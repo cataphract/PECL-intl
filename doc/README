@@ -1,0 +1,108 @@
+Introduction
+============
+
+Internationalization(further is referred as Intl) extension is a wrapper for
+ICU services. It exposes the corresponding functions of the ICU API to PHP, 
+enabling PHP programmers to perform UCA-conformant collations, locale-sensitive
+string comparison, date/time/number/currency formatting in their scripts.
+
+Intl extension consists of several modules. Each module expose logically
+grouped ICU API sets:
+- Collation: provides string comparison capability with 
+             support for appropriate locale-sensitive sort orderings.
+- Formatting: allows to display number according to the localized format or 
+              given pattern or set of rules, and to parse strings into numbers
+              according to the above patterns.
+
+
+Prerequisites
+=============
+
+To build the extension you need to install the ICU library of version 3.6+
+(http://www.icu-project.org/).
+
+And of course PHP is required.
+Please grab the latest version of PHP 5.x at http://www.php.net.
+Collator is known to work well on PHP 5.1.3+ and 5.2.0+.
+
+
+Building
+========
+
+Let's assume that you have installed PHP to /opt/php5/ and ICU is
+installed to /opt/icu/. Run the following commands:
+
+ /opt/php5/bin/phpize
+ ./configure --with-php-config=/opt/php5/bin/php-config \
+             --with-icu-dir=/opt/icu
+ make
+		
+
+If your ICU is installed to a non-standard directory then you might want to specify its location
+in LD_LIBRARY_PATH environment variable so that dynamic linker can find it:
+
+ export LD_LIBRARY_PATH=/opt/icu/lib
+
+Otherwise, if PHP and ICU are installed to their default locations, then
+the additional options to `configure' are not needed.
+
+
+Testing
+=======
+
+Run "make test".
+
+Note that the tests may fail if:
+- you have already enabled collator extension in your php.ini;
+- you use LD_LIBRARY_PATH to load ICU libraries and value of the
+  'variables_order' setting in php.ini doesn't contain letter 'E'
+  (missing 'E' means "do not register Environment variables");
+
+
+Installation
+============
+
+Run "make install".
+
+Then enable the extension by adding the following line to [PHP] section
+of your php.ini:
+
+ extension=intl.so
+
+
+Using
+=====
+
+Each module provides two kind of APIs: a procedural one and an object oriented
+one. Both are actually identical and described in appropriate doc.
+For 'Collation' module see doc/collator_api.php,
+For 'Formatting' module see doc/formatter_api.php
+
+Example of using the procedural API:
+
+  $coll   = collator_create( 'en_US' );
+  $result = collator_compare( $coll, "string#1", "string#2" );
+
+  $formatter = new NumberFormatter( 'en_US', NumberFormatter::DECIMAL );
+  echo $formatter->format( 1234567 );
+
+Example of using the object-oriented API:
+
+  $coll = new Collator( 'en_US' );
+  $al   = $coll->getLocaleByType( ULOC_ACTUAL_LOCALE );
+  echo "Actual locale: $al\n";
+
+
+Known Bugs
+==========
+
+- Collator::sortWithSortKeys() converts all elements in the input array
+  that are neither strings nor null to empty strings.
+
+Links
+=====
+
+- http://www.icu-project.org/docs/       (misc ICU docs)
+- http://www.icu-project.org/userguide/  (ICU Userguide)
+- http://php.net/                        (PHP)
+- http://www.unicode.org/reports/tr10/   (Unicode Collation Algorithm)
