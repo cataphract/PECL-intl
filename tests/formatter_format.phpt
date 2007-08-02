@@ -14,10 +14,10 @@ $value = 1234567.89;
 $fmt = new NumberFormatter( "en_UK", NumberFormatter::DECIMAL );
 echo $fmt->format( $value ) . "\n";
 
-$fmt = number_formatter( "de_DE", NumberFormatter::DECIMAL );
+$fmt = new NumberFormatter( "de_DE", NumberFormatter::DECIMAL );
 echo $fmt->format( $value ) . "\n";
 
-$fmt = number_formatter( "en_UK", NumberFormatter::PATTERN_DECIMAL, "@@##" );
+$fmt = new NumberFormatter( "en_UK", NumberFormatter::PATTERN_DECIMAL, "@@##" );
 echo $fmt->format( $value ) . "\n";
 
 $fmt = new NumberFormatter( "en_UK", NumberFormatter::PATTERN_DECIMAL, "0.0" );

@@ -9,7 +9,7 @@ include_once( 'ut_common.php' );
 
 # Check setting/getting attribute.
 
-$fmt = number_formatter( "en_US", NumberFormatter::DECIMAL );
+$fmt = new NumberFormatter( "en_US", NumberFormatter::DECIMAL );
 
 // Format a number using default multiplier (1).
 echo $fmt->format( 128 ) . "\n";

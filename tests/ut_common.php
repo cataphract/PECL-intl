@@ -218,4 +218,60 @@ function ut_nfmt_format_number( $fmt, $number, $type = null )
 {
     return $GLOBALS['oo-mode'] ? $fmt->format( $number, $type ) : number_format_number( $fmt, $number, $type );
 }
+function ut_nfmt_parse( $fmt, $string, $type, $position = 0 )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->parse( $string, $type, $position ) : numfmt_parse( $fmt, $string, $type, $position );
+}
+function ut_nfmt_format_currency( $fmt, $number, $currency )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->formatCurrency( $number, $currency ) : numfmt_format_currency( $fmt, $number, $currency );
+}
+function ut_nfmt_parse_currency( $fmt, $string, $currency, $position )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->parseCurrency( $string, $currency, $position ) : numfmt_parse_currency( $fmt, $string, $currency, $position );
+}
+function ut_nfmt_set_attribute( $fmt, $attribute, $value )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->setAttribute( $attribute, $value ) : numfmt_set_attribute( $fmt, $attribute, $value );
+}
+function ut_nfmt_set_text_attribute( $fmt, $attribute, $value )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->setTextAttribute( $attribute, $value ) : numfmt_set_text_attribute( $fmt, $attribute, $value );
+}
+function ut_nfmt_set_symbol( $fmt, $attribute, $value )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->setSymbol( $attribute, $value ) : numfmt_set_symbol( $fmt, $attribute, $value );
+}
+function ut_nfmt_set_pattern( $fmt, $pattern )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->setPattern( $pattern ) : numfmt_set_pattern( $fmt, $pattern );
+}
+function ut_nfmt_get_attribute( $fmt, $attribute )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getAttribute( $attribute ) : numfmt_get_attribute( $fmt, $attribute );
+}
+function ut_nfmt_get_text_attribute( $fmt, $attribute )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getTextAttribute( $attribute ) : numfmt_get_text_attribute( $fmt, $attribute );
+}
+function ut_nfmt_get_symbol( $fmt, $attribute )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getSymbol( $attribute ) : numfmt_get_symbol( $fmt, $attribute );
+}
+function ut_nfmt_get_pattern( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getPattern() : numfmt_get_pattern( $fmt );
+}
+function ut_nfmt_get_locale( $fmt, $type = 0 )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getLocale( $type ) : numfmt_get_locale( $fmt, $type );
+}
+function ut_nfmt_get_error_code( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getErrorCode() : numfmt_get_error_code( $fmt );
+}
+function ut_nfmt_get_error_message( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getErrorMessage() : numfmt_get_error_message( $fmt );
+}
 ?>
