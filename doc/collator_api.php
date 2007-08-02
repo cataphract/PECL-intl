@@ -94,8 +94,7 @@ class Collator {
      *
      * Creates a new instance of Collator.
      *
-     * This method is useful when you don't want to deal with exceptions,
-     * preferring just to get null on error,
+     * This method is useful when you prefer just to get null on error,
      * as if you called collator_create().
      *
      * @return Collator      Newly created Collator instance,
@@ -347,7 +346,7 @@ function collator_asort( $coll, $arr, $sort_flags ) {}
 function collator_sort_with_sort_keys( $coll, $arr ) {}
 
 /**
- * Gets the locale name of the collator.
+ * Get the locale name of the collator.
  *
  * @param Collator $coll Collator object.
  * @param int      $type You can choose between requested, valid

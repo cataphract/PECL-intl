@@ -1,15 +1,14 @@
 Introduction
 ============
 
-Internationalization(further is referred as Intl) extension is a wrapper for
+Internationalization extension (further is referred as intl) is a wrapper for
 ICU services. It exposes the corresponding functions of the ICU API to PHP, 
 enabling PHP programmers to perform UCA-conformant collations, locale-sensitive
 string comparison, date/time/number/currency formatting in their scripts.
 
-Intl extension consists of several modules. Each module expose logically
-grouped ICU API sets:
-- Collation: provides string comparison capability with 
-             support for appropriate locale-sensitive sort orderings.
+Intl consists of several modules, each of them exposes the corresponding ICU API:
+- Collator:   provides string comparison capability with 
+              support for appropriate locale-sensitive sort orderings.
 - Formatting: allows to display number according to the localized format or 
               given pattern or set of rules, and to parse strings into numbers
               according to the above patterns.
@@ -75,7 +74,7 @@ Using
 
 Each module provides two kind of APIs: a procedural one and an object oriented
 one. Both are actually identical and described in appropriate doc.
-For 'Collation' module see doc/collator_api.php,
+For 'Collator' module see doc/collator_api.php,
 For 'Formatting' module see doc/formatter_api.php
 
 Example of using the procedural API:
@@ -83,14 +82,14 @@ Example of using the procedural API:
   $coll   = collator_create( 'en_US' );
   $result = collator_compare( $coll, "string#1", "string#2" );
 
-  $formatter = new NumberFormatter( 'en_US', NumberFormatter::DECIMAL );
-  echo $formatter->format( 1234567 );
-
 Example of using the object-oriented API:
 
   $coll = new Collator( 'en_US' );
   $al   = $coll->getLocaleByType( ULOC_ACTUAL_LOCALE );
   echo "Actual locale: $al\n";
+
+  $formatter = new NumberFormatter( 'en_US', NumberFormatter::DECIMAL );
+  echo $formatter->format( 1234567 );
 
 
 Known Bugs

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Handling of errors occured in statics methods
+ * Handling of errors occured in static methods
  * when there's no object to get error code/message from.
  *
  * Example #1:
@@ -37,7 +37,8 @@ function intl_get_error_message() {}
 /**
  * Check whether the given error code indicates failure.
  *
- * @param $code integer ICU error code. 
+ * @param  int  $code ICU error code.
+ *
  * @return bool true if it the code indicates some failure,
  *              and false in case of success or a warning.
  */
@@ -48,8 +49,9 @@ function intl_is_failure($code) {}
  *
  * The returned string will be the same as the name of the error code constant.
  *
- * @param $code integer ICU error code. 
- * @return string Error code name.
+ * @param  int       $code  ICU error code.
+ *
+ * @return string    Error code name.
  */
 function intl_error_name($code) {}
 
