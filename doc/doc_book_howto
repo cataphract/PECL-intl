@@ -1,0 +1,43 @@
+This document explains how to debug documentation for 'intl'
+extension and how to quickly compile a stripped version of the PHP
+manual to check your changes.
+
+1. Unpack the PHP Manual sources to phpdoc/ directory.
+
+2. Run the following command in phpdoc/ directory:
+
+  $ autoconf
+
+3. Remove everything under phpdoc/en/reference/ and place documentation
+on 'intl' extension there. After that the directory will contain only
+one 'intl' subdirectory.
+
+4. Edit phpdoc/manual.xml.in: remove everything from the <book> section
+and add a single line to that section:
+
+ &builtin.extensions;
+
+This will make the manual contain only intl API reference. Such
+a stripped manual compiles *much* faster.
+
+5. Insert all entries found in intl-doc/global.ent to
+   phpdoc/entities/global.ent.
+
+6. Run the following command in phpdoc/ directory:
+
+  $ ./configure
+  
+Configure runs numerous PHP scripts, preparing the manual sources for
+compilation. Besides, they create/overwrite functions.xml file under
+phpdoc/en/reference/intl/. Just ignore it.
+
+7. Run the following command in  phpdoc/ directory:
+
+  $ make
+  
+8. Make may fail, but that's ok. :-) You'll find the compiled manual
+under phpdoc/html/.
+
+NOTE:
+You may encounter "???" marks in the compiled manual.
+They mean (dead) links to non-existent sections.

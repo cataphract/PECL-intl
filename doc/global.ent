@@ -1,0 +1,7 @@
+<!ENTITY url.icu.home "http://www.icu-project.org/">
+<!ENTITY url.icu.docs "http://www.icu-project.org/docs/">
+<!ENTITY url.icu.userguide "http://www.icu-project.org/userguide/">
+<!ENTITY url.icu.uca "http://www.unicode.org/reports/tr10/">
+<!ENTITY url.icu.demo "http://demo.icu-project.org/icu-bin/locexp/">
+<!ENTITY url.rfc4646 "http://www.rfc-editor.org/rfc/rfc4646.txt">
+<!ENTITY url.rfc4647 "http://www.rfc-editor.org/rfc/rfc4647.txt">
