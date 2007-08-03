@@ -6,16 +6,16 @@
 ARG_ENABLE("intl", "Enable internationalization support", "no");
 
 if (PHP_INTL != "no") {
-	if (!CHECK_LIB('icuuc.lib', null)) {
-		ERROR('ICU library not found');
+	if (CHECK_LIB('icuuc.lib', null)) {
+		CHECK_HEADER_ADD_INCLUDE("unicode/utypes.h", "CFLAGS_INTL");
+		ADD_FLAG("LIBS", "icuuc.lib icuin.lib icuio.lib icule.lib iculx.lib");
+		EXTENSION('intl', 'php_intl.c intl_error.c intl_convert.c', PHP_INTL_SHARED, "/I ext/intl");
+		ADD_SOURCES("ext/intl/collator", 'collator.c collator_class.c collator_sort.c collator_convert.c collator_locale.c \
+			    collator_compare.c collator_attr.c collator_create.c collator_is_numeric.c collator_error.c', "intl");
+		ADD_SOURCES("ext/intl/common", 'common_error.c', "intl");
+		ADD_SOURCES("ext/intl/formatter",'formatter.c formatter_main.c formatter_class.c formatter_attr.c \
+			    formatter_data.c formatter_format.c formatter_parse.c', "intl");
+	} else {
+		WARNING("intl not enabled; libraries and/or headers not found");
 	}
-	CHECK_HEADER_ADD_INCLUDE("unicode/utypes.h", "CFLAGS_INTL");
-	ADD_FLAG("LIBS", "icuuc.lib icuin.lib icuio.lib icule.lib iculx.lib");
-	EXTENSION('intl', 'php_intl.c intl_error.c intl_convert.c', PHP_INTL_SHARED, "/I ext/intl");
-	ADD_SOURCES("ext/intl/collator", 'collator.c collator_class.c collator_sort.c collator_convert.c collator_locale.c \
-		    collator_compare.c collator_attr.c collator_create.c collator_is_numeric.c collator_error.c', "intl");
-	ADD_SOURCES("ext/intl/common", 'common_error.c', "intl");
-	ADD_SOURCES("ext/intl/formatter",'formatter.c formatter_main.c formatter_class.c formatter_attr.c \
-		    formatter_data.c formatter_format.c formatter_parse.c', "intl");
-
 }
