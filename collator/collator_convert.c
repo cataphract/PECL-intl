@@ -105,6 +105,7 @@ zval* collator_convert_string_to_number( zval* str )
 	zval* num = collator_convert_string_to_number_if_possible( str );
 	if( num == str )
 	{
+		// String wasn't converted => return zero.
 		zval_ptr_dtor( &num );
 
 		ALLOC_INIT_ZVAL( num );

@@ -47,8 +47,6 @@ static const size_t DEF_SORT_KEYS_BUF_INCREMENT = 1048576;
 static const size_t DEF_SORT_KEYS_INDX_BUF_SIZE = 1048576;
 static const size_t DEF_SORT_KEYS_INDX_BUF_INCREMENT = 1048576;
 
-static const size_t DEF_UTF16_BUF_SIZE = 1024;
-
 /* {{{ collator_regular_compare_function */
 static int collator_regular_compare_function(zval *result, zval *op1, zval *op2 TSRMLS_DC)
 {
@@ -394,9 +392,8 @@ PHP_FUNCTION( collator_sort_with_sort_keys )
 	zend_hash_internal_pointer_reset( hash );
 	while( zend_hash_get_current_data( hash, (void**) &hashData ) == SUCCESS )
 	{
-		// Convert current hash item from UTF-8 to UTF-16LE and save the result to utf16_buf.
-
 		// Process string values only.
+
 		if( Z_TYPE_PP( hashData ) == IS_UNICODE )
 		{
 			utf16_buf = INTL_Z_STRVAL_P( *hashData );
@@ -406,7 +403,6 @@ PHP_FUNCTION( collator_sort_with_sort_keys )
 		{
 			// Set empty string
 			utf16_len = 0;
-
 			utf16_buf = (UChar*) "";
 		}
 
