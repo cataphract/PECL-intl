@@ -14,11 +14,11 @@ Regression: sort_wsk() and copy-on-write.
  * Sort the array and the first copy.
  * Check if the second copy remains unsorted.
  */
-function test_COW( $locale_name, $test_array )
+function test_COW( $locale, $test_array )
 {
     $res_str = '';
 
-    $coll = ut_coll_create( $locale_name );
+    $coll = ut_coll_create( $locale );
 
     // Convert strings to UTF-16 if needed.
     $u_test_array = u( $test_array );

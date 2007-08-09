@@ -4,33 +4,33 @@ sort_with_sort_keys()
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
 --FILE--
 <?php
+
 /*
- * Sort arrays in various locales
- * with Procedural and Object methods.
+ * Sort arrays using various locales.
  */
 
 
 /*
- * Sort various arrays in specified locale.
+ * Sort arrays in the given list using specified locale.
  */
-function sort_in_locale( $locale_name, $test_params )
+function sort_arrays( $locale, $arrays )
 {
     $res_str = '';
 
-    $coll = ut_coll_create( $locale_name );
+    $coll = ut_coll_create( $locale );
 
-    foreach( $test_params as $test_param )
+    foreach( $arrays as $array )
     {
         // Convert strings to UTF-16 if needed.
-        $u_test_param = u( $test_param );
+        $u_array = u( $array );
 
         // Sort array values
-        $res_val = ut_coll_sort_with_sort_keys( $coll, $u_test_param );
+        $res_val = ut_coll_sort_with_sort_keys( $coll, $u_array );
 
         // Concatenate the sorted array and function result
         // with output string.
         $res_str .= "\n" .
-                   dump( $u_test_param ) .
+                   dump( $u_array ) .
                    "\n Result: " .
                    dump( $res_val );
     }
@@ -44,7 +44,7 @@ function ut_main()
 
     $res_str = '';
 
-    // Array with data for sorting.
+    // Sort an array in SORT_REGULAR mode using en_US locale.
     $test_params = array(
         array( 'abc', 'abd', 'aaa' ),
         array( 'm'  , '1'  , '_'   ),
@@ -57,25 +57,23 @@ function ut_main()
         array( 'y'  , 'i'  , 'k'   )
     );
 
-    // Sort arrays in en_US locale.
-    $res_str .= sort_in_locale( 'en_US', $test_params );
+    $res_str .= sort_arrays( 'en_US', $test_params );
 
-    // Array with data for sorting.
+    // Sort a non-ASCII array using ru_RU locale.
     $test_params = array(
         array( 'абг', 'абв', 'ааа', 'abc' ),
         array( 'аа', 'ааа', 'а' )
     );
 
-    // Sort arrays in ru_RU locale.
-    $res_str .= sort_in_locale( 'ru_RU', $test_params );
+    $res_str .= sort_arrays( 'ru_RU', $test_params );
 
     // Array with data for sorting.
     $test_params = array(
         array( 'y'  , 'i'  , 'k'   )
     );
 
-    // Sort arrays in lt_LT locale.
-    $res_str .= sort_in_locale( 'lt_LT', $test_params );
+    // Sort an array using Lithuanian locale.
+    $res_str .= sort_arrays( 'lt_LT', $test_params );
 
     return $res_str . "\n";
 }

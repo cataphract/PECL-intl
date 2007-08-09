@@ -14,20 +14,25 @@ function ut_main()
 {
     $res_str = '';
 
-    $test_params = array(
+    $locales = array(
         'EN-US-ODESSA',
         'UK_UA_ODESSA',
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
-        // locale for default ICU values.
         '',
         'root',
         'uk@currency=EURO'
     );
 
-    foreach( $test_params as $test_param )
+    foreach( $locales as $locale )
     {
         // Create Collator with the current locale.
-        $coll = ut_coll_create( $test_param );
+        $coll = ut_coll_create( $locale );
+        if( $coll === false )
+        {
+            echo "Error creating collator with '$locale' locale: " .
+                 intl_get_error_message() . "\n";
+            continue;
+        }
 
         // Get the requested, valid and actual locales.
         $rloc = ut_coll_get_locale( $coll, ULOC_REQUESTED_LOCALE );
@@ -35,16 +40,11 @@ function ut_main()
         $aloc = ut_coll_get_locale( $coll, ULOC_ACTUAL_LOCALE );
 
         // Show them.
-        $res_str .= "Locale: '$test_param'\n" .
+        $res_str .= "Locale: '$locale'\n" .
             "  ULOC_REQUESTED_LOCALE = '$rloc'\n" .
             "  ULOC_VALID_LOCALE     = '$vloc'\n" .
             "  ULOC_ACTUAL_LOCALE    = '$aloc'\n";
     }
-
-    // Test creation of Collator with empty locale name.
-    $coll = ut_coll_create( '' );
-    if( !isset( $coll ) )
-        print( "Error - collator was not created with default parameter!\n" );
 
     return $res_str;
 }

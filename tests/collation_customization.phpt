@@ -4,8 +4,9 @@ Collation customization
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
 --FILE--
 <?php
+
 /*
- * Check effects on setting different collator's attributes.
+ * Check effects of changing misc collattion options.
  */
 
 

@@ -6,8 +6,10 @@ get_error_message()
 <?php
 
 /*
- * Show error messages with Procedural and Object methods.
+ * Retreive error message.
  */
+
+
 function ut_main()
 {
     $res = '';
@@ -25,9 +27,6 @@ function ut_main()
 
     return $res;
 }
-
-// Suppress warning messages.
-error_reporting( E_ERROR );
 
 include_once( 'ut_common.php' );
 ut_run();

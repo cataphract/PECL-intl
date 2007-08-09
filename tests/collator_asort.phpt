@@ -4,20 +4,20 @@ asort()
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
 --FILE--
 <?php
+
 /*
- * Sort associative arrays in various locales
- * with Procedural and Object methods.
+ * Sort associative arrays using various locales.
  */
 
 
 /*
  * Sort various arrays in specified locale.
  */
-function sort_in_locale( $locale_name, $test_arrays, $sort_flag = Collator::SORT_REGULAR )
+function sort_arrays( $locale, $test_arrays, $sort_flag = Collator::SORT_REGULAR )
 {
     $res_str = '';
 
-    $coll = ut_coll_create( $locale_name );
+    $coll = ut_coll_create( $locale );
 
     foreach( $test_arrays as $test_array )
     {
@@ -42,7 +42,7 @@ function ut_main()
 {
     $res_str = '';
 
-    // Initialize test data.
+    // Sort an array in SORT_REGULAR mode using en_US locale.
     $test_params = array(
         array( 'd' => 'y'  ,
                'c' => 'i'  ,
@@ -60,41 +60,40 @@ function ut_main()
                '5' => '!'  ,
                '2' => null ,
                '7' => ''   ),
-	       
+
         array( '1' => '100',
-	       '2' => '25' ,
-	       '3' => '36' ),
-	       
+               '2' => '25' ,
+               '3' => '36' ),
+
         array( '1' => 5    ,
-	       '2' => '30' ,
-	       '3' => 2    )
+               '2' => '30' ,
+               '3' => 2    )
     );
 
-    $res_str .= sort_in_locale( 'en_US', $test_params );
+    $res_str .= sort_arrays( 'en_US', $test_params );
 
-    // Array with data for sorting
+    // Sort an array in SORT_STRING mode using en_US locale.
     $test_params = array(
         array( '1' => '100',
-	       '2' => '25' ,
-	       '3' => '36' ),
-	       
+               '2' => '25' ,
+               '3' => '36' ),
+
         array( '1' => 5    ,
-	       '2' => '30' ,
-	       '3' => 2    ),
-	       
+               '2' => '30' ,
+               '3' => 2    ),
+
         array( '1' => 'd'  ,
-	       '2' => ''   ,
-	       '3' => ' a' ),
-	       
+               '2' => ''   ,
+               '3' => ' a' ),
+
         array( '1' => 'y'  ,
-	       '2' => 'k'  ,
-	       '3' => 'i'  )
+               '2' => 'k'  ,
+               '3' => 'i'  )
     );
 
-    // Sort in en_US locale with SORT_STRING flag
-    $res_str .= sort_in_locale( 'en_US', $test_params, Collator::SORT_STRING );
+    $res_str .= sort_arrays( 'en_US', $test_params, Collator::SORT_STRING );
 
-    // Initialize UTF8 test data.
+    // Sort a non-ASCII array using ru_RU locale.
     $test_params = array(
         array( 'п' => 'у',
                'б' => 'в',
@@ -106,16 +105,17 @@ function ut_main()
                '2' => 'пп' )
     );
 
-    $res_str .= sort_in_locale( 'ru_RU', $test_params );
+    $res_str .= sort_arrays( 'ru_RU', $test_params );
 
-    // Test other sort order in Lithuanian locale.
+
+    // Sort an array using Lithuanian locale.
     $test_params = array(
         array( 'd' => 'y',
                'c' => 'i',
                'a' => 'k' )
     );
 
-    $res_str .= sort_in_locale( 'lt_LT', $test_params );
+    $res_str .= sort_arrays( 'lt_LT', $test_params );
 
     return $res_str . "\n";
 }

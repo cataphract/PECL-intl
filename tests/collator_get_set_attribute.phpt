@@ -4,13 +4,14 @@ get/set_attribute()
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
 --FILE--
 <?php
-/*
- * Try to set and get the values of a NORMALIZATION_MODE attribute
- * with Procedural and Object methods.
- */
 
 /*
- * Return string with status of NormalizationMode attribute.
+ * Try to set/get a collation attribute.
+ */
+
+
+/*
+ * Return current normalication mode.
  */
 function check_val( $coll )
 {

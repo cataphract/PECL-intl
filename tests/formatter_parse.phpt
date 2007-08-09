@@ -5,25 +5,36 @@ numfmt_parse()
 --FILE--
 <?php
 
+/*
+ * Number parsing.
+ */
+
+
+function ut_main()
+{
+    $res_str = '';
+
+    // Test parsing float number.
+    $fmt = ut_nfmt_create( "en_US", NumberFormatter::DECIMAL );
+    $res_str .= ut_nfmt_parse( $fmt, "123E-3" ) . "\n";
+
+    // Test parsing float number as integer.
+    $fmt = ut_nfmt_create( "en_US", NumberFormatter::DECIMAL );
+    $res_str .= ut_nfmt_parse( $fmt, "1.23", NumberFormatter::TYPE_INT32 ) . "\n";
+
+    // Test specifying non-zero parsing start position.
+    $fmt = ut_nfmt_create( "en_US", NumberFormatter::DECIMAL );
+    $pos = 2;
+    $res_str .= ut_nfmt_parse( $fmt, "0.123", NumberFormatter::TYPE_DOUBLE, $pos ) . "\n";
+    
+    return $res_str;
+}
+
 include_once( 'ut_common.php' );
-
-# Number parsing.
-
-// Test parsing float number.
-$fmt = new NumberFormatter( "en_US", NumberFormatter::DECIMAL );
-echo $fmt->parse( "123E-3" ) . "\n";
-
-// Test parsing float number as integer.
-$fmt = new NumberFormatter( "en_US", NumberFormatter::DECIMAL );
-echo $fmt->parse( "1.23", NumberFormatter::TYPE_INT32 ) . "\n";
-
-// Test specifying non-zero parsing start position.
-$fmt = new NumberFormatter( "en_US", NumberFormatter::DECIMAL );
-$pos = 2;
-echo $fmt->parse( "123", NumberFormatter::DECIMAL, $pos ) . "\n";
+ut_run();
 
 ?>
 --EXPECT--
 0.123
 1
-3
+123

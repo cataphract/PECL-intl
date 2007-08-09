@@ -4,13 +4,14 @@ get/set_strength()
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
 --FILE--
 <?php
+
 /*
- * Try to set and get Strength value
- * with Procedural and Object methods.
+ * Try to set/get collation strength.
  */
 
 /*
- * Return the string with Streng status.
+ * Set given collation strength, then get it back
+ * and check if it's the same.
  */
 function check_set_strength( $coll, $val )
 {

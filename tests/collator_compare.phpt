@@ -6,13 +6,14 @@ compare()
 <?php
 
 /*
- * Compare various string pairs in various locales
- * with Procedural and Object methods.
+ * Compare various string pairs using various locales.
  */
 
 
-// Converts comparison result to a character.
-function get_printable_sign( $comp_res )
+/*
+ * Converts comparison result to a character.
+ */
+function cmp_to_char( $comp_res )
 {
     switch( $comp_res )
     {
@@ -28,13 +29,14 @@ function get_printable_sign( $comp_res )
 }
 
 /*
- * Compare strings in specified locales
+ * Compare string pairs in the given array
+ * using specified locale.
  */
-function compare_in_locale( $locale_name, $test_array )
+function compare_pairs( $locale, $test_array )
 {
     $res_str = '';
 
-    $coll = ut_coll_create( $locale_name );
+    $coll = ut_coll_create( $locale );
 
     foreach( $test_array as $test_strings )
     {
@@ -45,7 +47,7 @@ function compare_in_locale( $locale_name, $test_array )
         $str2 = u( $str2 );
 
         // Compare strings.
-        $res_val = get_printable_sign( ut_coll_compare( $coll, $str1, $str2 ) );
+        $res_val = cmp_to_char( ut_coll_compare( $coll, $str1, $str2 ) );
 
         // Concatenate result strings.
         $res_str .= dump( $str1 ) .
@@ -59,8 +61,6 @@ function compare_in_locale( $locale_name, $test_array )
 
 function ut_main()
 {
-    $locale_name = 'en_US';
-
     $res_str = '';
 
     // Compare strings using en_US locale.
@@ -82,7 +82,7 @@ function ut_main()
         array( null , null  )
     );
 
-    $res_str .= compare_in_locale( 'en_US', $test_params );
+    $res_str .= compare_pairs( 'en_US', $test_params );
 
 
     // Compare strings using ru_RU locale.
@@ -97,7 +97,7 @@ function ut_main()
         array( 'а',   null )
     );
 
-    $res_str .= compare_in_locale( 'ru_RU', $test_params );
+    $res_str .= compare_pairs( 'ru_RU', $test_params );
 
 
     // Compare strings using lt_LT locale.
@@ -105,7 +105,7 @@ function ut_main()
         array( 'y', 'k' )
     );
 
-    $res_str .= compare_in_locale( 'lt_LT', $test_params );
+    $res_str .= compare_pairs( 'lt_LT', $test_params );
 
     return $res_str;
 }

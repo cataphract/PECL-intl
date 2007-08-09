@@ -8,9 +8,9 @@ Regression: sort_wsk() eq but different len.
  * Test sorting strings that have different length but otherwise equal.
  */
 
-function sort_using_locale( $locale_name, $test_array )
+function sort_using_locale( $locale, $test_array )
 {
-    $coll = ut_coll_create( $locale_name );
+    $coll = ut_coll_create( $locale );
 
     // Convert strings to UTF-16 if needed.
     $u_test_array = u( $test_array );

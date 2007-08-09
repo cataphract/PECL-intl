@@ -5,20 +5,41 @@ numfmt_format_currency()
 --FILE--
 <?php
 
+/*
+ * Format a number using misc currencies/locales.
+ */
+
+
+function ut_main()
+{
+    $locales = array(
+        'en_UK' => 'GBP',
+        'en_US' => 'USD',
+        'ru'    => 'RUR',
+        'uk'    => 'UAH',
+        'en'    => 'UAH'
+    );
+
+    $res_str = '';
+    $number = 1234567.89;
+
+    foreach( $locales as $locale => $currency )
+    {
+        $fmt = ut_nfmt_create( $locale, NumberFormatter::CURRENCY );
+        $res_str .= "$locale: " . dump( ut_nfmt_format_currency( $fmt, $number, $currency ) ) . "\n";
+    }
+    return $res_str;
+}
+
 include_once( 'ut_common.php' );
 
-$value = 1234567.89;
-
-# Currency formatting.
-
-$fmt = new NumberFormatter( "en_UK", NumberFormatter::CURRENCY );
-echo $fmt->formatCurrency( $value, 'UAH' ) . "\n";
-
-$fmt = new NumberFormatter( "ru_RU", NumberFormatter::CURRENCY );
-$s = $fmt->formatCurrency( $value, 'UAH' );
-echo dump( $s ) . "\n";
+// Run the test
+ut_run();
 
 ?>
 --EXPECT--
-UAH1,234,567.89
-'1 234 567,89грн.'
+en_UK: '£1,234,567.89'
+en_US: '$1,234,567.89'
+ru: '1 234 567,89р.'
+uk: 'грн. 1 234 567,89'
+en: 'UAH1,234,567.89'

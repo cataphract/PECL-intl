@@ -10,6 +10,7 @@ get_display_name()
  * with Procedural and Object methods
  */
 
+
 function ut_main()
 {
     $res_str = '';

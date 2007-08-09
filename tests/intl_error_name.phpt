@@ -4,6 +4,7 @@ intl_error_name()
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
 --FILE--
 <?php
+
 /*
  * Check getting error string by integer error code.
  */
@@ -11,7 +12,7 @@ intl_error_name()
 
 function check( $err_code )
 {
-	echo intl_error_name( $err_code ) . "\n";
+    echo intl_error_name( $err_code ) . "\n";
 }
 
 check( U_ZERO_ERROR );

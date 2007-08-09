@@ -75,13 +75,16 @@ function u_array( $a )
  * Same as 'var_export" but does conversion binary string content
  * of $str to utf-8.
  */
-function dump_str( $val )
+function dump_str( $val, $use_quotes = true )
 {
+    $q = '';
+    if( $use_quotes )
+	$q = "'";
     if( is_unicode( $val ) && !unicode_semantics() )
-        return "'" . unicode_encode( $val, 'utf-8' ) . "'";
+        return $q . unicode_encode( $val, 'utf-8' ) . $q;
 
     if( is_string( $val ) )
-        return "'$val'";
+        return $q . "$val" . $q;
 
     return var_export( $val, true );
 }
@@ -212,13 +215,13 @@ function ut_coll_set_default( $coll )
 
 function ut_nfmt_create( $locale, $style, $pattern = null )
 {
-    return $GLOBALS['oo-mode'] ? new NumberFormatter( $locale, $style, $pattern ) : number_formatter( $locale, $style, $pattern );
+    return $GLOBALS['oo-mode'] ? new NumberFormatter( $locale, $style, $pattern ) : numfmt_create( $locale, $style, $pattern );
 }
-function ut_nfmt_format_number( $fmt, $number, $type = null )
+function ut_nfmt_format( $fmt, $number, $type = null )
 {
-    return $GLOBALS['oo-mode'] ? $fmt->format( $number, $type ) : number_format_number( $fmt, $number, $type );
+    return $GLOBALS['oo-mode'] ? $fmt->format( $number, $type ) : numfmt_format( $fmt, $number, $type );
 }
-function ut_nfmt_parse( $fmt, $string, $type, $position = 0 )
+function ut_nfmt_parse( $fmt, $string, $type = NumberFormatter::TYPE_DOUBLE, $position = 0 )
 {
     return $GLOBALS['oo-mode'] ? $fmt->parse( $string, $type, $position ) : numfmt_parse( $fmt, $string, $type, $position );
 }
@@ -226,7 +229,7 @@ function ut_nfmt_format_currency( $fmt, $number, $currency )
 {
     return $GLOBALS['oo-mode'] ? $fmt->formatCurrency( $number, $currency ) : numfmt_format_currency( $fmt, $number, $currency );
 }
-function ut_nfmt_parse_currency( $fmt, $string, $currency, $position )
+function ut_nfmt_parse_currency( $fmt, $string, &$currency, &$position )
 {
     return $GLOBALS['oo-mode'] ? $fmt->parseCurrency( $string, $currency, $position ) : numfmt_parse_currency( $fmt, $string, $currency, $position );
 }

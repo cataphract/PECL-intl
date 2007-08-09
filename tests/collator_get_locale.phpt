@@ -6,17 +6,12 @@ get_locale()
 <?php
 
 /*
- * Try to specify valid and invalid locale types when getting locale
- * with Procedural and Object methods.
+ * Try to specify valid and invalid locale types when getting locale.
  */
 
 function ut_main()
 {
-    $res_str = '';
-    $coll = ut_coll_create( 'en_US' );
-
-    // Array with locales for test.
-    $test_params = array(
+    $locales = array(
         ULOC_REQUESTED_LOCALE,
         ULOC_VALID_LOCALE,
         ULOC_ACTUAL_LOCALE,
@@ -28,14 +23,17 @@ function ut_main()
         9999999999999999999999999999999999999999999999
     );
 
-    foreach( $test_params as $test_param )
+    $coll = ut_coll_create( 'en_US' );
+    $res_str = '';
+
+    foreach( $locales as $locale )
     {
-        $res_val = ut_coll_get_locale( $coll, $test_param );
+        $rc = ut_coll_get_locale( $coll, $locale );
 
         $res_str .= sprintf(
             "Locale of type %s is %s\n",
-            dump( $test_param ),
-            dump( $res_val ) );
+            dump( $locale ),
+            dump( $rc ) );
     }
 
     return $res_str . "\n";

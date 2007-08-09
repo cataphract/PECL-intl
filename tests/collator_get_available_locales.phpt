@@ -6,9 +6,10 @@ get_available_locales()
 <?php
 
 /*
- * Check list of available locales
- * with Procedural and Object methods
+ * Get list of available locales.
  */
+
+
 function ut_main()
 {
     $nlocales = count( ut_coll_get_available_locales() );
