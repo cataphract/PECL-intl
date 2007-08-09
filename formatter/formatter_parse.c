@@ -100,18 +100,18 @@ PHP_FUNCTION( numfmt_parse )
  */
 PHP_FUNCTION( numfmt_parse_currency )
 {
-	double number;
+	double number = 0;
 	UChar currency[5] = {0};
-	UChar *str;
-	int str_len;
+	UChar *str = NULL;
+	int str_len = 0;
 	int32_t* position_p = NULL;
 	int32_t position = 0;
-	zval *zcurrency, *zposition = NULL;
+	zval *zcurrency = NULL, *zposition = NULL;
 	FORMATTER_METHOD_INIT_VARS;
 
 	// Parse parameters.
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ouz|z",
-		&object, NumberFormatter_ce_ptr,  &str, &str_len, &zcurrency, &zposition ) == FAILURE )
+		&object, NumberFormatter_ce_ptr, &str, &str_len, &zcurrency, &zposition ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			"number_parse_currency: unable to parse input params", 0 );
@@ -134,6 +134,7 @@ PHP_FUNCTION( numfmt_parse_currency )
 	}
 	FORMATTER_CHECK_STATUS( nfo, "Number parsing failed" );
 
+	zval_dtor( zcurrency );
 	ZVAL_UNICODE( zcurrency, currency, TRUE );
 
 	RETVAL_DOUBLE( number );

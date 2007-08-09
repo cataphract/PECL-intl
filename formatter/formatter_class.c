@@ -82,15 +82,13 @@ zend_object_value NumberFormatter_object_create(
 /* {{{ NumberFormatter_class_functions
  * Every 'NumberFormatter' class method has an entry in this table
  */
-static ZEND_BEGIN_ARG_INFO_EX( number_parse_arginfo, 0, 0, 2 )
-	ZEND_ARG_INFO( 0, formatter )
+static ZEND_BEGIN_ARG_INFO_EX( number_parse_arginfo, 0, 0, 1 )
 	ZEND_ARG_INFO( 0, string )
 	ZEND_ARG_INFO( 0, type )
 	ZEND_ARG_INFO( 1, position )
 ZEND_END_ARG_INFO()
 
-static ZEND_BEGIN_ARG_INFO_EX( number_parse_currency_arginfo, 0, 0, 3 )
-	ZEND_ARG_INFO( 0, formatter )
+static ZEND_BEGIN_ARG_INFO_EX( number_parse_currency_arginfo, 0, 0, 2 )
 	ZEND_ARG_INFO( 0, string )
 	ZEND_ARG_INFO( 1, currency )
 	ZEND_ARG_INFO( 1, position )

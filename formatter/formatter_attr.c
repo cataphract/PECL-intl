@@ -64,6 +64,10 @@ PHP_FUNCTION( numfmt_get_attribute )
 		case UNUM_FORMAT_WIDTH:
 		case UNUM_PADDING_POSITION:
 		case UNUM_SECONDARY_GROUPING_SIZE:
+		case UNUM_SIGNIFICANT_DIGITS_USED:
+		case UNUM_MIN_SIGNIFICANT_DIGITS:
+		case UNUM_MAX_SIGNIFICANT_DIGITS:
+		case UNUM_LENIENT_PARSE:
 			value = unum_getAttribute(nfo->nf_data.unum, attribute);
 			if(value == -1) {
 				FORMATTER_ERROR_CODE(nfo) = U_UNSUPPORTED_ERROR;
@@ -181,6 +185,10 @@ PHP_FUNCTION( numfmt_set_attribute )
 		case UNUM_FORMAT_WIDTH:
 		case UNUM_PADDING_POSITION:
 		case UNUM_SECONDARY_GROUPING_SIZE:
+		case UNUM_SIGNIFICANT_DIGITS_USED:
+		case UNUM_MIN_SIGNIFICANT_DIGITS:
+		case UNUM_MAX_SIGNIFICANT_DIGITS:
+		case UNUM_LENIENT_PARSE:
 			convert_to_long_ex(value);
 			unum_setAttribute(nfo->nf_data.unum, attribute, Z_LVAL_PP(value));
 			break;
@@ -261,6 +269,7 @@ PHP_FUNCTION( numfmt_get_symbol )
 	length = unum_getSymbol(nfo->nf_data.unum, symbol, value_buf, length, &FORMATTER_ERROR_CODE(nfo));
 	FORMATTER_CHECK_STATUS( nfo, "Error getting symbol value" );
 	if(length >= USIZE(value)) {
+		++length; // to avoid U_STRING_NOT_TERMINATED_WARNING
 		value_buf = eumalloc(length);
 		length = unum_getSymbol(nfo->nf_data.unum, symbol, value_buf, length, &FORMATTER_ERROR_CODE(nfo));
 		FORMATTER_CHECK_STATUS( nfo, "Error getting symbol value" );

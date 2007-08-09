@@ -120,7 +120,8 @@ PHP_METHOD( NumberFormatter, __construct )
  */
 PHP_FUNCTION( numfmt_get_error_code )
 {
-	FORMATTER_METHOD_INIT_VARS;
+	zval*                    object  = NULL;
+	NumberFormatter_object*  nfo     = NULL;
 
 	// Parse parameters.
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O",
@@ -146,8 +147,9 @@ PHP_FUNCTION( numfmt_get_error_code )
  */
 PHP_FUNCTION( numfmt_get_error_message )
 {
-	char* message = NULL;
-	FORMATTER_METHOD_INIT_VARS;
+	char*                    message = NULL;
+	zval*                    object  = NULL;
+	NumberFormatter_object*  nfo     = NULL;
 
 	// Parse parameters.
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O",
