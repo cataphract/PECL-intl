@@ -135,7 +135,6 @@ class NumberFormatter {
 	const NAN_SYMBOL                         = 'UNUM_NAN_SYMBOL';
 	const SIGNIFICANT_DIGIT_SYMBOL           = 'UNUM_SIGNIFICANT_DIGIT_SYMBOL';
 	const MONETARY_GROUPING_SEPARATOR_SYMBOL = 'UNUM_MONETARY_GROUPING_SEPARATOR_SYMBOL';
-	const FORMAT_SYMBOL_COUNT                = 'UNUM_FORMAT_SYMBOL_COUNT';
 
 	/**
 	 * Create a number formatter
@@ -202,7 +201,7 @@ class NumberFormatter {
 	 * Uses user-defined currency string.
 	 *
 	 * @param double $number    Number to format
-	 * @param string $currency  Currency code to use in format
+	 * @param string $currency  3-letter currency code (ISO 4217) to use in format
 	 */
 	public function formatCurrency($number, $currency) {}
 
@@ -372,7 +371,7 @@ function numfmt_parse($formatter, $string, $type, &$position) {}
  *
  * @param NumberFormatter $formatter The formatter resource
  * @param double          $number    Number to format
- * @param string $currency  Currency code to use in format
+ * @param string          $currency  3-letter currency code (ISO 4217) to use in format
  */
 function numfmt_format_currency($formatter, $number, $currency) {}
 /**
