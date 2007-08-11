@@ -72,26 +72,26 @@ function u_array( $a )
 }
 
 /*
- * Same as 'var_export" but does conversion binary string content
+ * Same as 'var_export" but does conversion unicode string content
  * of $str to utf-8.
  */
-function dump_str( $val, $use_quotes = true )
+function dump_str( $str, $use_quotes = true )
 {
     $q = '';
     if( $use_quotes )
-	$q = "'";
-    if( is_unicode( $val ) && !unicode_semantics() )
-        return $q . unicode_encode( $val, 'utf-8' ) . $q;
+        $q = "'";
+    if( is_unicode( $str ) && !unicode_semantics() )
+        return $q . unicode_encode( $str, 'utf-8' ) . $q;
 
-    if( is_string( $val ) )
-        return $q . "$val" . $q;
+    if( is_string( $str ) )
+        return $q . "$str" . $q;
 
-    return var_export( $val, true );
+    return var_export( $str, true );
 }
 
 /*
- * Same as 'var_export" but does conversion binary string content
- * of $str to utf-8.
+ * Same as 'var_export" but does conversion unicode string content
+ * of each item of array $a to utf-8.
  */
 function dump_array( $a )
 {
