@@ -45,7 +45,7 @@ PHP_FUNCTION( collator_compare )
 		&object, Collator_ce_ptr, &str1, &str1_len, &str2, &str2_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			 "collator_compare: unable to parse input params", 0 );
+			 "collator_compare: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}

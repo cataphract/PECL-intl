@@ -37,7 +37,7 @@ PHP_FUNCTION( collator_get_error_code )
 		&object, Collator_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"collator_get_error_code: unable to parse input params", 0 );
+			"collator_get_error_code: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -68,7 +68,7 @@ PHP_FUNCTION( collator_get_error_message )
 		&object, Collator_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"collator_get_error_message: unable to parse input params", 0 );
+			"collator_get_error_message: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -79,7 +79,7 @@ PHP_FUNCTION( collator_get_error_message )
 		RETURN_FALSE;
 
 	// Return last error message.
-	message = intl_error_get_message( COLLATOR_ERROR_P( co ) );
+	message = intl_error_get_message( COLLATOR_ERROR_P( co ) TSRMLS_CC );
 	RETURN_STRING( (char*)message, FALSE );
 }
 /* }}} */

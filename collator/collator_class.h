@@ -42,30 +42,30 @@ typedef struct {
 #define COLLATOR_ERROR_CODE(co)   INTL_ERROR_CODE(COLLATOR_ERROR(co))
 #define COLLATOR_ERROR_CODE_P(co) &(INTL_ERROR_CODE(COLLATOR_ERROR(co)))
 
-void collator_register_Collator_class();
-void collator_object_init( Collator_object* co );
-void collator_object_destroy( Collator_object* co );
+void collator_register_Collator_class( TSRMLS_D );
+void collator_object_init( Collator_object* co TSRMLS_DC );
+void collator_object_destroy( Collator_object* co TSRMLS_DC );
 
 extern zend_class_entry *Collator_ce_ptr;
 
 /* Auxiliary macros */
 
-#define COLLATOR_METHOD_INIT_VARS     \
-    zval*             object  = NULL; \
-    Collator_object*  co      = NULL; \
-    intl_error_reset( NULL );         \
+#define COLLATOR_METHOD_INIT_VARS       \
+    zval*             object  = NULL;   \
+    Collator_object*  co      = NULL;   \
+    intl_error_reset( NULL TSRMLS_CC ); \
 
 #define COLLATOR_METHOD_FETCH_OBJECT                                           \
     co = (Collator_object *) zend_object_store_get_object( object TSRMLS_CC ); \
-    intl_error_reset( COLLATOR_ERROR_P( co ) );                                \
+    intl_error_reset( COLLATOR_ERROR_P( co ) TSRMLS_CC );                      \
 
 // Macro to check return value of a ucol_* function call.
-#define COLLATOR_CHECK_STATUS( co, msg )                                       \
-    intl_error_set_code( NULL, COLLATOR_ERROR_CODE( co ) );                    \
-    if( U_FAILURE( COLLATOR_ERROR_CODE( co ) ) )                               \
-    {                                                                          \
-        intl_errors_set_custom_msg( COLLATOR_ERROR_P( co ), msg, 0 );          \
-        RETURN_FALSE;                                                          \
-    }                                                                          \
+#define COLLATOR_CHECK_STATUS( co, msg )                                        \
+    intl_error_set_code( NULL, COLLATOR_ERROR_CODE( co ) TSRMLS_CC );           \
+    if( U_FAILURE( COLLATOR_ERROR_CODE( co ) ) )                                \
+    {                                                                           \
+        intl_errors_set_custom_msg( COLLATOR_ERROR_P( co ), msg, 0 TSRMLS_CC ); \
+        RETURN_FALSE;                                                           \
+    }                                                                           \
 
 #endif // #ifndef COLLATOR_CLASS_H

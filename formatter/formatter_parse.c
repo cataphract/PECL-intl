@@ -48,7 +48,7 @@ PHP_FUNCTION( numfmt_parse )
 		&object, NumberFormatter_ce_ptr,  &str, &str_len, &type, &zposition ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"number_parse: unable to parse input params", 0 );
+			"number_parse: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -114,7 +114,7 @@ PHP_FUNCTION( numfmt_parse_currency )
 		&object, NumberFormatter_ce_ptr, &str, &str_len, &zcurrency, &zposition ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"number_parse_currency: unable to parse input params", 0 );
+			"number_parse_currency: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}

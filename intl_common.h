@@ -27,10 +27,6 @@
 # define UBYTES(len) ((len) * sizeof(UChar))
 #endif
 
-#ifndef TEXT_CHARS
-#define TEXT_CHARS(len) ((len) / sizeof(UChar))
-#endif
-
 #ifndef eumalloc
 # define eumalloc(size)  (UChar*)safe_emalloc(size, sizeof(UChar), 0)
 #endif
@@ -40,6 +36,7 @@
 #endif
 
 #define USIZE(data) sizeof((data))/sizeof(UChar)
+#define UCHARS(len) ((len) / sizeof(UChar))
 
 #define INTL_Z_STRVAL_P(str) (UChar*) Z_USTRVAL_P(str)
 #define INTL_Z_STRLEN_P(str) Z_USTRLEN_P(str)

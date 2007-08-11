@@ -54,8 +54,8 @@ static int collator_regular_compare_function(zval *result, zval *op1, zval *op2 
 
 	int rc      = SUCCESS;
 
-	zval* str1  = collator_convert_object_to_string( op1 );
-	zval* str2  = collator_convert_object_to_string( op2 );
+	zval* str1  = collator_convert_object_to_string( op1 TSRMLS_CC );
+	zval* str2  = collator_convert_object_to_string( op2 TSRMLS_CC );
 
 	zval* num1  = NULL;
 	zval* num2  = NULL;
@@ -237,7 +237,7 @@ static int collator_compare_func( const void* a, const void* b TSRMLS_DC )
 /* {{{ collator_cmp_sort_keys
  * Compare sort keys
  */
-static int collator_cmp_sort_keys( const void *p1, const void *p2 )
+static int collator_cmp_sort_keys( const void *p1, const void *p2 TSRMLS_DC )
 {
 	char* key1 = ((collator_sort_key_index_t*)p1)->key;
 	char* key2 = ((collator_sort_key_index_t*)p2)->key;
@@ -290,7 +290,7 @@ static void collator_sort_internal( int renumber, INTERNAL_FUNCTION_PARAMETERS )
 		&object, Collator_ce_ptr, &array, &sort_flags ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"collator_sort_internal: unable to parse input params", 0 );
+			"collator_sort_internal: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -367,7 +367,7 @@ PHP_FUNCTION( collator_sort_with_sort_keys )
 		&object, Collator_ce_ptr, &array ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"collator_sort_with_sort_keys: unable to parse input params", 0 );
+			"collator_sort_with_sort_keys: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}

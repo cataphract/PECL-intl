@@ -28,7 +28,7 @@ typedef struct {
 	formatter_data  nf_data;
 } NumberFormatter_object;
 
-void formatter_register_class();
+void formatter_register_class( TSRMLS_D );
 extern zend_class_entry *NumberFormatter_ce_ptr;
 
 /* Auxiliary macros */
@@ -36,7 +36,7 @@ extern zend_class_entry *NumberFormatter_ce_ptr;
 #define FORMATTER_METHOD_INIT_VARS             \
     zval*                    object  = NULL;   \
     NumberFormatter_object*  nfo     = NULL;   \
-	intl_error_reset( NULL );                  \
+	intl_error_reset( NULL TSRMLS_CC );        \
 
 #define FORMATTER_ERROR(nfo)                (nfo)->nf_data.error
 #define FORMATTER_ERROR_P(nfo)              &(FORMATTER_ERROR(nfo))
@@ -44,14 +44,14 @@ extern zend_class_entry *NumberFormatter_ce_ptr;
 
 #define FORMATTER_METHOD_FETCH_OBJECT                                                   \
     nfo = (NumberFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );	\
-    intl_error_reset( FORMATTER_ERROR_P(nfo) );                                         \
+    intl_error_reset( FORMATTER_ERROR_P(nfo) TSRMLS_CC );                               \
 
-#define FORMATTER_CHECK_STATUS(nfo, msg)                           \
-    intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) );      \
-    if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )                 \
-    {                                                              \
-        intl_errors_set_custom_msg(FORMATTER_ERROR_P(nfo), msg, 0);\
-        RETURN_FALSE;                                              \
+#define FORMATTER_CHECK_STATUS(nfo, msg)                                        \
+    intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) TSRMLS_CC );         \
+    if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )                              \
+    {                                                                           \
+        intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), msg, 0 TSRMLS_CC ); \
+        RETURN_FALSE;                                                           \
     }
 
 #define FORMATTER_RETVAL_UTF8( nfo, ustring, ulen, free_it )                                    \

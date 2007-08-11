@@ -43,7 +43,7 @@ PHP_FUNCTION( collator_get_locale )
 		&object, Collator_ce_ptr, &type ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"collator_get_locale: unable to parse input params", 0 );
+			"collator_get_locale: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -80,7 +80,7 @@ PHP_FUNCTION( collator_get_display_name )
 	int32_t     buflen       = 512;
 	UErrorCode  status       = U_ZERO_ERROR;
 
-	intl_error_reset( NULL );
+	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
 	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "ss",
@@ -88,7 +88,7 @@ PHP_FUNCTION( collator_get_display_name )
 		&disp_loc, &disp_loc_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
- 			"collator_get_display_name: unable to parse input params", 0 );
+			"collator_get_display_name: unable to parse input params", 0 TSRMLS_CC );
 		RETURN_FALSE;
 	}
 
@@ -110,7 +110,7 @@ PHP_FUNCTION( collator_get_display_name )
 			}
 
 			intl_error_set( NULL, status,
- 				"collator_get_display_name: unable to get locale display name", 0 );
+				"collator_get_display_name: unable to get locale display name", 0 TSRMLS_CC );
 			efree( uname );
 			RETURN_FALSE;
 		}
@@ -136,14 +136,14 @@ PHP_FUNCTION( collator_get_available_locales )
 	const UChar*      l        = NULL;
 	int32_t           l_len    = 0;
 
-	intl_error_reset( NULL );
+	intl_error_reset( NULL TSRMLS_CC );
 
 	// Get an enumeration representing the list of available locales.
 	e = ucol_openAvailableLocales( &status );
 	if( e == NULL )
 	{
 		intl_error_set( NULL, status,
-			"collator_get_available_locales: unable to get the list of available locales", 0 );
+			"collator_get_available_locales: unable to get the list of available locales", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}

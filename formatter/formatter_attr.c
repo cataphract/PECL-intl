@@ -40,7 +40,7 @@ PHP_FUNCTION( numfmt_get_attribute )
 		&object, NumberFormatter_ce_ptr, &attribute ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_get_attribute: unable to parse input params", 0 );
+			"numfmt_get_attribute: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -113,7 +113,7 @@ PHP_FUNCTION( numfmt_get_text_attribute )
 		&object, NumberFormatter_ce_ptr, &attribute ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_get_text_attribute: unable to parse input params", 0 );
+			"numfmt_get_text_attribute: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -129,13 +129,13 @@ PHP_FUNCTION( numfmt_get_text_attribute )
 		++length; // to avoid U_STRING_NOT_TERMINATED_WARNING
 		value = eumalloc( length );
 
-		intl_error_reset( FORMATTER_ERROR_P(nfo) );
+		intl_error_reset( FORMATTER_ERROR_P(nfo) TSRMLS_CC );
 		length = unum_getTextAttribute( nfo->nf_data.unum, attribute, value, length, &FORMATTER_ERROR_CODE(nfo) );
 
 		if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )
 		{
-			intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) );
-			intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), "Error getting attribute value", 0 );
+			intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) TSRMLS_CC );
+			intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), "Error getting attribute value", 0 TSRMLS_CC );
 			efree( value );
 			RETURN_FALSE;
 		}
@@ -161,7 +161,7 @@ PHP_FUNCTION( numfmt_set_attribute )
 		&object, NumberFormatter_ce_ptr, &attribute, &value ) == FAILURE)
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_set_attribute: unable to parse input params", 0 );
+			"numfmt_set_attribute: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -224,7 +224,7 @@ PHP_FUNCTION( numfmt_set_text_attribute )
 		&object, NumberFormatter_ce_ptr, &attribute, &value, &len ) == FAILURE)
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_set_text_attribute: unable to parse input params", 0 );
+			"numfmt_set_text_attribute: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -258,7 +258,7 @@ PHP_FUNCTION( numfmt_get_symbol )
 		&object, NumberFormatter_ce_ptr, &symbol ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_get_symbol: unable to parse input params", 0 );
+			"numfmt_get_symbol: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -296,7 +296,7 @@ PHP_FUNCTION( numfmt_set_symbol )
 		&object, NumberFormatter_ce_ptr, &symbol, &value, &value_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_set_symbol: unable to parse input params", 0 );
+			"numfmt_set_symbol: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -329,7 +329,7 @@ PHP_FUNCTION( numfmt_get_pattern )
 		&object, NumberFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_get_pattern: unable to parse input params", 0 );
+			"numfmt_get_pattern: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -367,7 +367,7 @@ PHP_FUNCTION( numfmt_set_pattern )
 		&object, NumberFormatter_ce_ptr, &value, &value_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_set_pattern: unable to parse input params", 0 );
+			"numfmt_set_pattern: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -398,7 +398,7 @@ PHP_FUNCTION( numfmt_get_locale )
 		&object, NumberFormatter_ce_ptr, &type ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_get_locale: unable to parse input params", 0 );
+			"numfmt_get_locale: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}

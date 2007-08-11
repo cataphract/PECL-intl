@@ -37,14 +37,14 @@ PHP_FUNCTION( numfmt_create )
 	zval*       object;
 	NumberFormatter_object* nfo;
 
-	intl_error_reset( NULL );
+	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
 	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "sl|u",
 		&locale, &locale_len, &style, &pattern, &pattern_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_create: unable to parse input parameters", 0 );
+			"numfmt_create: unable to parse input parameters", 0 TSRMLS_CC );
 
 		RETURN_NULL();
 	}
@@ -58,14 +58,14 @@ PHP_FUNCTION( numfmt_create )
 
 	nfo = (NumberFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
-	intl_error_reset( &nfo->nf_data.error );
+	intl_error_reset( &nfo->nf_data.error TSRMLS_CC );
 
 	nfo->nf_data.unum = unum_open(style, pattern, pattern_len, locale, NULL, &FORMATTER_ERROR_CODE(nfo));
 
 	if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_formatter: number formatter creation failed", 0 );
+			"numfmt_create: number formatter creation failed", 0 TSRMLS_CC );
 
 		RETURN_NULL();
 	}
@@ -83,14 +83,14 @@ PHP_METHOD( NumberFormatter, __construct )
 	zval*       object;
 	NumberFormatter_object* nfo;
 
-	intl_error_reset( NULL );
+	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
 	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "sl|u",
 		&locale, &locale_len, &style, &pattern, &pattern_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"__construct: unable to parse input params", 0 );
+			"__construct: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_NULL();
 	}
@@ -98,7 +98,7 @@ PHP_METHOD( NumberFormatter, __construct )
 	object = getThis();
 	nfo = (NumberFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
-	intl_error_reset( &nfo->nf_data.error );
+	intl_error_reset( &nfo->nf_data.error TSRMLS_CC );
 
 	// Create an ICU number formatter.
 	nfo->nf_data.unum = unum_open(style, pattern, pattern_len, locale, NULL, &FORMATTER_ERROR_CODE(nfo));
@@ -106,7 +106,7 @@ PHP_METHOD( NumberFormatter, __construct )
 	if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_formatter: number formatter creation failed", 0 );
+			"__construct: number formatter creation failed", 0 TSRMLS_CC );
 
 		RETURN_NULL();
 	}
@@ -128,7 +128,7 @@ PHP_FUNCTION( numfmt_get_error_code )
 		&object, NumberFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_get_error_code: unable to parse input params", 0 );
+			"numfmt_get_error_code: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -156,7 +156,7 @@ PHP_FUNCTION( numfmt_get_error_message )
 		&object, NumberFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"numfmt_get_error_message: unable to parse input params", 0 );
+			"numfmt_get_error_message: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -165,7 +165,7 @@ PHP_FUNCTION( numfmt_get_error_message )
 	nfo = (NumberFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
 	// Return last error message.
-	message = intl_error_get_message( &nfo->nf_data.error );
+	message = intl_error_get_message( &nfo->nf_data.error TSRMLS_CC );
 	RETURN_STRING( message, 0);
 }
 /* }}} */

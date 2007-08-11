@@ -23,20 +23,20 @@
 /* {{{ void formatter_data_init( formatter_data* nf_data )
  * Initialize internals of formatter_data.
  */
-void formatter_data_init( formatter_data* nf_data )
+void formatter_data_init( formatter_data* nf_data TSRMLS_DC )
 {
 	if( !nf_data )
 		return;
 
 	nf_data->unum                = NULL;
-	intl_errors_reset(&nf_data->error);
+	intl_errors_reset( &nf_data->error TSRMLS_CC );
 }
 /* }}} */
 
 /* {{{ void formatter_data_free( formatter_data* nf_data )
  * Clean up mem allocted by internals of formatter_data
  */
-void formatter_data_free( formatter_data* nf_data )
+void formatter_data_free( formatter_data* nf_data TSRMLS_DC )
 {
 	if( !nf_data )
 		return;
@@ -45,18 +45,18 @@ void formatter_data_free( formatter_data* nf_data )
 		unum_close( nf_data->unum );
 
 	nf_data->unum = NULL;
-	intl_errors_reset(&nf_data->error);
+	intl_errors_reset( &nf_data->error TSRMLS_CC );
 }
 /* }}} */
 
 /* {{{ formatter_data* formatter_data_create()
  * Alloc mem for formatter_data and initialize it with default values.
  */
-formatter_data* formatter_data_create()
+formatter_data* formatter_data_create( TSRMLS_D )
 {
 	formatter_data* nf_data = ecalloc( 1, sizeof(formatter_data) );
 
-	formatter_data_init( nf_data );
+	formatter_data_init( nf_data TSRMLS_CC );
 
 	return nf_data;
 }

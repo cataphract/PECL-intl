@@ -30,7 +30,7 @@ ZEND_EXTERN_MODULE_GLOBALS( intl )
 /* {{{ intl_error* intl_g_error_get()
  * Return global error structure.
  */
-static intl_error* intl_g_error_get()
+static intl_error* intl_g_error_get( TSRMLS_D )
 {
 	return &INTL_G( g_error );
 }
@@ -39,9 +39,9 @@ static intl_error* intl_g_error_get()
 /* {{{ void intl_free_custom_error_msg( intl_error* err )
  * Free mem.
  */
-static void intl_free_custom_error_msg( intl_error* err )
+static void intl_free_custom_error_msg( intl_error* err TSRMLS_DC )
 {
-	if( !err && !( err = intl_g_error_get() ) )
+	if( !err && !( err = intl_g_error_get( TSRMLS_C ) ) )
 		return;
 
 	if( !err->free_custom_error_message )
@@ -57,11 +57,11 @@ static void intl_free_custom_error_msg( intl_error* err )
 /* {{{ intl_error* intl_error_create()
  * Create and initialize  internals of 'intl_error'.
  */
-intl_error* intl_error_create()
+intl_error* intl_error_create( TSRMLS_D )
 {
 	intl_error* err = ecalloc( 1, sizeof( intl_error ) );
 
-	intl_error_init( err );
+	intl_error_init( err TSRMLS_CC );
 
 	return err;
 }
@@ -70,9 +70,9 @@ intl_error* intl_error_create()
 /* {{{ void intl_error_init( intl_error* coll_error )
  * Initialize internals of 'intl_error'.
  */
-void intl_error_init( intl_error* err )
+void intl_error_init( intl_error* err TSRMLS_DC )
 {
-	if( !err && !( err = intl_g_error_get() ) )
+	if( !err && !( err = intl_g_error_get( TSRMLS_C ) ) )
 		return;
 
 	err->code                      = U_ZERO_ERROR;
@@ -84,30 +84,30 @@ void intl_error_init( intl_error* err )
 /* {{{ void intl_error_reset( intl_error* err )
  * Set last error code to 0 and unset last error message
  */
-void intl_error_reset( intl_error* err )
+void intl_error_reset( intl_error* err TSRMLS_DC )
 {
-	if( !err && !( err = intl_g_error_get() ) )
+	if( !err && !( err = intl_g_error_get( TSRMLS_C ) ) )
 		return;
 
 	err->code = U_ZERO_ERROR;
 
-	intl_free_custom_error_msg( err );
+	intl_free_custom_error_msg( err TSRMLS_CC );
 }
 /* }}} */
 
 /* {{{ void intl_error_set_custom_msg( intl_error* err, char* msg, int copyMsg )
  * Set last error message to msg copying it if needed.
  */
-void intl_error_set_custom_msg( intl_error* err, char* msg, int copyMsg )
+void intl_error_set_custom_msg( intl_error* err, char* msg, int copyMsg TSRMLS_DC )
 {
 	if( !msg )
 		return;
 
-	if( !err && !( err = intl_g_error_get() ) )
+	if( !err && !( err = intl_g_error_get( TSRMLS_C ) ) )
 		return;
 
 	// Free previous message if any
-	intl_free_custom_error_msg( err );
+	intl_free_custom_error_msg( err TSRMLS_CC );
 
 	// Mark message copied if any
 	err->free_custom_error_message = copyMsg;
@@ -120,12 +120,12 @@ void intl_error_set_custom_msg( intl_error* err, char* msg, int copyMsg )
 /* {{{ const char* intl_error_get_message( intl_error* err )
  * Create output message in format "<intl_error_text>: <extra_user_error_text>".
  */
-char* intl_error_get_message( intl_error* err )
+char* intl_error_get_message( intl_error* err TSRMLS_DC )
 {
 	const char* uErrorName = NULL;
 	char*       errMessage = 0;
 
-	if( !err && !( err = intl_g_error_get() ) )
+	if( !err && !( err = intl_g_error_get( TSRMLS_C ) ) )
 		return estrdup( "" );
 
 	uErrorName = u_errorName( err->code );
@@ -147,9 +147,9 @@ char* intl_error_get_message( intl_error* err )
 /* {{{ void intl_error_set_code( intl_error* err, UErrorCode err_code )
  * Set last error code.
  */
-void intl_error_set_code( intl_error* err, UErrorCode err_code )
+void intl_error_set_code( intl_error* err, UErrorCode err_code TSRMLS_DC )
 {
-	if( !err && !( err = intl_g_error_get() ) )
+	if( !err && !( err = intl_g_error_get( TSRMLS_C ) ) )
 		return;
 
 	err->code = err_code;
@@ -159,9 +159,9 @@ void intl_error_set_code( intl_error* err, UErrorCode err_code )
 /* {{{ void intl_error_get_code( intl_error* err )
  * Return last error code.
  */
-UErrorCode intl_error_get_code( intl_error* err )
+UErrorCode intl_error_get_code( intl_error* err TSRMLS_DC )
 {
-	if( !err && !( err = intl_g_error_get() ) )
+	if( !err && !( err = intl_g_error_get( TSRMLS_C ) ) )
 		return U_ZERO_ERROR;
 
 	return err->code;
@@ -171,37 +171,37 @@ UErrorCode intl_error_get_code( intl_error* err )
 /* {{{ void intl_error_set( intl_error* err, UErrorCode code, char* msg, int copyMsg )
  * Set error code and message.
  */
-void intl_error_set( intl_error* err, UErrorCode code, char* msg, int copyMsg )
+void intl_error_set( intl_error* err, UErrorCode code, char* msg, int copyMsg TSRMLS_DC )
 {
-	intl_error_set_code( err, code );
-	intl_error_set_custom_msg( err, msg, copyMsg );
+	intl_error_set_code( err, code TSRMLS_CC );
+	intl_error_set_custom_msg( err, msg, copyMsg TSRMLS_CC );
 }
 /* }}} */
 
 /* {{{ void intl_errors_reset( intl_error* err )
  */
-void intl_errors_reset( intl_error* err )
+void intl_errors_reset( intl_error* err TSRMLS_DC )
 {
-	intl_error_reset( err );
-	intl_error_reset( NULL );
+	intl_error_reset( err TSRMLS_CC );
+	intl_error_reset( NULL TSRMLS_CC );
 }
 /* }}} */
 
 /* {{{ void intl_errors_set_custom_msg( intl_error* err, char* msg, int copyMsg )
  */
-void intl_errors_set_custom_msg( intl_error* err, char* msg, int copyMsg )
+void intl_errors_set_custom_msg( intl_error* err, char* msg, int copyMsg TSRMLS_DC )
 {
-	intl_error_set_custom_msg( err, msg, copyMsg );
-	intl_error_set_custom_msg( NULL, msg, copyMsg );
+	intl_error_set_custom_msg( err, msg, copyMsg TSRMLS_CC );
+	intl_error_set_custom_msg( NULL, msg, copyMsg TSRMLS_CC );
 }
 /* }}} */
 
 /* {{{ intl_errors_set_code( intl_error* err, UErrorCode err_code )
  */
-void intl_errors_set_code( intl_error* err, UErrorCode err_code )
+void intl_errors_set_code( intl_error* err, UErrorCode err_code TSRMLS_DC )
 {
-	intl_error_set_code( err, err_code );
-	intl_error_set_code( NULL, err_code );
+	intl_error_set_code( err, err_code TSRMLS_CC );
+	intl_error_set_code( NULL, err_code TSRMLS_CC );
 }
 /* }}} */
 

@@ -156,6 +156,8 @@ zend_function_entry intl_functions[] = {
 };
 /* }}} */
 
+static PHP_GINIT_FUNCTION(intl);
+
 /* {{{ intl_module_entry
  */
 zend_module_entry intl_module_entry = {
@@ -169,10 +171,12 @@ zend_module_entry intl_module_entry = {
 	PHP_RINIT( intl ),
 	PHP_RSHUTDOWN( intl ),
 	PHP_MINFO( intl ),
-#if ZEND_MODULE_API_NO >= 20010901
 	INTL_MODULE_VERSION,
-#endif
-	STANDARD_MODULE_PROPERTIES
+	PHP_MODULE_GLOBALS(intl),   /* globals descriptor */
+	PHP_GINIT(intl),            /* globals ctor */
+	NULL,                       /* globals dtor */
+	NULL,                       /* post deactivate */
+	STANDARD_MODULE_PROPERTIES_EX
 };
 /* }}} */
 
@@ -180,18 +184,25 @@ zend_module_entry intl_module_entry = {
 ZEND_GET_MODULE( intl )
 #endif
 
+/* {{{ intl_init_globals */
+static PHP_GINIT_FUNCTION(intl)
+{
+	memset( intl_globals, 0, sizeof(zend_intl_globals) );
+}
+/* }}} */
+
 /* {{{ PHP_MINIT_FUNCTION
  */
 PHP_MINIT_FUNCTION( intl )
 {
 	// Register 'Collator' PHP class
-	collator_register_Collator_class();
+	collator_register_Collator_class( TSRMLS_C );
 
 	// Expose Collator constants to PHP scripts
 	collator_register_constants( INIT_FUNC_ARGS_PASSTHRU );
 
 	// Register 'NumberFormatter' PHP class
-	formatter_register_class();
+	formatter_register_class( TSRMLS_C );
 
 	// Expose NumberFormatter constants to PHP scripts
 	formatter_register_constants( INIT_FUNC_ARGS_PASSTHRU );
@@ -200,7 +211,7 @@ PHP_MINIT_FUNCTION( intl )
 	intl_expose_icu_error_codes( INIT_FUNC_ARGS_PASSTHRU );
 
 	// Global error handling.
-	intl_error_init( NULL );
+	intl_error_init( NULL TSRMLS_CC );
 
 	return SUCCESS;
 }
@@ -226,6 +237,10 @@ PHP_RINIT_FUNCTION( intl )
  */
 PHP_RSHUTDOWN_FUNCTION( intl )
 {
+	if(INTL_G(current_collator)) {
+		INTL_G(current_collator) = NULL;
+	}
+	intl_error_reset( NULL TSRMLS_CC);
 	return SUCCESS;
 }
 /* }}} */

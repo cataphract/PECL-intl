@@ -37,7 +37,7 @@
 /* {{{ collator_convert_object_to_string
  * Convert object to UTF16-encoded string.
  */
-zval* collator_convert_object_to_string( zval* obj )
+zval* collator_convert_object_to_string( zval* obj TSRMLS_DC )
 {
 	zval* zstr        = NULL;
 
@@ -157,7 +157,7 @@ zval* collator_convert_string_to_number_if_possible( zval* str )
 		COLLATOR_CONVERT_RETURN_FAILED( str );
 	}
 
-	if( ( is_numeric = collator_is_numeric( (UChar*) Z_STRVAL_P(str), TEXT_CHARS( Z_STRLEN_P(str) ), &lval, &dval, 1 ) ) )
+	if( ( is_numeric = collator_is_numeric( (UChar*) Z_STRVAL_P(str), UCHARS( Z_STRLEN_P(str) ), &lval, &dval, 1 ) ) )
 	{
 		ALLOC_INIT_ZVAL( num );
 

@@ -28,7 +28,7 @@
  */
 PHP_FUNCTION( intl_get_error_code )
 {
-	RETURN_LONG( intl_error_get_code( NULL ) );
+	RETURN_LONG( intl_error_get_code( NULL TSRMLS_CC ) );
 }
 /* }}} */
 
@@ -37,7 +37,7 @@ PHP_FUNCTION( intl_get_error_code )
  */
 PHP_FUNCTION( intl_get_error_message )
 {
-	char* message = intl_error_get_message( NULL );
+	char* message = intl_error_get_message( NULL TSRMLS_CC );
 	RETURN_STRING( message, FALSE );
 }
 /* }}} */
@@ -56,7 +56,7 @@ PHP_FUNCTION( intl_is_failure )
 		&err_code ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"intl_is_failure: unable to parse input params", 0 );
+			"intl_is_failure: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
@@ -77,7 +77,7 @@ PHP_FUNCTION( intl_error_name )
 		&err_code ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"intl_error_name: unable to parse input params", 0 );
+			"intl_error_name: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}

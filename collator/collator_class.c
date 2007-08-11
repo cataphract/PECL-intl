@@ -50,7 +50,7 @@ void Collator_objects_free( zend_object *object TSRMLS_DC )
 
 	zend_object_std_dtor( &co->zo TSRMLS_CC );
 
-	collator_object_destroy( co );
+	collator_object_destroy( co TSRMLS_CC );
 
 	efree( co );
 }
@@ -64,14 +64,14 @@ zend_object_value Collator_object_create(
 	Collator_object*     intern;
 
 	intern = ecalloc( 1, sizeof(Collator_object) );
-	intl_error_init( COLLATOR_ERROR_P( intern ) );
+	intl_error_init( COLLATOR_ERROR_P( intern ) TSRMLS_CC );
 	zend_object_std_init( &intern->zo, ce TSRMLS_CC );
 
 	retval.handle = zend_objects_store_put(
 		intern,
 		Collator_objects_dtor,
 		(zend_objects_free_object_storage_t)Collator_objects_free,
-		NULL );
+		NULL TSRMLS_CC );
 
 	retval.handlers = zend_get_std_object_handlers();
 
@@ -138,7 +138,7 @@ function_entry Collator_class_functions[] = {
 /* {{{ collator_register_Collator_class
  * Initialize 'Collator' class
  */
-void collator_register_Collator_class()
+void collator_register_Collator_class( TSRMLS_D )
 {
 	zend_class_entry ce;
 
@@ -162,19 +162,19 @@ void collator_register_Collator_class()
  * Initialize internals of Collator_object.
  * Must be called before any other call to 'collator_object_...' functions.
  */
-void collator_object_init( Collator_object* co )
+void collator_object_init( Collator_object* co TSRMLS_DC )
 {
 	if( !co )
 		return;
 
-	intl_error_init( COLLATOR_ERROR_P( co ) );
+	intl_error_init( COLLATOR_ERROR_P( co ) TSRMLS_CC );
 }
 /* }}} */
 
 /* {{{ void collator_object_destroy( Collator_object* co )
  * Clean up mem allocted by internals of Collator_object
  */
-void collator_object_destroy( Collator_object* co )
+void collator_object_destroy( Collator_object* co TSRMLS_DC )
 {
 	if( !co )
 		return;
@@ -185,7 +185,7 @@ void collator_object_destroy( Collator_object* co )
 		co->ucoll = NULL;
 	}
 
-	intl_errors_reset( COLLATOR_ERROR_P( co ) );
+	intl_errors_reset( COLLATOR_ERROR_P( co ) TSRMLS_CC );
 }
 /* }}} */
 

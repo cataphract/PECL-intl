@@ -46,7 +46,7 @@ void NumberFormatter_object_free( zend_object *object TSRMLS_DC )
 
 	zend_object_std_dtor( &nfo->zo TSRMLS_CC );
 
-	formatter_data_free( &nfo->nf_data );
+	formatter_data_free( &nfo->nf_data TSRMLS_CC );
 
 	efree( nfo );
 }
@@ -60,14 +60,14 @@ zend_object_value NumberFormatter_object_create(
 	NumberFormatter_object*     intern;
 
 	intern = ecalloc( 1, sizeof(NumberFormatter_object) );
-	formatter_data_init(&intern->nf_data);
+	formatter_data_init( &intern->nf_data TSRMLS_CC );
 	zend_object_std_init( &intern->zo, ce TSRMLS_CC );
 
 	retval.handle = zend_objects_store_put(
 		intern,
 		NumberFormatter_object_dtor,
 		(zend_objects_free_object_storage_t)NumberFormatter_object_free,
-		NULL );
+		NULL TSRMLS_CC );
 
 	retval.handlers = zend_get_std_object_handlers();
 
@@ -119,7 +119,7 @@ static function_entry NumberFormatter_class_functions[] = {
 /* {{{ formatter_register_class
  * Initialize 'NumberFormatter' class
  */
-void formatter_register_class()
+void formatter_register_class( TSRMLS_D )
 {
 	zend_class_entry ce;
 

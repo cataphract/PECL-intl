@@ -33,14 +33,14 @@ PHP_FUNCTION( collator_create )
 	zval*            object;
 	Collator_object* co;
 
-	intl_error_reset( NULL );
+	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
 	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "s",
 		&locale, &locale_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"collator_create: unable to parse input params", 0 );
+			"collator_create: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_NULL();
 	}
@@ -54,7 +54,7 @@ PHP_FUNCTION( collator_create )
 
 	co = (Collator_object *) zend_object_store_get_object( object TSRMLS_CC );
 
-	intl_error_reset( COLLATOR_ERROR_P( co ) );
+	intl_error_reset( COLLATOR_ERROR_P( co ) TSRMLS_CC );
 
 	// Open ICU collator.
 	co->ucoll = ucol_open( locale, COLLATOR_ERROR_CODE_P( co ) );
@@ -62,7 +62,7 @@ PHP_FUNCTION( collator_create )
 	if( U_FAILURE( COLLATOR_ERROR_CODE( co ) ) || co->ucoll == NULL )
 	{
 		intl_error_set( NULL, COLLATOR_ERROR_CODE( co ),
-			"collator_create: unable to open ICU collator", 0 );
+			"collator_create: unable to open ICU collator", 0 TSRMLS_CC );
 
 		// Collator creation failed.
 		RETURN_NULL();
@@ -85,7 +85,7 @@ PHP_METHOD( Collator, __construct )
 		&locale, &locale_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"__construct: unable to parse input params", 0 );
+			"__construct: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_NULL();
 	}
@@ -94,7 +94,7 @@ PHP_METHOD( Collator, __construct )
 	object = getThis();
 	co  = (Collator_object*) zend_object_store_get_object( object TSRMLS_CC );
 
-	intl_error_reset( COLLATOR_ERROR_P( co ) );
+	intl_error_reset( COLLATOR_ERROR_P( co ) TSRMLS_CC );
 
 	// Open ICU collator.
 	co->ucoll = ucol_open( locale, COLLATOR_ERROR_CODE_P( co ) );
@@ -102,7 +102,7 @@ PHP_METHOD( Collator, __construct )
 	if( U_FAILURE( COLLATOR_ERROR_CODE( co ) ) || co->ucoll == NULL )
 	{
 		intl_error_set( NULL, COLLATOR_ERROR_CODE( co ),
-			"__construct: unable to open ICU collator", 0 );
+			"__construct: unable to open ICU collator", 0 TSRMLS_CC );
 
 		RETURN_NULL();
 	}

@@ -22,7 +22,7 @@
 #include <unicode/utypes.h>
 
 zval* collator_normalize_sort_argument( zval* arg );
-zval* collator_convert_object_to_string( zval* obj );
+zval* collator_convert_object_to_string( zval* obj TSRMLS_DC );
 zval* collator_convert_string_to_number( zval* arg );
 zval* collator_convert_string_to_number_if_possible( zval* str );
 zval* collator_convert_string_to_double( zval* str );
