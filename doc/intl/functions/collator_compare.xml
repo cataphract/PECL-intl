@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.collator_compare" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>collator_compare()</refname>
+  <refname>collator_compare</refname>
   <refpurpose>Compare two strings in Unicode encoding.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

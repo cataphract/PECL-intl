@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.collator_asort" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>collator_asort()</refname>
+  <refname>collator_asort</refname>
   <refpurpose>Sort array maintaining index association.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

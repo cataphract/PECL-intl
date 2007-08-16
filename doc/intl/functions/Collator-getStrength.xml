@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.collator-getStrength" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>Collator->getStrength()</refname>
+  <refname>Collator->getStrength</refname>
   <refpurpose>Get current collation strength.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

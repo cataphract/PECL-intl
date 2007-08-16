@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.collator_create" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>collator_create()</refname>
+  <refname>collator_create</refname>
   <refpurpose>Create a collator.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

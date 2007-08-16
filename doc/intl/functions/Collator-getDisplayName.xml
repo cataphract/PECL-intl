@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.collator-getDisplayName" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>Collator::getDisplayName()</refname>
+  <refname>Collator::getDisplayName</refname>
   <refpurpose>Get the display name for a locale.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

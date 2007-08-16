@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.collator-sortWithSortKeys" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>Collator->sortWithSortKeys()</refname>
+  <refname>Collator->sortWithSortKeys</refname>
   <refpurpose>Sort array using specified collator.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.intl_error_name">
  <refnamediv>
-  <refname>intl_error_name()</refname>
+  <refname>intl_error_name</refname>
   <refpurpose>Get symbolic name for a given error code.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

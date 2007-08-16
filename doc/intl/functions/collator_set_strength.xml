@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <refentry xml:id="function.collator_set_strength" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>collator_set_strength()</refname>
+  <refname>collator_set_strength</refname>
   <refpurpose>Set collation strength.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

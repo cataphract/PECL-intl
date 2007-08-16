@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.collator_get_available_locales" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>collator_get_available_locales()</refname>
+  <refname>collator_get_available_locales</refname>
   <refpurpose>Get a list of all locales for which a valid collator may be opened.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

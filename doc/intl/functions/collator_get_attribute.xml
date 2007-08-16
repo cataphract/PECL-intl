@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.collator_get_attribute" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>collator_get_attribute()</refname>
+  <refname>collator_get_attribute</refname>
   <refpurpose>Get collation attribute value.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

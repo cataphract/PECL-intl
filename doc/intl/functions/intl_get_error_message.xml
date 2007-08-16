@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.intl_get_error_message">
  <refnamediv>
-  <refname>intl_get_error_message()</refname>
+  <refname>intl_get_error_message</refname>
   <refpurpose>Get description of the last error of static methods.</refpurpose>
  </refnamediv>
  <refsect1 role="description">

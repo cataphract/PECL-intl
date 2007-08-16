@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.intl_is_failure">
  <refnamediv>
-  <refname>intl_is_failure()</refname>
+  <refname>intl_is_failure</refname>
   <refpurpose>Check whether the given error code indicates failure.</refpurpose>
  </refnamediv>
  <refsect1 role="description">
