@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.collator_compare" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>collator_compare()</refname>
@@ -9,9 +9,9 @@
   &reftitle.description;
   <methodsynopsis>
    <type>integer</type><methodname>collator_compare</methodname>
-   <methodparam><type>Collator</type><parameter>$coll</parameter></methodparam>
-   <methodparam><type>string</type><parameter>$str1</parameter></methodparam>
-   <methodparam><type>string</type><parameter>$str2</parameter></methodparam>
+   <methodparam><type>Collator</type><parameter>coll</parameter></methodparam>
+   <methodparam><type>string</type><parameter>str1</parameter></methodparam>
+   <methodparam><type>string</type><parameter>str2</parameter></methodparam>
   </methodsynopsis>
   <para>
   <!-- desctiption goes here -->
@@ -23,7 +23,7 @@
   <para>
    <variablelist>
     <varlistentry>
-    <term><parameter>$coll</parameter></term>
+    <term><parameter>coll</parameter></term>
      <listitem>
       <para>
        Collator object.
@@ -31,7 +31,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-    <term><parameter>$str1</parameter></term>
+    <term><parameter>str1</parameter></term>
      <listitem>
       <para>
        The first string to compare.
@@ -39,7 +39,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-    <term><parameter>$str2</parameter></term>
+    <term><parameter>str2</parameter></term>
      <listitem>
       <para>
        The second string to compare. 
@@ -59,17 +59,17 @@
   <itemizedlist>
    <listitem>
     <para>
-      1 if <emphasis>$str1</emphasis> is <emphasis>greater</emphasis> than <emphasis>$str2</emphasis>;
+      1 if <emphasis>str1</emphasis> is <emphasis>greater</emphasis> than <emphasis>str2</emphasis>;
     </para>
    </listitem>
    <listitem>
     <para>
-      0 if <emphasis>$str1</emphasis> is <emphasis>equal</emphasis> to <emphasis>$str2</emphasis>;
+      0 if <emphasis>str1</emphasis> is <emphasis>equal</emphasis> to <emphasis>str2</emphasis>;
     </para>
    </listitem>
    <listitem>
     <para>
-     -1 if <emphasis>$str1</emphasis> is <emphasis>less</emphasis> than <emphasis>$str2</emphasis>.
+     -1 if <emphasis>str1</emphasis> is <emphasis>less</emphasis> than <emphasis>str2</emphasis>.
     </para>
    </listitem>
   </itemizedlist>

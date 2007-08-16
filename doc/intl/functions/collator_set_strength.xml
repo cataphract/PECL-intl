@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
-<refentry xml:id="function.collator_set_strength" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- $Revision: 1.3 $ -->
+<refentry xml:id="function.collator_set_strength" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>collator_set_strength()</refname>
   <refpurpose>Set collation strength.</refpurpose>
@@ -9,8 +9,8 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>collator_set_strength</methodname>
-   <methodparam><type>Collator</type><parameter>$coll</parameter></methodparam>
-   <methodparam><type>integer</type><parameter>$strength</parameter></methodparam>
+   <methodparam><type>Collator</type><parameter>coll</parameter></methodparam>
+   <methodparam><type>integer</type><parameter>strength</parameter></methodparam>
   </methodsynopsis>
   <para>
    The <link xlink:href="&url.icu.home;">ICU</link> Collation Service supports many levels of comparison (named "Levels", but also
@@ -85,7 +85,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$coll</parameter></term>
+     <term><parameter>coll</parameter></term>
      <listitem>
       <para>
        Collator object.
@@ -93,7 +93,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>$strength</parameter></term>
+     <term><parameter>strength</parameter></term>
      <listitem>
       <para>
        Strength to set.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
-<refentry xml:id="function.collator-create" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- $Revision: 1.3 $ -->
+<refentry xml:id="function.collator-create" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>Collator::create()</refname>
   <refpurpose>Create a collator.</refpurpose>
@@ -9,7 +9,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>Collator</type><methodname>Collator::create</methodname>
-   <methodparam><type>string</type><parameter>$locale</parameter></methodparam>
+   <methodparam><type>string</type><parameter>locale</parameter></methodparam>
   </methodsynopsis>
   <para>
    Creates a new instance of Collator.
@@ -24,7 +24,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$locale</parameter></term>
+     <term><parameter>locale</parameter></term>
      <listitem>
       <para>
        The locale whose collation rules should be used. Special values for

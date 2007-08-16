@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.collator-getDisplayName" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>Collator::getDisplayName()</refname>
@@ -9,8 +9,8 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>Collator::getDisplayName</methodname>
-   <methodparam><type>string</type><parameter>$obj_loc</parameter></methodparam>
-   <methodparam><type>string</type><parameter>$disp_loc</parameter></methodparam>
+   <methodparam><type>string</type><parameter>obj_loc</parameter></methodparam>
+   <methodparam><type>string</type><parameter>disp_loc</parameter></methodparam>
   </methodsynopsis>
 <!--
   <para>
@@ -31,7 +31,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$obj_loc</parameter></term>
+     <term><parameter>obj_loc</parameter></term>
      <listitem>
       <para>
        Locale to get display name for.
@@ -40,7 +40,7 @@
     </varlistentry>
     
     <varlistentry>
-     <term><parameter>$disp_loc</parameter></term>
+     <term><parameter>disp_loc</parameter></term>
      <listitem>
       <para>
        Locale for display.

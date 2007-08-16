@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.collator-compare" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>Collator->compare</refname>
@@ -9,8 +9,8 @@
   &reftitle.description;
   <methodsynopsis>
    <type>integer</type><methodname>Collator->compare</methodname>
-   <methodparam><type>string</type><parameter>$str1</parameter></methodparam>
-   <methodparam><type>string</type><parameter>$str2</parameter></methodparam>
+   <methodparam><type>string</type><parameter>str1</parameter></methodparam>
+   <methodparam><type>string</type><parameter>str2</parameter></methodparam>
   </methodsynopsis>
   <para>
   Wrapper around ICU ucol_strcoll().
@@ -22,7 +22,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$str1</parameter></term>
+     <term><parameter>str1</parameter></term>
      <listitem>
       <para>
        First string to compare.
@@ -31,7 +31,7 @@
     </varlistentry>
 
     <varlistentry>
-     <term><parameter>$str2</parameter></term>
+     <term><parameter>str2</parameter></term>
      <listitem>
       <para>
        Second string to compare.
@@ -48,17 +48,17 @@
    <itemizedlist>
     <listitem>
      <para>
-      1   if <parameter>$str1</parameter> is <emphasis>greater</emphasis> than <parameter>$str2</parameter>;
+      1   if <parameter>str1</parameter> is <emphasis>greater</emphasis> than <parameter>str2</parameter>;
      </para>
     </listitem>
     <listitem>
      <para>
-      0   if <parameter>$str1</parameter> is <emphasis>equal</emphasis> to <parameter>$str2</parameter>;
+      0   if <parameter>str1</parameter> is <emphasis>equal</emphasis> to <parameter>str2</parameter>;
      </para>
     </listitem>
     <listitem>
      <para>
-      -1   if <parameter>$str1</parameter> is <emphasis>less</emphasis> than <parameter>$str2</parameter>;
+      -1   if <parameter>str1</parameter> is <emphasis>less</emphasis> than <parameter>str2</parameter>;
      </para> 
     </listitem>
    </itemizedlist>

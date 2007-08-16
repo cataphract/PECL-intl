@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.collator_asort" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>collator_asort()</refname>
@@ -9,9 +9,9 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>collator_asort</methodname>
-   <methodparam><type>Collator</type><parameter>$coll</parameter></methodparam>
-   <methodparam><type>array</type><parameter>$arr</parameter></methodparam>
-   <methodparam choice="opt"><type>integer</type><parameter>$sort_flag</parameter></methodparam>
+   <methodparam><type>Collator</type><parameter>coll</parameter></methodparam>
+   <methodparam><type>array</type><parameter>arr</parameter></methodparam>
+   <methodparam choice="opt"><type>integer</type><parameter>sort_flag</parameter></methodparam>
   </methodsynopsis>
 
   <para>
@@ -31,7 +31,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$coll</parameter></term>
+     <term><parameter>coll</parameter></term>
      <listitem>
       <para>
        Collator object.
@@ -39,7 +39,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>$arr</parameter></term>
+     <term><parameter>arr</parameter></term>
      <listitem>
       <para>
        Array of strings to sort. 
@@ -47,7 +47,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>$sort_flag</parameter></term>
+     <term><parameter>sort_flag</parameter></term>
      <listitem>
       <para>
       Optional sorting type, one of the following:

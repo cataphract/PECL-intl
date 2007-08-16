@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.intl_error_name">
  <refnamediv>
   <refname>intl_error_name()</refname>
@@ -9,7 +9,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>intl_error_name</methodname>
-   <methodparam><type>integer</type><parameter>$error_code</parameter></methodparam>
+   <methodparam><type>integer</type><parameter>error_code</parameter></methodparam>
   </methodsynopsis>
   <para>
    The returned string will be the same as the name of the error code constant.
@@ -21,7 +21,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$error_code</parameter></term>
+     <term><parameter>error_code</parameter></term>
      <listitem>
       <para>
        ICU error code.

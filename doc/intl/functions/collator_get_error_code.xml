@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.collator_get_error_code" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>collator_get_error_code()</refname>
@@ -9,7 +9,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>integer</type><methodname>collator_get_error_code</methodname>
-   <methodparam><type>Collator</type><parameter>$coll</parameter></methodparam>
+   <methodparam><type>Collator</type><parameter>coll</parameter></methodparam>
   </methodsynopsis>
   <para>
   <!-- desctiption goes here -->
@@ -21,7 +21,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$coll</parameter></term>
+     <term><parameter>coll</parameter></term>
      <listitem>
       <para>
        Collator object.

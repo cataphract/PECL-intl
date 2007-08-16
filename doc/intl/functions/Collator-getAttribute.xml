@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.collator-getAttribute" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>Collator->getAttribute()</refname>
@@ -9,7 +9,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>integer</type><methodname>Collator->getAttribute</methodname>
-   <methodparam><type>integer</type><parameter>$attr</parameter></methodparam>
+   <methodparam><type>integer</type><parameter>attr</parameter></methodparam>
   </methodsynopsis>
 <!-- FIXME: why is 'tailoring' described here?
   <para>
@@ -78,7 +78,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$attr</parameter></term>
+     <term><parameter>attr</parameter></term>
      <listitem>
       <para>
        Attribute to get value for.
