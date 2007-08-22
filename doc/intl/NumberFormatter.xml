@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="intl.NumberFormatter" xmlns="http://docbook.org/ns/docbook">
+	<refnamediv>
+    <refname>NumberFormatter class</refname>
+    <refpurpose>Provides string comparison capability with support for appropriate locale-sensitive sort orderings</refpurpose>
+    </refnamediv>
+   
+    <refsect1 role="description">
+    <section xml:id="intl.classes.NumberFormatter.constructors">
+     <title>Constructors</title>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-create'>NumberFormatter::__construct</link> - create a number formatter
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-create'>NumberFormatter::create</link>-
+	 creates a new number formatter. This method is useful when you prefer just to
+	 get null on error, as if you called <function>numfmt_create</function>.
+       </para>
+      </listitem>
+     </itemizedlist>
+    </section>
+    <section xml:id="intl.classes.NumberFormatter.methods">
+     &reftitle.methods;
+     <itemizedlist>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-get-error-code'>getErrorCode</link> -
+        get formatter's last error code.
+       </para>
+      </listitem>
+     </itemizedlist>
+    </section>
+	</refsect1>
+</refentry>

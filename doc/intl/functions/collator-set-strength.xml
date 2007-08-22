@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.4 $ -->
-<refentry xml:id="function.collator-setStrength"
-xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="function.collator-set-strength" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
+  <refname>collator_set_strength</refname>
   <refname>Collator->setStrength</refname>
-  <refpurpose>Set collation strength.</refpurpose>
+  <refpurpose>Set collation strength</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
+  <para>Procedural style</para>
   <methodsynopsis>
-   <type>bool</type><methodname>Collator->setStrength</methodname>
+   <type>bool</type><methodname>collator_set_strength</methodname>
+   <methodparam><type>Collator</type><parameter>coll</parameter></methodparam>
    <methodparam><type>integer</type><parameter>strength</parameter></methodparam>
   </methodsynopsis>
+  <para>Object oriented style</para>
+  <classsynopsis>
+   <ooclass><classname>Collator</classname></ooclass>
+   <methodsynopsis>
+   <type>bool</type><methodname>setStrength</methodname>
+   <methodparam><type>integer</type><parameter>strength</parameter></methodparam>
+  </methodsynopsis>
+  </classsynopsis>
   <para>
    The <link xlink:href="&url.icu.home;">ICU</link> Collation Service supports many levels of comparison (named "Levels", but also
    known as "Strengths"). Having these categories enables ICU to sort strings precisely
@@ -34,9 +44,9 @@ xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
      when there is a primary difference anywhere in the strings. This is also called the level2 strength.
      <footnote>
       <para>
-      Note: In some languages (such as Danish), certain accented letters are considered to
-      be separate base characters. In most languages, however, an accented letter only has a
-      secondary difference from the unaccented version of that letter.
+       Note: In some languages (such as Danish), certain accented letters are considered to
+       be separate base characters. In most languages, however, an accented letter only has a
+       secondary difference from the unaccented version of that letter.
       </para>
      </footnote>
     </member>
@@ -79,11 +89,19 @@ xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
    keys, and slower string comparison performance for equal strings.
   </para>
  </refsect1>
- 
+
  <refsect1 role="parameters">
   &reftitle.parameters;
   <para>
    <variablelist>
+    <varlistentry>
+     <term><parameter>coll</parameter></term>
+     <listitem>
+      <para>
+       <classname>Collator</classname> object.
+      </para>
+     </listitem>
+    </varlistentry>
     <varlistentry>
      <term><parameter>strength</parameter></term>
      <listitem>
@@ -92,45 +110,45 @@ xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
       </para>
       <para>
        Possible values are:
-       <itemizedlist>
+       <itemizedlist> 
         <listitem>
 	 <para>
-          <constant>Collator::PRIMARY</constant>
+         <constant>Collator::PRIMARY</constant>
 	 </para>
         </listitem>
         <listitem>
 	 <para>
-  	  <constant>Collator::SECONDARY</constant>
+ 	 <constant>Collator::SECONDARY</constant>
 	 </para>
         </listitem>
         <listitem>
 	 <para>
-	  <constant>Collator::TERTIARY</constant>
+	 <constant>Collator::TERTIARY</constant>
 	 </para>
         </listitem>
         <listitem>
 	 <para>
-	  <constant>Collator::QUATERNARY</constant>
+	 <constant>Collator::QUATERNARY</constant>
 	 </para>
         </listitem>
         <listitem>
 	 <para>
-	  <constant>Collator::IDENTICAL</constant>
+	 <constant>Collator::IDENTICAL</constant>
 	 </para>
         </listitem>
         <listitem>
 	 <para>
-	  <constant>Collator::DEFAULT</constant>
+	 <constant>Collator::DEFAULT</constant>
 	 </para>
         </listitem>
-       </itemizedlist>
+       </itemizedlist> 
       </para>
      </listitem>
     </varlistentry>
    </variablelist>
   </para>
  </refsect1>
-
+ 
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
@@ -142,26 +160,26 @@ xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
   &reftitle.examples;
   <para>
    <example>
-    <title><function>Collator->setStrength</function> example</title>
+    <title><function>collator_set_strength</function> example</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $arr  = array( 'aò', 'Ao', 'ao' );
-$coll = new Collator( 'en_US' );
+$coll = collator_create( 'en_US' );
 
 // Sort array using default strength.
-$coll->sort( $arr );
+collator_sort( $coll, $arr ); 
 var_export( $arr );
 
 // Sort array using primary strength.
-$coll->setStrength( Collator::PRIMARY );
-$coll->sort( $arr );
+collator_set_strength( $coll, Collator::PRIMARY );
+collator_sort( $coll, $arr );
 var_export( $arr );
 ?>
 ]]>
     </programlisting>
     &example.outputs;
-    <screen>
+     <screen>
 <![CDATA[
 array (
   0 => 'ao',
@@ -174,7 +192,7 @@ array (
   2 => 'ao',
 )
 ]]>
-    </screen>
+     </screen>
    </example>
   </para>
  </refsect1>
@@ -183,8 +201,8 @@ array (
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>Collator->getStrength</function></member>
-    <member><function>collator_set_strength</function></member>
+ 	<member><link linkend="intl.Collator-constants"><classname>Collator</classname> constants</link></member>
+    <member><function>collator_get_strength</function></member>
    </simplelist>
   </para>
  </refsect1>

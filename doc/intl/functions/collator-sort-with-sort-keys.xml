@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.3 $ -->
-<refentry xml:id="function.collator_sort_with_sort_keys" xmlns="http://docbook.org/ns/docbook">
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="function.collator-sort-with-sort-keys" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>collator_sort_with_sort_keys</refname>
-  <refpurpose>Sort array using specified collator.</refpurpose>
+  <refname>Collator->sortWithSortKeys</refname>
+  <refpurpose>Sort array using specified collator and sort keys</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
+  <para>Procedural style</para>
   <methodsynopsis>
    <type>bool</type><methodname>collator_sort_with_sort_keys</methodname>
    <methodparam><type>Collator</type><parameter>coll</parameter></methodparam>
    <methodparam><type>array</type><parameter>arr</parameter></methodparam>
   </methodsynopsis>
+  <para>Object oriented style</para>
+  <classsynopsis>
+   <ooclass><classname>Collator</classname></ooclass>
+  <methodsynopsis>
+   <type>bool</type><methodname>sortWithSortKeys</methodname>
+   <methodparam><type>array</type><parameter>arr</parameter></methodparam>
+  </methodsynopsis>
+  </classsynopsis>
   <para>
-  Similar to collator_sort(). Uses ICU ucol_getSortKey() to gain more speed on large arrays.
+  Similar to <function>collator_sort</function> but uses ICU sorting keys produced by 
+  ucol_getSortKey() to gain more speed on large arrays.
   </para>
  </refsect1>
 
@@ -25,7 +36,7 @@
      <term><parameter>coll</parameter></term>
      <listitem>
       <para>
-       Collator object.
+       <classname>Collator</classname> object.
       </para>
      </listitem>
     </varlistentry>
@@ -81,7 +92,7 @@ array (
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>Collator->sortWithSortKeys</function></member>
+	<member><link linkend="intl.Collator-constants"><classname>Collator</classname> constants</link></member>
     <member><function>collator_sort</function></member>
     <member><function>collator_asort</function></member>
    </simplelist>

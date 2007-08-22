@@ -1,40 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.1 $ -->
 <refentry xml:id="function.collator-compare" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
+  <refname>collator_compare</refname>
   <refname>Collator->compare</refname>
-  <refpurpose>Compare two strings using PHP <function>strcmp</function> semantics.</refpurpose>
+  <refpurpose>Compare two Unicode strings</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
+  <para>Procedural style</para>
   <methodsynopsis>
-   <type>integer</type><methodname>Collator->compare</methodname>
+   <type>integer</type><methodname>collator_compare</methodname>
+   <methodparam><type>Collator</type><parameter>coll</parameter></methodparam>
    <methodparam><type>string</type><parameter>str1</parameter></methodparam>
    <methodparam><type>string</type><parameter>str2</parameter></methodparam>
   </methodsynopsis>
+  <para>Object oriented style</para>
+  <classsynopsis>
+  <methodsynopsis>
+   <ooclass><classname>Collator</classname></ooclass>
+   <type>integer</type><methodname>compare</methodname>
+   <methodparam><type>string</type><parameter>str1</parameter></methodparam>
+   <methodparam><type>string</type><parameter>str2</parameter></methodparam>
+  </methodsynopsis>
+  </classsynopsis>
   <para>
-  Wrapper around ICU ucol_strcoll().
+  Compare two Unicode strings according to collation rules.
   </para>
  </refsect1>
- 
+
  <refsect1 role="parameters">
   &reftitle.parameters;
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>str1</parameter></term>
+    <term><parameter>coll</parameter></term>
      <listitem>
       <para>
-       First string to compare.
+       <classname>Collator</classname> object.
       </para>
      </listitem>
     </varlistentry>
-
     <varlistentry>
-     <term><parameter>str2</parameter></term>
+    <term><parameter>str1</parameter></term>
      <listitem>
       <para>
-       Second string to compare.
+       The first string to compare.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+    <term><parameter>str2</parameter></term>
+     <listitem>
+      <para>
+       The second string to compare. 
       </para>
      </listitem>
     </varlistentry>
@@ -45,50 +64,47 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   <itemizedlist>
-    <listitem>
-     <para>
-      1   if <parameter>str1</parameter> is <emphasis>greater</emphasis> than <parameter>str2</parameter>;
-     </para>
-    </listitem>
-    <listitem>
-     <para>
-      0   if <parameter>str1</parameter> is <emphasis>equal</emphasis> to <parameter>str2</parameter>;
-     </para>
-    </listitem>
-    <listitem>
-     <para>
-      -1   if <parameter>str1</parameter> is <emphasis>less</emphasis> than <parameter>str2</parameter>;
-     </para> 
-    </listitem>
-   </itemizedlist>
+   Return comparison result:
   </para>
- </refsect1>
- 
- <refsect1 role="errors">
-  &reftitle.errors;
   <para>
-   On error <type>boolean</type> &false; is returned.
-  </para> 
+  <itemizedlist>
+   <listitem>
+    <para>
+      1 if <emphasis>str1</emphasis> is <emphasis>greater</emphasis> than <emphasis>str2</emphasis>;
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+      0 if <emphasis>str1</emphasis> is <emphasis>equal</emphasis> to <emphasis>str2</emphasis>;
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     -1 if <emphasis>str1</emphasis> is <emphasis>less</emphasis> than <emphasis>str2</emphasis>.
+    </para>
+   </listitem>
+  </itemizedlist>
+  On error <type>boolean</type> &false; is returned.
+  </para>
   &return.falseproblem;
  </refsect1>
-
+ 
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title><function>Collator->compare</function> example</title>
+    <title><function>collator_compare</function> example</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $s1 = 'Hello';
 $s2 = 'hello';
 
-$coll = Collator::create( 'en_US' );
-$res  = $coll->compare( $s1, $s2 );
+$coll = collator_create( 'en_US' );
+$res  = collator_compare( $coll, $s1, $s2 );
 
 if( $res === false )
-    echo $coll->getErrorMessage();
+    echo collator_get_error_message( $coll );
 else if( $res > 0 )
     echo "s1 is greater than s2\n";
 else if( $res < 0 )
@@ -110,7 +126,7 @@ s1 is greater than s2
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>collator_compare</function></member>
+    <member><function>collator_sort</function></member>
    </simplelist>
   </para>
  </refsect1>

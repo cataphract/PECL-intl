@@ -1,42 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
-<refentry xml:id="function.collator_get_strength" xmlns="http://docbook.org/ns/docbook">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="function.intl-error-name">
  <refnamediv>
-  <refname>collator_get_strength</refname>
-  <refpurpose>Get current collation strength.</refpurpose>
+  <refname>intl_error_name</refname>
+  <refpurpose>Get symbolic name for a given error code</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>integer</type><methodname>collator_get_strength</methodname>
-   <methodparam><type>Collator</type><parameter>$coll</parameter></methodparam>
+   <type>string</type><methodname>intl_error_name</methodname>
+   <methodparam><type>integer</type><parameter>error_code</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <!-- description goes here -->
+   Return ICU error code name.
   </para>
  </refsect1>
-
+ 
  <refsect1 role="parameters">
   &reftitle.parameters;
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$coll</parameter></term>
+     <term><parameter>error_code</parameter></term>
      <listitem>
       <para>
-       Collator object.
+       ICU error code.
       </para>
      </listitem>
     </varlistentry>
    </variablelist>
   </para>
  </refsect1>
-   
  
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Returns current collation strength, or <type>boolean</type> &false; on error.
+   The returned string will be the same as the name of the error code constant.
   </para>
  </refsect1>
  
@@ -44,19 +43,20 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>collator_get_strength</function> example</title>
+    <title><function>intl_error_name</function> example</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$coll = collator_create( 'en_US' );
-$strength = collator_get_strength( $coll );
+$coll = collator_create( 'en_RU' );
+$err_code = collator_get_error_code( $coll );
+printf( "Symbolic name for %d is %s\n.", $err_code, intl_error_name( $err_code ) );
 ?>
 ]]>
     </programlisting>
-    &example.outputs;
+    &example.outputs.similar;
     <screen>
 <![CDATA[
-Strength value is TERTIARY
+Symbolic name for -128 is U_USING_FALLBACK_WARNING.
 ]]>
     </screen>
    </example>
@@ -67,8 +67,9 @@ Strength value is TERTIARY
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>collator_set_strength</function></member>
-    <member><function>collator-getStrength</function></member>
+    <member><function>intl_is_failure</function></member>
+    <member><function>intl_get_error_code</function></member>
+    <member><function>intl_get_error_message</function></member>
    </simplelist>
   </para>
  </refsect1>

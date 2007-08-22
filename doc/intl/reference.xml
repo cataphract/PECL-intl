@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <!-- Purpose: collation -->
 <!-- Membership: xx -->
 <!-- State: xx -->
 <reference xml:id="ref.intl" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 <title>Internationalization Functions</title>
-<titleabbrev>Collator</titleabbrev>
+<titleabbrev>intl</titleabbrev>
 
  <partintro>
   <section xml:id="intl.intro">
@@ -37,7 +37,7 @@
     </listitem>
     <listitem>
      <simpara>
-      Formatter: allows to display number according to the localized format or
+      Nmber Formatter: allows to display number according to the localized format or
       given pattern or set of rules, and to parse strings into numbers.
      </simpara>
     </listitem>
@@ -154,204 +154,10 @@ echo $formatter->format( 1234567 );
 
   <section xml:id="intl.classes">
    &reftitle.classes;
-   <section xml:id="intl.classes.Collator">
-    <title><classname>Collator</classname></title>
-    <section xml:id="intl.classes.Collator.constructors">
-     <title>Constructors</title>
-     <itemizedlist>
-      <listitem>
-       <para>
-        <link linkend='function.collator-construct'>Collator::__construct()</link> - create a collator
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-create'>Collator::create()</link>-
-	 creates a new instance of Collator. This method is useful when you prefer just to
-	 get null on error, as if you called <function>collator_create</function>.
-       </para>
-      </listitem>
-     </itemizedlist>
-    </section>
-    <section xml:id="intl.classes.Collator.methods">
-     &reftitle.methods;
-     <itemizedlist>
-      <listitem>
-       <para>
-        <link linkend='function.collator-getErrorCode'>getErrorCode()</link> -
-        get collator's last error code.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-getErrorMessage'>getErrorMessage()</link> -
-        return error text for the last ICU operation.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-compare'>compare()</link> -
-        compare two strings using PHP <function>strcmp</function> semantics.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-sort'>sort()</link> -
-        equivalent to standard PHP <function>sort</function> using Collator.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-asort'>asort()</link> -
-        sort array maintaining index association.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-sortWithSortKeys'>sortWithSortKeys()</link> -
-        similar to Collator::sort(). Uses ICU ucol_getSortKey() to gain more speed on large arrays. 
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-getAttribute'>getAttribute()</link> -
-        get collation attribute value.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-setAttribute'>setAttribute()</link> -
-        set collation attribute.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-getStrength'>getStrength()</link> -
-        get current collation strength.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-setStrength'>setStrength()</link> -
-        set collation strength.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-getLocale'>getLocale()</link> -
-        get the locale name of the collator.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-getDisplayName'>getDisplayName()</link> -
-        get the display name for a locale.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.collator-getAvailableLocales'>getAvailableLocales()</link> -
-        get a list of all locales for which a valid collator may be opened.
-       </para>
-      </listitem>
-     </itemizedlist>
-    </section>
-   </section>
-  </section>
-
-  <section xml:id="intl.functions">
-    <title>Functions</title>
-    <para>
-     These are actually the same as Collator class methods.
-    </para>
-    <section xml:id="intl.functions.collator">
-     <itemizedlist>
-      <listitem>
-       <para>
-       <link linkend='function.collator_create'>collator_create()</link> -
-        create collator.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_compare'>collator_compare()</link> -
-        compare two strings
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_sort'>collator_sort()</link> -
-        sort array using specified collator.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_asort'>collator_asort()</link> -
-        sort array maintaining index association.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_sort_with_sort_keys'>collator_sort_with_sort_keys()</link> -
-        similar to <function>collator_sort</function>. Uses ICU ucol_getSortKey() to gain more speed on large arrays.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_get_locale'>collator_get_locale()</link> -
-        gets the locale name of the collator.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_get_display_name'>collator_get_display_name()</link> -
-        get the display name for a locale.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_get_available_locales'>collator_get_available_locales()</link> -
-        get a list of all locales for which a valid collator may be opened.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_get_attribute'>collator_get_attribute()</link> -
-        get collation attribute value.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_get_strength'>collator_get_strength()</link> -
-        get current collation strength.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_set_strength'>collator_set_strength()</link> -
-        set collation strength.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_set_attribute'>collator_set_attribute()</link> -
-        set collation attribute.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_get_error_code'>collator_get_error_code()</link> -
-        get collator's last error code.
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-       <link linkend='function.collator_get_error_message'>collator_get_error_message()</link> -
-        get text for collator's last error code.
-       </para>
-      </listitem>
-     </itemizedlist>
-    </section>
+   <simplelist>
+   <member><link linkend="intl.Collator"><classname>Collator</classname></link></member>
+   <member><link linkend="intl.NumberFormatter"><classname>NumberFormatter</classname></link></member>
+   </simplelist>
   </section>
 
   &reference.intl.constants;
@@ -378,6 +184,8 @@ echo $formatter->format( 1234567 );
   </section>
  </partintro>
 
+ &reference.intl.Collator;
+ &reference.intl.NumberFormatter;
  &reference.intl.functions;
 
 </reference>

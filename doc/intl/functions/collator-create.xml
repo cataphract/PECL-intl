@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
-<refentry xml:id="function.collator_create" xmlns="http://docbook.org/ns/docbook">
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="function.collator-create" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>collator_create</refname>
-  <refpurpose>Create a collator.</refpurpose>
+  <refname>Collator::create</refname>
+  <refpurpose>Create a collator</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
+  <para>Procedural style</para>
   <methodsynopsis>
    <type>Collator</type><methodname>collator_create</methodname>
-   <methodparam><type>string</type><parameter>$locale</parameter></methodparam>
+   <methodparam><type>string</type><parameter>locale</parameter></methodparam>
   </methodsynopsis>
+  <para>Object oriented style</para>
+  <classsynopsis>
+   <ooclass><classname>Collator</classname></ooclass>
+   <methodsynopsis>
+    <type>Collator</type><methodname>Collator::create</methodname>
+    <methodparam><type>string</type><parameter>locale</parameter></methodparam>
+   </methodsynopsis>
+  </classsynopsis>
   <para>
    The strings will be compared using the options already specified.
   </para>
@@ -21,7 +31,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>$locale</parameter></term>
+     <term><parameter>locale</parameter></term>
      <listitem>
       <para>
        The locale containing the required collation rules. Special values for
@@ -39,7 +49,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Return new instance of <type>Collator</type> object, or &null; on error.
+   Return new instance of <classname>Collator</classname> object, or &null; on error.
   </para>
  </refsect1>
  
@@ -70,7 +80,6 @@ if( !isset( $coll ) )
   <para>
    <simplelist>
     <member><function>Collator::__construct</function></member>
-    <member><function>Collator::create</function></member>
    </simplelist>
   </para>
  </refsect1>

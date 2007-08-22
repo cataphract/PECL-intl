@@ -1,25 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
-<refentry xml:id="function.collator-getErrorMessage" xmlns="http://docbook.org/ns/docbook">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="function.intl-get-error-message">
  <refnamediv>
-  <refname>Collator->getErrorMessage</refname>
-  <refpurpose>Return error text for the last object operation.</refpurpose>
+  <refname>intl_get_error_message</refname>
+  <refpurpose>Get description of the last error</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>Collator->getErrorMessage</methodname>
+   <type>string</type><methodname>intl_get_error_message</methodname>
    <void />
   </methodsynopsis>
   <para>
-   <!-- description goes here -->
+   Get error message from last internationalization function called.
   </para>
  </refsect1>
  
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Description of an error occured in the last Collator method call.
+   Description of an error occured in the last API function call.
   </para>
  </refsect1>
  
@@ -27,15 +27,12 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>Collator->getErrorMessage</function> example</title>
+    <title><function>intl_get_error_message</function> example</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$coll = new Collator( 'lt' );
-if( $coll->compare( 'y', 'k' ) === false )
-{
-    echo $coll->getErrorMessage();
-}
+if( Collator::getAvailableLocales() === false )
+    show_error( intl_get_error_message() );
 ?>
 ]]>
     </programlisting>
@@ -47,9 +44,11 @@ if( $coll->compare( 'y', 'k' ) === false )
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>Collator->getErrorCode</function></member>
+    <member><function>intl_error_name</function></member>
+    <member><function>intl_get_error_code</function></member>
+    <member><function>intl_is_failure</function></member>
     <member><function>collator_get_error_message</function></member>
-    <member><function>intl_get_error_message</function></member>
+    <member><function>numfmt_get_error_message</function></member>
    </simplelist>
   </para>
  </refsect1>

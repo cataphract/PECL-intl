@@ -100,7 +100,7 @@ echo numfmt_format($fmt, 1234567.891234567890000);
 <![CDATA[
 <?php
 $fmt = new NumberFormatter( 'de_DE', NumberFormatter::DECIMAL );
-$fmt->format(1234567.891234567890000);
+echo $fmt->format(1234567.891234567890000);
 ?>
 ]]>
     </programlisting>
