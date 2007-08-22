@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.numfmt-create" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>numfmt_create</refname>
@@ -13,7 +13,7 @@
   <methodsynopsis>
    <type>NumberFormatter</type><methodname>numfmt_create</methodname>
    <methodparam><type>string</type><parameter>locale</parameter></methodparam>
-   <methodparam><type>string</type><parameter>style</parameter></methodparam>
+   <methodparam><type>integer</type><parameter>style</parameter></methodparam>
    <methodparam choice='opt'><type>string</type><parameter>pattern</parameter></methodparam>
   </methodsynopsis>
   <para>Object oriented style (constructor):</para>
@@ -22,7 +22,7 @@
    <constructorsynopsis>
    <methodname>__construct</methodname>
    <methodparam><type>string</type><parameter>locale</parameter></methodparam>
-   <methodparam><type>string</type><parameter>style</parameter></methodparam>
+   <methodparam><type>integer</type><parameter>style</parameter></methodparam>
    <methodparam choice='opt'><type>string</type><parameter>pattern</parameter></methodparam>
    </constructorsynopsis>
   </classsynopsis>
@@ -32,7 +32,7 @@
    <methodsynopsis>
    <type>NumberFormatter</type><methodname>create</methodname>
    <methodparam><type>string</type><parameter>locale</parameter></methodparam>
-   <methodparam><type>string</type><parameter>style</parameter></methodparam>
+   <methodparam><type>integer</type><parameter>style</parameter></methodparam>
    <methodparam choice='opt'><type>string</type><parameter>pattern</parameter></methodparam>
    </methodsynopsis>
   </classsynopsis>
