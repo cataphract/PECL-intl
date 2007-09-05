@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision: 1.1 $ -->
+<section xml:id="intl.NumberFormatter-constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.constants;
+ <para>
+  <variablelist>
+   <varlistentry>
+    <term>
+     <constant>NumberFormatter::PATTERN_DECIMAL</constant> 
+      (<type>integer</type>)
+    </term>
+    <listitem>
+	<para>
+	<!-- TODO -->
+	</para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </para>
+ </section>

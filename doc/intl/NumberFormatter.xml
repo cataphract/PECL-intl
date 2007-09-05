@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <refentry xml:id="intl.NumberFormatter" xmlns="http://docbook.org/ns/docbook">
 	<refnamediv>
     <refname>NumberFormatter class</refname>
@@ -113,5 +113,7 @@
       </listitem>
 	  </itemizedlist>
     </section>
-	</refsect1>
+
+    &reference.intl.NumberFormatter-constants;
+</refsect1>
 </refentry>
