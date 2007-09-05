@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="intl.NumberFormatter" xmlns="http://docbook.org/ns/docbook">
 	<refnamediv>
     <refname>NumberFormatter class</refname>
@@ -29,17 +29,89 @@
      <itemizedlist>
       <listitem>
        <para>
+        <link linkend='function.numfmt-format'>format</link> -
+        format a number.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-format-currency'>formatCurrency</link> -
+        format a currency value.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-parse'>parse</link> -
+        parse number.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-parse-currency'>parseCurrency</link> -
+        parse currency value.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-set-attribute'>setAttribute</link> -
+        set numeric attribute.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-set-text-attribute'>setTextAttribute</link> -
+        set text attribute.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-set-pattern'>setPattern</link> -
+        set formatter pattern.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-get-attribute'>getAttribute</link> -
+        get numeric attribute.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-get-text-attribute'>getTextAttribute</link> -
+        get text attribute.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-get-pattern'>getPattern</link> -
+        get formatter pattern.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-get-symbol'>getSymbol</link> -
+        get formatter symbol.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.numfmt-get-locale'>getLocale</link> -
+        get formatter locale.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
         <link linkend='function.numfmt-get-error-code'>getErrorCode</link> -
-        get formatter's last error code.
+        get formatter last error code.
        </para>
       </listitem>
       <listitem>
        <para>
         <link linkend='function.numfmt-get-error-message'>getErrorMessage</link> -
-        get formatter's last error message.
+        get formatter last error message.
        </para>
       </listitem>
-     </itemizedlist>
+	  </itemizedlist>
     </section>
 	</refsect1>
 </refentry>
