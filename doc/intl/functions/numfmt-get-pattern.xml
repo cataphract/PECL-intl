@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.numfmt-get-pattern" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>numfmt_get_pattern</refname>
@@ -21,7 +21,7 @@
    </methodsynopsis>
   </classsynopsis>
   <para>
-   <!-- TODO -->
+   Extract pattern used by the formatter.
   </para> 
   </refsect1>
 
@@ -45,7 +45,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   <!-- TODO -->
+   Pattern string that is used by the formatter, or &false; if an error happens.
   </para>
  </refsect1>
  
@@ -76,6 +76,8 @@
   <para>
    <simplelist>
     <member><function>numfmt_get_error_code</function></member>
+    <member><function>numfmt_set_pattern</function></member>
+    <member><function>numfmt_create</function></member>
    </simplelist>
   </para>
  </refsect1>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.numfmt-set-text-attribute" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>numfmt_set_text_attribute</refname>
@@ -24,7 +24,10 @@
    </methodsynopsis>
   </classsynopsis>
   <para>
-   <!-- TODO -->
+   Set a text attribute associated with the formatter. 
+   An example of a text attribute is the suffix for positive numbers. 
+   If the formatter does not understand the attributre, <constant>U_UNSUPPORTED_ERROR</constant> error is produced. 
+   Rule-based formatters only understand <constant>NumberFormatter::DEFAULT_RULESET</constant> and <constant>NumberFormatter::PUBLIC_RULESETS</constant>.
   </para> 
   </refsect1>
 
@@ -40,6 +43,21 @@
       </para>
      </listitem>
     </varlistentry>
+    <varlistentry>
+     <term><parameter>attr</parameter></term>
+     <listitem>
+      <para>
+       Attribute specifier - one of the <link rel="intl.NumberFormatter-constants.UNumberFormatTextAttribute">text attribute</link> constants.       
+      </para>
+     </listitem>
+     <varlistentry>
+      <term><parameter>value</parameter></term>
+      <listitem>
+       <para>
+        Text for the attribute value.       
+       </para>
+      </listitem>
+     </varlistentry>
    </variablelist>
   </para>
  </refsect1>
@@ -48,7 +66,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   <!-- TODO -->
+   &return.success;
   </para>
  </refsect1>
  
@@ -79,6 +97,8 @@
   <para>
    <simplelist>
     <member><function>numfmt_get_error_code</function></member>
+    <member><function>numfmt_get_text_attribute</function></member>
+    <member><function>numfmt_set_attribute</function></member>
    </simplelist>
   </para>
  </refsect1>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.numfmt-parse-currency" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>numfmt_parse_currency</refname>
@@ -26,7 +26,7 @@
    </methodsynopsis>
   </classsynopsis>
   <para>
-   <!-- TODO -->
+   Parse a string into a double and a currency using the current formatter.
   </para> 
   </refsect1>
 
@@ -42,6 +42,23 @@
       </para>
      </listitem>
     </varlistentry>
+    <varlistentry>
+     <term><parameter>position</parameter></term>
+     <listitem>
+      <para>
+       Parameter to receive the currency name (3-letter ISO 4217 currency code).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>position</parameter></term>
+     <listitem>
+      <para>
+       Offset in the string at which to begin parsing.
+       On return, this value will hold the offset at which parsing ended.
+      </para>
+     </listitem>
+    </varlistentry>
    </variablelist>
   </para>
  </refsect1>
@@ -50,7 +67,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   <!-- TODO -->
+   The parsed numeric value or &false; on error.
   </para>
  </refsect1>
  
@@ -81,6 +98,8 @@
   <para>
    <simplelist>
     <member><function>numfmt_get_error_code</function></member>
+    <member><function>numfmt_parse</function></member>
+    <member><function>numfmt_format_currency</function></member>
    </simplelist>
   </para>
  </refsect1>

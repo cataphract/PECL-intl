@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.numfmt-set-symbol" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>numfmt_set_symbol</refname>
@@ -24,7 +24,9 @@
    </methodsynopsis>
   </classsynopsis>
   <para>
-   <!-- TODO -->
+   Set a symbol associated with the formatter. The formatter uses symbols to represent 
+   the special locale-dependent characters in a number, for example the percent sign. 
+   This API is not supported for rule-based formatters.
   </para> 
   </refsect1>
 
@@ -40,6 +42,22 @@
       </para>
      </listitem>
     </varlistentry>
+    <varlistentry>
+     <term><parameter>attr</parameter></term>
+     <listitem>
+      <para>
+       Symbol specifier, one of the <link rel="intl.NumberFormatter-constants.UNumberFormatSymbol">format symbol</link> constants.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>value</parameter></term>
+     <listitem>
+      <para>
+       Text for the symbol.
+      </para>
+     </listitem>
+    </varlistentry>
    </variablelist>
   </para>
  </refsect1>
@@ -48,7 +66,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   <!-- TODO -->
+   &return.success;
   </para>
  </refsect1>
  
@@ -79,6 +97,7 @@
   <para>
    <simplelist>
     <member><function>numfmt_get_error_code</function></member>
+    <member><function>numfmt_get_symbol</function></member>
    </simplelist>
   </para>
  </refsect1>

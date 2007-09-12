@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.numfmt-set-pattern" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>numfmt_set_pattern</refname>
@@ -22,7 +22,7 @@
    </methodsynopsis>
   </classsynopsis>
   <para>
-   <!-- TODO -->
+   Set the pattern used by the formatter. Can not be used on a rule-based formatter.
   </para> 
   </refsect1>
 
@@ -38,6 +38,14 @@
       </para>
      </listitem>
     </varlistentry>
+    <varlistentry>
+     <term><parameter>pattern</parameter></term>
+     <listitem>
+      <para>
+       Pattern in syntax described in <link xlink:href="&url.icu.decimalformat;">ICU DecimalFormat documentation</link>.
+      </para>
+     </listitem>
+    </varlistentry>
    </variablelist>
   </para>
  </refsect1>
@@ -46,7 +54,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   <!-- TODO -->
+   &return.success;
   </para>
  </refsect1>
  
@@ -77,6 +85,8 @@
   <para>
    <simplelist>
     <member><function>numfmt_get_error_code</function></member>
+    <member><function>numfmt_create</function></member>
+    <member><function>numfmt_set_pattern</function></member>
    </simplelist>
   </para>
  </refsect1>
