@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.4 $ -->
+<!-- $Revision: 1.5 $ -->
 <refentry xml:id="function.numfmt-create" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_create</refname>
@@ -57,7 +57,7 @@
      <term><parameter>style</parameter></term>
      <listitem>
       <para>
-	  Style of the formatting, one of the <link rel="intl.NumberFormatter-constants.UNumberFormatStyle">format style</link> constants.
+	  Style of the formatting, one of the <link linkend="intl.NumberFormatter-constants.UNumberFormatStyle">format style</link> constants.
 	  If <constant>NumberFormatter::PATTERN_DECIMAL</constant> or <constant>NumberFormatter::PATTERN_RULEBASED</constant> is passed then the number format is opened using the given pattern, 
 	  which must conform to the syntax described in <link xlink:href="&url.icu.decimalformat;">ICU DecimalFormat documentation</link> or <link xlink:href="&url.icu.ruleformat;">ICU RuleBasedNumberFormat documentation</link>, respectively.
       </para>

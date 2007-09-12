@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <refentry xml:id="function.numfmt-set-text-attribute" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_set_text_attribute</refname>
@@ -47,9 +47,10 @@
      <term><parameter>attr</parameter></term>
      <listitem>
       <para>
-       Attribute specifier - one of the <link rel="intl.NumberFormatter-constants.UNumberFormatTextAttribute">text attribute</link> constants.       
+       Attribute specifier - one of the <link linkend="intl.NumberFormatter-constants.UNumberFormatTextAttribute">text attribute</link> constants.       
       </para>
      </listitem>
+     </varlistentry>
      <varlistentry>
       <term><parameter>value</parameter></term>
       <listitem>

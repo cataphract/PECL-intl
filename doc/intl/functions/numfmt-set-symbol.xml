@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <refentry xml:id="function.numfmt-set-symbol" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_set_symbol</refname>
@@ -46,7 +46,7 @@
      <term><parameter>attr</parameter></term>
      <listitem>
       <para>
-       Symbol specifier, one of the <link rel="intl.NumberFormatter-constants.UNumberFormatSymbol">format symbol</link> constants.
+       Symbol specifier, one of the <link linkend="intl.NumberFormatter-constants.UNumberFormatSymbol">format symbol</link> constants.
       </para>
      </listitem>
     </varlistentry>
