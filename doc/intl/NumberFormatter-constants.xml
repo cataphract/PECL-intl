@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <section xml:id="intl.NumberFormatter-constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.constants;
  
@@ -296,7 +296,8 @@
 <row>
 <entry>integer</entry>
 <entry>PUBLIC_RULESETS</entry>
-<entry>The public rule sets. This is only available with rule-based formatters. This is a read-only attribute. The public rulesets are returned as a single string, with each ruleset name delimited by ';' (semicolon).</entry>
+<entry>The public rule sets. This is only available with rule-based formatters. This is a read-only attribute. 
+The public rulesets are returned as a single string, with each ruleset name delimited by ';' (semicolon).</entry>
 </row>
 </tbody>
     </tgroup>
