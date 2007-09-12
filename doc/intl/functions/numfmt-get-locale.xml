@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.numfmt-get-locale" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>numfmt_get_locale</refname>
@@ -22,7 +22,7 @@
    </methodsynopsis>
   </classsynopsis>
   <para>
-   <!-- TODO -->
+   Get formatter locale name.
   </para> 
   </refsect1>
 
@@ -38,6 +38,16 @@
       </para>
      </listitem>
     </varlistentry>
+    <varlistentry>
+     <term><parameter>type</parameter></term>
+     <listitem>
+      <para>
+       You can choose between requested, valid and actual locale (<constant>ULOC_REQUESTED_LOCALE</constant>,
+       <constant>ULOC_VALID_LOCALE</constant>, <constant>ULOC_ACTUAL_LOCALE</constant>, respectively).
+       The default is the actual locale.    
+      </para>
+     </listitem>
+    </varlistentry>
    </variablelist>
   </para>
  </refsect1>
@@ -46,7 +56,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   <!-- TODO -->
+   The locale name used to create the formatter.
   </para>
  </refsect1>
  
@@ -56,15 +66,24 @@
     <title><function>numfmt_get_locale</function> example</title>
     <programlisting role="php">
 <![CDATA[
+<?php
+$fmt = numfmt_create( 'en_US_California',  NumberFormatter::PATTERN_DECIMAL);
+$res_req = numfmt_get_locale( $fmt, ULOC_REQUESTED_LOCALE );
+$res_val = numfmt_get_locale( $fmt, ULOC_VALID_LOCALE );
+$res_act = numfmt_get_locale( $fmt, ULOC_ACTUAL_LOCALE );
+printf( "Requested locale name: %s\nValid locale name: %s\nActual locale name: %s\n",
+         $res_req, $res_val, $res_act );
+?>
 ]]>
     </programlisting>
-   </example>
-   <example>
-    <title>OO example</title>
-    <programlisting role="php">
+    &example.outputs;
+    <screen>
 <![CDATA[
+Requested locale name: en_US_California
+Valid locale name: en_US
+Actual locale name: en
 ]]>
-    </programlisting>
+    </screen>
    </example>
  </refsect1>
 
@@ -72,6 +91,7 @@
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member><function>numfmt_create</function></member>
     <member><function>numfmt_get_error_code</function></member>
    </simplelist>
   </para>

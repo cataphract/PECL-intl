@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.collator-get-locale" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>collator_get_locale</refname>
@@ -19,11 +19,11 @@
    <ooclass><classname>Collator</classname></ooclass>
   <methodsynopsis>
    <type>string</type><methodname>getLocale</methodname>
-   <methodparam><type>integer</type><parameter>type</parameter></methodparam>
+   <methodparam><type choice='opt'>integer</type><parameter>type</parameter></methodparam>
   </methodsynopsis>
   </classsynopsis>
   <para>
-  <!-- desctiption goes here -->
+  Get collector locale name.
   </para>
   </refsect1>
 
@@ -45,7 +45,8 @@
      <listitem>
       <para>
        You can choose between requested, valid and actual locale (<constant>ULOC_REQUESTED_LOCALE</constant>,
-       <constant>ULOC_VALID_LOCALE</constant>, <constant>ULOC_ACTUAL_LOCALE</constant>, respectively).
+       <constant>ULOC_VALID_LOCALE</constant>, <constant>ULOC_ACTUAL_LOCALE</constant>, respectively). 
+       The default is the actual locale.
       </para>
      </listitem>
     </varlistentry>
