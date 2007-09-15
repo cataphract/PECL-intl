@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <refentry xml:id="function.numfmt-parse-currency" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_parse_currency</refname>
@@ -75,22 +75,34 @@
   &reftitle.examples;
    <example>
     <title><function>numfmt_parse_currency</function> example</title>
-    <programlisting role="php">
-<![CDATA[
+       <programlisting role="php">
+           <![CDATA[
 <?php
+$fmt = numfmt_create( 'de_DE', NumberFormatter::CURRENCY );
+$num = "1.234.567,89 $";
+echo "We have ".numfmt_parse_currency($fmt, $num, $curr)." in $curr\n";
 ?>
 ]]>
-    </programlisting>
+       </programlisting>
    </example>
-   <example>
-    <title>OO example</title>
-    <programlisting role="php">
-<![CDATA[
+     <example>
+         <title>OO example</title>
+         <programlisting role="php">
+             <![CDATA[
 <?php
+$fmt = new NumberFormatter( 'de_DE', NumberFormatter::CURRENCY );
+$num = "1.234.567,89 $";
+echo "We have ".$fmt->parseCurrency($num, $curr)." in $curr\n";
 ?>
 ]]>
-    </programlisting>
-   </example>
+         </programlisting>
+     </example>
+     &example.outputs;
+     <screen>
+         <![CDATA[
+We have 1234567.89 in USD
+]]>
+     </screen>
  </refsect1>
 
  <refsect1 role="seealso">

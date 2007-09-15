@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.4 $ -->
+<!-- $Revision: 1.5 $ -->
 <refentry xml:id="function.numfmt-set-symbol" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_set_symbol</refname>
@@ -74,22 +74,43 @@
   &reftitle.examples;
    <example>
     <title><function>numfmt_set_symbol</function> example</title>
-    <programlisting role="php">
-<![CDATA[
+       <programlisting role="php">
+           <![CDATA[
 <?php
+$fmt = numfmt_create( 'de_DE', NumberFormatter::DECIMAL );
+echo "Sep: ".numfmt_get_symbol($fmt, NumberFormatter::GROUPING_SEPARATOR_SYMBOL)."\n";
+echo numfmt_format($fmt, 1234567.891234567890000)."\n";
+numfmt_set_symbol($fmt, NumberFormatter::GROUPING_SEPARATOR_SYMBOL, "*");
+echo "Sep: ".numfmt_get_symbol($fmt, NumberFormatter::GROUPING_SEPARATOR_SYMBOL)."\n";
+echo numfmt_format($fmt, 1234567.891234567890000)."\n";
 ?>
 ]]>
-    </programlisting>
+       </programlisting>
    </example>
-   <example>
-    <title>OO example</title>
-    <programlisting role="php">
-<![CDATA[
+     <example>
+         <title>OO example</title>
+         <programlisting role="php">
+             <![CDATA[
 <?php
+$fmt = new NumberFormatter( 'de_DE', NumberFormatter::DECIMAL );
+echo "Sep: ".$fmt->getSymbol(NumberFormatter::GROUPING_SEPARATOR_SYMBOL)."\n";
+echo $fmt->format(1234567.891234567890000)."\n";
+$fmt->setSymbol(NumberFormatter::GROUPING_SEPARATOR_SYMBOL, "*");
+echo "Sep: ".$fmt->getSymbol(NumberFormatter::GROUPING_SEPARATOR_SYMBOL)."\n";
+echo $fmt->format(1234567.891234567890000)."\n";
 ?>
 ]]>
-    </programlisting>
-   </example>
+         </programlisting>
+     </example>
+     &example.outputs;
+     <screen>
+         <![CDATA[
+Sep: .
+1.234.567,891
+Sep: *
+1*234*567,891
+]]>
+     </screen>
  </refsect1>
 
  <refsect1 role="seealso">

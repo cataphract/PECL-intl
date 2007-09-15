@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <refentry xml:id="function.numfmt-get-pattern" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_get_pattern</refname>
@@ -53,22 +53,43 @@
   &reftitle.examples;
    <example>
     <title><function>numfmt_get_pattern</function> example</title>
-    <programlisting role="php">
-<![CDATA[
+       <programlisting role="php">
+           <![CDATA[
 <?php
+$fmt = numfmt_create( 'de_DE', NumberFormatter::DECIMAL );
+echo "Pattern: ".numfmt_get_pattern($fmt)."\n";
+echo numfmt_format($fmt, 1234567.891234567890000)."\n";
+numfmt_set_pattern($fmt, "#0.# kg");
+echo "Pattern: ".numfmt_get_pattern($fmt)."\n";
+echo numfmt_format($fmt, 1234567.891234567890000)."\n";
 ?>
 ]]>
-    </programlisting>
+       </programlisting>
    </example>
-   <example>
-    <title>OO example</title>
-    <programlisting role="php">
-<![CDATA[
+     <example>
+         <title>OO example</title>
+         <programlisting role="php">
+             <![CDATA[
 <?php
+$fmt = new NumberFormatter( 'de_DE', NumberFormatter::DECIMAL );
+echo "Pattern: ".$fmt->getPattern()."\n";
+echo $fmt->format(1234567.891234567890000)."\n";
+$fmt->setPattern("#0.# kg");
+echo "Pattern: ".$fmt->getPattern()."\n";
+echo $fmt->format(1234567.891234567890000)."\n";
 ?>
 ]]>
-    </programlisting>
-   </example>
+         </programlisting>
+     </example>
+     &example.outputs;
+     <screen>
+         <![CDATA[
+Pattern: #,##0.###
+1.234.567,891
+Pattern: #0.# kg
+1234567,9 kg
+]]>
+     </screen>
  </refsect1>
 
  <refsect1 role="seealso">

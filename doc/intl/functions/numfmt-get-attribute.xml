@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.4 $ -->
+<!-- $Revision: 1.5 $ -->
 <refentry xml:id="function.numfmt-get-attribute" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_get_attribute</refname>
@@ -66,6 +66,12 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+$fmt = numfmt_create( 'de_DE', NumberFormatter::DECIMAL );
+echo "Digits: ".numfmt_get_attribute($fmt, NumberFormatter::MAX_FRACTION_DIGITS)."\n";
+echo numfmt_format($fmt, 1234567.891234567890000)."\n";
+numfmt_set_attribute($fmt, NumberFormatter::MAX_FRACTION_DIGITS, 2);
+echo "Digits: ".numfmt_get_attribute($fmt, NumberFormatter::MAX_FRACTION_DIGITS)."\n";
+echo numfmt_format($fmt, 1234567.891234567890000)."\n";
 ?>
 ]]>
     </programlisting>
@@ -75,10 +81,25 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+$fmt = new NumberFormatter( 'de_DE', NumberFormatter::DECIMAL );
+echo "Digits: ".$fmt->getAttribute(NumberFormatter::MAX_FRACTION_DIGITS)."\n";
+echo $fmt->format(1234567.891234567890000)."\n";
+$fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 2);
+echo "Digits: ".$fmt->getAttribute(NumberFormatter::MAX_FRACTION_DIGITS)."\n";
+echo $fmt->format(1234567.891234567890000)."\n";
 ?>
 ]]>
     </programlisting>
    </example>
+     &example.outputs;
+     <screen>
+         <![CDATA[
+Digits: 3
+1.234.567,891
+Digits: 2
+1.234.567,89
+]]>
+     </screen>
  </refsect1>
 
  <refsect1 role="seealso">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.4 $ -->
+<!-- $Revision: 1.5 $ -->
 <refentry xml:id="function.numfmt-parse" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_parse</refname>
@@ -79,6 +79,10 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+$fmt = numfmt_create( 'de_DE', NumberFormatter::DECIMAL );
+$num = "1.234.567,891";
+echo numfmt_parse($fmt, $num)."\n";
+echo numfmt_parse($fmt, $num, NumberFormatter::TYPE_INT32)."\n";
 ?>
 ]]>
     </programlisting>
@@ -88,10 +92,21 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+$fmt = new NumberFormatter( 'de_DE', NumberFormatter::DECIMAL );
+$num = "1.234.567,891";
+echo $fmt->parse($num)."\n";
+echo $fmt->parse($num, NumberFormatter::TYPE_INT32)."\n";
 ?>
 ]]>
     </programlisting>
    </example>
+     &example.outputs;
+     <screen>
+         <![CDATA[
+1234567.891
+1234567
+]]>
+     </screen>
  </refsect1>
 
  <refsect1 role="seealso">

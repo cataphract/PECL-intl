@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.4 $ -->
+<!-- $Revision: 1.5 $ -->
 <refentry xml:id="function.numfmt-get-text-attribute" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_get_text_attribute</refname>
@@ -68,6 +68,12 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+$fmt = numfmt_create( 'de_DE', NumberFormatter::DECIMAL );
+echo "Prefix: ".numfmt_get_text_attribute($fmt, NumberFormatter::NEGATIVE_PREFIX)."\n";
+echo numfmt_format($fmt, -1234567.891234567890000)."\n";
+numfmt_set_text_attribute($fmt, NumberFormatter::NEGATIVE_PREFIX, "MINUS");
+echo "Prefix: ".numfmt_get_text_attribute($fmt, NumberFormatter::NEGATIVE_PREFIX)."\n";
+echo numfmt_format($fmt, -1234567.891234567890000)."\n";
 ?>
 ]]>
     </programlisting>
@@ -77,10 +83,25 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+$fmt = new NumberFormatter( 'de_DE', NumberFormatter::DECIMAL );
+echo "Prefix: ".$fmt->getTextAttribute(NumberFormatter::NEGATIVE_PREFIX)."\n";
+echo $fmt->format(-1234567.891234567890000)."\n";
+$fmt->setTextAttribute(NumberFormatter::NEGATIVE_PREFIX, "MINUS");
+echo "Prefix: ".$fmt->getTextAttribute(NumberFormatter::NEGATIVE_PREFIX)."\n";
+echo $fmt->format(-1234567.891234567890000)."\n";
 ?>
 ]]>
     </programlisting>
    </example>
+     &example.outputs;
+     <screen>
+         <![CDATA[
+Prefix: -
+-1.234.567,891
+Prefix: MINUS
+MINUS1.234.567,891
+]]>
+     </screen>
  </refsect1>
 
  <refsect1 role="seealso">

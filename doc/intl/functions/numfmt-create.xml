@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.5 $ -->
+<!-- $Revision: 1.6 $ -->
 <refentry xml:id="function.numfmt-create" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>numfmt_create</refname>
@@ -91,7 +91,9 @@
 <![CDATA[
 <?php
 $fmt = numfmt_create( 'de_DE', NumberFormatter::DECIMAL );
-echo numfmt_format($fmt, 1234567.891234567890000);
+echo numfmt_format($fmt, 1234567.891234567890000)."\n";
+$fmt = numfmt_create( 'it', NumberFormatter::SPELLOUT );
+echo numfmt_format($fmt, 1142)."\n";
 ?>
 ]]>
     </programlisting>
@@ -102,7 +104,9 @@ echo numfmt_format($fmt, 1234567.891234567890000);
 <![CDATA[
 <?php
 $fmt = new NumberFormatter( 'de_DE', NumberFormatter::DECIMAL );
-echo $fmt->format(1234567.891234567890000);
+echo $fmt->format(1234567.891234567890000)."\n";
+$fmt = new NumberFormatter( 'it', NumberFormatter::SPELLOUT );
+echo $fmt->format(1142)."\n";
 ?>
 ]]>
     </programlisting>
@@ -111,6 +115,7 @@ echo $fmt->format(1234567.891234567890000);
   <screen>
 <![CDATA[
 1.234.567,891
+millicentoquarantadue
 ]]>
   </screen>
  </refsect1>
