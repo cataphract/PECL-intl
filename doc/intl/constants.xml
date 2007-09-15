@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <section xml:id="intl.constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.constants;
  &extension.constants;
@@ -30,29 +30,19 @@
     </listitem>
 
    </varlistentry>
-   <varlistentry>
-    <term>
-     <constant>ULOC_REQUESTED_LOCALE</constant> 
-      (<type>integer</type>)
-    </term>
-    <listitem>
-     <simpara>
-      This is the requested locale.
-     </simpara>
-     <para> 
-      <example><title>Locale types</title>
-       <para>
-        For example, a collator for "en_US_CALIFORNIA" was requested. In the current state of ICU (2.0), the:
-        <emphasis>requested</emphasis> locale is "en_US_CALIFORNIA"
-        <emphasis>valid</emphasis> locale is "en_US" (most specific locale supported by ICU)
-        <emphasis>actual</emphasis> locale is "root" (the collation data comes unmodified from the UCA)
-       </para>
-      </example>
-      The locale is considered supported by ICU if there is a core ICU bundle for that locale (although it may be empty).
-     </para> 
-    </listitem>
-   </varlistentry>
   </variablelist>
+
+  <para> 
+   <example><title>Locale types</title>
+    <para>
+     For example, a collator for "en_US_CALIFORNIA" was requested. In the current state of ICU, the:
+     <emphasis>requested</emphasis> locale is "en_US_CALIFORNIA"
+     <emphasis>valid</emphasis> locale is "en_US" (most specific locale supported by ICU)
+     <emphasis>actual</emphasis> locale is "root" (the collation data comes unmodified from the UCA)
+    </para>
+   </example>
+   The locale is considered supported by ICU if there is a core ICU bundle for that locale (although it may be empty).
+  </para> 
  </para>
 </section>
 
