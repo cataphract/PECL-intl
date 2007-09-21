@@ -51,10 +51,6 @@ class Locale {
     * identifier for the valid locale, equivalent to ULOC_VALID_LOCALE
     */
    const VALID_LOCALE = 1;
-   /**
-    * identifier for the requested locale, equivalent to ULOC_REQUESTED_LOCALE
-    */
-   const REQUESTED_LOCALE = 2;
 
    /**
     * member functions
