@@ -44,6 +44,10 @@ class Locale {
     */
 
    /**
+    *  identifier for the default locale
+    */
+   const DEFAULT = null;
+   /**
     *  identifier for the actual locale, equivalent to ULOC_ACTUAL_LOCALE
     */
    const ACTUAL_LOCALE = 0;
@@ -278,7 +282,226 @@ class Locale {
 
 }
 
-/** Now the same as procedural API */
+ /**
+    * @return string the current runtime locale as an RFC 4646 language tag, 
+    * normalized according to case mapping conventions in RFC 4646 
+    * Section 2.1.
+    */
+  function locale_get_default() {}
+
+   /*
+    * sets the default runtime locale to $locale
+    *
+    * @param string $locale is a BCP 47 compliant language tag containing the 
+    * locale identifier. UAX #35 extensions are accepted.
+    * @return boolean 'true' if okay, 'false' if in error
+    */
+  function locate_set_default($locale) {}
+    /*
+     * @param string $locale the locale to extract the primary language code from
+     * @return string the language code associated with the language (or 
+     * a grandfathered language tag). This will not be an empty 
+     * value except for the root locale. Deprecated values will be 
+     * mapped to modern equivalents. 
+     *
+     * The language subtag must always be present. Returns 'null' if an
+     * error occured extracting the language subtag (as with an invalid
+     * locale code).
+     */
+ function locale_get_primary_language($locale) {}
+
+    /*
+     * @param string $locale the locale to extract the script code from
+     * @return string the script subtag for the locale or the empty string
+     * if the script is not assigned. Note that many locales do not
+     * assign a script code.
+     *
+     * If no script is present, returns the empty string.
+     */
+  function locate_get_script($locale) {}
+
+    /*
+     * @param string $locale the locale to extract the region code from
+     * @return string the region subtag for the locale or the empty string
+     * if the region is not assigned. 
+     * Valid values include both ISO 3166 country codes and UN
+     * M.49 region codes (which are numeric strings).
+     *
+     * If no region is present, returns the empty string.
+     */
+  function locale_get_region($locale) {}
+
+
+    /*
+     * @param string $locale the locale to extract the first variant code from
+     * @return string the first variant subtag for the locale or the empty string
+     * Note that there can be multiple variants. In practice
+     * multiple variants are rare. Obtain the complete list of variants using
+     * getAllVariants().
+     *
+     * If no variant is present, returns the empty string.
+     */
+  function locate_get_variant($locale) {}
+
+
+     /*
+      * @param string $locale the locale to extract the variants from
+      * @return array an array containing the list of variants, or null
+      * if there are no variants. The array preserves the variant order.
+      */
+  function locale_get_all_variants($locale) {}
+
+
+      /*
+       * @param string $locale locale to extract the keywords from
+       * @return an associative array containing keyword-value
+       * pairs for this locale. The keys are keys to the array (doh!)
+       */
+  function locale_get_keywords($locale) {}
+
+       /*
+        * @param string $locale - the locale to return a displayname for
+	* @param [string] $in_locale - optional format locale
+	*
+	* @return string - display name of the locale in the format
+	* appropriate for $in_locale. If $in_locale is 'null' 
+	* then the default locale is used. 
+	*
+	* For example, if the default locale is "de", getDisplayName("de") returns
+	* "Deutsch" while getDisplayName("de", "en-US") returns "German".
+	*/
+    function locale_get_display_name($locale, $in_locale = null) {}
+
+	/*
+	 * Returns an appropriately localized display name for the language
+	 * subtag $lang. For example, the language subtag for locale
+	 * "en-US" is "en". Thus getDisplayLanguage(getLanguage("en-US"), "en-US")
+	 * would return the string "English".
+	 *
+	 * Language must always be present. If an error occurs returns null.
+	 *
+	 * @param  string  $lang      language code to get display value for
+	 * @param  string  $in_locale locale to use to display the language name
+	 * @return string  display name for $lang
+	 */
+	function locale_get_display_language($lang, $in_locale = null) {}
+
+	/*
+	 * Returns an appropriately localized display name for the script 
+	 * subtag $script. For example, the script subtag for locale
+	 * "zh-Hant-TW" is "Hant". Thus getDisplayScript(getScript("zh-Hant-TW"), "en-US")
+	 * would return the string "Traditional Chinese".
+	 *
+	 * If no script is present, returns null.
+	 *
+	 * @param  string  $script    script code to get the display name for
+	 * @param  string  $in_locale locale to use to display the script name
+	 * @return string  display name for $script
+	 */
+	function locale_get_display_script($script, $in_locale = null) {}
+
+	/*
+	 * Returns an appropriately localized display name for the region 
+	 * subtag $region. For example, the region subtag for locale
+	 * "en-US" is "US". Thus getDisplayRegion(getRegion("en-US"), "en-US")
+	 * would return the string "United States".
+	 *
+	 * If no $region is empty or an error occurs, returns null.
+	 *
+	 * @param  string  $region    region to get the display name for
+	 * @param  string  $in_locale locale to use to display the region name
+	 * @return string  display name for $region
+	 */
+	function locale_get_display_region($region, $in_locale = null) {}
+
+	/*
+	 * Returns an appropriately localized display name for the variant 
+	 * subtag $variant. For example, the variant subtag 
+	 * for locale "sl-IT-rozaj" is "rozaj". 
+	 * getDisplayVariants(getVariant("sl-IT-rozaj"), "en-US") would return 
+	 * the string "Resian".
+	 *
+	 * Note that a locale can contain multiple variants. You will need to iterate
+	 * over the list of variants in order to obtain each display name.
+	 *
+	 * If no $variant is empty or an error occurs, returns null.
+	 *
+	 * @param  string  $variant   variant to get a display name for
+	 * @param  string  $in_locale locale to use to display the variant's name
+	 * @return string  display name for $variant
+	 */
+	function locale_get_display_variant($variant, $in_locale = null) {}
+
+       /*
+        * @param string $langtag the language tag to check
+	* @param string $locale the language range to check against
+        * @return boolean 'true' if $locale matches $langtag according to RFC 4647's 
+	* basic filtering algorithm. That is, if $locale is "de-DE", then 
+	* langtag "de-Deva" would not match while "de-De-xyzzy" does. 
+	*
+	* Note that $langtag is the 'tag' and $locale is the 'range' in 
+	* this function call. This functionality is not implemented by ICU
+	* and is provided as a utility for doing language neogitation.
+	*/
+    function locale_filter_matches($langtag, $locale) {}
+
+       /*
+        * Searchs the items in $langtag for the best match to the language
+	* range specified in $locale according to RFC 4647's lookup
+	* algorithm. $default is returned if none of the tags in $langtag
+	* match. If $default is not provided, returns the empty string.
+	*
+	* @param array $langtag - an array containing a list of language tags to compare
+	*            to $locale
+	* @param string $locale  - the locale to use as the language range when matching
+	* @param string $default - the locale to use if no match is found
+	* @return string closest matching language tag, $default, or empty string
+	*/
+    function locale_lookup(array $langtag, $locale, $default = null) {}
+
+	/* 
+	 * @param string $langtag	the language tag to check
+	 * @return boolean 'true' if $langtag is "well-formed" according to the ABNF
+	 * in RFC 4646, 'false' otherwise.
+	 *
+	 * Note that the tag may still not be valid.
+	 */
+    function locale_is_well_formed($langtag) {}
+
+        /*
+	 * @param	string $langtag	the language tag to check
+	 * @return boolean 'true' if $langtag is well-formed according to
+	 * RFC 4646 and if all of the subtags are also valid, according
+	 * to the copy of the IANA Language Subtag Registry in this library.
+	 *
+	 * Note that CLDR (ICU) extensions to language tags are implemented
+	 * as private use codes and do not interfere with validity checking.
+	 */ 
+    function locale_is_valid($langtag) {}
+
+        /*
+	 * @param string $langtag	The language tag string to canonicalize
+	 * @return string the canonicalized language tag form of $langtag.
+         * Deprecated subtags are mapped to modern equivalents and 
+	 * case is normalized according to the rules in RFC 4646. 
+	 * ICU-style locale identifiers are converted into the 
+	 * language tag form by replacing underscores with hyphens
+	 *
+	 * Note that invalid subtags are preserved. A canonicalized
+	 * language tag may not be valid.
+	 */
+    function locale_canonicalize($langtag) {}
+
+        /*
+	 * @return string the IANA Language Subtag Registry date used by this
+	 * version of the library as a string in the RFC 3339 full-date
+	 * format. This is useful in debugging (when tags are unexpectedly 
+	 * invalid, for example).
+	 */
+    function locale_get_registry_date() {}
+
+}
+
 
 
 ?>
