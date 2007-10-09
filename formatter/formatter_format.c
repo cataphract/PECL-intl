@@ -74,13 +74,17 @@ PHP_FUNCTION( numfmt_format )
 	switch(type) {
 		case FORMAT_TYPE_INT32:
 			formatted_len = unum_format(nfo->nf_data.unum, (int32_t)Z_LVAL_PP(number), formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-			FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
-			if(formatted_len >= USIZE(format_buf)) {
+			if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
+				intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
 				formatted = eumalloc(formatted_len);
 				formatted_len = unum_format(nfo->nf_data.unum, (int32_t)Z_LVAL_PP(number), formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-				FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
+				if (U_FAILURE( FORMATTER_ERROR_CODE(nfo) ) ) {
+					efree(formatted);
+				}
 			}
+			FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
 			break;
+
 		case FORMAT_TYPE_INT64:
 		{
 			int64_t value;
@@ -92,24 +96,32 @@ PHP_FUNCTION( numfmt_format )
 				value = (Z_TYPE_PP(number) == IS_DOUBLE)?(int64_t)Z_DVAL_PP(number):Z_LVAL_PP(number);
 			}
 			formatted_len = unum_formatInt64(nfo->nf_data.unum, value, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-			FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
-			if(formatted_len >= USIZE(format_buf)) {
+			if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
+				intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
 				formatted = eumalloc(formatted_len);
 				formatted_len = unum_formatInt64(nfo->nf_data.unum, value, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-				FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
+				if (U_FAILURE( FORMATTER_ERROR_CODE(nfo) ) ) {
+					efree(formatted);
+				}
 			}
+			FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
 		}
 			break;
+
 		case FORMAT_TYPE_DOUBLE:
 			convert_to_double_ex(number);
 			formatted_len = unum_formatDouble(nfo->nf_data.unum, Z_DVAL_PP(number), formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-			FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
-			if(formatted_len >= USIZE(format_buf)) {
+			if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
+				intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
 				formatted = eumalloc(formatted_len);
 				unum_formatDouble(nfo->nf_data.unum, Z_DVAL_PP(number), formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-				FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
+				if (U_FAILURE( FORMATTER_ERROR_CODE(nfo) ) ) {
+					efree(formatted);
+				}
 			}
+			FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
 			break;
+
 		default:
 			php_error_docref(NULL TSRMLS_CC, E_WARNING, "Unsupported format type %ld", type);
 			RETURN_FALSE;
@@ -150,27 +162,26 @@ PHP_FUNCTION( numfmt_format_currency )
 
 	// Format the number using a fixed-length buffer.
 	formatted_len = unum_formatDoubleCurrency(nfo->nf_data.unum, number, currency, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-	if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) ) {
-		intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) TSRMLS_CC );
-		intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), "Number formatting failed", 0 TSRMLS_CC );
-		RETURN_FALSE;
-	}
 
 	// If the buffer turned out to be too small
 	// then allocate another buffer dynamically
 	// and use it to format the number.
-	if(formatted_len >= USIZE(format_buf)) {
+ 	if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
+ 		intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
 		formatted = eumalloc(formatted_len);
 		unum_formatDoubleCurrency(nfo->nf_data.unum, number, currency, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-		if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) ) {
-			intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) TSRMLS_CC );
-			intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), "Number formatting failed", 0 TSRMLS_CC );
-			efree( formatted );
-			RETURN_FALSE;
-		}
 	}
 
-	RETVAL_UNICODEL( formatted, formatted_len, ( formatted == format_buf ) );
+	if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) ) {
+		intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) TSRMLS_CC );
+		intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), "Number formatting failed", 0 TSRMLS_CC );
+		RETVAL_FALSE;
+ 		if (formatted != format_buf) {
+ 			efree(formatted);
+ 		}
+	} else {
+		RETVAL_UNICODEL( formatted, formatted_len, ( formatted == format_buf ) );
+	}
 }
 
 /* }}} */
