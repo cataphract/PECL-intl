@@ -80,7 +80,7 @@ if test "$PHP_INTL" != "no"; then
   PHP_SETUP_ICU
 
   PHP_NEW_EXTENSION(intl,
-                    php_intl.c \
+   			php_intl.c \
 		    intl_error.c \
 		    intl_convert.c \
 		    collator/collator.c \
@@ -101,5 +101,8 @@ if test "$PHP_INTL" != "no"; then
 		    formatter/formatter_data.c \
 		    formatter/formatter_format.c \
 		    formatter/formatter_parse.c \
+			locale/locale.c \
+			locale/locale_class.c \
+			locale/locale_methods.c \
 		    ,$ext_shared,,$ICU_INCS)
 fi

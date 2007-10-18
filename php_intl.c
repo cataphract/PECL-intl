@@ -13,6 +13,7 @@
    | Authors: Vadim Savchuk <vsavchuk@productengine.com>                  |
    |          Dmitry Lakhtyuk <dlakhtyuk@productengine.com>               |
    |          Stanislav Malyshev <stas@zend.com>                          |
+   |          Kirti Velankar <kirtig@yahoo-inc.com>   			          |
    +----------------------------------------------------------------------+
  */
 
@@ -39,11 +40,25 @@
 #include "formatter/formatter_main.h"
 #include "formatter/formatter_parse.h"
 
+#include "locale/locale.h"
+#include "locale/locale_class.h"
+#include "locale/locale_methods.h"
+
 #include "common/common_error.h"
 
 #include <ext/standard/info.h>
 
 #define INTL_MODULE_VERSION "0.1a"
+
+/*
+ * locale_get_default has a conflict since ICU also has 
+ * a function with the same  name
+ * in fact ICU appends the version no. to it also
+ * Hence the following undef for ICU version
+ * Same true for the locale_set_default function 
+*/
+#undef locale_get_default
+#undef locale_set_default
 
 ZEND_DECLARE_MODULE_GLOBALS( intl )
 
@@ -102,6 +117,22 @@ ZEND_BEGIN_ARG_INFO_EX( numfmt_parse_currency_arginfo, 0, 0, 3 )
 	ZEND_ARG_INFO( 1, position )
 ZEND_END_ARG_INFO()
 
+static
+ZEND_BEGIN_ARG_INFO_EX( locale_0_args, 0, 0, 0 )
+ZEND_END_ARG_INFO()
+
+static
+ZEND_BEGIN_ARG_INFO_EX( locale_1_arg, 0, 0, 1 )
+        ZEND_ARG_INFO( 0, arg1 )
+ZEND_END_ARG_INFO()
+
+static
+ZEND_BEGIN_ARG_INFO_EX( locale_2_args, 0, 0, 2 )
+        ZEND_ARG_INFO( 0, arg1 )
+        ZEND_ARG_INFO( 0, arg2 )
+ZEND_END_ARG_INFO()
+
+
 #define intl_0_args collator_static_0_args
 #define intl_1_arg collator_static_1_arg
 /* }}} */
@@ -146,6 +177,21 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( numfmt_get_error_code, NULL )
 	PHP_FE( numfmt_get_error_message, NULL )
 
+	//Locale functions
+    PHP_NAMED_FE( locale_get_default, zif_locale_get_default, locale_0_args )
+    PHP_NAMED_FE( locale_set_default, zif_locale_set_default, locale_1_arg )
+    PHP_FE( locale_get_primary_language, locale_1_arg )
+    PHP_FE( locale_get_script, locale_1_arg )
+    PHP_FE( locale_get_region, locale_1_arg )
+    PHP_FE( locale_get_variant, locale_1_arg )
+    PHP_FE( locale_get_keywords, locale_1_arg )
+    PHP_FE( locale_get_display_script, locale_2_args )
+    PHP_FE( locale_get_display_region, locale_2_args )
+    PHP_FE( locale_get_display_name, locale_2_args )
+    PHP_FE( locale_get_display_language, locale_2_args)
+    PHP_FE( locale_get_display_variant, locale_2_args )
+
+	
 	// common functions
 	PHP_FE( intl_get_error_code, intl_0_args )
 	PHP_FE( intl_get_error_message, intl_0_args )
@@ -207,6 +253,12 @@ PHP_MINIT_FUNCTION( intl )
 	// Expose NumberFormatter constants to PHP scripts
 	formatter_register_constants( INIT_FUNC_ARGS_PASSTHRU );
 
+    // Register 'Locale' PHP class
+    locale_register_Locale_class( TSRMLS_C );
+
+    // Expose Locale constants to PHP scripts
+    locale_register_constants( INIT_FUNC_ARGS_PASSTHRU );
+
 	// Expose ICU error codes to PHP scripts.
 	intl_expose_icu_error_codes( INIT_FUNC_ARGS_PASSTHRU );
 
@@ -240,6 +292,9 @@ PHP_RSHUTDOWN_FUNCTION( intl )
 	if(INTL_G(current_collator)) {
 		INTL_G(current_collator) = NULL;
 	}
+    if(INTL_G(current_locale)) {
+        INTL_G(current_locale) = NULL;
+    }
 	intl_error_reset( NULL TSRMLS_CC);
 	return SUCCESS;
 }

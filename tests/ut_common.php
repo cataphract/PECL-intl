@@ -34,96 +34,9 @@ function ut_run()
     echo $proc_result;
 }
 
-/*
- * Convert a binary string content of $var to unicode.
- */
-function u( $var )
-{
-    if( is_string( $var ) )
-        return u_str( $var );
-
-    if( is_array( $var ) )
-        return u_array( $var );
-
-    return $var;
-}
-
-/*
- * Convert a binary string to unicode one.
- */
-function u_str( $s )
-{
-    if( !is_binary( $s ) )
-        return $s;
-
-    return unicode_decode( $s, 'utf-8' );
-}
-
-/*
- * Convert each binary string item of array to unicode string.
- */
-function u_array( $a )
-{
-    $b = array();
-    foreach( $a as $key => $val )
-        $b[$key] = u( $val );
-
-    return $b;
-}
-
-/*
- * Same as 'var_export" but does conversion unicode string content
- * of $str to utf-8.
- */
-function dump_str( $str, $use_quotes = true )
-{
-    $q = '';
-    if( $use_quotes )
-        $q = "'";
-    if( is_unicode( $str ) && !unicode_semantics() )
-        return $q . unicode_encode( $str, 'utf-8' ) . $q;
-
-    if( is_string( $str ) )
-        return $q . "$str" . $q;
-
-    return var_export( $str, true );
-}
-
-/*
- * Same as 'var_export" but does conversion unicode string content
- * of each item of array $a to utf-8.
- */
-function dump_array( $a )
-{
-    $b = "array (\n";
-    foreach( $a as $key => $val )
-    {
-    	if( is_integer( $key ) )
-            $b .= "  $key => ";
-        else
-            $b .= "  '$key' => ";
-
-        if( is_unicode( $val ) && !unicode_semantics() )
-    	    $b .= "'" . unicode_encode( $val, 'utf-8' ) . "'";
-        elseif( is_null( $val ) )
-            $b .= "NULL";
-        elseif( is_string( $val ) )
-            $b .= "'" . "$val" . "'";
-        else
-            $b .= $val;
-        $b .= ",\n";
-    }
-    $b .= ")";
-
-    return $b;
-}
-
 function dump( $val )
 {
-    if( is_array( $val ) )
-        return dump_array( $val );
-
-    return dump_str( $val );
+    return var_export( $val, true );
 }
 
 /*
@@ -276,5 +189,54 @@ function ut_nfmt_get_error_code( $fmt )
 function ut_nfmt_get_error_message( $fmt )
 {
     return $GLOBALS['oo-mode'] ? $fmt->getErrorMessage() : numfmt_get_error_message( $fmt );
+}
+
+/*
+ * Wrappers around Collator methods to run them in either OO- or procedural mode.
+ */
+
+function ut_loc_get_default( )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getDefault( ) : locale_get_default();
+}
+function ut_loc_set_default( $locale  )
+{
+   	return $GLOBALS['oo-mode'] ? Locale::setDefault( $locale  ) : locale_set_default( $locale );
+}
+function ut_loc_get_primary_language( $locale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getPrimaryLanguage( $locale ) : locale_get_primary_language( $locale );
+}
+function ut_loc_get_script( $locale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getScript( $locale ) : locale_get_script( $locale );
+}
+function ut_loc_get_region( $locale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getRegion( $locale ) : locale_get_region( $locale );
+}
+function ut_loc_get_variant( $locale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getVariant( $locale ) : locale_get_variant( $locale );
+}
+function ut_loc_get_keywords( $locale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getKeywords( $locale ) : locale_get_keywords( $locale );
+}
+function ut_loc_get_display_language( $locale , $dispLocale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getDisplayLanguage( $locale , $dispLocale ) : locale_get_display_language( $locale , $dispLocale );
+}
+function ut_loc_get_display_script( $locale , $dispLocale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getDisplayScript( $locale , $dispLocale ) : locale_get_display_script( $locale , $dispLocale );
+}
+function ut_loc_get_display_region( $locale, $dispLocale  )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getDisplayRegion( $locale, $dispLocale  ) : locale_get_display_region( $locale, $dispLocale  );
+}
+function ut_loc_get_display_variant( $locale , $dispLocale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getDisplayVariant( $locale , $dispLocale ) : locale_get_display_variant( $locale, $dispLocale  );
 }
 ?>
