@@ -191,6 +191,19 @@ function ut_nfmt_get_error_message( $fmt )
     return $GLOBALS['oo-mode'] ? $fmt->getErrorMessage() : numfmt_get_error_message( $fmt );
 }
 
+function ut_norm_create( )
+{
+    return $GLOBALS['oo-mode'] ? new Normalizer( ) : NULL;
+}
+function ut_norm_normalize( $norm, $str, $form )
+{
+    return $GLOBALS['oo-mode'] ? $norm->normalize( $str, $form ) : normalizer_normalize( $str, $form );
+}
+function ut_norm_is_normalized( $norm, $str, $form )
+{
+    return $GLOBALS['oo-mode'] ? $norm->isNormalized( $str, $form ) : normalizer_is_normalized( $str, $form );
+}
+
 /*
  * Wrappers around Collator methods to run them in either OO- or procedural mode.
  */
