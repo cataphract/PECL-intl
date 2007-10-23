@@ -50,22 +50,21 @@ class Normalizer {
 
    /**
     * Normalizes the input provided and returns the normalized string
-    * @param  string  $input    The input string to normalize
-    * @param  integer $form     One of the normalization forms
-    * @param  array   $options  Normalization options
-    * @return string            The normalized string or null if an error
-    *                           occurred.
+    * @param  string     $input    The input string to normalize
+    * @param  [integer]  $form     One of the normalization forms
+    * @param  [array]    $options  Normalization options
+    * @return string               The normalized string or false if an error occurred.
     */
-   public static function normalize($input [,$form = FORM_C] [, $options]) {}
+   public static function normalize($input, $form = self::FORM_C, $options = null) {}
 
    /**
     * Checks if the provided string is already in the specified normalization form.
-    * @param  string  $input    The input string to normalize
-    * @param  integer $form     One of the normalization forms
-    * @param  array   $options  Normalization options
-    * @return boolean           True if normalized, false otherwise
+    * @param  string    $input    The input string to normalize
+    * @param  [integer] $form     One of the normalization forms
+    * @param  [array]   $options  Normalization options
+    * @return boolean             True if normalized, false otherwise
     */
-   public static function isNormalized($input, [,$form = FORM_C] [, $options]) {}
+   public static function isNormalized($input, $form = self::FORM_C, $options = null) {}
 
 }
 
@@ -75,13 +74,12 @@ class Normalizer {
 
 /**
  * Normalizes the input provided and returns the normalized string
- * @param  string  $input    The input string to normalize
- * @param  integer $form     One of the normalization forms
- * @param  array   $options  Normalization options
- * @return string            The normalized string or null if an error
- *                           occurred.
+ * @param  string    $input    The input string to normalize
+ * @param  [integer] $form     One of the normalization forms
+ * @param  [array]   $options  Normalization options
+ * @return string              The normalized string or false if an error occurred.
  */
-function normalizer_normalize($input [,$form = FORM_C] [, $options]) {}
+function normalizer_normalize($input, $form = self::FORM_C, $options = null) {}
 
 /**
  * Checks if the provided string is already in the specified normalization form.
@@ -90,7 +88,7 @@ function normalizer_normalize($input [,$form = FORM_C] [, $options]) {}
  * @param  array   $options  Normalization options
  * @return boolean           True if normalized, false otherwise
  */
-function normalizer_is_normalized($input, [,$form = FORM_C] [, $options]) {}
+function normalizer_is_normalized($input, $form = self::FORM_C, $options = null) {}
 
 
 ?>
