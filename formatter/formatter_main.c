@@ -33,7 +33,7 @@ PHP_FUNCTION( numfmt_create )
 {
 	char*       locale;
 	UChar*      pattern;
-	int         locale_len, style, pattern_len = 0;
+	int         locale_len = 0, style, pattern_len = 0;
 	zval*       object;
 	NumberFormatter_object* nfo;
 
@@ -60,6 +60,10 @@ PHP_FUNCTION( numfmt_create )
 
 	intl_error_reset( &nfo->nf_data.error TSRMLS_CC );
 
+	if(locale_len == 0) {
+		locale = INTL_G(current_locale);
+	}
+
 	nfo->nf_data.unum = unum_open(style, pattern, pattern_len, locale, NULL, &FORMATTER_ERROR_CODE(nfo));
 
 	if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )
@@ -79,7 +83,7 @@ PHP_METHOD( NumberFormatter, __construct )
 {
 	char*       locale;
 	UChar*      pattern;
-	int         locale_len, style, pattern_len = 0;
+	int         locale_len = 0, style, pattern_len = 0;
 	zval*       object;
 	NumberFormatter_object* nfo;
 
@@ -99,6 +103,10 @@ PHP_METHOD( NumberFormatter, __construct )
 	nfo = (NumberFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
 	intl_error_reset( &nfo->nf_data.error TSRMLS_CC );
+
+	if(locale_len == 0) {
+		locale = UG(default_locale);
+	}
 
 	// Create an ICU number formatter.
 	nfo->nf_data.unum = unum_open(style, pattern, pattern_len, locale, NULL, &FORMATTER_ERROR_CODE(nfo));
@@ -159,6 +167,10 @@ PHP_FUNCTION( numfmt_get_error_message )
 			"numfmt_get_error_message: unable to parse input params", 0 TSRMLS_CC );
 
 		RETURN_FALSE;
+	}
+
+	if(locale_len == 0) {
+		locale = UG(default_locale);
 	}
 
 	// Create an ICU number formatter.

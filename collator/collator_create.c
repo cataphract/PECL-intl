@@ -29,7 +29,7 @@
 PHP_FUNCTION( collator_create )
 {
 	char*            locale;
-	int              locale_len;
+	int              locale_len = 0;
 	zval*            object;
 	Collator_object* co;
 
@@ -55,6 +55,10 @@ PHP_FUNCTION( collator_create )
 	co = (Collator_object *) zend_object_store_get_object( object TSRMLS_CC );
 
 	intl_error_reset( COLLATOR_ERROR_P( co ) TSRMLS_CC );
+
+	if(locale_len == 0) {
+		locale = UG(default_locale);
+	}
 
 	// Open ICU collator.
 	co->ucoll = ucol_open( locale, COLLATOR_ERROR_CODE_P( co ) );
@@ -95,6 +99,10 @@ PHP_METHOD( Collator, __construct )
 	co  = (Collator_object*) zend_object_store_get_object( object TSRMLS_CC );
 
 	intl_error_reset( COLLATOR_ERROR_P( co ) TSRMLS_CC );
+
+	if(locale_len == 0) {
+		locale = UG(default_locale);
+	}
 
 	// Open ICU collator.
 	co->ucoll = ucol_open( locale, COLLATOR_ERROR_CODE_P( co ) );
