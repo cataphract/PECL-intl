@@ -38,7 +38,7 @@
 #define USIZE(data) sizeof((data))/sizeof(UChar)
 #define UCHARS(len) ((len) / sizeof(UChar))
 
-#define INTL_Z_STRVAL_P(str) (UChar*) Z_STRVAL_P(str)
-#define INTL_Z_STRLEN_P(str) UCHARS( Z_STRLEN_P(str) )
+#define INTL_Z_STRVAL_P(str) (UChar*) Z_USTRVAL_P(str)
+#define INTL_Z_STRLEN_P(str) Z_USTRLEN_P(str)
 
 #endif /* INTL_COMMON_H */
