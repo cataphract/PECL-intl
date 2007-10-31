@@ -128,7 +128,7 @@ PHP_FUNCTION( numfmt_format )
 			break;
 	}
 
-	RETVAL_UNICODEL( formatted, formatted_len, ( formatted == format_buf ) );
+	FORMATTER_RETVAL_UTF8( nfo, formatted, formatted_len, ( formatted != format_buf ) );
 }
 /* }}} */
 
@@ -143,12 +143,14 @@ PHP_FUNCTION( numfmt_format_currency )
 	UChar      format_buf[32];
 	UChar*     formatted     = format_buf;
 	int        formatted_len = USIZE(format_buf);
-	UChar*     currency      = NULL;
-	int        currency_len;
+	char*      currency      = NULL;
+	int        currency_len  = 0;
+	UChar*     scurrency     = NULL;
+	int        scurrency_len = 0;
 	FORMATTER_METHOD_INIT_VARS;
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Odu",
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ods",
 		&object, NumberFormatter_ce_ptr,  &number, &currency, &currency_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
@@ -160,27 +162,35 @@ PHP_FUNCTION( numfmt_format_currency )
 	// Fetch the object.
 	FORMATTER_METHOD_FETCH_OBJECT;
 
+	// Convert currency to UTF-16.
+	intl_convert_utf8_to_utf16(&scurrency, &scurrency_len, currency, currency_len, &FORMATTER_ERROR_CODE(nfo));
+	FORMATTER_CHECK_STATUS( nfo, "Currency conversion to UTF-16 failed" );
+
 	// Format the number using a fixed-length buffer.
-	formatted_len = unum_formatDoubleCurrency(nfo->nf_data.unum, number, currency, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
+	formatted_len = unum_formatDoubleCurrency(nfo->nf_data.unum, number, scurrency, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
 
 	// If the buffer turned out to be too small
 	// then allocate another buffer dynamically
 	// and use it to format the number.
- 	if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
- 		intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
+	if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
+		intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
 		formatted = eumalloc(formatted_len);
-		unum_formatDoubleCurrency(nfo->nf_data.unum, number, currency, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
+		unum_formatDoubleCurrency(nfo->nf_data.unum, number, scurrency, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
 	}
 
 	if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) ) {
 		intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) TSRMLS_CC );
 		intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), "Number formatting failed", 0 TSRMLS_CC );
 		RETVAL_FALSE;
- 		if (formatted != format_buf) {
- 			efree(formatted);
- 		}
+		if (formatted != format_buf) {
+			efree(formatted);
+		}
 	} else {
-		RETVAL_UNICODEL( formatted, formatted_len, ( formatted == format_buf ) );
+		FORMATTER_RETVAL_UTF8( nfo, formatted, formatted_len, ( formatted != format_buf ) );
+	}
+
+	if(scurrency) {
+		efree(scurrency);
 	}
 }
 

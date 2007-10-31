@@ -20,5 +20,15 @@
 #include <php.h>
 
 void locale_register_constants( INIT_FUNC_ARGS );
+ 
+#define LOC_DEFAULT NULL
+#define LOC_LANG_TAG "language"
+#define LOC_SCRIPT_TAG "script"
+#define LOC_REGION_TAG "region"
+#define LOC_VARIANT_TAG "variant"
+#define LOC_EXTLANG_TAG "extlang"
+#define LOC_GRANDFATHERED_LANG_TAG "grandfathered"
+#define LOC_PRIVATE_TAG "private"
+#define LOC_CANONICALIZE_TAG "canonicalize"
 
 #endif // LOCALE_LOCALE_H

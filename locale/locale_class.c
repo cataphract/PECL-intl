@@ -26,6 +26,48 @@
 zend_class_entry *Locale_ce_ptr = NULL;
 
 /////////////////////////////////////////////////////////////////////////////
+// Auxiliary functions needed by objects of 'Locale' class
+/////////////////////////////////////////////////////////////////////////////
+
+
+/* {{{ Locale_objects_free */
+void Locale_objects_free( zend_object *object TSRMLS_DC )
+{
+	Locale_object* lo = (Locale_object*)object;
+
+	zend_object_std_dtor( &lo->zo TSRMLS_CC );
+
+	locale_object_destroy( lo TSRMLS_CC );
+
+	efree( lo );
+}
+/* }}} */
+
+/* {{{ Locale_object_create */
+zend_object_value Locale_object_create(
+	zend_class_entry *ce TSRMLS_DC )
+{
+	zend_object_value    retval;
+	Locale_object*     intern;
+
+	intern = ecalloc( 1, sizeof(Locale_object) );
+	//intl_error_init( LOCALE_ERROR_P( intern ) TSRMLS_CC );
+	intl_error_init( NULL TSRMLS_CC );
+	zend_object_std_init( &intern->zo, ce TSRMLS_CC );
+
+	retval.handle = zend_objects_store_put(
+		intern,
+		NULL,
+		(zend_objects_free_object_storage_t)Locale_objects_free,
+		NULL TSRMLS_CC );
+
+	retval.handlers = zend_get_std_object_handlers();
+
+	return retval;
+}
+/* }}} */
+
+/////////////////////////////////////////////////////////////////////////////
 // 'Locale' class registration structures & functions
 /////////////////////////////////////////////////////////////////////////////
 
@@ -68,6 +110,14 @@ function_entry Locale_class_functions[] = {
 	ZEND_FENTRY( getDisplayName, ZEND_FN( locale_get_display_name ), locale_2_args , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( getDisplayLanguage, ZEND_FN( locale_get_display_language ), locale_2_args , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( getDisplayVariant, ZEND_FN( locale_get_display_variant ), locale_2_args , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( composeLocale, ZEND_FN( locale_compose ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( parseLocale, ZEND_FN( locale_parse ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( getAllVariants, ZEND_FN( locale_get_all_variants ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( filterMatches, ZEND_FN( locale_filter_matches ), locale_2_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( canonicalFilterMatches, ZEND_FN( locale_canonical_filter_matches ), locale_2_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( lookup, ZEND_FN( locale_lookup ), locale_2_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( canonicalLookup, ZEND_FN( locale_canonical_lookup ), locale_2_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( canonicalize, ZEND_FN( locale_canonicalize ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	{ NULL, NULL, NULL }
 };
 /* }}} */
@@ -81,7 +131,7 @@ void locale_register_Locale_class( TSRMLS_D )
 
 	// Create and register 'Locale' class.
 	INIT_CLASS_ENTRY( ce, "Locale", Locale_class_functions );
-	ce.create_object = NULL;
+	ce.create_object = Locale_object_create;
 	Locale_ce_ptr = zend_register_internal_class( &ce TSRMLS_CC );
 
 	// Declare 'Locale' class properties.

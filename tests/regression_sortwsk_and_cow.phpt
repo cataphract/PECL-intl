@@ -20,22 +20,19 @@ function test_COW( $locale, $test_array )
 
     $coll = ut_coll_create( $locale );
 
-    // Convert strings to UTF-16 if needed.
-    $u_test_array = u( $test_array );
-
     // Create two copies of the given array.
-    $u_copy1 = $u_test_array;
-    $u_copy2 = $u_test_array;
+    $copy1 = $test_array;
+    $copy2 = $test_array;
 
     // Sort given array and the first copy of it.
-    ut_coll_sort_with_sort_keys( $coll, $u_test_array );
-    ut_coll_sort_with_sort_keys( $coll, $u_copy1      );
+    ut_coll_sort_with_sort_keys( $coll, $test_array );
+    ut_coll_sort_with_sort_keys( $coll, $copy1      );
 
     // Return contents of all the arrays.
     // The second copy should remain unsorted.
-    $res_str .= dump( $u_test_array ) . "\n";
-    $res_str .= dump( $u_copy1      ) . "\n";
-    $res_str .= dump( $u_copy2      ) . "\n";
+    $res_str .= dump( $test_array ) . "\n";
+    $res_str .= dump( $copy1      ) . "\n";
+    $res_str .= dump( $copy2      ) . "\n";
 
     return $res_str;
 }

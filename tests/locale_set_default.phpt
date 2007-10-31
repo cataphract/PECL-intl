@@ -14,6 +14,7 @@ function ut_main()
 {
     $res_str = '';
 
+/*
     $locales = array(
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
         '',
@@ -56,8 +57,8 @@ function ut_main()
         'qaa-Qaaa-QM-x-southern',
         'sr-Latn-QM',
         'sr-Qaaa-CS',
-/*Tags that use extensions (examples ONLY: extensions MUST be defined
-   by revision or update to this document or by RFC): */
+//Tags that use extensions (examples ONLY: extensions MUST be defined
+//   by revision or update to this document or by RFC): 
         'en-US-u-islamCal',
         'zh-CN-a-myExt-x-private',
         'en-a-myExt-b-another',
@@ -66,13 +67,19 @@ function ut_main()
         'a-DE',
         'ar-a-aaa-b-bbb-a-ccc'
     );
+*/
 
+	$locales = array(	
+		'es'
+	);
     $res_str = '';
 
     foreach( $locales as $locale )
     {
         $lang = ut_loc_set_default( $locale);
         $res_str .= "$locale: set locale '$lang'";
+        $lang = ut_loc_get_default( );
+        $res_str .= "get locale '$lang'";
         $res_str .= "\n";
     }
 

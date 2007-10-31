@@ -35,6 +35,16 @@ PHP_FUNCTION( locale_get_display_region );
 PHP_FUNCTION( locale_get_display_variant );
 
 PHP_FUNCTION( locale_get_keywords );
-PHP_FUNCTION(locale_canonicalize);
+PHP_FUNCTION( locale_canonicalize);
+
+PHP_FUNCTION( locale_compose);
+PHP_FUNCTION( locale_parse);
+PHP_FUNCTION( locale_get_all_variants);
+PHP_FUNCTION( locale_filter_matches);
+PHP_FUNCTION( locale_canonical_filter_matches);
+
+PHP_FUNCTION( locale_lookup);
+PHP_FUNCTION( locale_canonical_lookup);
+PHP_FUNCTION( locale_canonicalize);
 
 #endif // LOCALE_METHODS_H

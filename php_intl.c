@@ -22,6 +22,7 @@
 #endif
 
 #include "php_intl.h"
+#include "php_ini.h"
 #include "intl_error.h"
 #include "collator/collator_class.h"
 #include "collator/collator.h"
@@ -39,11 +40,6 @@
 #include "formatter/formatter_format.h"
 #include "formatter/formatter_main.h"
 #include "formatter/formatter_parse.h"
-
-#include "normalizer/normalizer.h"
-#include "normalizer/normalizer_class.h"
-#include "normalizer/normalizer_create.h"
-#include "normalizer/normalizer_normalize.h"
 
 #include "locale/locale.h"
 #include "locale/locale_class.h"
@@ -140,13 +136,6 @@ ZEND_END_ARG_INFO()
 
 #define intl_0_args collator_static_0_args
 #define intl_1_arg collator_static_1_arg
-
-ZEND_BEGIN_ARG_INFO_EX( normalizer_3_args, 0, 0, 3 )
-	ZEND_ARG_INFO( 0, arg1 )
-	ZEND_ARG_INFO( 0, arg2 )
-	ZEND_ARG_INFO( 0, arg3 )
-ZEND_END_ARG_INFO()
-
 /* }}} */
 
 /* {{{ intl_functions[]
@@ -189,24 +178,29 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( numfmt_get_error_code, NULL )
 	PHP_FE( numfmt_get_error_message, NULL )
 
-	// normalizer functions
-	PHP_FE( normalizer_normalize, normalizer_3_args )
-	PHP_FE( normalizer_is_normalized, normalizer_3_args )
-
 	//Locale functions
-	PHP_NAMED_FE( locale_get_default, zif_locale_get_default, locale_0_args )
-	PHP_NAMED_FE( locale_set_default, zif_locale_set_default, locale_1_arg )
-	PHP_FE( locale_get_primary_language, locale_1_arg )
-	PHP_FE( locale_get_script, locale_1_arg )
-	PHP_FE( locale_get_region, locale_1_arg )
-	PHP_FE( locale_get_variant, locale_1_arg )
-	PHP_FE( locale_get_keywords, locale_1_arg )
-	PHP_FE( locale_get_display_script, locale_2_args )
-	PHP_FE( locale_get_display_region, locale_2_args )
-	PHP_FE( locale_get_display_name, locale_2_args )
-	PHP_FE( locale_get_display_language, locale_2_args)
-	PHP_FE( locale_get_display_variant, locale_2_args )
+    PHP_NAMED_FE( locale_get_default, zif_locale_get_default, locale_0_args )
+    PHP_NAMED_FE( locale_set_default, zif_locale_set_default, locale_1_arg )
+    PHP_FE( locale_get_primary_language, locale_1_arg )
+    PHP_FE( locale_get_script, locale_1_arg )
+    PHP_FE( locale_get_region, locale_1_arg )
+    PHP_FE( locale_get_variant, locale_1_arg )
+    PHP_FE( locale_get_keywords, locale_1_arg )
+    PHP_FE( locale_get_display_script, locale_2_args )
+    PHP_FE( locale_get_display_region, locale_2_args )
+    PHP_FE( locale_get_display_name, locale_2_args )
+    PHP_FE( locale_get_display_language, locale_2_args)
+    PHP_FE( locale_get_display_variant, locale_2_args )
+    PHP_FE( locale_compose, locale_1_arg )
+    PHP_FE( locale_parse, locale_1_arg )
+    PHP_FE( locale_get_all_variants, locale_1_arg )
+    PHP_FE( locale_filter_matches, locale_2_args )
+    PHP_FE( locale_canonical_filter_matches, locale_2_args )
+    PHP_FE( locale_canonicalize, locale_1_arg )
+    PHP_FE( locale_lookup, locale_2_args )
+    PHP_FE( locale_canonical_lookup, locale_2_args )
 
+	
 	// common functions
 	PHP_FE( intl_get_error_code, intl_0_args )
 	PHP_FE( intl_get_error_message, intl_0_args )
@@ -218,6 +212,13 @@ zend_function_entry intl_functions[] = {
 /* }}} */
 
 static PHP_GINIT_FUNCTION(intl);
+
+/* {{{ INI Settings */
+PHP_INI_BEGIN()
+	STD_PHP_INI_ENTRY("intl.default_locale", "", PHP_INI_ALL, OnUpdateStringUnempty, default_locale, zend_intl_globals, intl_globals)
+PHP_INI_END()
+/* }}} */
+
 
 /* {{{ intl_module_entry
  */
@@ -256,6 +257,9 @@ static PHP_GINIT_FUNCTION(intl)
  */
 PHP_MINIT_FUNCTION( intl )
 {
+	//For the default locale php.ini setting
+	REGISTER_INI_ENTRIES();
+
 	// Register 'Collator' PHP class
 	collator_register_Collator_class( TSRMLS_C );
 
@@ -268,17 +272,11 @@ PHP_MINIT_FUNCTION( intl )
 	// Expose NumberFormatter constants to PHP scripts
 	formatter_register_constants( INIT_FUNC_ARGS_PASSTHRU );
 
-	// Register 'Normalizer' PHP class
-	normalizer_register_Normalizer_class( TSRMLS_C );
+    // Register 'Locale' PHP class
+    locale_register_Locale_class( TSRMLS_C );
 
-	// Expose Normalizer constants to PHP scripts
-	normalizer_register_constants( INIT_FUNC_ARGS_PASSTHRU );
-	
-	// Register 'Locale' PHP class
-	locale_register_Locale_class( TSRMLS_C );
-
-	// Expose Locale constants to PHP scripts
-	locale_register_constants( INIT_FUNC_ARGS_PASSTHRU );
+    // Expose Locale constants to PHP scripts
+    locale_register_constants( INIT_FUNC_ARGS_PASSTHRU );
 
 	// Expose ICU error codes to PHP scripts.
 	intl_expose_icu_error_codes( INIT_FUNC_ARGS_PASSTHRU );
@@ -294,6 +292,9 @@ PHP_MINIT_FUNCTION( intl )
  */
 PHP_MSHUTDOWN_FUNCTION( intl )
 {
+	//For the default locale php.ini setting
+	UNREGISTER_INI_ENTRIES();
+
 	return SUCCESS;
 }
 /* }}} */
@@ -313,9 +314,9 @@ PHP_RSHUTDOWN_FUNCTION( intl )
 	if(INTL_G(current_collator)) {
 		INTL_G(current_collator) = NULL;
 	}
-	if(INTL_G(current_locale)) {
-		INTL_G(current_locale) = NULL;
-	}
+    if(INTL_G(default_locale)) {
+        INTL_G(default_locale) = NULL;
+    }
 	intl_error_reset( NULL TSRMLS_CC);
 	return SUCCESS;
 }
@@ -329,6 +330,7 @@ PHP_MINFO_FUNCTION( intl )
 	php_info_print_table_header( 2, "Internationalization support", "enabled" );
 	php_info_print_table_row( 2, "version", INTL_MODULE_VERSION );
 	php_info_print_table_end();
+	DISPLAY_INI_ENTRIES() ;
 }
 /* }}} */
 

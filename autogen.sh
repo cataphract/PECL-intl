@@ -1,7 +1,7 @@
 #!/bin/bash
 # Usage: ./autogen.sh [PHP_PREFIX [ICU_PREFIX]]
 
-PHP_PREFIX=/opt/php6
+PHP_PREFIX=/opt/php5
 ICU_PREFIX=/usr
 
 function check_dir()

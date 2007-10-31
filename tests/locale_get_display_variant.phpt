@@ -94,9 +94,9 @@ ut_run();
 ?>
 --EXPECT--
 locale='uk-ua_CALIFORNIA@currency=;currency=GRN'
-disp_locale=en :  display_variant=Ukraine
-disp_locale=fr :  display_variant=Ukraine
-disp_locale=de :  display_variant=Ukraine
+disp_locale=en :  display_variant=CALIFORNIA
+disp_locale=fr :  display_variant=CALIFORNIA
+disp_locale=de :  display_variant=CALIFORNIA
 -----------------
 locale=''
 disp_locale=en :  display_variant=
@@ -159,74 +159,74 @@ disp_locale=fr :  display_variant=
 disp_locale=de :  display_variant=
 -----------------
 locale='zh-Hans-CN'
-disp_locale=en :  display_variant=China
-disp_locale=fr :  display_variant=Chine
-disp_locale=de :  display_variant=China
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='sr-Latn-CS'
-disp_locale=en :  display_variant=Serbia And Montenegro
-disp_locale=fr :  display_variant=Serbie-et-Monténégro
-disp_locale=de :  display_variant=Serbien und Montenegro
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='sl-rozaj'
-disp_locale=en :  display_variant=ROZAJ
-disp_locale=fr :  display_variant=ROZAJ
-disp_locale=de :  display_variant=ROZAJ
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='sl-nedis'
-disp_locale=en :  display_variant=NEDIS
-disp_locale=fr :  display_variant=NEDIS
-disp_locale=de :  display_variant=NEDIS
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='de-CH-1901'
-disp_locale=en :  display_variant=Switzerland
-disp_locale=fr :  display_variant=Suisse
-disp_locale=de :  display_variant=Schweiz
+disp_locale=en :  display_variant=Traditional German orthography
+disp_locale=fr :  display_variant=orthographe allemande traditionnelle
+disp_locale=de :  display_variant=1901
 -----------------
 locale='sl-IT-nedis'
-disp_locale=en :  display_variant=Italy
-disp_locale=fr :  display_variant=Italie
-disp_locale=de :  display_variant=Italien
+disp_locale=en :  display_variant=Natisone dialect
+disp_locale=fr :  display_variant=dialecte de Natisone
+disp_locale=de :  display_variant=NEDIS
 -----------------
 locale='sl-Latn-IT-nedis'
-disp_locale=en :  display_variant=Italy
-disp_locale=fr :  display_variant=Italie
-disp_locale=de :  display_variant=Italien
+disp_locale=en :  display_variant=Natisone dialect
+disp_locale=fr :  display_variant=dialecte de Natisone
+disp_locale=de :  display_variant=NEDIS
 -----------------
 locale='de-DE'
-disp_locale=en :  display_variant=Germany
-disp_locale=fr :  display_variant=Allemagne
-disp_locale=de :  display_variant=Deutschland
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='en-US'
-disp_locale=en :  display_variant=United States
-disp_locale=fr :  display_variant=États-Unis
-disp_locale=de :  display_variant=Vereinigte Staaten
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='es-419'
-disp_locale=en :  display_variant=Latin America and the Caribbean
-disp_locale=fr :  display_variant=Amérique latine et Caraïbes
-disp_locale=de :  display_variant=Lateinamerika und Karibik
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='de-CH-x-phonebk'
-disp_locale=en :  display_variant=Switzerland
-disp_locale=fr :  display_variant=Suisse
-disp_locale=de :  display_variant=Schweiz
+disp_locale=en :  display_variant=X_PHONEBK
+disp_locale=fr :  display_variant=X_PHONEBK
+disp_locale=de :  display_variant=X_PHONEBK
 -----------------
 locale='az-Arab-x-AZE-derbend'
-disp_locale=en :  display_variant=X
-disp_locale=fr :  display_variant=X
-disp_locale=de :  display_variant=X
+disp_locale=en :  display_variant=AZE_DERBEND
+disp_locale=fr :  display_variant=AZE_DERBEND
+disp_locale=de :  display_variant=AZE_DERBEND
 -----------------
 locale='zh-min'
-disp_locale=en :  display_variant=MIN
-disp_locale=fr :  display_variant=MIN
-disp_locale=de :  display_variant=MIN
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='zh-min-nan-Hant-CN'
-disp_locale=en :  display_variant=MIN
-disp_locale=fr :  display_variant=MIN
-disp_locale=de :  display_variant=MIN
+disp_locale=en :  display_variant=NAN_HANT_CN
+disp_locale=fr :  display_variant=NAN_HANT_CN
+disp_locale=de :  display_variant=NAN_HANT_CN
 -----------------
 locale='x-whatever'
 disp_locale=en :  display_variant=
@@ -234,47 +234,47 @@ disp_locale=fr :  display_variant=
 disp_locale=de :  display_variant=
 -----------------
 locale='qaa-Qaaa-QM-x-southern'
-disp_locale=en :  display_variant=QM
-disp_locale=fr :  display_variant=QM
-disp_locale=de :  display_variant=QM
+disp_locale=en :  display_variant=X_SOUTHERN
+disp_locale=fr :  display_variant=X_SOUTHERN
+disp_locale=de :  display_variant=X_SOUTHERN
 -----------------
 locale='sr-Latn-QM'
-disp_locale=en :  display_variant=QM
-disp_locale=fr :  display_variant=QM
-disp_locale=de :  display_variant=QM
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='sr-Qaaa-CS'
-disp_locale=en :  display_variant=Serbia And Montenegro
-disp_locale=fr :  display_variant=Serbie-et-Monténégro
-disp_locale=de :  display_variant=Serbien und Montenegro
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='en-US-u-islamCal'
-disp_locale=en :  display_variant=United States
-disp_locale=fr :  display_variant=États-Unis
-disp_locale=de :  display_variant=Vereinigte Staaten
+disp_locale=en :  display_variant=U_ISLAMCAL
+disp_locale=fr :  display_variant=U_ISLAMCAL
+disp_locale=de :  display_variant=U_ISLAMCAL
 -----------------
 locale='zh-CN-a-myExt-x-private'
-disp_locale=en :  display_variant=China
-disp_locale=fr :  display_variant=Chine
-disp_locale=de :  display_variant=China
+disp_locale=en :  display_variant=A_MYEXT_X_PRIVATE
+disp_locale=fr :  display_variant=A_MYEXT_X_PRIVATE
+disp_locale=de :  display_variant=A_MYEXT_X_PRIVATE
 -----------------
 locale='en-a-myExt-b-another'
-disp_locale=en :  display_variant=A
-disp_locale=fr :  display_variant=A
-disp_locale=de :  display_variant=A
+disp_locale=en :  display_variant=MYEXT_B_ANOTHER
+disp_locale=fr :  display_variant=MYEXT_B_ANOTHER
+disp_locale=de :  display_variant=MYEXT_B_ANOTHER
 -----------------
 locale='de-419-DE'
-disp_locale=en :  display_variant=Latin America and the Caribbean
-disp_locale=fr :  display_variant=Amérique latine et Caraïbes
-disp_locale=de :  display_variant=Lateinamerika und Karibik
+disp_locale=en :  display_variant=DE
+disp_locale=fr :  display_variant=DE
+disp_locale=de :  display_variant=DE
 -----------------
 locale='a-DE'
-disp_locale=en :  display_variant=Germany
-disp_locale=fr :  display_variant=Allemagne
-disp_locale=de :  display_variant=Deutschland
+disp_locale=en :  display_variant=
+disp_locale=fr :  display_variant=
+disp_locale=de :  display_variant=
 -----------------
 locale='ar-a-aaa-b-bbb-a-ccc'
-disp_locale=en :  display_variant=A
-disp_locale=fr :  display_variant=A
-disp_locale=de :  display_variant=A
+disp_locale=en :  display_variant=AAA_B_BBB_A_CCC
+disp_locale=fr :  display_variant=AAA_B_BBB_A_CCC
+disp_locale=de :  display_variant=AAA_B_BBB_A_CCC
 -----------------
