@@ -191,6 +191,19 @@ function ut_nfmt_get_error_message( $fmt )
     return $GLOBALS['oo-mode'] ? $fmt->getErrorMessage() : numfmt_get_error_message( $fmt );
 }
 
+function ut_norm_create( )
+{
+    return $GLOBALS['oo-mode'] ? new Normalizer( ) : NULL;
+}
+function ut_norm_normalize( $norm, $str, $form )
+{
+    return $GLOBALS['oo-mode'] ? $norm->normalize( $str, $form ) : normalizer_normalize( $str, $form );
+}
+function ut_norm_is_normalized( $norm, $str, $form )
+{
+    return $GLOBALS['oo-mode'] ? $norm->isNormalized( $str, $form ) : normalizer_is_normalized( $str, $form );
+}
+
 /*
  * Wrappers around Collator methods to run them in either OO- or procedural mode.
  */
@@ -223,10 +236,6 @@ function ut_loc_get_keywords( $locale )
 {
     return $GLOBALS['oo-mode'] ? Locale::getKeywords( $locale ) : locale_get_keywords( $locale );
 }
-function ut_loc_get_display_name( $locale , $dispLocale )
-{
-    return $GLOBALS['oo-mode'] ? Locale::getDisplayName( $locale , $dispLocale ) : locale_get_display_name( $locale , $dispLocale );
-}
 function ut_loc_get_display_language( $locale , $dispLocale )
 {
     return $GLOBALS['oo-mode'] ? Locale::getDisplayLanguage( $locale , $dispLocale ) : locale_get_display_language( $locale , $dispLocale );
@@ -242,37 +251,5 @@ function ut_loc_get_display_region( $locale, $dispLocale  )
 function ut_loc_get_display_variant( $locale , $dispLocale )
 {
     return $GLOBALS['oo-mode'] ? Locale::getDisplayVariant( $locale , $dispLocale ) : locale_get_display_variant( $locale, $dispLocale  );
-}
-function ut_loc_locale_compose( $loc_parts_arr )
-{
-    return $GLOBALS['oo-mode'] ? Locale::composeLocale( $loc_parts_arr ) : locale_compose( $loc_parts_arr );
-}
-function ut_loc_locale_parse( $locale )
-{
-    return $GLOBALS['oo-mode'] ? Locale::parseLocale( $locale ) : locale_parse($locale );
-}
-function ut_loc_locale_get_all_variants( $locale )
-{
-    return $GLOBALS['oo-mode'] ? Locale::getAllVariants( $locale ) : locale_get_all_variants( $locale );
-}
-function ut_loc_locale_filter_matches( $lang_tag,$loc_range  )
-{
-    return $GLOBALS['oo-mode'] ? Locale::filterMatches( $lang_tag,$loc_range ) : locale_filter_matches( $lang_tag,$loc_range );
-}
-function ut_loc_locale_canonical_filter_matches( $lang_tag,$loc_range  )
-{
-    return $GLOBALS['oo-mode'] ? Locale::canonicalFilterMatches( $lang_tag,$loc_range ) : locale_canonical_filter_matches( $lang_tag,$loc_range );
-}
-function ut_loc_canonicalize( $locale )
-{
-    return $GLOBALS['oo-mode'] ? Locale::canonicalize( $locale ) : locale_canonicalize( $locale );
-}
-function ut_loc_locale_lookup( $lang_tag_arr,$loc_range,$default_loc  )
-{
-    return $GLOBALS['oo-mode'] ? Locale::lookup( $lang_tag_arr,$loc_range,$default_loc ) : locale_lookup( $lang_tag_arr,$loc_range,$default_loc );
-}
-function ut_loc_locale_canonical_lookup( $lang_tag_arr,$loc_range  )
-{
-    return $GLOBALS['oo-mode'] ? Locale::canonical_lookup( $lang_tag_arr,$loc_range ) : locale_canonical_lookup( $lang_tag_arr,$loc_range );
 }
 ?>

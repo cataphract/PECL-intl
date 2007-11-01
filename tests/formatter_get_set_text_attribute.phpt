@@ -37,7 +37,7 @@ function ut_main()
            ut_nfmt_set_attribute( $fmt, NumberFormatter::FORMAT_WIDTH, 21 );
 
         // Get default attribute's value
-        $def_val = ut_nfmt_get_text_attribute( $fmt, $attr );
+        $def_val = dump_str( ut_nfmt_get_text_attribute( $fmt, $attr ), false );
         if( $def_val === false )
             $res_str .= "get_text_attribute() error: " . ut_nfmt_get_error_message( $fmt ) . "\n";
 
@@ -50,7 +50,7 @@ function ut_main()
             $res_str .= "set_text_attribute() error: " . ut_nfmt_get_error_message( $fmt ) . "\n";
 
         // Get attribute value back.
-        $new_val_check = ut_nfmt_get_text_attribute( $fmt, $attr );
+        $new_val_check = dump_str( ut_nfmt_get_text_attribute( $fmt, $attr ), false );
         $res_str .=  "New value: [$new_val_check]\n";
         $res_str .=  "Formatting number with new value: " . ut_nfmt_format( $fmt, $test_number ) . "\n";
 
