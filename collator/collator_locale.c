@@ -57,7 +57,7 @@ PHP_FUNCTION( collator_get_locale )
 	COLLATOR_CHECK_STATUS( co, "Error getting locale by type" );
 
 	// Return it.
-	RETVAL_STRINGL( locale_name, strlen(locale_name), TRUE );
+	RETURN_ASCII_STRINGL( locale_name, strlen(locale_name), TRUE );
 }
 /* }}} */
 
@@ -76,9 +76,6 @@ PHP_FUNCTION( collator_get_display_name )
 
 	UChar*      uname        = NULL;
 	int32_t     uname_len    = 0;
-
-	char*       name         = NULL;
-	int         name_len     = 0;
 
 	int32_t     buflen       = 512;
 	UErrorCode  status       = U_ZERO_ERROR;
@@ -120,18 +117,8 @@ PHP_FUNCTION( collator_get_display_name )
 
 	} while( buflen > uname_len );
 
-	// Convert display name from UTF-16 to UTF-8.
-	intl_convert_utf16_to_utf8( &name, &name_len, uname, buflen, &status );
-	efree( uname );
-	if( U_FAILURE( status ) )
-	{
-		intl_error_set( NULL, status,
-			"collator_get_display_name: error converting display name to UTF-8", 0 TSRMLS_CC );
-		RETURN_FALSE;
-	}
-
 	// Return it.
-	RETVAL_STRINGL( name, name_len, FALSE );
+	RETURN_UNICODEL( uname, buflen, FALSE );
 }
 /* }}} */
 
@@ -146,7 +133,7 @@ PHP_FUNCTION( collator_get_available_locales )
 {
 	UEnumeration*     e        = NULL;
 	UErrorCode        status   = U_ZERO_ERROR;
-	const char*       l        = NULL;
+	const UChar*      l        = NULL;
 	int32_t           l_len    = 0;
 
 	intl_error_reset( NULL TSRMLS_CC );
@@ -163,8 +150,8 @@ PHP_FUNCTION( collator_get_available_locales )
 
 	// Traverse it, filling the return array.
 	array_init( return_value );
-	while( ( l = uenum_next( e, &l_len, &status ) ) != NULL )
-		add_next_index_stringl( return_value, (char*)l, l_len, TRUE );
+	while( ( l = uenum_unext( e, &l_len, &status ) ) != NULL )
+		add_next_index_unicodel( return_value, (UChar*)l, l_len, TRUE );
 
 	uenum_close( e );
 }

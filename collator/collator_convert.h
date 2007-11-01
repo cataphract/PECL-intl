@@ -21,12 +21,6 @@
 #include <php.h>
 #include <unicode/utypes.h>
 
-void collator_convert_hash_from_utf8_to_utf16( HashTable* hash, UErrorCode* status );
-void collator_convert_hash_from_utf16_to_utf8( HashTable* hash, UErrorCode* status );
-
-zval* collator_convert_zstr_utf16_to_utf8( zval* utf16_zval );
-zval* collator_convert_zstr_utf8_to_utf16( zval* utf8_zval );
-
 zval* collator_normalize_sort_argument( zval* arg );
 zval* collator_convert_object_to_string( zval* obj TSRMLS_DC );
 zval* collator_convert_string_to_number( zval* arg );

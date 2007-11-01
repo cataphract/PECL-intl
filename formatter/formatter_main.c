@@ -32,17 +32,15 @@
 PHP_FUNCTION( numfmt_create )
 {
 	char*       locale;
-	char*       pattern;
-	int         locale_len, style, pattern_len = 0;
-	UChar*      spattern     = NULL;
-	int         spattern_len = 0;
+	UChar*      pattern;
+	int         locale_len = 0, style, pattern_len = 0;
 	zval*       object;
 	NumberFormatter_object* nfo;
 
 	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
-	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "sl|s",
+	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "sl|u",
 		&locale, &locale_len, &style, &pattern, &pattern_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
@@ -62,24 +60,11 @@ PHP_FUNCTION( numfmt_create )
 
 	intl_error_reset( &nfo->nf_data.error TSRMLS_CC );
 
-	// Convert pattern (if specified) to UTF-16.
-	if(pattern && pattern_len) {
-		intl_convert_utf8_to_utf16(&spattern, &spattern_len, pattern, pattern_len, &FORMATTER_ERROR_CODE(nfo));
-		if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )
-		{
-			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-				"numfmt_create: error converting pattern to UTF-16", 0 TSRMLS_CC );
-
-			RETURN_NULL();
-		}
+	if(locale_len == 0) {
+		locale = INTL_G(current_locale);
 	}
 
-	// Create an ICU number formatter.
-	nfo->nf_data.unum = unum_open(style, spattern, spattern_len, locale, NULL, &FORMATTER_ERROR_CODE(nfo));
-
-	if(spattern) {
-		efree(spattern);
-	}
+	nfo->nf_data.unum = unum_open(style, pattern, pattern_len, locale, NULL, &FORMATTER_ERROR_CODE(nfo));
 
 	if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )
 	{
@@ -97,17 +82,15 @@ PHP_FUNCTION( numfmt_create )
 PHP_METHOD( NumberFormatter, __construct )
 {
 	char*       locale;
-	char*       pattern;
-	int         locale_len, style, pattern_len = 0;
-	UChar*      spattern     = NULL;
-	int         spattern_len = 0;
+	UChar*      pattern;
+	int         locale_len = 0, style, pattern_len = 0;
 	zval*       object;
 	NumberFormatter_object* nfo;
 
 	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
-	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "sl|s",
+	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "sl|u",
 		&locale, &locale_len, &style, &pattern, &pattern_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
@@ -121,24 +104,12 @@ PHP_METHOD( NumberFormatter, __construct )
 
 	intl_error_reset( &nfo->nf_data.error TSRMLS_CC );
 
-	// Convert pattern (if specified) to UTF-16.
-	if(pattern && pattern_len) {
-		intl_convert_utf8_to_utf16(&spattern, &spattern_len, pattern, pattern_len, &FORMATTER_ERROR_CODE(nfo));
-		if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )
-		{
-			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-				"__construct: Error converting pattern to UTF-16", 0 TSRMLS_CC );
-
-			RETURN_NULL();
-		}
+	if(locale_len == 0) {
+		locale = UG(default_locale);
 	}
 
 	// Create an ICU number formatter.
-	nfo->nf_data.unum = unum_open(style, spattern, spattern_len, locale, NULL, &FORMATTER_ERROR_CODE(nfo));
-
-	if(spattern) {
-		efree(spattern);
-	}
+	nfo->nf_data.unum = unum_open(style, pattern, pattern_len, locale, NULL, &FORMATTER_ERROR_CODE(nfo));
 
 	if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )
 	{
@@ -198,6 +169,11 @@ PHP_FUNCTION( numfmt_get_error_message )
 		RETURN_FALSE;
 	}
 
+	if(locale_len == 0) {
+		locale = UG(default_locale);
+	}
+
+	// Create an ICU number formatter.
 	nfo = (NumberFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
 	// Return last error message.
