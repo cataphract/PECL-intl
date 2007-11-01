@@ -21,6 +21,7 @@
 
 #include "intl_common.h"
 #include "intl_error.h"
+#include "intl_data.h"
 #include "formatter_data.h"
 
 typedef struct {
@@ -33,37 +34,8 @@ extern zend_class_entry *NumberFormatter_ce_ptr;
 
 /* Auxiliary macros */
 
-#define FORMATTER_METHOD_INIT_VARS             \
-    zval*                    object  = NULL;   \
-    NumberFormatter_object*  nfo     = NULL;   \
-	intl_error_reset( NULL TSRMLS_CC );        \
-
-#define FORMATTER_ERROR(nfo)                (nfo)->nf_data.error
-#define FORMATTER_ERROR_P(nfo)              &(FORMATTER_ERROR(nfo))
-#define FORMATTER_ERROR_CODE(nfo)           INTL_ERROR_CODE(FORMATTER_ERROR(nfo))
-
-#define FORMATTER_METHOD_FETCH_OBJECT                                                   \
-    nfo = (NumberFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );	\
-    intl_error_reset( FORMATTER_ERROR_P(nfo) TSRMLS_CC );                               \
-
-#define FORMATTER_CHECK_STATUS(nfo, msg)                                        \
-    intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) TSRMLS_CC );         \
-    if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )                              \
-    {                                                                           \
-        intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), msg, 0 TSRMLS_CC ); \
-        RETURN_FALSE;                                                           \
-    }
-
-#define FORMATTER_RETVAL_UTF8( nfo, ustring, ulen, free_it )                                    \
-{                                                                                               \
-    char *u8value;                                                                              \
-    int u8len;                                                                                  \
-    intl_convert_utf16_to_utf8(&u8value, &u8len, ustring, ulen, &FORMATTER_ERROR_CODE(nfo));    \
-    if( (free_it) ) {                                                                           \
-        efree( ustring );                                                                       \
-    }                                                                                           \
-    FORMATTER_CHECK_STATUS(nfo, "Error converting value to UTF-8");                             \
-    RETVAL_STRINGL(u8value, u8len, 0);                                                          \
-}
+#define FORMATTER_METHOD_INIT_VARS		INTL_METHOD_INIT_VARS(NumberFormatter, nfo)
+#define FORMATTER_METHOD_FETCH_OBJECT	INTL_METHOD_FETCH_OBJECT(NumberFormatter, nfo)                                                
+#define FORMATTER_OBJECT(nfo)			(nfo)->nf_data.unum
 
 #endif // #ifndef FORMATTER_CLASS_H

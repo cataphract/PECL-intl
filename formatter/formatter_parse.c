@@ -63,11 +63,11 @@ PHP_FUNCTION( numfmt_parse )
 
 	switch(type) {
 		case FORMAT_TYPE_INT32:
-			val32 = unum_parse(nfo->nf_data.unum, str, str_len, position_p, &FORMATTER_ERROR_CODE(nfo));
+			val32 = unum_parse(FORMATTER_OBJECT(nfo), str, str_len, position_p, &INTL_DATA_ERROR_CODE(nfo));
 			RETVAL_LONG(val32);
 			break;
 		case FORMAT_TYPE_INT64:
-			val64 = unum_parseInt64(nfo->nf_data.unum, str, str_len, position_p, &FORMATTER_ERROR_CODE(nfo));
+			val64 = unum_parseInt64(FORMATTER_OBJECT(nfo), str, str_len, position_p, &INTL_DATA_ERROR_CODE(nfo));
 			if(val64 > LONG_MAX || val64 < -LONG_MAX) {
 				RETVAL_DOUBLE(val64);
 			} else {
@@ -76,7 +76,7 @@ PHP_FUNCTION( numfmt_parse )
 			}
 			break;
 		case FORMAT_TYPE_DOUBLE:
-			val_double = unum_parseDouble(nfo->nf_data.unum, str, str_len, position_p, &FORMATTER_ERROR_CODE(nfo));
+			val_double = unum_parseDouble(FORMATTER_OBJECT(nfo), str, str_len, position_p, &INTL_DATA_ERROR_CODE(nfo));
 			RETVAL_DOUBLE(val_double);
 			break;
 		default:
@@ -89,7 +89,7 @@ PHP_FUNCTION( numfmt_parse )
 		ZVAL_LONG(zposition, position);
 	}
 
-	FORMATTER_CHECK_STATUS( nfo, "Number parsing failed" );
+	INTL_METHOD_CHECK_STATUS( nfo, "Number parsing failed" );
 }
 /* }}} */
 
@@ -127,7 +127,7 @@ PHP_FUNCTION( numfmt_parse_currency )
 		position_p = &position;
 	}
 
-	number = unum_parseDoubleCurrency(nfo->nf_data.unum, str, str_len, position_p, currency, &FORMATTER_ERROR_CODE(nfo));
+	number = unum_parseDoubleCurrency(FORMATTER_OBJECT(nfo), str, str_len, position_p, currency, &INTL_DATA_ERROR_CODE(nfo));
 	if(zposition) {
 		zval_dtor(zposition);
 		ZVAL_LONG(zposition, position);

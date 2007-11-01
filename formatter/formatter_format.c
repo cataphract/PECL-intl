@@ -55,7 +55,8 @@ PHP_FUNCTION( numfmt_format )
 	if(type == FORMAT_TYPE_DEFAULT) {
 		if(Z_TYPE_PP(number) == IS_STRING) {
 			SEPARATE_ZVAL_IF_NOT_REF(number);
-			if ((Z_TYPE_PP(number)=is_numeric_string(Z_STRVAL_PP(number), Z_STRLEN_PP(number), &Z_LVAL_PP(number), &Z_DVAL_PP(number), 1)) == 0) {
+			if ((Z_TYPE_PP(number)=is_numeric_string(Z_STRVAL_PP(number), Z_STRLEN_PP(number), 
+				&Z_LVAL_PP(number), &Z_DVAL_PP(number), 1)) == 0) {
 				ZVAL_LONG(*number, 0);
 			}
 		}
@@ -71,55 +72,55 @@ PHP_FUNCTION( numfmt_format )
 		}
 	}
 
+	if(Z_TYPE_PP(number) != IS_DOUBLE && Z_TYPE_PP(number) != IS_LONG) {
+		SEPARATE_ZVAL_IF_NOT_REF(number);
+		convert_scalar_to_number( *number TSRMLS_CC );
+	}
+
 	switch(type) {
 		case FORMAT_TYPE_INT32:
-			formatted_len = unum_format(nfo->nf_data.unum, (int32_t)Z_LVAL_PP(number), formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-			if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
-				intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
+			formatted_len = unum_format(FORMATTER_OBJECT(nfo), (int32_t)Z_LVAL_PP(number), 
+				formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
+			if (INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
+				intl_error_reset(INTL_DATA_ERROR_P(nfo) TSRMLS_CC); 
 				formatted = eumalloc(formatted_len);
-				formatted_len = unum_format(nfo->nf_data.unum, (int32_t)Z_LVAL_PP(number), formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-				if (U_FAILURE( FORMATTER_ERROR_CODE(nfo) ) ) {
+				formatted_len = unum_format(FORMATTER_OBJECT(nfo), (int32_t)Z_LVAL_PP(number), 
+					formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
+				if (U_FAILURE( INTL_DATA_ERROR_CODE(nfo) ) ) {
 					efree(formatted);
 				}
 			}
-			FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
+			INTL_METHOD_CHECK_STATUS( nfo, "Number formatting failed" );
 			break;
 
 		case FORMAT_TYPE_INT64:
 		{
-			int64_t value;
-			if(Z_TYPE_PP(number) == IS_DOUBLE) {
-				value = (int64_t)Z_DVAL_PP(number);
-			} else {
-				SEPARATE_ZVAL_IF_NOT_REF(number);
-				convert_scalar_to_number( *number TSRMLS_CC );
-				value = (Z_TYPE_PP(number) == IS_DOUBLE)?(int64_t)Z_DVAL_PP(number):Z_LVAL_PP(number);
-			}
-			formatted_len = unum_formatInt64(nfo->nf_data.unum, value, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-			if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
-				intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
+			int64_t value = (Z_TYPE_PP(number) == IS_DOUBLE)?(int64_t)Z_DVAL_PP(number):Z_LVAL_PP(number);
+			formatted_len = unum_formatInt64(FORMATTER_OBJECT(nfo), value, formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
+			if (INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
+				intl_error_reset(INTL_DATA_ERROR_P(nfo) TSRMLS_CC); 
 				formatted = eumalloc(formatted_len);
-				formatted_len = unum_formatInt64(nfo->nf_data.unum, value, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-				if (U_FAILURE( FORMATTER_ERROR_CODE(nfo) ) ) {
+				formatted_len = unum_formatInt64(FORMATTER_OBJECT(nfo), value, formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
+				if (U_FAILURE( INTL_DATA_ERROR_CODE(nfo) ) ) {
 					efree(formatted);
 				}
 			}
-			FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
+			INTL_METHOD_CHECK_STATUS( nfo, "Number formatting failed" );
 		}
 			break;
 
 		case FORMAT_TYPE_DOUBLE:
 			convert_to_double_ex(number);
-			formatted_len = unum_formatDouble(nfo->nf_data.unum, Z_DVAL_PP(number), formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-			if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
-				intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
+			formatted_len = unum_formatDouble(FORMATTER_OBJECT(nfo), Z_DVAL_PP(number), formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
+			if (INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
+				intl_error_reset(INTL_DATA_ERROR_P(nfo) TSRMLS_CC); 
 				formatted = eumalloc(formatted_len);
-				unum_formatDouble(nfo->nf_data.unum, Z_DVAL_PP(number), formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-				if (U_FAILURE( FORMATTER_ERROR_CODE(nfo) ) ) {
+				unum_formatDouble(FORMATTER_OBJECT(nfo), Z_DVAL_PP(number), formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
+				if (U_FAILURE( INTL_DATA_ERROR_CODE(nfo) ) ) {
 					efree(formatted);
 				}
 			}
-			FORMATTER_CHECK_STATUS( nfo, "Number formatting failed" );
+			INTL_METHOD_CHECK_STATUS( nfo, "Number formatting failed" );
 			break;
 
 		default:
@@ -161,20 +162,20 @@ PHP_FUNCTION( numfmt_format_currency )
 	FORMATTER_METHOD_FETCH_OBJECT;
 
 	// Format the number using a fixed-length buffer.
-	formatted_len = unum_formatDoubleCurrency(nfo->nf_data.unum, number, currency, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
+	formatted_len = unum_formatDoubleCurrency(nfo->nf_data.unum, number, currency, formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
 
 	// If the buffer turned out to be too small
 	// then allocate another buffer dynamically
 	// and use it to format the number.
- 	if (FORMATTER_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
- 		intl_error_reset(FORMATTER_ERROR_P(nfo) TSRMLS_CC); 
+ 	if (INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
+ 		intl_error_reset(INTL_DATA_ERROR_P(nfo) TSRMLS_CC); 
 		formatted = eumalloc(formatted_len);
-		unum_formatDoubleCurrency(nfo->nf_data.unum, number, currency, formatted, formatted_len, NULL, &FORMATTER_ERROR_CODE(nfo));
+		unum_formatDoubleCurrency(nfo->nf_data.unum, number, currency, formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
 	}
 
-	if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) ) {
-		intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) TSRMLS_CC );
-		intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), "Number formatting failed", 0 TSRMLS_CC );
+	if( U_FAILURE( INTL_DATA_ERROR_CODE((nfo)) ) ) {
+		intl_error_set_code( NULL, INTL_DATA_ERROR_CODE((nfo)) TSRMLS_CC );
+		intl_errors_set_custom_msg( INTL_DATA_ERROR_P(nfo), "Number formatting failed", 0 TSRMLS_CC );
 		RETVAL_FALSE;
  		if (formatted != format_buf) {
  			efree(formatted);

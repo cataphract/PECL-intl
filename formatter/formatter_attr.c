@@ -68,29 +68,29 @@ PHP_FUNCTION( numfmt_get_attribute )
 		case UNUM_MIN_SIGNIFICANT_DIGITS:
 		case UNUM_MAX_SIGNIFICANT_DIGITS:
 		case UNUM_LENIENT_PARSE:
-			value = unum_getAttribute(nfo->nf_data.unum, attribute);
+			value = unum_getAttribute(FORMATTER_OBJECT(nfo), attribute);
 			if(value == -1) {
-				FORMATTER_ERROR_CODE(nfo) = U_UNSUPPORTED_ERROR;
+				INTL_DATA_ERROR_CODE(nfo) = U_UNSUPPORTED_ERROR;
 			} else {
 				RETVAL_LONG(value);
 			}
 			break;
 		case UNUM_ROUNDING_INCREMENT:
 		{
-			double value = unum_getDoubleAttribute(nfo->nf_data.unum, attribute);
+			double value = unum_getDoubleAttribute(FORMATTER_OBJECT(nfo), attribute);
 			if(value == -1) {
-				FORMATTER_ERROR_CODE(nfo) = U_UNSUPPORTED_ERROR;
+				INTL_DATA_ERROR_CODE(nfo) = U_UNSUPPORTED_ERROR;
 			} else {
 				RETVAL_DOUBLE(value);
 			}
 		}
 			break;
 		default:
-			FORMATTER_ERROR_CODE(nfo) = U_UNSUPPORTED_ERROR;
+			INTL_DATA_ERROR_CODE(nfo) = U_UNSUPPORTED_ERROR;
 			break;
 	}
 
-	FORMATTER_CHECK_STATUS( nfo, "Error getting attribute value" );
+	INTL_METHOD_CHECK_STATUS( nfo, "Error getting attribute value" );
 }
 /* }}} */
 
@@ -121,21 +121,21 @@ PHP_FUNCTION( numfmt_get_text_attribute )
 	// Fetch the object.
 	FORMATTER_METHOD_FETCH_OBJECT;
 
-	length = unum_getTextAttribute( nfo->nf_data.unum, attribute, value, value_buf_size, &FORMATTER_ERROR_CODE(nfo) );
+	length = unum_getTextAttribute( FORMATTER_OBJECT(nfo), attribute, value, value_buf_size, &INTL_DATA_ERROR_CODE(nfo) );
 
-	FORMATTER_CHECK_STATUS( nfo, "Error getting attribute value" );
+	INTL_METHOD_CHECK_STATUS( nfo, "Error getting attribute value" );
 	if( length >= value_buf_size )
 	{
 		++length; // to avoid U_STRING_NOT_TERMINATED_WARNING
 		value = eumalloc( length );
 
-		intl_error_reset( FORMATTER_ERROR_P(nfo) TSRMLS_CC );
-		length = unum_getTextAttribute( nfo->nf_data.unum, attribute, value, length, &FORMATTER_ERROR_CODE(nfo) );
+		intl_error_reset( INTL_DATA_ERROR_P(nfo) TSRMLS_CC );
+		length = unum_getTextAttribute( FORMATTER_OBJECT(nfo), attribute, value, length, &INTL_DATA_ERROR_CODE(nfo) );
 
-		if( U_FAILURE( FORMATTER_ERROR_CODE((nfo)) ) )
+		if( U_FAILURE( INTL_DATA_ERROR_CODE((nfo)) ) )
 		{
-			intl_error_set_code( NULL, FORMATTER_ERROR_CODE((nfo)) TSRMLS_CC );
-			intl_errors_set_custom_msg( FORMATTER_ERROR_P(nfo), "Error getting attribute value", 0 TSRMLS_CC );
+			intl_error_set_code( NULL, INTL_DATA_ERROR_CODE((nfo)) TSRMLS_CC );
+			intl_errors_set_custom_msg( INTL_DATA_ERROR_P(nfo), "Error getting attribute value", 0 TSRMLS_CC );
 			efree( value );
 			RETURN_FALSE;
 		}
@@ -190,18 +190,18 @@ PHP_FUNCTION( numfmt_set_attribute )
 		case UNUM_MAX_SIGNIFICANT_DIGITS:
 		case UNUM_LENIENT_PARSE:
 			convert_to_long_ex(value);
-			unum_setAttribute(nfo->nf_data.unum, attribute, Z_LVAL_PP(value));
+			unum_setAttribute(FORMATTER_OBJECT(nfo), attribute, Z_LVAL_PP(value));
 			break;
 		case UNUM_ROUNDING_INCREMENT:
 			convert_to_double_ex(value);
-			unum_setDoubleAttribute(nfo->nf_data.unum, attribute, Z_DVAL_PP(value));
+			unum_setDoubleAttribute(FORMATTER_OBJECT(nfo), attribute, Z_DVAL_PP(value));
 			break;
 		default:
-			FORMATTER_ERROR_CODE(nfo) = U_UNSUPPORTED_ERROR;
+			INTL_DATA_ERROR_CODE(nfo) = U_UNSUPPORTED_ERROR;
 			break;
 	}
 
-	FORMATTER_CHECK_STATUS( nfo, "Error setting attribute value" );
+	INTL_METHOD_CHECK_STATUS( nfo, "Error setting attribute value" );
 
 	RETURN_TRUE;
 }
@@ -233,8 +233,8 @@ PHP_FUNCTION( numfmt_set_text_attribute )
 	FORMATTER_METHOD_FETCH_OBJECT;
 
 	// Actually set new attribute value.
-	unum_setTextAttribute(nfo->nf_data.unum, attribute, value, len, &FORMATTER_ERROR_CODE(nfo));
-	FORMATTER_CHECK_STATUS( nfo, "Error setting text attribute" );
+	unum_setTextAttribute(FORMATTER_OBJECT(nfo), attribute, value, len, &INTL_DATA_ERROR_CODE(nfo));
+	INTL_METHOD_CHECK_STATUS( nfo, "Error setting text attribute" );
 
 	RETURN_TRUE;
 }
@@ -266,13 +266,13 @@ PHP_FUNCTION( numfmt_get_symbol )
 	// Fetch the object.
 	FORMATTER_METHOD_FETCH_OBJECT;
 
-	length = unum_getSymbol(nfo->nf_data.unum, symbol, value_buf, length, &FORMATTER_ERROR_CODE(nfo));
-	FORMATTER_CHECK_STATUS( nfo, "Error getting symbol value" );
+	length = unum_getSymbol(FORMATTER_OBJECT(nfo), symbol, value_buf, length, &INTL_DATA_ERROR_CODE(nfo));
+	INTL_METHOD_CHECK_STATUS( nfo, "Error getting symbol value" );
 	if(length >= USIZE(value)) {
 		++length; // to avoid U_STRING_NOT_TERMINATED_WARNING
 		value_buf = eumalloc(length);
-		length = unum_getSymbol(nfo->nf_data.unum, symbol, value_buf, length, &FORMATTER_ERROR_CODE(nfo));
-		FORMATTER_CHECK_STATUS( nfo, "Error getting symbol value" );
+		length = unum_getSymbol(FORMATTER_OBJECT(nfo), symbol, value_buf, length, &INTL_DATA_ERROR_CODE(nfo));
+		INTL_METHOD_CHECK_STATUS( nfo, "Error getting symbol value" );
 	}
 
 	RETVAL_UNICODEL( value_buf, length, ( value_buf == value ) );
@@ -305,8 +305,8 @@ PHP_FUNCTION( numfmt_set_symbol )
 	FORMATTER_METHOD_FETCH_OBJECT;
 
 	// Actually set the symbol.
-	unum_setSymbol(nfo->nf_data.unum, symbol, value, value_len, &FORMATTER_ERROR_CODE(nfo));
-	FORMATTER_CHECK_STATUS( nfo, "Error setting symbol value" );
+	unum_setSymbol(FORMATTER_OBJECT(nfo), symbol, value, value_len, &INTL_DATA_ERROR_CODE(nfo));
+	INTL_METHOD_CHECK_STATUS( nfo, "Error setting symbol value" );
 
 	RETURN_TRUE;
 }
@@ -337,14 +337,14 @@ PHP_FUNCTION( numfmt_get_pattern )
 	// Fetch the object.
 	FORMATTER_METHOD_FETCH_OBJECT;
 
-	length = unum_toPattern(nfo->nf_data.unum, 0, value, length, &FORMATTER_ERROR_CODE(nfo));
-	FORMATTER_CHECK_STATUS( nfo, "Error getting formatter pattern" );
+	length = unum_toPattern(FORMATTER_OBJECT(nfo), 0, value, length, &INTL_DATA_ERROR_CODE(nfo));
+	INTL_METHOD_CHECK_STATUS( nfo, "Error getting formatter pattern" );
 
 	if( length >= USIZE( value_buf ) )
 	{
 		value = eumalloc( length );
-		unum_toPattern( nfo->nf_data.unum, 0, value_buf, length, &FORMATTER_ERROR_CODE(nfo) );
-		FORMATTER_CHECK_STATUS( nfo, "Error getting formatter pattern" );
+		unum_toPattern( FORMATTER_OBJECT(nfo), 0, value_buf, length, &INTL_DATA_ERROR_CODE(nfo) );
+		INTL_METHOD_CHECK_STATUS( nfo, "Error getting formatter pattern" );
 	}
 
 	RETVAL_UNICODEL( value_buf, length, ( value == value_buf ) );
@@ -375,8 +375,8 @@ PHP_FUNCTION( numfmt_set_pattern )
 	// Fetch the object.
 	FORMATTER_METHOD_FETCH_OBJECT;
 
-	unum_applyPattern(nfo->nf_data.unum, 0, value, value_len, NULL, &FORMATTER_ERROR_CODE(nfo));
-	FORMATTER_CHECK_STATUS( nfo, "Error setting symbol value" );
+	unum_applyPattern(FORMATTER_OBJECT(nfo), 0, value, value_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
+	INTL_METHOD_CHECK_STATUS( nfo, "Error setting symbol value" );
 
 	RETURN_TRUE;
 }
@@ -406,8 +406,8 @@ PHP_FUNCTION( numfmt_get_locale )
 	// Fetch the object.
 	FORMATTER_METHOD_FETCH_OBJECT;
 
-	loc = (char *)unum_getLocaleByType(nfo->nf_data.unum, type, &FORMATTER_ERROR_CODE(nfo));
-	FORMATTER_CHECK_STATUS( nfo, "Error getting locale" );
+	loc = (char *)unum_getLocaleByType(FORMATTER_OBJECT(nfo), type, &INTL_DATA_ERROR_CODE(nfo));
+	INTL_METHOD_CHECK_STATUS( nfo, "Error getting locale" );
 	RETURN_STRING(loc, 1);
 }
 /* }}} */

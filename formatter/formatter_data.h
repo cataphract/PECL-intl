@@ -24,11 +24,11 @@
 #include "intl_error.h"
 
 typedef struct {
-	// formatter handling
-	UNumberFormat*  unum;
-
 	// error hangling
 	intl_error      error;
+
+	// formatter handling
+	UNumberFormat*  unum;
 } formatter_data;
 
 formatter_data* formatter_data_create( TSRMLS_D );
