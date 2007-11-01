@@ -22,7 +22,6 @@
 
 #include "php_intl.h"
 #include "formatter_class.h"
-#include "intl_convert.h"
 
 /* {{{ proto NumberFormatter NumberFormatter::create( string $locale, int style[, string $pattern ] )
  * Create formatter. }}} */

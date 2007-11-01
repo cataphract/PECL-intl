@@ -23,7 +23,6 @@
 #include "php_intl.h"
 #include "formatter_class.h"
 #include "formatter_format.h"
-#include "intl_convert.h"
 
 /* {{{ proto mixed NumberFormatter::format( mixed $num[, int $type] )
  * Format a number. }}} */

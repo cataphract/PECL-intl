@@ -24,7 +24,6 @@
 #include "formatter_class.h"
 #include "formatter_format.h"
 #include "formatter_parse.h"
-#include "intl_convert.h"
 
 /* {{{ proto mixed NumberFormatter::parse( string $str[, int $type, int &$position ])
  * Parse a number. }}} */
@@ -69,7 +68,7 @@ PHP_FUNCTION( numfmt_parse )
 		case FORMAT_TYPE_INT64:
 			val64 = unum_parseInt64(FORMATTER_OBJECT(nfo), str, str_len, position_p, &INTL_DATA_ERROR_CODE(nfo));
 			if(val64 > LONG_MAX || val64 < -LONG_MAX) {
-				RETVAL_DOUBLE(val64);
+				RETVAL_DOUBLE((double)val64);
 			} else {
 				val32 = (int32_t)val64;
 				RETVAL_LONG(val32);
@@ -132,7 +131,7 @@ PHP_FUNCTION( numfmt_parse_currency )
 		zval_dtor(zposition);
 		ZVAL_LONG(zposition, position);
 	}
-	FORMATTER_CHECK_STATUS( nfo, "Number parsing failed" );
+	INTL_METHOD_CHECK_STATUS( nfo, "Number parsing failed" );
 
 	zval_dtor( zcurrency );
 	ZVAL_UNICODE( zcurrency, currency, TRUE );
