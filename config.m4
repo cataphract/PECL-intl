@@ -6,8 +6,8 @@ PHP_ARG_ENABLE(intl, whether to enable internationalization support,
 [  --enable-intl           Enable internationalization support])
 
 if test "$PHP_INTL" != "no"; then
-
   PHP_SETUP_ICU
+  PHP_REQUIRE_CXX()
 
   PHP_NEW_EXTENSION(intl,
    			php_intl.c \
@@ -38,5 +38,19 @@ if test "$PHP_INTL" != "no"; then
 		    locale/locale.c \
 		    locale/locale_class.c \
 		    locale/locale_methods.c \
+		msgformat/msgformat.c \
+		msgformat/msgformat_attr.c \
+		msgformat/msgformat_class.c \
+		msgformat/msgformat_data.c  \
+		msgformat/msgformat_format.c \
+		msgformat/msgformat_helpers.cpp \
+		msgformat/msgformat_parse.c \
 		    ,$ext_shared,,$ICU_INCS)
+
+	PHP_ADD_BUILD_DIR($ext_builddir/collator)
+	PHP_ADD_BUILD_DIR($ext_builddir/common)
+	PHP_ADD_BUILD_DIR($ext_builddir/formatter)
+	PHP_ADD_BUILD_DIR($ext_builddir/normalizer)
+	PHP_ADD_BUILD_DIR($ext_builddir/locale)
+	PHP_ADD_BUILD_DIR($ext_builddir/msgformat)
 fi
