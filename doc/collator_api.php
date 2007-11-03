@@ -240,31 +240,6 @@ class Collator {
      *                       returns false.
      */
     public function getLocale( $type ) {}
-
-    /**
-     * Get the display name for a locale.
-     *
-     * Wrapper around ICU ucol_getDisplayName().
-     *
-     * The display name is suitable for presentation to a user.
-     *
-     * @param  string  $obj_loc   Locale to get display name for.
-     * @param  string  $disp_loc  Locale for display.
-     *
-     * @return string  Locale name, or false on error.
-     */
-    public static function getDisplayName( $obj_loc, $disp_loc ) {}
-
-    /**
-     * Get a list of all locales for which a valid collator may be
-     * opened.
-     *
-     * Wrapper around ICU Collator::getAvailableLocales().
-     *
-     * @return array(string) The list of available locales, or false
-     *                       on error.
-     */
-    public static function getAvailableLocales() {}
 }
 
 #############################################################################
@@ -349,10 +324,9 @@ function collator_sort_with_sort_keys( $coll, $arr ) {}
  * Get the locale name of the collator.
  *
  * @param Collator $coll Collator object.
- * @param int      $type You can choose between requested, valid
- *                       and actual locale
- *                       (ULOC_REQUESTED_LOCALE,
- *                       ULOC_VALID_LOCALE, ULOC_ACTUAL_LOCALE,
+ * @param int      $type You can choose between valid and 
+ *                       actual locale
+ *                       (ULOC_VALID_LOCALE, ULOC_ACTUAL_LOCALE
  *                       respectively).
  *
  * @return string  Real locale name from which the
@@ -361,28 +335,6 @@ function collator_sort_with_sort_keys( $coll, $arr ) {}
  *                 returns false.
  */
 function collator_get_locale( $coll, $type ) {}
-
-/**
- * Get the display name for a locale.
- *
- * The display name is suitable for presentation to a user.
- *
- * @param string   $obj_loc   Locale to get display name for.
- * @param string   $disp_loc  Locale for display.
- *
- * @return string  Locale name, or false on error.
- */
-function collator_get_display_name( $obj_loc, $disp_loc ) {}
-
-
-/**
- * Get a list of all locales for which a valid collator may be
- * opened.
- *
- * @return array(string) The list of available locales, or false
- *                       on error.
- */
-function collator_get_available_locales() {}
 
 /**
  * Get collation attribute value.
