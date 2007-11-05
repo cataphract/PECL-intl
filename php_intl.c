@@ -166,8 +166,6 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( collator_sort_with_sort_keys, collator_sort_args )
 	PHP_FE( collator_asort, collator_sort_args )
 	PHP_FE( collator_get_locale, collator_1_arg )
-	PHP_FE( collator_get_display_name, collator_static_2_args )
-	PHP_FE( collator_get_available_locales, collator_static_0_args )
 	PHP_FE( collator_get_error_code, collator_0_args )
 	PHP_FE( collator_get_error_message, collator_0_args )
 
