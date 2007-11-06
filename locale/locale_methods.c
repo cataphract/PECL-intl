@@ -137,11 +137,11 @@ getCorrectGrandfatheredLang(const char* oldID ){
 PHP_NAMED_FUNCTION( zif_locale_get_default){
 	char*  		locale_name = NULL;
 
-	if(INTL_G(default_locale) && (strcmp("", INTL_G(default_locale))!=0) ) {
-		locale_name = estrdup( INTL_G (default_locale) ); 
+	if(UG(default_locale) && (strcmp("", UG(default_locale))!=0) ) {
+		locale_name = estrdup( UG (default_locale) ); 
 	}else{
 		locale_name = (char*) uloc_getDefault();
-		INTL_G(default_locale) = estrdup( locale_name);
+		UG(default_locale) = estrdup( locale_name);
 	}
 
 	RETVAL_STRINGL( locale_name, strlen(locale_name), TRUE );
@@ -170,9 +170,9 @@ PHP_NAMED_FUNCTION(  zif_locale_set_default){
 	}
 
 	// Set new value for the given attribute.
-	INTL_G( default_locale) = estrndup( locale_name , len );
+	UG( default_locale) = estrndup( locale_name , len );
 
-	RETVAL_STRINGL( INTL_G( default_locale), len , TRUE );
+	RETVAL_STRINGL( UG( default_locale), len , TRUE );
 }
 /* }}} */
 
@@ -319,7 +319,7 @@ static void get_icu_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS)
     }
 
 	if(loc_name_len == 0) {
-		loc_name = INTL_G(default_locale);
+		loc_name = UG(default_locale);
 	}
 
 	//Call ICU get
@@ -420,7 +420,7 @@ static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAME
     }
 
     if(loc_name_len == 0) {
-        loc_name = INTL_G(default_locale);
+        loc_name = UG(default_locale);
     }
 
 	mod_loc_name = estrndup( loc_name , loc_name_len );
@@ -461,7 +461,7 @@ static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAME
 
         //Check if disp_loc_name passed , if not use default locale
         if( !disp_loc_name){
-            disp_loc_name = INTL_G(default_locale);
+            disp_loc_name = UG(default_locale);
         }
 
 		if( tag_name ==  LOC_LANG_TAG ){
@@ -626,7 +626,7 @@ PHP_FUNCTION( locale_get_keywords )
     }
 
     if(loc_name_len == 0) {
-        loc_name = INTL_G(default_locale);
+        loc_name = UG(default_locale);
     }
 
 	//Get the keywords
@@ -820,7 +820,7 @@ PHP_FUNCTION(locale_compose){
     }
 
     if(loc_name_len == 0) {
-        loc_name = INTL_G(default_locale);
+        loc_name = UG(default_locale);
     }
 
 
@@ -987,7 +987,7 @@ PHP_FUNCTION(locale_parse){
     }
 
     if(loc_name_len == 0) {
-        loc_name = INTL_G(default_locale);
+        loc_name = UG(default_locale);
     }
 
 	array_init( return_value );
@@ -1028,7 +1028,7 @@ PHP_FUNCTION(locale_get_all_variants){
     }
 
     if(loc_name_len == 0) {
-        loc_name = INTL_G(default_locale);
+        loc_name = UG(default_locale);
     }
 
 
@@ -1117,7 +1117,7 @@ static void filter_matches_internal( INTERNAL_FUNCTION_PARAMETERS) {
     }
 
     if(loc_range_len == 0) {
-        loc_range = INTL_G(default_locale);
+        loc_range = UG(default_locale);
     }
 
 	if( strcmp(loc_range,"*")==0){
@@ -1344,7 +1344,7 @@ static char* lookup_internal_src_php( INTERNAL_FUNCTION_PARAMETERS) {
     }
 
     if(loc_range_len == 0) {
-        loc_range = INTL_G(default_locale);
+        loc_range = UG(default_locale);
     }
 
 
