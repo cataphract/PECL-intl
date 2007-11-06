@@ -7,3 +7,4 @@
 <!ENTITY url.rfc4647 "http://www.rfc-editor.org/rfc/rfc4647.txt">
 <!ENTITY url.icu.decimalformat "http://www.icu-project.org/apiref/icu4c/classDecimalFormat.html#_details">
 <!ENTITY uri.icu.ruleformat "http://www.icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html#_details">
+<!ENTITY uri.icu.msgformat "http://icu-project.org/userguide/formatMessages.html">
