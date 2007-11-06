@@ -17,6 +17,7 @@ function ut_main()
     $disp_locales=array('en','fr','de');
 
     $locales = array(
+
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
         '',
         'root',

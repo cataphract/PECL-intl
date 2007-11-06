@@ -17,6 +17,17 @@ function ut_main()
     $disp_locales=array('en','fr','de');
 
     $locales = array(
+        'sl_IT_nedis_KIRTI',
+        'sl_IT_nedis-a-kirti-x-xyz',
+        'sl_IT_rozaj',
+        'sl_IT_NEDIS_ROJAZ_1901',
+        'i-enochian',
+        'zh-hakka',
+        'zh-wuu',
+        'i-tay',
+        'sgn-BE-nl',
+        'sgn-CH-de',
+        'sl_IT_rozaj@currency=EUR',
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
         '',
         'root',
@@ -93,6 +104,61 @@ ut_run();
 
 ?>
 --EXPECT--
+locale='sl_IT_nedis_KIRTI'
+disp_locale=en :  display_region=Italy
+disp_locale=fr :  display_region=Italie
+disp_locale=de :  display_region=Italien
+-----------------
+locale='sl_IT_nedis-a-kirti-x-xyz'
+disp_locale=en :  display_region=Italy
+disp_locale=fr :  display_region=Italie
+disp_locale=de :  display_region=Italien
+-----------------
+locale='sl_IT_rozaj'
+disp_locale=en :  display_region=Italy
+disp_locale=fr :  display_region=Italie
+disp_locale=de :  display_region=Italien
+-----------------
+locale='sl_IT_NEDIS_ROJAZ_1901'
+disp_locale=en :  display_region=Italy
+disp_locale=fr :  display_region=Italie
+disp_locale=de :  display_region=Italien
+-----------------
+locale='i-enochian'
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
+-----------------
+locale='zh-hakka'
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
+-----------------
+locale='zh-wuu'
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
+-----------------
+locale='i-tay'
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
+-----------------
+locale='sgn-BE-nl'
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
+-----------------
+locale='sgn-CH-de'
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
+-----------------
+locale='sl_IT_rozaj@currency=EUR'
+disp_locale=en :  display_region=Italy
+disp_locale=fr :  display_region=Italie
+disp_locale=de :  display_region=Italien
+-----------------
 locale='uk-ua_CALIFORNIA@currency=;currency=GRN'
 disp_locale=en :  display_region=Ukraine
 disp_locale=fr :  display_region=Ukraine
@@ -214,14 +280,14 @@ disp_locale=fr :  display_region=Suisse
 disp_locale=de :  display_region=Schweiz
 -----------------
 locale='az-Arab-x-AZE-derbend'
-disp_locale=en :  display_region=X
-disp_locale=fr :  display_region=X
-disp_locale=de :  display_region=X
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
 -----------------
 locale='zh-min'
-disp_locale=en :  display_region=MIN
-disp_locale=fr :  display_region=MIN
-disp_locale=de :  display_region=MIN
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
 -----------------
 locale='zh-min-nan-Hant-CN'
 disp_locale=en :  display_region=MIN
@@ -259,9 +325,9 @@ disp_locale=fr :  display_region=Chine
 disp_locale=de :  display_region=China
 -----------------
 locale='en-a-myExt-b-another'
-disp_locale=en :  display_region=A
-disp_locale=fr :  display_region=A
-disp_locale=de :  display_region=A
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
 -----------------
 locale='de-419-DE'
 disp_locale=en :  display_region=Latin America and the Caribbean
@@ -269,12 +335,12 @@ disp_locale=fr :  display_region=Amérique latine et Caraïbes
 disp_locale=de :  display_region=Lateinamerika und Karibik
 -----------------
 locale='a-DE'
-disp_locale=en :  display_region=Germany
-disp_locale=fr :  display_region=Allemagne
-disp_locale=de :  display_region=Deutschland
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
 -----------------
 locale='ar-a-aaa-b-bbb-a-ccc'
-disp_locale=en :  display_region=A
-disp_locale=fr :  display_region=A
-disp_locale=de :  display_region=A
+disp_locale=en :  display_region=
+disp_locale=fr :  display_region=
+disp_locale=de :  display_region=
 -----------------

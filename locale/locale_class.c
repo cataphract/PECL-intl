@@ -91,6 +91,21 @@ ZEND_BEGIN_ARG_INFO_EX( locale_2_args, 0, 0, 2 )
 	ZEND_ARG_INFO( 0, arg2 )
 ZEND_END_ARG_INFO()
 
+static
+ZEND_BEGIN_ARG_INFO_EX( locale_3_args, 0, 0, 3 )
+	ZEND_ARG_INFO( 0, arg1 )
+	ZEND_ARG_INFO( 0, arg2 )
+	ZEND_ARG_INFO( 0, arg3 )
+ZEND_END_ARG_INFO()
+
+static
+ZEND_BEGIN_ARG_INFO_EX( locale_4_args, 0, 0, 4 )
+	ZEND_ARG_INFO( 0, arg1 )
+	ZEND_ARG_INFO( 0, arg2 )
+	ZEND_ARG_INFO( 0, arg3 )
+	ZEND_ARG_INFO( 0, arg4 )
+ZEND_END_ARG_INFO()
+
 /* }}} */
 
 /* {{{ Locale_class_functions
@@ -103,7 +118,6 @@ function_entry Locale_class_functions[] = {
 	ZEND_FENTRY( getPrimaryLanguage, ZEND_FN( locale_get_primary_language ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( getScript, ZEND_FN( locale_get_script ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( getRegion, ZEND_FN( locale_get_region ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
-	ZEND_FENTRY( getVariant, ZEND_FN( locale_get_variant ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( getKeywords, ZEND_FN( locale_get_keywords ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( getDisplayScript, ZEND_FN( locale_get_display_script ), locale_2_args , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( getDisplayRegion, ZEND_FN( locale_get_display_region ), locale_2_args , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
@@ -113,10 +127,8 @@ function_entry Locale_class_functions[] = {
 	ZEND_FENTRY( composeLocale, ZEND_FN( locale_compose ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( parseLocale, ZEND_FN( locale_parse ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( getAllVariants, ZEND_FN( locale_get_all_variants ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
-	ZEND_FENTRY( filterMatches, ZEND_FN( locale_filter_matches ), locale_2_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
-	ZEND_FENTRY( canonicalFilterMatches, ZEND_FN( locale_canonical_filter_matches ), locale_2_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
-	ZEND_FENTRY( lookup, ZEND_FN( locale_lookup ), locale_2_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
-	ZEND_FENTRY( canonicalLookup, ZEND_FN( locale_canonical_lookup ), locale_2_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( filterMatches, ZEND_FN( locale_filter_matches ), locale_3_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	ZEND_FENTRY( lookup, ZEND_FN( locale_lookup ), locale_4_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( canonicalize, ZEND_FN( locale_canonicalize ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	{ NULL, NULL, NULL }
 };

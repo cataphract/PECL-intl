@@ -15,6 +15,17 @@ function ut_main()
     $res_str = '';
 
     $locales = array(
+	    'sl_IT_nedis_KIRTI',
+		'sl_IT_nedis-a-kirti-x-xyz',
+		'sl_IT_rozaj',
+		'sl_IT_NEDIS_ROJAZ_1901',
+		'i-enochian',
+		'zh-hakka',
+		'zh-wuu',
+		'i-tay',
+		'sgn-BE-nl',
+		'sgn-CH-de',
+		'sl_IT_rozaj@currency=EUR',
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
         '',
         'root',
@@ -86,8 +97,19 @@ ut_run();
 
 ?>
 --EXPECT--
+sl_IT_nedis_KIRTI:  region='IT'
+sl_IT_nedis-a-kirti-x-xyz:  region='IT'
+sl_IT_rozaj:  region='IT'
+sl_IT_NEDIS_ROJAZ_1901:  region='IT'
+i-enochian:  region=''
+zh-hakka:  region=''
+zh-wuu:  region=''
+i-tay:  region=''
+sgn-BE-nl:  region=''
+sgn-CH-de:  region=''
+sl_IT_rozaj@currency=EUR:  region='IT'
 uk-ua_CALIFORNIA@currency=;currency=GRN:  region='UA'
-:  region=''
+:  region='US'
 root:  region=''
 uk@currency=EURO:  region=''
 Hindi:  region=''
@@ -110,8 +132,8 @@ de-DE:  region='DE'
 en-US:  region='US'
 es-419:  region='419'
 de-CH-x-phonebk:  region='CH'
-az-Arab-x-AZE-derbend:  region='X'
-zh-min:  region='MIN'
+az-Arab-x-AZE-derbend:  region=''
+zh-min:  region=''
 zh-min-nan-Hant-CN:  region='MIN'
 x-whatever:  region=''
 qaa-Qaaa-QM-x-southern:  region='QM'
@@ -119,7 +141,7 @@ sr-Latn-QM:  region='QM'
 sr-Qaaa-CS:  region='CS'
 en-US-u-islamCal:  region='US'
 zh-CN-a-myExt-x-private:  region='CN'
-en-a-myExt-b-another:  region='A'
+en-a-myExt-b-another:  region=''
 de-419-DE:  region='419'
-a-DE:  region='DE'
-ar-a-aaa-b-bbb-a-ccc:  region='A'
+a-DE:  region=''
+ar-a-aaa-b-bbb-a-ccc:  region=''
