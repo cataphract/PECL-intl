@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.4 $ -->
+<!-- $Revision: 1.5 $ -->
 <!-- Purpose: collation -->
 <!-- Membership: xx -->
 <!-- State: xx -->
@@ -186,6 +186,7 @@ echo $formatter->format( 1234567 );
 
  &reference.intl.Collator;
  &reference.intl.NumberFormatter;
+ &reference.intl.MessageFormatter;
  &reference.intl.functions;
 
 </reference>
