@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="intl.MessageFormatter" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<refnamediv>
     <refname>MessageFormatter class</refname>
@@ -51,7 +51,7 @@
        <para>
         <link linkend='function.msgfmt-create'>MessageFormatter::create</link>-
 	 creates a new MessageFormatter. This method is useful when you prefer just to
-	 get null on error, as if you called <function>msgfmt_create</function>.
+	 get null on error, as if you called <function>msgfmt-create</function>.
        </para>
       </listitem>
      </itemizedlist>
@@ -61,53 +61,53 @@
      <itemizedlist>
            <listitem>
        <para>
-        <link linkend='function.msgfmt_create'>create</link> -
+        <link linkend='function.msgfmt-create'>create</link> -
         Constructs a new Message Formatter       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt_format'>format</link> -
+        <link linkend='function.msgfmt-format'>format</link> -
         Format the message       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt_parse'>parse</link> -
+        <link linkend='function.msgfmt-parse'>parse</link> -
         parses input string and returns any extracted items as an array       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt_format_message'>formatMessage</link> -
+        <link linkend='function.msgfmt-format_message'>formatMessage</link> -
         Format the message without creating an object       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt_parse_message'>parseMessage</link> -
+        <link linkend='function.msgfmt-parse_message'>parseMessage</link> -
         parses input string and returns any extracted items as an array, without creating an object
        </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt_get_pattern'>getPattern</link> -
+        <link linkend='function.msgfmt-get_pattern'>getPattern</link> -
         Get the pattern used by the formatter       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt_set_pattern'>setPattern</link> -
+        <link linkend='function.msgfmt-set_pattern'>setPattern</link> -
         Set the pattern used by the formatter       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt_get_error_code'>getErrorCode</link> -
+        <link linkend='function.msgfmt-get_error_code'>getErrorCode</link> -
         Get the error code from last operation       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt_get_error_message'>getErrorMessage</link> -
+        <link linkend='function.msgfmt-get_error_message'>getErrorMessage</link> -
         Get the error text from the last operation.       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt_get_locale'>getLocale</link> -
+        <link linkend='function.msgfmt-get_locale'>getLocale</link> -
         Get the locale for which the formatter was created.       </para>
       </listitem>
       	  </itemizedlist>
