@@ -40,6 +40,12 @@
 #include "formatter/formatter_main.h"
 #include "formatter/formatter_parse.h"
 
+#include "msgformat/msgformat.h"
+#include "msgformat/msgformat_class.h"
+#include "msgformat/msgformat_attr.h"
+#include "msgformat/msgformat_format.h"
+#include "msgformat/msgformat_parse.h"
+
 #include "normalizer/normalizer.h"
 #include "normalizer/normalizer_class.h"
 #include "normalizer/normalizer_create.h"
@@ -137,6 +143,27 @@ ZEND_BEGIN_ARG_INFO_EX( locale_2_args, 0, 0, 2 )
         ZEND_ARG_INFO( 0, arg2 )
 ZEND_END_ARG_INFO()
 
+static
+ZEND_BEGIN_ARG_INFO_EX( locale_get_args, 0, 0, 1 )
+        ZEND_ARG_INFO( 0, locale )
+        ZEND_ARG_INFO( 0, in_locale )
+ZEND_END_ARG_INFO()
+
+static
+ZEND_BEGIN_ARG_INFO_EX( locale_filter_args, 0, 0, 3 )
+        ZEND_ARG_INFO( 0, langtag )
+        ZEND_ARG_INFO( 0, range )
+        ZEND_ARG_INFO( 0, canonical )
+ZEND_END_ARG_INFO()
+
+static
+ZEND_BEGIN_ARG_INFO_EX( locale_lookup_args, 0, 0, 3 )
+        ZEND_ARG_INFO( 0, langtag )
+        ZEND_ARG_INFO( 0, locale )
+        ZEND_ARG_INFO( 0, canonical )
+        ZEND_ARG_INFO( 0, fallback )
+ZEND_END_ARG_INFO()
+
 
 #define intl_0_args collator_static_0_args
 #define intl_1_arg collator_static_1_arg
@@ -192,18 +219,33 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( normalizer_is_normalized, normalizer_3_args )
 
 	//Locale functions
-	PHP_NAMED_FE( locale_get_default, zif_locale_get_default, locale_0_args )
-	PHP_NAMED_FE( locale_set_default, zif_locale_set_default, locale_1_arg )
 	PHP_FE( locale_get_primary_language, locale_1_arg )
 	PHP_FE( locale_get_script, locale_1_arg )
 	PHP_FE( locale_get_region, locale_1_arg )
-	PHP_FE( locale_get_variant, locale_1_arg )
 	PHP_FE( locale_get_keywords, locale_1_arg )
-	PHP_FE( locale_get_display_script, locale_2_args )
-	PHP_FE( locale_get_display_region, locale_2_args )
-	PHP_FE( locale_get_display_name, locale_2_args )
-	PHP_FE( locale_get_display_language, locale_2_args)
-	PHP_FE( locale_get_display_variant, locale_2_args )
+	PHP_FE( locale_get_display_script, locale_get_args )
+	PHP_FE( locale_get_display_region, locale_get_args )
+	PHP_FE( locale_get_display_name, locale_get_args )
+	PHP_FE( locale_get_display_language, locale_get_args )
+	PHP_FE( locale_get_display_variant, locale_get_args )
+	PHP_FE( locale_get_all_variants, locale_1_arg )
+	PHP_FE( locale_canonicalize, locale_1_arg )
+	PHP_FE( locale_compose, locale_1_arg )
+	PHP_FE( locale_parse, locale_1_arg )
+	PHP_FE( locale_filter_matches, locale_filter_args )
+	PHP_FE( locale_lookup, locale_lookup_args )
+
+	// MessageFormatter functions
+	PHP_FE( msgfmt_create, NULL )
+	PHP_FE( msgfmt_format, NULL )
+	PHP_FE( msgfmt_format_message, NULL )
+	PHP_FE( msgfmt_parse, NULL )
+	PHP_FE( msgfmt_parse_message, NULL )
+	PHP_FE( msgfmt_set_pattern, NULL )
+	PHP_FE( msgfmt_get_pattern, NULL )
+	PHP_FE( msgfmt_get_locale, NULL )
+	PHP_FE( msgfmt_get_error_code, NULL )
+	PHP_FE( msgfmt_get_error_message, NULL )
 
 	// common functions
 	PHP_FE( intl_get_error_code, intl_0_args )
