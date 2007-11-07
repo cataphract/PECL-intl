@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <refentry xml:id="intl.MessageFormatter" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<refnamediv>
     <refname>MessageFormatter class</refname>
@@ -51,7 +51,7 @@
        <para>
         <link linkend='function.msgfmt-create'>MessageFormatter::create</link>-
 	 creates a new MessageFormatter. This method is useful when you prefer just to
-	 get null on error, as if you called <function>msgfmt-create</function>.
+	 get null on error, as if you called <function>msgfmt_create</function>.
        </para>
       </listitem>
      </itemizedlist>

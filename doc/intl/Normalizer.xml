@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="intl.Normalizer" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<refnamediv>
+    <refname>Normalizer class</refname>
+    <refpurpose></refpurpose>
+    </refnamediv>
+   
+    <refsect1 role="description">
+    <section xml:id="intl.classes.Normalizer.constructors">
+     <title>Constructors</title>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <link linkend='function.normalizer-create'>Normalizer::__construct</link> - create Normalizer       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <link linkend='function.normalizer-create'>Normalizer::create</link>-
+	 creates a new Normalizer. This method is useful when you prefer just to
+	 get null on error, as if you called <function>normalizer_create</function>.
+       </para>
+      </listitem>
+     </itemizedlist>
+    </section>
+    <section xml:id="intl.classes.Normalizer.methods">
+     &reftitle.methods;
+     <itemizedlist>
+           <listitem>
+       <para>
+        <link linkend='function.normalizer-normalize'>normalize</link> -
+        Normalizes the input provided and returns the normalized string       </para>
+      </listitem>
+            <listitem>
+       <para>
+        <link linkend='function.normalizer-is-normalized'>isNormalized</link> -
+        Checks if the provided string is already in the specified normalization form.       </para>
+      </listitem>
+      	  </itemizedlist>
+    </section>
+
+    &reference.intl.Normalizer-constants;
+</refsect1>
+</refentry>
