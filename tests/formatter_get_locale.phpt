@@ -18,8 +18,8 @@ function ut_main()
     );
 
     $loc_types = array(
-        ULOC_ACTUAL_LOCALE    => 'actual',
-        ULOC_VALID_LOCALE     => 'valid',
+        Locale::ACTUAL_LOCALE    => 'actual',
+        Locale::VALID_LOCALE     => 'valid',
     );
 
     $res_str = '';

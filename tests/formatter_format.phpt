@@ -21,8 +21,8 @@ function ut_main()
         NumberFormatter::SPELLOUT => '@@@@@@@',
         NumberFormatter::ORDINAL => '',
         NumberFormatter::DURATION => '',
-        NumberFormatter::PATTERN_RULEBASED => '#####.###'
-        // NumberFormatter::IGNORE => ''
+        NumberFormatter::PATTERN_RULEBASED => '#####.###',
+        1234999, // bad one
     );
 
     $locales = array(
@@ -41,6 +41,11 @@ function ut_main()
         foreach( $styles as $style => $pattern )
         {
             $fmt = ut_nfmt_create( $locale, $style, $pattern );
+			
+			if(!$fmt) {
+				$str_res .= "Bad formatter!\n";
+				continue;
+			}
             $str_res .= dump( ut_nfmt_format( $fmt, $number ) ) . "\n";
         }
     }
@@ -60,10 +65,11 @@ Locale is: en_US
 '$1,234,567.89'
 '123,456,789%'
 '1.23456789123457E6'
-false
+'one million, two hundred and thirty-four thousand, five hundred and sixty-seven point eight nine one two three four five seven'
 '1,234,568th'
 '342:56:08'
 '#####.###'
+Bad formatter!
 
   Locale is: ru_UA
 '1234567,89123457'
@@ -71,10 +77,11 @@ false
 '1 234 567,89 грн.'
 '123 456 789%'
 '1,23456789123457E6'
-false
+'миллион два сто тридцать четыре тысяча пять сто шестьдесят восемь'
 '1 234 568'
 '1 234 568'
 '#####.###'
+Bad formatter!
 
   Locale is: de
 '1234567,89123457'
@@ -82,10 +89,11 @@ false
 '¤ 1.234.567,89'
 '123.456.789%'
 '1,23456789123457E6'
-false
+'eine Million zweihundertvierunddreißigtausendfünfhundertsiebenundsechzig komma acht neun eins zwei drei vier fünf sieben'
 '1.234.568'
 '1.234.568'
 '#####.###'
+Bad formatter!
 
   Locale is: en_UK
 '1234567.89123457'
@@ -93,7 +101,8 @@ false
 '¤1,234,567.89'
 '123,456,789%'
 '1.23456789123457E6'
-false
+'one million, two hundred and thirty-four thousand, five hundred and sixty-seven point eight nine one two three four five seven'
 '1,234,568th'
 '342:56:08'
 '#####.###'
+Bad formatter!

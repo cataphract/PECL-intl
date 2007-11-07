@@ -12,9 +12,8 @@ get_locale()
 function ut_main()
 {
     $locales = array(
-        ULOC_REQUESTED_LOCALE,
-        ULOC_VALID_LOCALE,
-        ULOC_ACTUAL_LOCALE,
+        Locale::VALID_LOCALE,
+        Locale::ACTUAL_LOCALE,
         100,
         -100,
         -9999999999999,
@@ -43,7 +42,6 @@ include_once( 'ut_common.php' );
 ut_run();
 ?>
 --EXPECT--
-Locale of type 2 is 'en_US'
 Locale of type 1 is 'en_US'
 Locale of type 0 is 'en'
 Locale of type 100 is false

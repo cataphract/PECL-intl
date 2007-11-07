@@ -11,7 +11,7 @@ intl_get_error_code()
 // Suppress warning messages.
 error_reporting( E_ERROR );
 
-if( collator_get_display_name() !== false )
+if( collator_get_locale() !== false )
     echo "failed\n";
 else
 {

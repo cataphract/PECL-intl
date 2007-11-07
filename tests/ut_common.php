@@ -67,14 +67,6 @@ function ut_coll_get_locale( $coll, $type )
 {
     return $GLOBALS['oo-mode'] ? $coll->getLocale( $type ) : collator_get_locale( $coll, $type );
 }
-function ut_coll_get_display_name( $obj_loc, $disp_loc )
-{
-    return $GLOBALS['oo-mode'] ? Collator::getDisplayName( $obj_loc, $disp_loc ) : collator_get_display_name( $obj_loc, $disp_loc );
-}
-function ut_coll_get_available_locales()
-{
-    return $GLOBALS['oo-mode'] ? Collator::getAvailableLocales() : collator_get_available_locales();
-}
 function ut_coll_get_attribute( $coll, $attr )
 {
     return $GLOBALS['oo-mode'] ? $coll->getAttribute( $attr ) : collator_get_attribute( $coll, $attr );
@@ -236,6 +228,10 @@ function ut_loc_get_keywords( $locale )
 {
     return $GLOBALS['oo-mode'] ? Locale::getKeywords( $locale ) : locale_get_keywords( $locale );
 }
+function ut_loc_get_display_name( $locale , $dispLocale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getDisplayName( $locale , $dispLocale ) : locale_get_display_name( $locale , $dispLocale );
+}
 function ut_loc_get_display_language( $locale , $dispLocale )
 {
     return $GLOBALS['oo-mode'] ? Locale::getDisplayLanguage( $locale , $dispLocale ) : locale_get_display_language( $locale , $dispLocale );
@@ -251,5 +247,78 @@ function ut_loc_get_display_region( $locale, $dispLocale  )
 function ut_loc_get_display_variant( $locale , $dispLocale )
 {
     return $GLOBALS['oo-mode'] ? Locale::getDisplayVariant( $locale , $dispLocale ) : locale_get_display_variant( $locale, $dispLocale  );
+}
+function ut_loc_locale_compose( $loc_parts_arr )
+{
+    return $GLOBALS['oo-mode'] ? Locale::composeLocale( $loc_parts_arr ) : locale_compose( $loc_parts_arr );
+}
+function ut_loc_locale_parse( $locale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::parseLocale( $locale ) : locale_parse($locale );
+}
+function ut_loc_locale_get_all_variants( $locale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::getAllVariants( $locale ) : locale_get_all_variants( $locale );
+}
+function ut_loc_locale_filter_matches( $lang_tag,$loc_range  )
+{
+    return $GLOBALS['oo-mode'] ? Locale::filterMatches( $lang_tag,$loc_range ) : locale_filter_matches( $lang_tag,$loc_range );
+}
+function ut_loc_locale_canonical_filter_matches( $lang_tag,$loc_range  )
+{
+    return $GLOBALS['oo-mode'] ? Locale::canonicalFilterMatches( $lang_tag,$loc_range ) : locale_canonical_filter_matches( $lang_tag,$loc_range );
+}
+function ut_loc_canonicalize( $locale )
+{
+    return $GLOBALS['oo-mode'] ? Locale::canonicalize( $locale ) : locale_canonicalize( $locale );
+}
+function ut_loc_locale_lookup( $lang_tag_arr,$loc_range,$default_loc  )
+{
+    return $GLOBALS['oo-mode'] ? Locale::lookup( $lang_tag_arr,$loc_range,$default_loc ) : locale_lookup( $lang_tag_arr,$loc_range,$default_loc );
+}
+function ut_loc_locale_canonical_lookup( $lang_tag_arr,$loc_range  )
+{
+    return $GLOBALS['oo-mode'] ? Locale::canonical_lookup( $lang_tag_arr,$loc_range ) : locale_canonical_lookup( $lang_tag_arr,$loc_range );
+}
+/* MessageFormatter functions */
+function ut_msgfmt_create( $locale, $pattern)
+{
+    return $GLOBALS['oo-mode'] ? MessageFormatter::create( $locale, $pattern ) : msgfmt_create( $locale, $pattern );
+}
+function ut_msgfmt_format( $fmt, $args )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->format( $args ) : msgfmt_format( $fmt, $args);
+}
+function ut_msgfmt_parse( $fmt, $string)
+{
+    return $GLOBALS['oo-mode'] ? $fmt->parse( $string) : msgfmt_parse( $fmt, $string);
+}
+function ut_msgfmt_format_message( $locale, $pattern, $args )
+{
+    return $GLOBALS['oo-mode'] ? MessageFormatter::formatMessage( $locale, $pattern, $args ) : msgfmt_format_message( $locale, $pattern, $args );
+}
+function ut_msgfmt_parse_message( $locale, $pattern, $string )
+{
+    return $GLOBALS['oo-mode'] ? MessageFormatter::parseMessage( $locale, $pattern, $string ) : msgfmt_parse_message( $locale, $pattern, $string );
+}
+function ut_msgfmt_set_pattern( $fmt, $pattern )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->setPattern( $pattern ) : msgfmt_set_pattern( $fmt, $pattern );
+}
+function ut_msgfmt_get_pattern( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getPattern() : msgfmt_get_pattern( $fmt );
+}
+function ut_msgfmt_get_locale( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getLocale( ) : msgfmt_get_locale( $fmt );
+}
+function ut_msgfmt_get_error_code( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getErrorCode() : msgfmt_get_error_code( $fmt );
+}
+function ut_msgfmt_get_error_message( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getErrorMessage() : msgfmt_get_error_message( $fmt );
 }
 ?>

@@ -35,13 +35,12 @@ function ut_main()
         }
 
         // Get the requested, valid and actual locales.
-        $rloc = ut_coll_get_locale( $coll, ULOC_REQUESTED_LOCALE );
-        $vloc = ut_coll_get_locale( $coll, ULOC_VALID_LOCALE );
-        $aloc = ut_coll_get_locale( $coll, ULOC_ACTUAL_LOCALE );
+        $vloc = ut_coll_get_locale( $coll, Locale::VALID_LOCALE );
+        $aloc = ut_coll_get_locale( $coll, Locale::ACTUAL_LOCALE );
 
         // Show them.
         $res_str .= "Locale: '$locale'\n" .
-            "  ULOC_REQUESTED_LOCALE = '$rloc'\n" .
+            "  ULOC_REQUESTED_LOCALE = '$locale'\n" .
             "  ULOC_VALID_LOCALE     = '$vloc'\n" .
             "  ULOC_ACTUAL_LOCALE    = '$aloc'\n";
     }
@@ -68,8 +67,8 @@ Locale: 'uk-ua_CALIFORNIA@currency=;currency=GRN'
   ULOC_ACTUAL_LOCALE    = 'uk'
 Locale: ''
   ULOC_REQUESTED_LOCALE = ''
-  ULOC_VALID_LOCALE     = 'root'
-  ULOC_ACTUAL_LOCALE    = 'root'
+  ULOC_VALID_LOCALE     = 'en_US'
+  ULOC_ACTUAL_LOCALE    = 'en'
 Locale: 'root'
   ULOC_REQUESTED_LOCALE = 'root'
   ULOC_VALID_LOCALE     = 'root'
