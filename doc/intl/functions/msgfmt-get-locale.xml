@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
-<refentry xml:id="function.msgfmt-get-error-code" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="function.msgfmt-get-locale" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
-  <refname>msgfmt_get_error_code</refname>
-  <refpurpose>Get the error code from last operation</refpurpose>
+  <refname>msgfmt_get_locale</refname>
+  <refpurpose>Get the locale for which the formatter was created.</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
    <para>Procedural style</para>
   <methodsynopsis>
-   <type>integer</type><methodname>msgfmt_get_error_code</methodname>
-     <methodparam><type>MessageFormatter</type><parameter>fmt</parameter></methodparam>
+   <type>string</type><methodname>msgfmt_get_locale</methodname>
+     <methodparam><type>NumberFormatter</type><parameter>formatter</parameter></methodparam>
     </methodsynopsis>
   <para>Object oriented style</para>
   <classsynopsis>
    <ooclass><classname></classname></ooclass>
    <methodsynopsis>
-   <type>integer</type><methodname>getErrorCode</methodname>
+   <type>string</type><methodname>getLocale</methodname>
       </methodsynopsis>
   </classsynopsis>
   <para>
-   Get the error code from last operation.
-  </para> 
+   Get the locale for which the formatter was created.  </para> 
   </refsect1>
 
  <refsect1 role="parameters">
@@ -29,10 +28,10 @@
   <para>
    <variablelist>
        <varlistentry>
-     <term><parameter>fmt</parameter></term>
+     <term><parameter>formatter</parameter></term>
      <listitem>
       <para>
-	  The message formatter      </para>
+	  The formatter resource      </para>
      </listitem>
     </varlistentry>
 	   </variablelist>
@@ -43,21 +42,18 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   the error code, one of UErrorCode values. Initial value is U_ZERO_ERROR.  </para>
+   locale name</para>
  </refsect1>
  
  <refsect1 role="examples">
   &reftitle.examples;
    <example>
-    <title><function>msgfmt_get_error_code</function> example</title>
+    <title><function>msgfmt_get_locale</function> example</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$fmt = msgfmt_create("en_US", "{0, number} monkeys on {1, number} trees");
-$str = msgfmt_format($fmt, array());
-if(!$str) {
-  echo "ERROR: ".msgfmt_get_error_message($fmt) . " (" . msgfmt_get_error_code($fmt) . ")\n";
-}
+$fmt = msgfmt_create('en_US', "Number {0,number}");
+echo msgfmt_get_locale($fmt);
 ?>
 ]]>
     </programlisting>
@@ -67,11 +63,8 @@ if(!$str) {
     <programlisting role="php">
 <![CDATA[
 <?php
-$fmt = new MessageFormatter("en_US", "{0, number} monkeys on {1, number} trees");
-$str = $fmt->format(array());
-if(!$str) {
-  echo "ERROR: ".$fmt->getErrorMessage() . " (" . $fmt->getErrorCode() . ")\n";
-}
+$fmt = new MessageFormatter('en_US', "Number {0,number}");
+echo $fmt->getLocale();
 ?>
 ]]>
     </programlisting>
@@ -79,7 +72,7 @@ if(!$str) {
      &example.outputs;
      <screen>
          <![CDATA[
-ERROR: msgfmt_format: not enough parameters: U_ILLEGAL_ARGUMENT_ERROR (1)
+en_US
 ]]>
      </screen>
  </refsect1>
@@ -88,9 +81,7 @@ ERROR: msgfmt_format: not enough parameters: U_ILLEGAL_ARGUMENT_ERROR (1)
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>msgfmt_get_error_message</function></member>
-    <member><function>intl_get_error_code</function></member>
-    <member><function>intl_is_failure</function></member>
+    <member><function>msgfmt_create</function></member>
    </simplelist>
   </para>
  </refsect1>

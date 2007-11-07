@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
-<refentry xml:id="function.msgfmt-get-error-code" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="function.msgfmt-get-pattern" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
-  <refname>msgfmt_get_error_code</refname>
-  <refpurpose>Get the error code from last operation</refpurpose>
+  <refname>msgfmt_get_pattern</refname>
+  <refpurpose>Get the pattern used by the formatter</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
    <para>Procedural style</para>
   <methodsynopsis>
-   <type>integer</type><methodname>msgfmt_get_error_code</methodname>
+   <type>string</type><methodname>msgfmt_get_pattern</methodname>
      <methodparam><type>MessageFormatter</type><parameter>fmt</parameter></methodparam>
     </methodsynopsis>
   <para>Object oriented style</para>
   <classsynopsis>
    <ooclass><classname></classname></ooclass>
    <methodsynopsis>
-   <type>integer</type><methodname>getErrorCode</methodname>
+   <type>string</type><methodname>getPattern</methodname>
       </methodsynopsis>
   </classsynopsis>
   <para>
-   Get the error code from last operation.
-  </para> 
+   Get the pattern used by the formatter  </para> 
   </refsect1>
 
  <refsect1 role="parameters">
@@ -43,21 +42,23 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   the error code, one of UErrorCode values. Initial value is U_ZERO_ERROR.  </para>
+   the pattern string for this message formatter</para>
  </refsect1>
  
  <refsect1 role="examples">
   &reftitle.examples;
    <example>
-    <title><function>msgfmt_get_error_code</function> example</title>
+    <title><function>msgfmt_get_pattern</function> example</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$fmt = msgfmt_create("en_US", "{0, number} monkeys on {1, number} trees");
-$str = msgfmt_format($fmt, array());
-if(!$str) {
-  echo "ERROR: ".msgfmt_get_error_message($fmt) . " (" . msgfmt_get_error_code($fmt) . ")\n";
-}
+$fmt = msgfmt_create( "en_US", "{0, number} monkeys on {1, number} trees" );
+echo "Default pattern: '" . msgfmt_get_pattern( $fmt ) . "'\n";
+echo "Formatting result: " . msgfmt_format( $fmt, array(123, 456) ) . "\n";
+
+msgfmt_set_pattern( $fmt, "{0, number} trees hosting {1, number} monkeys" );
+echo "New pattern: '" . msgfmt_get_pattern( $fmt ) . "'\n";
+echo "Formatted number: " . msgfmt_format( $fmt, array(123, 456) ) . "\n";
 ?>
 ]]>
     </programlisting>
@@ -67,11 +68,13 @@ if(!$str) {
     <programlisting role="php">
 <![CDATA[
 <?php
-$fmt = new MessageFormatter("en_US", "{0, number} monkeys on {1, number} trees");
-$str = $fmt->format(array());
-if(!$str) {
-  echo "ERROR: ".$fmt->getErrorMessage() . " (" . $fmt->getErrorCode() . ")\n";
-}
+$fmt = new MessageFormatter( "en_US", "{0, number} monkeys on {1, number} trees" );
+echo "Default pattern: '" . $fmt->getPattern() . "'\n";
+echo "Formatting result: " . $fmt->format(array(123, 456)) . "\n";
+
+$fmt->setPattern("{0, number} trees hosting {1, number} monkeys" );
+echo "New pattern: '" . $fmt->getPattern() . "'\n";
+echo "Formatted number: " . $fmt->format(array(123, 456)) . "\n";
 ?>
 ]]>
     </programlisting>
@@ -79,7 +82,10 @@ if(!$str) {
      &example.outputs;
      <screen>
          <![CDATA[
-ERROR: msgfmt_format: not enough parameters: U_ILLEGAL_ARGUMENT_ERROR (1)
+Default pattern: '{0,number} monkeys on {1,number} trees'
+Formatting result: 123 monkeys on 456 trees
+New pattern: '{0,number} trees hosting {1,number} monkeys'
+Formatted number: 123 trees hosting 456 monkeys
 ]]>
      </screen>
  </refsect1>
@@ -88,9 +94,8 @@ ERROR: msgfmt_format: not enough parameters: U_ILLEGAL_ARGUMENT_ERROR (1)
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>msgfmt_get_error_message</function></member>
-    <member><function>intl_get_error_code</function></member>
-    <member><function>intl_is_failure</function></member>
+    <member><function>msgfmt_create</function></member>
+    <member><function>msgfmt_set_pattern</function></member>
    </simplelist>
   </para>
  </refsect1>
