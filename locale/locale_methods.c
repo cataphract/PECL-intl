@@ -36,22 +36,22 @@ ZEND_EXTERN_MODULE_GLOBALS( intl )
 
 
 //Sizes required for the strings "variant15" , "extlang11", "private12" etc.
-static const char* 	SEPARATOR= "_";
-static const char* 	SEPARATOR1= "-";
-static const char* 	DELIMITER= "-_";
-static const char* 	EXTLANG_PREFIX= "a";
-static const char* 	PRIVATE_PREFIX= "x";
-static const char* 	DISP_NAME= "name";
+#define SEPARATOR "_"
+#define SEPARATOR1 "-"
+#define DELIMITER "-_"
+#define EXTLANG_PREFIX "a"
+#define PRIVATE_PREFIX "x"
+#define DISP_NAME "name"
 
-static const int 	MAX_NO_VARIANT = 15;
-static const int 	MAX_NO_EXTLANG = 3;
-static const int 	MAX_NO_PRIVATE = 15;
-static const int 	MAX_NO_LOOKUP_LANG_TAG = 100;
+#define MAX_NO_VARIANT  15
+#define MAX_NO_EXTLANG  3
+#define MAX_NO_PRIVATE  15
+#define MAX_NO_LOOKUP_LANG_TAG  100
 
 //Sizes required for the strings "variant15" , "extlang3", "private12" etc.
-static const int 	VARIANT_KEYNAME_LEN = 11;
-static const int 	EXTLANG_KEYNAME_LEN = 10;
-static const int 	PRIVATE_KEYNAME_LEN = 11;
+#define VARIANT_KEYNAME_LEN  11
+#define EXTLANG_KEYNAME_LEN  10
+#define PRIVATE_KEYNAME_LEN  11
 
 /* Based on IANA registry at the time of writing this code
 *
@@ -128,51 +128,66 @@ getCorrectGrandfatheredLang(const char* oldID ){
 
 /*}}}*/
 
-/* {{{ proto static string Locale::getDefault(  )
- * Gets the default locale 
- }}} */
-/* {{{ proto static string locale_get_default( )
- * Gets the default locale 
- */
-PHP_NAMED_FUNCTION( zif_locale_get_default){
-	char*  		locale_name = NULL;
-
-	if(UG(default_locale) && (strcmp("", UG(default_locale))!=0) ) {
-		locale_name = estrdup( UG (default_locale) ); 
-	}else{
-		locale_name = (char*) uloc_getDefault();
-		UG(default_locale) = estrdup( locale_name);
+/* {{{
+* returns the position of next token for lookup 
+* or -1 if no token
+* strtokr equivalent search for token in reverse direction 
+*/
+static int getStrrtokenPos(char* str, int savedPos){
+	int result =-1;
+	int i=0;
+	int nextPos = 0; 	//for the next pos. of delimiter
+	
+	for( i=savedPos; i>=0 ;i--){
+		if( isIDSeparator(*(str+i)) ){
+			//delimiter found; check for singleton 
+			if( isIDSeparator(*(str+i-2)) ){
+				//a singleton; so send the position of token before the singleton
+				result = i-3;
+			}else{
+				result = i-1;
+			}
+			break;
+		}
 	}
-
-	RETVAL_STRINGL( locale_name, strlen(locale_name), TRUE );
+	if(result < 1){
+		//Just in case inavlid locale e.g. '-x-xyz' or '-sl_Latn'
+		result =-1;
+	}
+	return result;
 }
-
 /* }}} */
 
-/* {{{ proto static string Locale::setDefault( string $locale )
-* sets the default locale
-/*}}} */
-/* {{{ proto static string locale_set_default( string $locale )
-* sets the default locale
+/* {{{
+* returns the position of a singleton if present 
+* returns -1 if no singleton
+* strtok equivalent search for singleton
 */
-PHP_NAMED_FUNCTION(  zif_locale_set_default){
-	char* locale_name = NULL;
-	int   len=0;	
-
-	// Parse parameters.
-	if(zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC,  "s",
-		&locale_name ,&len ) == FAILURE)
-	{
-		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			 "locale_set_default: unable to parse input params", 0 TSRMLS_CC );
-
-		RETURN_FALSE;
+static int getSingletonPos(char* str){
+	int result =-1;
+	int i=0;
+	int len = 0;
+	
+	if( str && ((len=strlen(str))>0) ){
+		for( i=0; i<len ; i++){
+			if( isIDSeparator(*(str+i)) ){
+				if( i==1){
+					// string is of the form x-avy or a-prv1
+					result =0;
+					break;
+				}else{
+					//delimiter found; check for singleton 
+					if( isIDSeparator(*(str+i+2)) ){
+						//a singleton; so send the position of separator before singleton
+						result = i+1;
+						break;
+					}
+				}
+			}
+		}//end of for
+		
 	}
-
-	// Set new value for the given attribute.
-	UG( default_locale) = estrndup( locale_name , len );
-
-	RETVAL_STRINGL( UG( default_locale), len , TRUE );
+	return result;
 }
 /* }}} */
 
@@ -300,7 +315,7 @@ static void get_icu_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS)
     int32_t     buflen          = 512;
     UErrorCode  status          = U_ZERO_ERROR;
 
-    int*        result    		= 0;
+    int        	result    		= 0;
     char*       msg        		= NULL;
     int         msg_len    		= 50;
 
@@ -595,7 +610,7 @@ PHP_FUNCTION( locale_get_keywords )
     UEnumeration*     e        = NULL;
     UErrorCode        status   = U_ZERO_ERROR;
 
-	const char*	 	kw_key        = NULL;
+	const char*	 		kw_key        = NULL;
     int32_t         kw_key_len    = 0;
 
     char*       loc_name        = NULL;
@@ -654,7 +669,7 @@ PHP_FUNCTION( locale_get_keywords )
 
 			//Add the obtained keyword name and value pair to the return-array
 			if( kw_value ){
-       			add_assoc_stringl( return_value, kw_key, kw_value , kw_value_len ,TRUE );
+       			add_assoc_stringl( return_value, (char *)kw_key, kw_value , kw_value_len ,TRUE );
 			}//end of if
 
 		} //end of while
@@ -684,7 +699,8 @@ PHP_FUNCTION(locale_canonicalize){
 * gets the value for the key_name and appends to the loc_name
 * returns 1 if successful , -1 if not found , 0 not a string
 */
-static int append_key_value(char* loc_name, zval* hash_arr, char* key_name ){
+//static int append_key_value(char* loc_name, zval* hash_arr, char* key_name ){
+static int append_key_value(char* loc_name, HashTable* hash_arr, char* key_name ){
 	int		result = -1;
 	zval**	ele_value		= NULL;
 
@@ -724,7 +740,7 @@ static void add_prefix(char* loc_name , char* key_name){
 * used for 'variant','extlang','private' 
 * returns 1 if successful , -1 if not found , 0 not a string
 */
-static int append_multiple_key_values(char* loc_name, zval* hash_arr, char* key_name ){
+static int append_multiple_key_values(char* loc_name, HashTable* hash_arr, char* key_name ){
 	int		result = -1;
 	zval**	ele_value		= NULL;
 
@@ -795,7 +811,7 @@ PHP_FUNCTION(locale_compose){
 
 	zval*		arr				= NULL;
 
-	zval*		hash_arr		= NULL;
+	HashTable*	hash_arr		= NULL;
 	zval**		ele_value		= NULL;
 
 	//to get the value for the key for multiple occurring parts
@@ -825,7 +841,8 @@ PHP_FUNCTION(locale_compose){
 
 
 	//MAKE_STD_ZVAL(hash_arr);
-	hash_arr = Z_ARRVAL_P( arr );
+	//hash_arr = Z_ARRVAL_P( arr );
+	hash_arr = HASH_OF( arr );
 
 	if( !hash_arr || zend_hash_num_elements( hash_arr ) == 0 )
 		RETURN_FALSE;
@@ -923,7 +940,7 @@ static int add_array_entry(char* loc_name, zval* hash_arr, char* key_name ){
     char*       token        		= NULL;
 
     int32_t     buflen          	= 512;
-	int*		result				= 0;
+	int			result				= 0;
 	int 		cur_result  		= 0;
 	int 		cnt  				= 0;
 
@@ -1011,7 +1028,7 @@ PHP_FUNCTION(locale_get_all_variants){
     int         loc_name_len    = 0;
 
     int32_t     buflen          	= 512;
-	int*		result				= 0;
+	int			result				= 0;
 	char*		token				= NULL;
 	char*		variant				= NULL;
 
@@ -1092,8 +1109,8 @@ static void filter_matches_internal( INTERNAL_FUNCTION_PARAMETERS) {
     int         loc_range_len    = 0;
 
     int32_t     buflen          	= 512;
-	int*		result				= 0;
-	int			token				= 0;
+	int			result				= 0;
+	char*		token				= 0;
 	char*		chrcheck			= NULL;
 
     char*       can_lang_tag        = NULL;
@@ -1176,10 +1193,10 @@ PHP_FUNCTION(locale_filter_matches){
 * returns the lookup result to lookup_loc_range_src_php 
 * internal function
 */
-static char* lookup_loc_range(char* loc_range, zval* hash_arr , int isCanonical){
+static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanonical){
 	int		cur_arr_ind 		= 0;
 	int		i 					= 0;
-	int* 	result 				= 0;
+	int 	result 				= 0;
 
 	char* 	lang_tag 			= NULL;
 	zval**	ele_value			= NULL;
@@ -1243,69 +1260,6 @@ static char* lookup_loc_range(char* loc_range, zval* hash_arr , int isCanonical)
 /* }}} */
 
 /* {{{
-* returns the position of a singleton if present 
-* returns -1 if no singleton
-* strtok equivalent search for singleton
-*/
-static int getSingletonPos(char* str){
-	int result =-1;
-	int i=0;
-	int len = 0;
-	
-	if( str && ((len=strlen(str))>0) ){
-		for( i=0; i<len ; i++){
-			if( isIDSeparator(*(str+i)) ){
-				if( i==1){
-					// string is of the form x-avy or a-prv1
-					result =0;
-					break;
-				}else{
-					//delimiter found; check for singleton 
-					if( isIDSeparator(*(str+i+2)) ){
-						//a singleton; so send the position of separator before singleton
-						result = i+1;
-						break;
-					}
-				}
-			}
-		}//end of for
-		
-	}
-	return result;
-}
-/* }}} */
-
-/* {{{
-* returns the position of next token for lookup 
-* or -1 if no token
-* strtokr equivalent search for token in reverse direction 
-*/
-static int getStrrtokenPos(char* str, int savedPos){
-	int result =-1;
-	int i=0;
-	int nextPos = 0; 	//for the next pos. of delimiter
-	
-	for( i=savedPos; i>=0 ;i--){
-		if( isIDSeparator(*(str+i)) ){
-			//delimiter found; check for singleton 
-			if( isIDSeparator(*(str+i-2)) ){
-				//a singleton; so send the position of token before the singleton
-				result = i-3;
-			}else{
-				result = i-1;
-			}
-			break;
-		}
-	}
-	if(result < 1){
-		//Just in case inavlid locale e.g. '-x-xyz' or '-sl_Latn'
-		result =-1;
-	}
-	return result;
-}
-/* }}} */
-
-/* {{{
 * returns the lookup result  
 * or -1 if no token
 */
@@ -1323,7 +1277,7 @@ static char* lookup_internal_src_php( INTERNAL_FUNCTION_PARAMETERS) {
     int         can_loc_range_len   = 0;
 
 	zval*		arr				= NULL;
-	zval*		hash_arr		= NULL;
+	HashTable*	hash_arr		= NULL;
 	zend_bool	boolCanonical		=0;
 
 	char*	 	result			=NULL;
@@ -1349,7 +1303,7 @@ static char* lookup_internal_src_php( INTERNAL_FUNCTION_PARAMETERS) {
 
 
 	//MAKE_STD_ZVAL(hash_arr);
-	hash_arr = Z_ARRVAL_P( arr );
+	hash_arr = HASH_OF( arr );
 
 	if( !hash_arr || zend_hash_num_elements( hash_arr ) == 0 ){
 		result = empty_result;
