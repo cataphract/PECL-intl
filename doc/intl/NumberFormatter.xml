@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.6 $ -->
+<!-- $Revision: 1.7 $ -->
 <refentry xml:id="intl.NumberFormatter" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<refnamediv>
     <refname>NumberFormatter class</refname>
@@ -42,7 +42,7 @@
     <simpara>
     For more complex formatting, like spelled-out numbers, the rule-based number formatters are used.
     </simpara>
-    <section xml:id="intl.classes.NumberFormatter.constructors">
+    <refsect2 xml:id="intl.classes.NumberFormatter.constructors">
      <title>Constructors</title>
      <itemizedlist>
       <listitem>
@@ -58,8 +58,8 @@
        </para>
       </listitem>
      </itemizedlist>
-    </section>
-    <section xml:id="intl.classes.NumberFormatter.methods">
+    </refsect2>
+    <refsect2 xml:id="intl.classes.NumberFormatter.methods">
      &reftitle.methods;
      <itemizedlist>
       <listitem>
@@ -147,7 +147,7 @@
        </para>
       </listitem>
 	  </itemizedlist>
-    </section>
+    </refsect2>
 
     &reference.intl.NumberFormatter-constants;
  </refsect1>

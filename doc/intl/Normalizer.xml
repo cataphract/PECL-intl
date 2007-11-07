@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="intl.Normalizer" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<refnamediv>
     <refname>Normalizer class</refname>
@@ -7,7 +7,7 @@
     </refnamediv>
    
     <refsect1 role="description">
-    <section xml:id="intl.classes.Normalizer.constructors">
+    <refsect2 xml:id="intl.classes.Normalizer.constructors">
      <title>Constructors</title>
      <itemizedlist>
       <listitem>
@@ -22,8 +22,8 @@
        </para>
       </listitem>
      </itemizedlist>
-    </section>
-    <section xml:id="intl.classes.Normalizer.methods">
+    </refsect2>
+    <refsect2 xml:id="intl.classes.Normalizer.methods">
      &reftitle.methods;
      <itemizedlist>
            <listitem>
@@ -37,7 +37,7 @@
         Checks if the provided string is already in the specified normalization form.       </para>
       </listitem>
       	  </itemizedlist>
-    </section>
+    </refsect2>
 
     &reference.intl.Normalizer-constants;
 </refsect1>
