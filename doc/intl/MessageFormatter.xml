@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="intl.MessageFormatter" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<refnamediv>
     <refname>MessageFormatter class</refname>
@@ -76,38 +76,38 @@
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt-format_message'>formatMessage</link> -
+        <link linkend='function.msgfmt-format-message'>formatMessage</link> -
         Format the message without creating an object       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt-parse_message'>parseMessage</link> -
+        <link linkend='function.msgfmt-parse-message'>parseMessage</link> -
         parses input string and returns any extracted items as an array, without creating an object
        </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt-get_pattern'>getPattern</link> -
+        <link linkend='function.msgfmt-get-pattern'>getPattern</link> -
         Get the pattern used by the formatter       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt-set_pattern'>setPattern</link> -
+        <link linkend='function.msgfmt-set-pattern'>setPattern</link> -
         Set the pattern used by the formatter       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt-get_error_code'>getErrorCode</link> -
+        <link linkend='function.msgfmt-get-error-code'>getErrorCode</link> -
         Get the error code from last operation       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt-get_error_message'>getErrorMessage</link> -
+        <link linkend='function.msgfmt-get-error-message'>getErrorMessage</link> -
         Get the error text from the last operation.       </para>
       </listitem>
             <listitem>
        <para>
-        <link linkend='function.msgfmt-get_locale'>getLocale</link> -
+        <link linkend='function.msgfmt-get-locale'>getLocale</link> -
         Get the locale for which the formatter was created.       </para>
       </listitem>
       	  </itemizedlist>
