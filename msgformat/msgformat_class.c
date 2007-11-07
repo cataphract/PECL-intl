@@ -20,7 +20,7 @@
 #include "php_intl.h"
 #include "msgformat_data.h"
 #include "msgformat_format.h"
-//#include "msgformat_parse.h"
+#include "msgformat_parse.h"
 #include "msgformat.h"
 #include "msgformat_attr.h"
 
@@ -85,7 +85,8 @@ static function_entry MessageFormatter_class_functions[] = {
 	ZEND_FENTRY(  create, ZEND_FN( msgfmt_create ), NULL, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	PHP_NAMED_FE( format, ZEND_FN( msgfmt_format ), NULL )
 	ZEND_FENTRY(  formatMessage, ZEND_FN( msgfmt_format_message ), NULL, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
-//	PHP_NAMED_FE( parse, ZEND_FN( msgfmt_parse ), NULL )
+	PHP_NAMED_FE( parse, ZEND_FN( msgfmt_parse ), NULL )
+	ZEND_FENTRY(  parseMessage, ZEND_FN( msgfmt_parse_message ), NULL, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	PHP_NAMED_FE( setPattern, ZEND_FN( msgfmt_set_pattern ), NULL )
 	PHP_NAMED_FE( getPattern, ZEND_FN( msgfmt_get_pattern ), NULL )
 	PHP_NAMED_FE( getLocale, ZEND_FN( msgfmt_get_locale ), NULL )

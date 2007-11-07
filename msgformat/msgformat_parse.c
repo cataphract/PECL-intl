@@ -86,7 +86,7 @@ PHP_FUNCTION( msgfmt_parse_message )
 	int         slocale_len = 0;
 	UChar      *source = NULL;
 	int         source_len = 0;
-	MessageFormatter_object mf;
+	MessageFormatter_object mf={0};
 	MessageFormatter_object *mfo = &mf;
 
 	// Parse parameters.

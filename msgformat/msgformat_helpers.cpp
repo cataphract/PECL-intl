@@ -113,7 +113,7 @@ U_CFUNC void umsg_format_helper(UMessageFormat *fmt, int arg_count, zval **args,
     /* format the message */
     ((const MessageFormat*)fmt)->format(fargs, fmt_count, resultStr, fieldPosition, *status);
 
-    delete[] args;
+    delete[] fargs;
 
     if(U_FAILURE(*status)){
         return;
@@ -160,7 +160,7 @@ U_CFUNC void umsg_parse_helper(UMessageFormat *fmt, int *count, zval ***args, UC
 
         case Formattable::kInt64:
             aInt64 = fargs[i].getInt64();
-			if(aInt64 > LONG_MAX) {
+			if(aInt64 > LONG_MAX || aInt64 < -LONG_MAX) {
 				ZVAL_DOUBLE((*args)[i], (double)aInt64);
 			} else {
 				ZVAL_LONG((*args)[i], (long)aInt64);
@@ -179,6 +179,7 @@ U_CFUNC void umsg_parse_helper(UMessageFormat *fmt, int *count, zval ***args, UC
             break;
         }
     }
+	delete[] fargs;
 }
 
 /*

@@ -29,7 +29,7 @@ void msgformat_data_init( msgformat_data* mf_data TSRMLS_DC )
 		return;
 
 	mf_data->umsgf = NULL;
-	intl_errors_reset( &mf_data->error TSRMLS_CC );
+	intl_error_reset( &mf_data->error TSRMLS_CC );
 }
 /* }}} */
 
@@ -45,7 +45,7 @@ void msgformat_data_free( msgformat_data* mf_data TSRMLS_DC )
 		umsg_close( mf_data->umsgf );
 
 	mf_data->umsgf = NULL;
-	intl_errors_reset( &mf_data->error TSRMLS_CC );
+	intl_error_reset( &mf_data->error TSRMLS_CC );
 }
 /* }}} */
 

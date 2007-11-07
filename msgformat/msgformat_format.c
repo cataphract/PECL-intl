@@ -61,7 +61,7 @@ static void msgfmt_do_format(MessageFormatter_object *mfo, zval *args, zval *ret
 	umsg_format_helper(MSG_FORMAT_OBJECT(mfo), count, fargs, &formatted, &formatted_len, &INTL_DATA_ERROR_CODE(mfo));
 
 	for(i=0;i<count;i++) {
-		Z_DELREF_P(fargs[i]);
+		zval_ptr_dtor(&fargs[i]);
 	}
 
 	efree(fargs);
@@ -115,7 +115,7 @@ PHP_FUNCTION( msgfmt_format_message )
 	int         spattern_len = 0;
 	char       *slocale = NULL;
 	int         slocale_len = 0;
-	MessageFormatter_object mf;
+	MessageFormatter_object mf = {0};
 	MessageFormatter_object *mfo = &mf;
 
 	// Parse parameters.

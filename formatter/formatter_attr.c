@@ -246,7 +246,7 @@ PHP_FUNCTION( numfmt_set_text_attribute )
  */
 PHP_FUNCTION( numfmt_get_symbol )
 {
-	int symbol;
+	long symbol;
 	UChar value[4];
 	UChar *value_buf = value;
 	int length = USIZE(value);
@@ -285,7 +285,7 @@ PHP_FUNCTION( numfmt_get_symbol )
  */
 PHP_FUNCTION( numfmt_set_symbol )
 {
-	int        symbol;
+	long       symbol;
 	UChar*     value     = NULL;
 	int        value_len = 0;
 	FORMATTER_METHOD_INIT_VARS;
@@ -388,7 +388,7 @@ PHP_FUNCTION( numfmt_set_pattern )
  */
 PHP_FUNCTION( numfmt_get_locale )
 {
-	int type = ULOC_ACTUAL_LOCALE;
+	long type = ULOC_ACTUAL_LOCALE;
 	char* loc;
 	FORMATTER_METHOD_INIT_VARS;
 

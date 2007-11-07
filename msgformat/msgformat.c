@@ -73,9 +73,9 @@ PHP_FUNCTION( msgfmt_create )
 
 	if( U_FAILURE( INTL_DATA_ERROR_CODE((mfo)) ) )
 	{
-		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
+		intl_error_set( NULL, INTL_DATA_ERROR_CODE( mfo ),
 			"msgfmt_create: message formatter creation failed", 0 TSRMLS_CC );
-
+		zval_dtor(return_value);
 		RETURN_NULL();
 	}
 }
@@ -95,17 +95,19 @@ PHP_METHOD( MessageFormatter, __construct )
 
 	intl_error_reset( NULL TSRMLS_CC );
 
+	object = getThis();
+
 	// Parse parameters.
 	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "su",
 		&locale, &locale_len, &spattern, &spattern_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			"__construct: unable to parse input params", 0 TSRMLS_CC );
-
+		zval_dtor(object);
+		ZVAL_NULL(object);
 		RETURN_NULL();
 	}
 
-	object = getThis();
 	mfo = (MessageFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
 	intl_error_reset( &mfo->mf_data.error TSRMLS_CC );
@@ -123,9 +125,10 @@ PHP_METHOD( MessageFormatter, __construct )
 
 	if( U_FAILURE( INTL_DATA_ERROR_CODE((mfo)) ) )
 	{
-		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
+		intl_error_set( NULL, INTL_DATA_ERROR_CODE(mfo),
 			"__construct: message formatter creation failed", 0 TSRMLS_CC );
-
+		zval_dtor(object);
+		ZVAL_NULL(object);
 		RETURN_NULL();
 	}
 }

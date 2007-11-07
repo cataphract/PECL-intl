@@ -29,7 +29,7 @@ void formatter_data_init( formatter_data* nf_data TSRMLS_DC )
 		return;
 
 	nf_data->unum                = NULL;
-	intl_errors_reset( &nf_data->error TSRMLS_CC );
+	intl_error_reset( &nf_data->error TSRMLS_CC );
 }
 /* }}} */
 
@@ -45,7 +45,7 @@ void formatter_data_free( formatter_data* nf_data TSRMLS_DC )
 		unum_close( nf_data->unum );
 
 	nf_data->unum = NULL;
-	intl_errors_reset( &nf_data->error TSRMLS_CC );
+	intl_error_reset( &nf_data->error TSRMLS_CC );
 }
 /* }}} */
 
