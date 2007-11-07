@@ -126,8 +126,6 @@ function_entry Collator_class_functions[] = {
 	PHP_NAMED_FE( setAttribute, ZEND_FN( collator_set_attribute ), collator_2_args )
 	PHP_NAMED_FE( getStrength, ZEND_FN( collator_get_strength ), collator_0_args )
 	PHP_NAMED_FE( setStrength, ZEND_FN( collator_set_strength ), collator_1_arg )
-	ZEND_FENTRY( getAvailableLocales, ZEND_FN( collator_get_available_locales ), collator_0_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
-	ZEND_FENTRY( getDisplayName, ZEND_FN( collator_get_display_name ), collator_2_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	PHP_NAMED_FE( getLocale, ZEND_FN( collator_get_locale ), collator_1_arg )
 	PHP_NAMED_FE( getErrorCode, ZEND_FN( collator_get_error_code ), collator_0_args )
 	PHP_NAMED_FE( getErrorMessage, ZEND_FN( collator_get_error_message ), collator_0_args )

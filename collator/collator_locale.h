@@ -21,7 +21,5 @@
 #include <php.h>
 
 PHP_FUNCTION( collator_get_locale );
-PHP_FUNCTION( collator_get_display_name );
-PHP_FUNCTION( collator_get_available_locales );
 
 #endif // COLLATOR_LOCALE_H
