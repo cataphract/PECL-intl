@@ -320,6 +320,8 @@ PHP_MINIT_FUNCTION( intl )
 	// Expose Locale constants to PHP scripts
 	locale_register_constants( INIT_FUNC_ARGS_PASSTHRU );
 
+	msgformat_register_class(TSRMLS_C);
+
 	// Expose ICU error codes to PHP scripts.
 	intl_expose_icu_error_codes( INIT_FUNC_ARGS_PASSTHRU );
 
