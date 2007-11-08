@@ -38,6 +38,89 @@ function dump( $val )
 {
     return var_export( $val, true );
 }
+/*
+ * Convert a binary string content of $var to unicode.
+ */
+function u( $var )
+{
+    if( is_string( $var ) )
+        return u_str( $var );
+
+    if( is_array( $var ) )
+        return u_array( $var );
+
+    return $var;
+}
+
+/*
+ * Convert a binary string to unicode one.
+ */
+function u_str( $s )
+{
+    if( !is_binary( $s ) )
+        return $s;
+
+    return unicode_decode( $s, 'utf-8' );
+}
+
+/*
+ * Convert each binary string item of array to unicode string.
+ */
+function u_array( $a )
+{
+    $b = array();
+    foreach( $a as $key => $val )
+        $b[$key] = u( $val );
+
+    return $b;
+}
+
+/*
+ * Same as 'var_export" but does conversion binary string content
+ * of $str to utf-8.
+ */
+function dump_str( $val, $use_quotes = true )
+{
+    $q = '';
+    if( $use_quotes )
+	$q = "'";
+    if( is_unicode( $val ) && !unicode_semantics() )
+        return $q . unicode_encode( $val, 'utf-8' ) . $q;
+
+    if( is_string( $val ) )
+        return $q . "$val" . $q;
+
+    return var_export( $val, true );
+}
+
+/*
+ * Same as 'var_export" but does conversion binary string content
+ * of $str to utf-8.
+ */
+function dump_array( $a )
+{
+    $b = "array (\n";
+    foreach( $a as $key => $val )
+    {
+    	if( is_integer( $key ) )
+            $b .= "  $key => ";
+        else
+            $b .= "  '$key' => ";
+
+        if( is_unicode( $val ) && !unicode_semantics() )
+    	    $b .= "'" . unicode_encode( $val, 'utf-8' ) . "'";
+        elseif( is_null( $val ) )
+            $b .= "NULL";
+        elseif( is_string( $val ) )
+            $b .= "'" . "$val" . "'";
+        else
+            $b .= $val;
+        $b .= ",\n";
+    }
+    $b .= ")";
+
+    return $b;
+}
 
 /*
  * Wrappers around Collator methods to run them in either OO- or procedural mode.

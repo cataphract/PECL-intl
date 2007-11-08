@@ -32,9 +32,9 @@ function test_COW( $locale, $test_array )
 
     // Return contents of all the arrays.
     // The second copy should remain unsorted.
-    $res_str .= dump( $u_test_array ) . "\n";
-    $res_str .= dump( $u_copy1 ) . "\n";
-    $res_str .= dump( $u_copy2 ) . "\n";
+    $res_str .= dump_array( $u_test_array ) . "\n";
+    $res_str .= dump_array( $u_copy1 ) . "\n";
+    $res_str .= dump_array( $u_copy2 ) . "\n";
 
     return $res_str;
 }

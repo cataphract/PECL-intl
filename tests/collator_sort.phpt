@@ -31,8 +31,8 @@ function sort_arrays( $locale, $arrays, $sort_flag = Collator::SORT_REGULAR )
 
         // Concatenate the sorted array and function result
         // with output string.
-        $res_dump = "\n" . dump( $u_array ) .
-                    "\n Result: " . dump( $res_val );
+        $res_dump = "\n" . dump_array( $u_array ) .
+                    "\n Result: " . dump_str( $res_val );
 
 		// Preppend test signature to output string
         if( unicode_semantics() )

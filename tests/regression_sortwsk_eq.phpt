@@ -19,7 +19,7 @@ function sort_using_locale( $locale, $test_array )
     ut_coll_sort_with_sort_keys( $coll, $u_test_array );
 
     // And return the sorted array.
-    return dump( $u_test_array ) . "\n";
+    return dump_array( $u_test_array ) . "\n";
 }
 
 function ut_main()

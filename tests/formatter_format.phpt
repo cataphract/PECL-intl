@@ -46,7 +46,7 @@ function ut_main()
 				$str_res .= "Bad formatter!\n";
 				continue;
 			}
-            $str_res .= dump( ut_nfmt_format( $fmt, $number ) ) . "\n";
+            $str_res .= dump_str( ut_nfmt_format( $fmt, $number ) ) . "\n";
         }
     }
     return $str_res;

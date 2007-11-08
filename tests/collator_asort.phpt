@@ -30,8 +30,8 @@ function sort_arrays( $locale, $test_arrays, $sort_flag = Collator::SORT_REGULAR
         $res_val = ut_coll_asort( $coll, $u_test_array, $sort_flag );
 
         // Return output data.
-        $res_dump = "\n" . dump( $u_test_array ) .
-                    "\n Result: " . dump( $res_val );
+        $res_dump = "\n" . dump_array( $u_test_array ) .
+                    "\n Result: " . dump_str( $res_val );
 
 		// Preppend test signature to output string
         if( unicode_semantics() )

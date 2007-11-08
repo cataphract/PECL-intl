@@ -26,7 +26,7 @@ function ut_main()
     foreach( $locales as $locale => $currency )
     {
         $fmt = ut_nfmt_create( $locale, NumberFormatter::CURRENCY );
-        $res_str .= "$locale: " . dump( ut_nfmt_format_currency( $fmt, $number, $currency ) ) . "\n";
+        $res_str .= "$locale: " . dump_str( ut_nfmt_format_currency( $fmt, $number, $currency ) ) . "\n";
     }
     return $res_str;
 }
