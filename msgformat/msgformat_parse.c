@@ -27,7 +27,7 @@
 #include "msgformat_helpers.h"
 
 /* {{{ */
-static void msgfmt_do_parse(MessageFormatter_object *mfo, UChar *source, int src_len, zval *return_value) 
+static void msgfmt_do_parse(MessageFormatter_object *mfo, UChar *source, int src_len, zval *return_value TSRMLS_DC) 
 {
 	zval **fargs;
 	int count = 0;
@@ -69,7 +69,7 @@ PHP_FUNCTION( msgfmt_parse )
 	// Fetch the object.
 	MSG_FORMAT_METHOD_FETCH_OBJECT;
 
-	msgfmt_do_parse(mfo, source, source_len, return_value);
+	msgfmt_do_parse(mfo, source, source_len, return_value TSRMLS_CC);
 }
 /* }}} */
 
@@ -109,7 +109,7 @@ PHP_FUNCTION( msgfmt_parse_message )
 	MSG_FORMAT_OBJECT(mfo) = umsg_open(spattern, spattern_len, slocale, NULL, &INTL_DATA_ERROR_CODE(mfo));
 	INTL_METHOD_CHECK_STATUS(mfo, "Creating message formatter failed");
 
-	msgfmt_do_parse(mfo, source, source_len, return_value);
+	msgfmt_do_parse(mfo, source, source_len, return_value TSRMLS_CC);
 
 	// drop the temporary formatter
 	msgformat_data_free(&mfo->mf_data TSRMLS_CC);

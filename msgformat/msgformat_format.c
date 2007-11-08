@@ -27,7 +27,7 @@
 #include "msgformat_helpers.h"
 
 /* {{{ */
-static void msgfmt_do_format(MessageFormatter_object *mfo, zval *args, zval *return_value) 
+static void msgfmt_do_format(MessageFormatter_object *mfo, zval *args, zval *return_value TSRMLS_DC) 
 {
 	zval **fargs;
 	int count;
@@ -58,7 +58,7 @@ static void msgfmt_do_format(MessageFormatter_object *mfo, zval *args, zval *ret
 		zend_hash_move_forward_ex(Z_ARRVAL_P(args), &pos);
 	}
 
-	umsg_format_helper(MSG_FORMAT_OBJECT(mfo), count, fargs, &formatted, &formatted_len, &INTL_DATA_ERROR_CODE(mfo));
+	umsg_format_helper(MSG_FORMAT_OBJECT(mfo), count, fargs, &formatted, &formatted_len, &INTL_DATA_ERROR_CODE(mfo) TSRMLS_CC);
 
 	for(i=0;i<count;i++) {
 		zval_ptr_dtor(&fargs[i]);
@@ -99,7 +99,7 @@ PHP_FUNCTION( msgfmt_format )
 	// Fetch the object.
 	MSG_FORMAT_METHOD_FETCH_OBJECT;
 
-	msgfmt_do_format(mfo, args, return_value);
+	msgfmt_do_format(mfo, args, return_value TSRMLS_CC);
 }
 /* }}} */
 
@@ -138,7 +138,7 @@ PHP_FUNCTION( msgfmt_format_message )
 	MSG_FORMAT_OBJECT(mfo) = umsg_open(spattern, spattern_len, slocale, NULL, &INTL_DATA_ERROR_CODE(mfo));
 	INTL_METHOD_CHECK_STATUS(mfo, "Creating message formatter failed");
 
-	msgfmt_do_format(mfo, args, return_value);
+	msgfmt_do_format(mfo, args, return_value TSRMLS_CC);
 
 	// drop the temporary formatter
 	msgformat_data_free(&mfo->mf_data TSRMLS_CC);

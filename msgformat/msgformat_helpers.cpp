@@ -52,7 +52,7 @@ U_CFUNC int32_t umsg_format_arg_count(UMessageFormat *fmt)
 	return fmt_count;
 }
 
-U_CFUNC void umsg_format_helper(UMessageFormat *fmt, int arg_count, zval **args, UChar **formatted, int *formatted_len, UErrorCode *status)
+U_CFUNC void umsg_format_helper(UMessageFormat *fmt, int arg_count, zval **args, UChar **formatted, int *formatted_len, UErrorCode *status TSRMLS_DC)
 {
 	int fmt_count = 0;
     const Formattable::Type* argTypes =
