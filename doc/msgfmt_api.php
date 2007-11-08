@@ -31,7 +31,7 @@ class MessageFormatter {
 	/**
 	 * Format the message
 	 * @param   array   $args   arguments to insert into the pattern string
-	 * @return  string  the formatted string, or 'null' if an error ocurred
+	 * @return  string  the formatted string, or false if an error ocurred
 	 */
 	public function format($args) {}
 
@@ -42,12 +42,10 @@ class MessageFormatter {
 	 * the position of the error.
 	 *
 	 * @param  string  $value      string to parse for items
-	 * @param  integer $parse_pos  starting position, zero-based, in $value
-	 * @param  integer $error      error code
 	 * @return array               array containing items extracted
 	 *
 	 */
-	public function parse($value, $parse_pos = 0, $error = 0) {}
+	public function parse($value) {}
 
 	/**
 	 * Inserts the items in $args into $pattern, formatting them
@@ -56,10 +54,9 @@ class MessageFormatter {
 	 * @param string    $locale   the locale to use when formatting numbers and dates and suchlike
 	 * @param string    $pattern  the pattern string to insert things into
 	 * @param array     $args     the array of values to insert into $pattern
-	 * @param [integer] $error    an integer in which any error codes will be returned
-	 * @return string             the formatted pattern string or 'null' if an error occured
+	 * @return string             the formatted pattern string or false if an error occured
 	 */
-	public static function formatMessage($locale, $pattern, $args, $error = 0) {}
+	public static function formatMessage($locale, $pattern, $args) {}
 
 	/**
 	 * parses input string and returns any extracted items as an array
@@ -69,12 +66,10 @@ class MessageFormatter {
 	 *
 	 * @param  string  $locale     the locale to use when formatting numbers and dates and suchlike
 	 * @param  string  $value      string to parse for items
-	 * @param  integer $parse_pos  starting position, zero-based, in $value
-	 * @param  integer $error      error code
 	 * @return array               array containing items extracted
 	 *
 	 */
-	public static function parseMessage($locale, $value, $parse_pos = 0, $error = 0) {}
+	public static function parseMessage($locale, $value) {}
 
 	/**
 	 * Get the pattern used by the formatter
@@ -129,7 +124,7 @@ class MessageFormatter {
 	 * Format the message
 	 * @param MessageFormatter $fmt The message formatter 
 	 * @param   array   $args   arguments to insert into the pattern string
-	 * @return  string  the formatted string, or 'null' if an error ocurred
+	 * @return  string  the formatted string, or false if an error ocurred
 	 */
 	function msgfmt_format($fmt, $args) {}
 
@@ -141,12 +136,10 @@ class MessageFormatter {
 	 *
 	 * @param MessageFormatter $fmt The message formatter 
 	 * @param  string  $value      string to parse for items
-	 * @param  integer $parse_pos  starting position, zero-based, in $value
-	 * @param  integer $error      error code
 	 * @return array               array containing items extracted
 	 *
 	 */
-	function msgfmt_parse($fmt, $value, $parse_pos = 0, $error = 0) {}
+	function msgfmt_parse($fmt, $value) {}
 
 	/**
 	 * Inserts the items in $args into $pattern, formatting them
@@ -155,10 +148,9 @@ class MessageFormatter {
 	 * @param string    $locale   the locale to use when formatting numbers and dates and suchlike
 	 * @param string    $pattern  the pattern string to insert things into
 	 * @param array     $args     the array of values to insert into $pattern
-	 * @param [integer] $error    an integer in which any error codes will be returned
-	 * @return string             the formatted pattern string or 'null' if an error occured
+	 * @return string             the formatted pattern string or false if an error occured
 	 */
-	function msgfmt_format_message($locale, $pattern, $args, $error = 0) {}
+	function msgfmt_format_message($locale, $pattern, $args) {}
 
 	/**
 	 * parses input string and returns any extracted items as an array
@@ -168,12 +160,10 @@ class MessageFormatter {
 	 *
 	 * @param  string  $locale     the locale to use when formatting numbers and dates and suchlike
 	 * @param  string  $value      string to parse for items
-	 * @param  integer $parse_pos  starting position, zero-based, in $value
-	 * @param  integer $error      error code
 	 * @return array               array containing items extracted
 	 *
 	 */
-	function msgfmt_parse_message($locale, $value, $parse_pos = 0, $error = 0) {}
+	function msgfmt_parse_message($locale, $value) {}
 
 	/**
 	 * Get the pattern used by the formatter
