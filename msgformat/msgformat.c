@@ -67,10 +67,6 @@ PHP_FUNCTION( msgfmt_create )
 	// Create an ICU message formatter.
 	MSG_FORMAT_OBJECT(mfo) = umsg_open(spattern, spattern_len, locale, NULL, &INTL_DATA_ERROR_CODE(mfo));
 
-	if(spattern) {
-		efree(spattern);
-	}
-
 	if( U_FAILURE( INTL_DATA_ERROR_CODE((mfo)) ) )
 	{
 		intl_error_set( NULL, INTL_DATA_ERROR_CODE( mfo ),
@@ -118,10 +114,6 @@ PHP_METHOD( MessageFormatter, __construct )
 
 	// Create an ICU message formatter.
 	MSG_FORMAT_OBJECT(mfo) = umsg_open(spattern, spattern_len, locale, NULL, &INTL_DATA_ERROR_CODE(mfo));
-
-	if(spattern && spattern_len) {
-		efree(spattern);
-	}
 
 	if( U_FAILURE( INTL_DATA_ERROR_CODE((mfo)) ) )
 	{

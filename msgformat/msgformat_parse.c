@@ -73,7 +73,7 @@ PHP_FUNCTION( msgfmt_parse )
 }
 /* }}} */
 
-/* {{{ proto array MessageFormatter::formatMessage( string $locale, string $pattern, string $source )
+/* {{{ proto array MessageFormatter::parse( string $locale, string $pattern, string $source )
  * Parse a message. }}} */
 /* {{{ proto array numfmt_parse_message( string $locale, string $pattern, string $source )
  * Parse a message.
@@ -107,9 +107,6 @@ PHP_FUNCTION( msgfmt_parse_message )
 
 	// Create an ICU message formatter.
 	MSG_FORMAT_OBJECT(mfo) = umsg_open(spattern, spattern_len, slocale, NULL, &INTL_DATA_ERROR_CODE(mfo));
-	if(spattern && spattern_len) {
-		efree(spattern);
-	}
 	INTL_METHOD_CHECK_STATUS(mfo, "Creating message formatter failed");
 
 	msgfmt_do_parse(mfo, source, source_len, return_value);
