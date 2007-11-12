@@ -149,7 +149,7 @@ void normalizer_object_destroy( Normalizer_object* co TSRMLS_DC )
 	if( !co )
 		return;
 
-	intl_errors_reset( NORMALIZER_ERROR_P( co ) TSRMLS_CC );
+	intl_error_reset( NORMALIZER_ERROR_P( co ) TSRMLS_CC );
 }
 /* }}} */
 

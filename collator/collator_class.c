@@ -183,7 +183,7 @@ void collator_object_destroy( Collator_object* co TSRMLS_DC )
 		co->ucoll = NULL;
 	}
 
-	intl_errors_reset( COLLATOR_ERROR_P( co ) TSRMLS_CC );
+	intl_error_reset( COLLATOR_ERROR_P( co ) TSRMLS_CC );
 }
 /* }}} */
 
