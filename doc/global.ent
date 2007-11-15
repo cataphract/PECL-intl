@@ -8,3 +8,7 @@
 <!ENTITY url.icu.decimalformat "http://www.icu-project.org/apiref/icu4c/classDecimalFormat.html#_details">
 <!ENTITY uri.icu.ruleformat "http://www.icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html#_details">
 <!ENTITY uri.icu.msgformat "http://icu-project.org/userguide/formatMessages.html">
+<!ENTITY uri.unicode.normalization "http://unicode.org/reports/tr15/">
+<!ENTITY uri.unicode.normalization.faq "http://unicode.org/faq/normalization.html">
+<!ENTITY uri.icu.normalization.guide "http://www.icu-project.org/userguide/normalization.html">
+<!ENTITY uri.icu.normalization.api "http://www.icu-project.org/apiref/icu4c/unorm_8h.html">
