@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <section xml:id="intl.Normalizer-constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.constants;
  
@@ -19,32 +19,32 @@
       <row>
        <entry>string</entry>
        <entry>FORM_C</entry>
-       <entry>TODO</entry>
+       <entry>Normalization Form C (NFC) - Canonical Decomposition followed by Canonical Composition</entry>
     </row>
         <row>
        <entry>string</entry>
        <entry>FORM_D</entry>
-       <entry>TODO</entry>
+       <entry>Normalization Form D (NFD) - Canonical Decomposition</entry>
     </row>
         <row>
        <entry>string</entry>
        <entry>FORM_KC</entry>
-       <entry>TODO</entry>
+       <entry>Normalization Form KC (NFKC) - Compatibility Decomposition, followed by Canonical Composition</entry>
     </row>
         <row>
        <entry>string</entry>
        <entry>FORM_KD</entry>
-       <entry>TODO</entry>
+       <entry>Normalization Form KD (NFKD) - Compatibility Decomposition</entry>
     </row>
         <row>
        <entry>string</entry>
        <entry>NONE</entry>
-       <entry>TODO</entry>
+       <entry>No decomposition/composition</entry>
     </row>
         <row>
        <entry>string</entry>
        <entry>OPTION_DEFAULT</entry>
-       <entry>TODO</entry>
+       <entry>Default normalization options</entry>
     </row>
     
     </tbody>
