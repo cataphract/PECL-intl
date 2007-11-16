@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.6 $ -->
+<!-- $Revision: 1.7 $ -->
 <!-- Purpose: collation -->
 <!-- Membership: xx -->
 <!-- State: xx -->
@@ -39,6 +39,12 @@
      <simpara>
       Number Formatter: allows to display number according to the localized format or
       given pattern or set of rules, and to parse strings into numbers.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Normalizer: provides a function to transform text into one of the Unicode normalization 
+      forms, and provides a routine to test if a given string is already normalized.
      </simpara>
     </listitem>
    </itemizedlist>
@@ -157,6 +163,7 @@ echo $formatter->format( 1234567 );
    <simplelist>
    <member><link linkend="intl.Collator"><classname>Collator</classname></link></member>
    <member><link linkend="intl.NumberFormatter"><classname>NumberFormatter</classname></link></member>
+   <member><link linkend="intl.Normalizer"><classname>Normalizer</classname></link></member>
    <member><link linkend="intl.MessageFormatter"><classname>MessageFormatter</classname></link></member>
    </simplelist>
   </section>
@@ -187,6 +194,7 @@ echo $formatter->format( 1234567 );
 
  &reference.intl.Collator;
  &reference.intl.NumberFormatter;
+ &reference.intl.Normalizer;
  &reference.intl.MessageFormatter;
  &reference.intl.functions;
 
