@@ -31,7 +31,7 @@
 PHP_FUNCTION( numfmt_create )
 {
 	char*       locale;
-	UChar*      pattern;
+	UChar*      pattern = NULL;
 	int         locale_len = 0, style, pattern_len = 0;
 	FORMATTER_METHOD_INIT_VARS;
 
