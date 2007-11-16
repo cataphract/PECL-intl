@@ -5,8 +5,13 @@
 <!ENTITY url.icu.demo "http://demo.icu-project.org/icu-bin/locexp/">
 <!ENTITY url.rfc4646 "http://www.rfc-editor.org/rfc/rfc4646.txt">
 <!ENTITY url.rfc4647 "http://www.rfc-editor.org/rfc/rfc4647.txt">
+<!ENTITY url.icu.formatparse "http://icu-project.org/userguide/formatParse.html">
+<!ENTITY url.icu.formatnumbers "http://icu-project.org/userguide/formatNumbers.html">
 <!ENTITY url.icu.decimalformat "http://www.icu-project.org/apiref/icu4c/classDecimalFormat.html#_details">
 <!ENTITY uri.icu.ruleformat "http://www.icu-project.org/apiref/icu4c/classRuleBasedNumberFormat.html#_details">
+<!ENTITY uri.icu.formatmsg "http://icu-project.org/userguide/formatMessages.html">
+<!ENTITY uri.icu.choiceformat "http://icu-project.org/apiref/icu4c/classChoiceFormat.html#_details">
+<!ENTITY uri.icu.msgformat "http://icu-project.org/apiref/icu4c/classMessageFormat.html#_details">
 <!ENTITY uri.icu.msgformat "http://icu-project.org/userguide/formatMessages.html">
 <!ENTITY uri.unicode.normalization "http://unicode.org/reports/tr15/">
 <!ENTITY uri.unicode.normalization.faq "http://unicode.org/faq/normalization.html">
