@@ -18,6 +18,7 @@
 #include "config.h"
 #endif
 
+#include <math.h>
 #include <unicode/msgfmt.h>
 
 extern "C" {
@@ -139,14 +140,19 @@ U_CFUNC void umsg_parse_helper(UMessageFormat *fmt, int *count, zval ***args, UC
     // assign formattables to varargs
     for(int32_t i = 0; i < *count; i++) {
 	    int64_t aInt64;
+		double aDate;
 		UnicodeString temp;
 
 		ALLOC_INIT_ZVAL((*args)[i]);
 		
 		switch(fargs[i].getType()) {
         case Formattable::kDate:
-			/* TODO: convert to seconds? */
-			ZVAL_DOUBLE((*args)[i], (double)fargs[i].getDate());
+			aDate = ((double)fargs[i].getDate())/U_MILLIS_PER_SECOND;
+			if(aDate > LONG_MAX || aDate < -LONG_MAX) {
+				ZVAL_DOUBLE((*args)[i], aDate<0?ceil(aDate):floor(aDate));
+			} else {
+				ZVAL_LONG((*args)[i], (long)aDate);
+			}
             break;
 
         case Formattable::kDouble:
