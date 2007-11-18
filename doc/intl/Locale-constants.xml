@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <section xml:id="intl.Locale-constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.constants;
  
  <para>
- TODO
+ These constants define how the Locale 
  <table>
-  <title>TODO</title>
+  <title>Locale constants</title>
   <tgroup cols="3">
    <thead>
     <row>
@@ -18,53 +18,66 @@
   <tbody>
       <row>
        <entry>string</entry>
-       <entry>LOC_DEFAULT</entry>
-       <entry>TODO</entry>
+       <entry>DEFAULT_LOCALE</entry>
+       <entry>Used with the getLocale methods of the various locale affected classes, such as numfmt.</entry>
     </row>
         <row>
        <entry>string</entry>
        <entry>ACTUAL_LOCALE</entry>
-       <entry>TODO</entry>
+       <entry>This is locale the data actually comes from.</entry>
     </row>
         <row>
        <entry>string</entry>
        <entry>VALID_LOCALE</entry>
-       <entry>TODO</entry>
+       <entry>This is the most specific locale supported by ICU.</entry>
+    </row>
+    </tbody>
+    </tgroup>
+   </table>
+ </para>
+ </section>
+
+ <section xml:id="intl.Locale-constants.subtags">
+ <para>
+ These constants define how the Locales are parsed or composed. They should be used as keys in the argument array to <function>locale_compose</function> and are returned from <function>locale_parse</function> as keys  of the returned asoociative array. 
+ <table>
+ <title>Locale subtags</title>
+  <tgroup cols="3">
+   <thead>
+        <row>
+       <entry>string</entry>
+       <entry>LANG_TAG</entry>
+       <entry>Language subtag</entry>
     </row>
         <row>
        <entry>string</entry>
-       <entry>LOC_LANG_TAG</entry>
-       <entry>TODO</entry>
+       <entry>EXTLANG_TAG</entry>
+       <entry>Extended language subtag</entry>
     </row>
         <row>
        <entry>string</entry>
-       <entry>LOC_EXTLANG_TAG</entry>
-       <entry>TODO</entry>
+       <entry>SCRIPT_TAG</entry>
+       <entry>Script subtag</entry>
     </row>
         <row>
        <entry>string</entry>
-       <entry>LOC_SCRIPT_TAG</entry>
-       <entry>TODO</entry>
+       <entry>REGION_TAG</entry>
+       <entry>Region subtag</entry>
     </row>
         <row>
        <entry>string</entry>
-       <entry>LOC_REGION_TAG</entry>
-       <entry>TODO</entry>
+       <entry>VARIANT_TAG</entry>
+       <entry>Variant subtag</entry>
     </row>
         <row>
        <entry>string</entry>
-       <entry>LOC_VARIANT_TAG</entry>
-       <entry>TODO</entry>
+       <entry>GRANDFATHERED_LANG_TAG</entry>
+       <entry>Grandfatherd Language subtag</entry>
     </row>
         <row>
        <entry>string</entry>
-       <entry>LOC_GRANDFATHERED_LANG_TAG</entry>
-       <entry>TODO</entry>
-    </row>
-        <row>
-       <entry>string</entry>
-       <entry>LOC_PRIVATE_TAG</entry>
-       <entry>TODO</entry>
+       <entry>PRIVATE_TAG</entry>
+       <entry>Private subtag</entry>
     </row>
     
     </tbody>
