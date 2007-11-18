@@ -66,9 +66,8 @@ U_CFUNC void umsg_format_helper(UMessageFormat *fmt, int arg_count, zval **args,
 
 		switch(argTypes[i]) {
 			case Formattable::kDate:
-				/* TODO: convert form seconds? */
-				convert_to_double_ex(&args[i]);
-				fargs[i].setDate(Z_DVAL_P(args[i]));
+				convert_to_long_ex(&args[i]);
+				fargs[i].setDate(U_MILLIS_PER_SECOND * (double)Z_LVAL_P(args[i]));
 				break;
 
 			case Formattable::kDouble:
