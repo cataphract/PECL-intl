@@ -101,7 +101,7 @@ U_CFUNC void umsg_format_helper(UMessageFormat *fmt, int arg_count, zval **args,
 			case Formattable::kArray:
 			case Formattable::kObject:
 				*status = U_UNSUPPORTED_ERROR;
-				delete[] args;
+				delete[] fargs;
 				return;
         }		
 	}
