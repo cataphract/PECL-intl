@@ -5,6 +5,10 @@
 <!ENTITY url.icu.demo "http://demo.icu-project.org/icu-bin/locexp/">
 <!ENTITY url.rfc4646 "http://www.rfc-editor.org/rfc/rfc4646.txt">
 <!ENTITY url.rfc4647 "http://www.rfc-editor.org/rfc/rfc4647.txt">
+<!ENTITY uri.cldr.locale "http://www.unicode.org/cldr/">
+<!ENTITY uri.iana.locale.subtags "http://www.iana.org/assignments/language-subtag-registry">
+<!ENTITY uri.icu.locale.guide "http://www.icu-project.org/userguide/locale.html">
+<!ENTITY uri.icu.locale.api "http://www.icu-project.org/apiref/icu4c/uloc_8h.html#_details">
 <!ENTITY url.icu.formatparse "http://icu-project.org/userguide/formatParse.html">
 <!ENTITY url.icu.formatnumbers "http://icu-project.org/userguide/formatNumbers.html">
 <!ENTITY url.icu.decimalformat "http://www.icu-project.org/apiref/icu4c/classDecimalFormat.html#_details">

@@ -42,7 +42,7 @@ class Locale {
      	 * The following static members are used with the getLocale methods of
      	 * the various locale affected classes, such as numfmt.
      	 */
-  	const LOC_DEFAULT 			= default_locale;
+  	const DEFAULT_LOCALE 			= default_locale;
 
    	/**
 	 * identifiers for the actual locale, valid locale
@@ -59,13 +59,13 @@ class Locale {
 	/** 
 	 * Valid locale tag and subtag values
 	 */
-	LOC_LANG_TAG 				= "language";
-	LOC_EXTLANG_TAG 			= "extlang";
-	LOC_SCRIPT_TAG 				= "script";
-	LOC_REGION_TAG 				= "region";
-	LOC_VARIANT_TAG 			= "variant";
-	LOC_GRANDFATHERED_LANG_TAG 		= "grandfathered";
-	LOC_PRIVATE_TAG 			= "private";
+	LANG_TAG 				= "language";
+	EXTLANG_TAG 				= "extlang";
+	SCRIPT_TAG 				= "script";
+	REGION_TAG 				= "region";
+	VARIANT_TAG 				= "variant";
+	GRANDFATHERED_LANG_TAG 			= "grandfathered";
+	PRIVATE_TAG 				= "private";
 	
 
 #############################################################################

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.7 $ -->
+<!-- $Revision: 1.8 $ -->
 <!-- Purpose: collation -->
 <!-- Membership: xx -->
 <!-- State: xx -->
@@ -45,6 +45,12 @@
      <simpara>
       Normalizer: provides a function to transform text into one of the Unicode normalization 
       forms, and provides a routine to test if a given string is already normalized.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Locale: provides interaction with locale identifiers in the form of functions 
+      to get subtags from locale identifier; parse ,compose ,match(lookup and filter) locale identifiers.
      </simpara>
     </listitem>
    </itemizedlist>
@@ -165,6 +171,7 @@ echo $formatter->format( 1234567 );
    <member><link linkend="intl.NumberFormatter"><classname>NumberFormatter</classname></link></member>
    <member><link linkend="intl.Normalizer"><classname>Normalizer</classname></link></member>
    <member><link linkend="intl.MessageFormatter"><classname>MessageFormatter</classname></link></member>
+   <member><link linkend="intl.Locale"><classname>Locale</classname></link></member>
    </simplelist>
   </section>
 
@@ -196,6 +203,7 @@ echo $formatter->format( 1234567 );
  &reference.intl.NumberFormatter;
  &reference.intl.Normalizer;
  &reference.intl.MessageFormatter;
+ &reference.intl.Locale;
  &reference.intl.functions;
 
 </reference>
