@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="intl.Locale" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<refnamediv>
     <refname>Locale class</refname>
@@ -7,7 +7,8 @@
     </refnamediv>
    
     <refsect1 role="description">
-    <simppara>
+    &reftitle.description;
+    <simpara>
 	A "Locale" is an identifier used to get language, culture, or regionally-specific 
  	behavior from an API. PHP locales are organized and identified the same
  	way that the CLDR locales used by ICU (and many vendors of Unix-like operating 
@@ -16,30 +17,30 @@
 	(which use hyphen, not underscore) in addition to the
 	more traditional underscore-using identifiers. Unless otherwise noted
 	the functions in this class are tolerant of both formats. 
-    </simppara>
-    <simppara>
+    </simpara>
+    <simpara>
 	Examples of identifiers include:
 
 	en-US (English, United States)
 	zh-Hant-TW (Chinese, Traditional Script, Taiwan)
 	fr-CA, fr-FR (French for Canada and France respectively) 
-    </simppara>
-    <simppara>
+    </simpara>
+    <simpara>
 	The Locale class (and related procedural functions) are used to interact 
 	with locale identifiers--to verify that an ID is well-formed, valid, 
 	etc. The extensions used by CLDR in UAX #35 (and inherited by ICU) are 
 	valid and used wherever they would be in ICU normally.
-    </simppara>
-    <simppara>
+    </simpara>
+    <simpara>
 	Locales cannot be instantiated as objects. All of the functions/methods 
 	provided are static.
-    <simppara>
-    <simppara>
+    </simpara>
+    <simpara>
 	The null or empty string obtains the "root" locale. 
 	The "root" locale is equivalent to "en_US_POSIX" in CLDR.
 	Language tags (and thus locale identifiers) are case insensitive. There
 	exists a canonicalization function to make case match the specification.
-    <simppara>
+    </simpara>
 
     <refsect2 xml:id="intl.classes.Locale.methods">
      &reftitle.methods;
