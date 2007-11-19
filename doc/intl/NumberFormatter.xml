@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.7 $ -->
+<!-- $Revision: 1.8 $ -->
 <refentry xml:id="intl.NumberFormatter" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<refnamediv>
     <refname>NumberFormatter class</refname>
@@ -7,6 +7,7 @@
     </refnamediv>
    
     <refsect1 role="description">
+    &reftitle.description;
     <simpara>
     Programs store and operate on numbers using a locale-independent binary
     representation. When displaying or printing a number it is converted to a

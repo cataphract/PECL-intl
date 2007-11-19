@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <refentry xml:id="intl.Normalizer" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<refnamediv>
     <refname>Normalizer class</refname>
@@ -7,6 +7,7 @@
     </refnamediv>
 
     <refsect1 role="description">
+    &reftitle.description;
     <simpara>
     Normalization is a process that involves transforming characters and sequences of characters into a formally-defined
     underlying representation. This process is most important when text needs to be compared for sorting and searching,
