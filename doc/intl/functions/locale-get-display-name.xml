@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.locale-get-display-name" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_get_display_name</refname>
@@ -63,7 +63,11 @@ If is 'null' then the default locale is used.  </para>
     <programlisting role="php">
 <![CDATA[
 < ?php
-TODO
+echo locale_get_display_name('sl-Latn-IT-nedis', 'en');
+echo ';\n';
+echo locale_get_display_name('sl-Latn-IT-nedis', 'fr');
+echo ';\n';
+echo locale_get_display_name('sl-Latn-IT-nedis', 'de');
 ?>
 ]]>
     </programlisting>
@@ -73,7 +77,11 @@ TODO
     <programlisting role="php">
 <![CDATA[
 < ?php
-TODO
+echo Locale::getDisplayName('sl-Latn-IT-nedis', 'en');
+echo ';\n';
+echo Locale::getDisplayName('sl-Latn-IT-nedis', 'fr');
+echo ';\n';
+echo Locale::getDisplayName('sl-Latn-IT-nedis', 'de');
 ?>
 ]]>
     </programlisting>
@@ -81,15 +89,22 @@ TODO
      &example.outputs;
      <screen>
          <![CDATA[
-TODO
-]]>
+Slovenian (Latin, Italy, Natisone dialect);
+slov\xc3\xa8ne (latin, Italie, dialecte de Natisone;
+Slowenisch (Lateinisch, Italien, NEDIS)
+	]]>
      </screen>
  </refsect1>
 
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
-TODO
+   <simplelist>
+    <member><function>locale_get_display_language</function></member>
+    <member><function>locale_get_display_script</function></member>
+    <member><function>locale_get_display_region</function></member>
+    <member><function>locale_get_display_variant</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

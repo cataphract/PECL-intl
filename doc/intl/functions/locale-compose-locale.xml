@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.locale-compose-locale" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_compose_locale</refname>
@@ -34,7 +34,7 @@ and the values are the associated subtag values.  </para>
      <term><parameter>subtags</parameter></term>
      <listitem>
       <para>
-	  an array containing a list of key-value pairs, where      </para>
+	  an array containing a list of key-value pairs, where  the keys identify the particular locale ID subtags, and the values are the associated subtag values.  Note : The 'variant' and 'private' subtags can take maximum 15 values whereas 'extlang' can take maximum 3 values.e.g. Variants are allowed  with the suffix ranging from 0-14 Hence the keys for the input array can be variant0,  variant1, ...,variant14 .In the returned locale id,  the subtag is ordered by suffix resulting in variant0 followed  by  variant1 followed by variant2 and so on.    </para>
      </listitem>
     </varlistentry>
 	   </variablelist>
@@ -55,7 +55,16 @@ and the values are the associated subtag values.  </para>
     <programlisting role="php">
 <![CDATA[
 < ?php
-TODO
+$arr = array(
+	'language'=>'en' ,
+	'script'=>'Hans' ,
+	'region'=>'CN',
+	'variant2'=>'rozaj' ,
+	'variant1'=>'nedis' ,
+	'private1'=>'prv1' ,
+	'private2'=>'prv2'
+);
+echo locale_compose( $arr );
 ?>
 ]]>
     </programlisting>
@@ -65,7 +74,16 @@ TODO
     <programlisting role="php">
 <![CDATA[
 < ?php
-TODO
+$arr = array(
+        'language'=>'en' ,
+        'script'=>'Hans' ,
+        'region'=>'CN',
+        'variant2'=>'rozaj' ,
+        'variant1'=>'nedis' ,
+        'private1'=>'prv1' ,
+        'private2'=>'prv2'
+);
+echo Locale::composeLocale( $arr );
 ?>
 ]]>
     </programlisting>
@@ -73,15 +91,17 @@ TODO
      &example.outputs;
      <screen>
          <![CDATA[
-TODO
-]]>
+	Locale: en_Hans_CN_nedis_rozaj_x_prv1_prv2
+	]]>
      </screen>
  </refsect1>
 
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
-TODO
+   <simplelist>
+    <member><function>locale_parse</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

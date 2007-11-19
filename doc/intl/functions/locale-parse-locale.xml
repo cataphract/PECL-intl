@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.locale-parse-locale" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_parse_locale</refname>
@@ -32,7 +32,7 @@
      <term><parameter>locale</parameter></term>
      <listitem>
       <para>
-	  the locale to extract the subtag array from      </para>
+	  the locale to extract the subtag array from. Note:The 'variant' and 'private' subtags can take maximum 15 values whereas 'extlang' can take maximum 3 values.    </para>
      </listitem>
     </varlistentry>
 	   </variablelist>
@@ -43,7 +43,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   $subtags 	an array containing a list of key-value pairs, where the keys identify the particular locale ID subtags, 	and the values are the associated subtag values.   </para>
+   $subtags 	an array containing a list of key-value pairs, where the keys identify the particular locale ID subtags, 	and the values are the associated subtag values.  The array will be ordered as the locale  id subtags e.g. in the locale id if  variants are '-varX-varY-varZ' then the returned array will have variant0=>varX ,  variant1=>varY , variant2=>varZ </para>
  </refsect1>
  
  <refsect1 role="examples">
@@ -53,7 +53,12 @@
     <programlisting role="php">
 <![CDATA[
 < ?php
-TODO
+$arr = locale_parse( 'sl-Latn-IT-nedis');
+if( $arr){
+    foreach( $arr as $key => $value){
+	    echo '$key : $value , ';
+    }
+}
 ?>
 ]]>
     </programlisting>
@@ -63,7 +68,12 @@ TODO
     <programlisting role="php">
 <![CDATA[
 < ?php
-TODO
+$arr = Locale::parseLocale( 'sl-Latn-IT-nedis');
+if( $arr){
+    foreach( $arr as $key => $value){
+	    echo '$key : $value , ';
+    }
+}
 ?>
 ]]>
     </programlisting>
@@ -71,7 +81,7 @@ TODO
      &example.outputs;
      <screen>
          <![CDATA[
-TODO
+language : sl , script : Latn , region : IT , variant0 : NEDIS ,
 ]]>
      </screen>
  </refsect1>
@@ -79,7 +89,9 @@ TODO
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
-TODO
+   <simplelist>
+    <member><function>compose_locale</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

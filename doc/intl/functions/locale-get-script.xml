@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.locale-get-script" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_get_script</refname>
@@ -53,7 +53,7 @@
     <programlisting role="php">
 <![CDATA[
 < ?php
-TODO
+echo locale_get_script('sr-Cyrl');
 ?>
 ]]>
     </programlisting>
@@ -63,7 +63,7 @@ TODO
     <programlisting role="php">
 <![CDATA[
 < ?php
-TODO
+echo Locale::getScript('sr-Cyrl');
 ?>
 ]]>
     </programlisting>
@@ -71,15 +71,19 @@ TODO
      &example.outputs;
      <screen>
          <![CDATA[
-TODO
-]]>
+	Cyrl
+	]]>
      </screen>
  </refsect1>
 
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
-TODO
+   <simplelist>
+    <member><function>locale_get_primary_language</function></member>
+    <member><function>locale_get_region</function></member>
+    <member><function>locale_get_all_variants</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
