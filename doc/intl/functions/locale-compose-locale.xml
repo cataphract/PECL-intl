@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.locale-compose-locale" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_compose_locale</refname>
@@ -54,7 +54,7 @@ and the values are the associated subtag values.  </para>
     <title><function>locale_compose_locale</function> example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 $arr = array(
 	'language'=>'en' ,
 	'script'=>'Hans' ,
@@ -73,7 +73,7 @@ echo locale_compose( $arr );
     <title>OO example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 $arr = array(
         'language'=>'en' ,
         'script'=>'Hans' ,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.locale-get-display-name" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_get_display_name</refname>
@@ -62,7 +62,7 @@ If is 'null' then the default locale is used.  </para>
     <title><function>locale_get_display_name</function> example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 echo locale_get_display_name('sl-Latn-IT-nedis', 'en');
 echo ';\n';
 echo locale_get_display_name('sl-Latn-IT-nedis', 'fr');
@@ -76,7 +76,7 @@ echo locale_get_display_name('sl-Latn-IT-nedis', 'de');
     <title>OO example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 echo Locale::getDisplayName('sl-Latn-IT-nedis', 'en');
 echo ';\n';
 echo Locale::getDisplayName('sl-Latn-IT-nedis', 'fr');

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.locale-get-all-variants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_get_all_variants</refname>
@@ -52,7 +52,7 @@
     <title><function>locale_get_all_variants</function> example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
  $arr = locale_get_all_variants('sl_IT_NEDIS_ROJAZ_1901');
  var_export( $arr );
 ?>
@@ -63,7 +63,7 @@
     <title>OO example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
  $arr = Locale::getAllVariants('sl_IT_NEDIS_ROJAZ_1901');
  var_export( $arr );
 ?>

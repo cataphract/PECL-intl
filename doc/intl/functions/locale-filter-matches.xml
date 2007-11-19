@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.locale-filter-matches" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_filter_matches</refname>
@@ -62,7 +62,7 @@ RFC 4647's basic filtering algorithm  </para>
     <title><function>locale_filter_matches</function> example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 echo (locale_filter_matches('de-DEVA','de-DE', false)) ? "Matches" : "Does not match"; 
 echo '; ';
 echo (locale_filter_matches('de-DE_1996','de-DE', false)) ? "Matches" : "Does not match"; 
@@ -74,7 +74,7 @@ echo (locale_filter_matches('de-DE_1996','de-DE', false)) ? "Matches" : "Does no
     <title>OO example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 echo (Locale::filter_matches('de-DEVA','de-DE', false)) ? "Matches" : "Does not match"; 
 echo '; ';
 echo (Locale::filter_matches('de-DE-1996','de-DE', false)) ? "Matches" : "Does not match"; 

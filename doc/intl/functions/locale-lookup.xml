@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.locale-lookup" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_lookup</refname>
@@ -72,7 +72,7 @@ to $locale  </para>
     <title><function>locale_lookup</function> example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 $arr = array(
 	'de-DEVA',
 	'de-DE-1996',
@@ -88,7 +88,7 @@ echo locale_lookup($arr,  'de-DE-1996-x-prv1-prv2', false, 'en_US');
     <title>OO example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 $arr = array(
 	'de-DEVA',
 	'de-DE-1996',

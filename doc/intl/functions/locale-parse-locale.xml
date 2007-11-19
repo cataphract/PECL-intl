@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.locale-parse-locale" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_parse_locale</refname>
@@ -52,7 +52,7 @@
     <title><function>locale_parse_locale</function> example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 $arr = locale_parse( 'sl-Latn-IT-nedis');
 if( $arr){
     foreach( $arr as $key => $value){
@@ -67,7 +67,7 @@ if( $arr){
     <title>OO example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 $arr = Locale::parseLocale( 'sl-Latn-IT-nedis');
 if( $arr){
     foreach( $arr as $key => $value){

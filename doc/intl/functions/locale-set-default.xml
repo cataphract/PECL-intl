@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.locale-set-default" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>locale_set_default</refname>
@@ -54,7 +54,7 @@ locale identifier. UAX #35 extensions are accepted.  </para>
     <title><function>locale_set_default</function> example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 locale_set_default('de-DE');
 echo locale_get_default();
 ?>
@@ -65,7 +65,7 @@ echo locale_get_default();
     <title>OO example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 Locale::setDefault('de-DE');
 echo Locale::getDefault();
 ?>

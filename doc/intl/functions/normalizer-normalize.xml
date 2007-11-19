@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.normalizer-normalize" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>normalizer_normalize</refname>
@@ -70,7 +70,7 @@
     <title><function>normalizer_normalize</function> example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 
 	$char_A_ring = "\xC3\x85";	// 'LATIN CAPITAL LETTER A WITH RING ABOVE' (U+00C5)
 	$char_combining_ring_above = "\xCC\x8A";  // 'COMBINING RING ABOVE' (U+030A)
@@ -89,7 +89,7 @@
     <title>OO example</title>
     <programlisting role="php">
 <![CDATA[
-< ?php
+<?php
 
 	$char_A_ring = "\xC3\x85";	// 'LATIN CAPITAL LETTER A WITH RING ABOVE' (U+00C5)
 	$char_combining_ring_above = "\xCC\x8A";  // 'COMBINING RING ABOVE' (U+030A)
