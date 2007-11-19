@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.4 $ -->
+<!-- $Revision: 1.5 $ -->
 <refentry xml:id="intl.Normalizer" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<refnamediv>
     <refname>Normalizer class</refname>
@@ -24,23 +24,6 @@
     The different forms are defined in terms of a set of transformations on the text, transformations that are expressed
     by both an algorithm and a set of data files.
     </simpara>
-    <refsect2 xml:id="intl.classes.Normalizer.constructors">
-     <title>Constructors</title>
-     <itemizedlist>
-      <listitem>
-       <para>
-        <link linkend='function.normalizer-create'>Normalizer::__construct</link> - create Normalizer
-       </para>
-      </listitem>
-      <listitem>
-       <para>
-        <link linkend='function.normalizer-create'>Normalizer::create</link>-
-	 creates a new Normalizer. This method is useful when you prefer just to
-	 get null on error, as if you called <function>normalizer_create</function>.
-       </para>
-      </listitem>
-     </itemizedlist>
-    </refsect2>
     <refsect2 xml:id="intl.classes.Normalizer.methods">
      &reftitle.methods;
      <itemizedlist>
