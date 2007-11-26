@@ -1,50 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.4 $ -->
-<section xml:id="intl.constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- $Revision: 1.5 $ -->
+<appendix xml:id="intl.constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.constants;
- &extension.constants;
-
- <para>
-  <variablelist>
-   <varlistentry>
-    <term>
-     <constant>ULOC_ACTUAL_LOCALE</constant> 
-      (<type>integer</type>)
-    </term>
-    <listitem>
-     <simpara>
-      This is locale the data actually comes from.
-     </simpara>
-    </listitem>
-   </varlistentry>
-
-   <varlistentry>
-    <term>
-     <constant>ULOC_VALID_LOCALE</constant> 
-      (<type>integer</type>)
-    </term>
-    <listitem>
-     <simpara>
-      This is the most specific locale supported by ICU.
-     </simpara>
-    </listitem>
-
-   </varlistentry>
-  </variablelist>
-
-  <para> 
-   <example><title>Locale types</title>
-    <para>
-     For example, a collator for "en_US_CALIFORNIA" was requested. In the current state of ICU, the:
-     <emphasis>requested</emphasis> locale is "en_US_CALIFORNIA"
-     <emphasis>valid</emphasis> locale is "en_US" (most specific locale supported by ICU)
-     <emphasis>actual</emphasis> locale is "root" (the collation data comes unmodified from the UCA)
-    </para>
-   </example>
-   The locale is considered supported by ICU if there is a core ICU bundle for that locale (although it may be empty).
-  </para> 
- </para>
-</section>
+ &no.constants;
+</appendix>
 
 <!-- Keep this comment at the end of the file
 Local variables:
