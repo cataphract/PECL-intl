@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <reference xml:id="class.numberformatter" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"  xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The NumberFormatter class</title>
   <titleabbrev>NumberFormatter</titleabbrev>
@@ -97,18 +97,18 @@
 }}} -->
  
   &reference.intl.numberformatter-constants;
- </partintro>
 
- <partintro xml:id="numberformatter.seealso">
-  &reftitle.seealso;
-  <para>
-   <simplelist>
-    <member><link xlink:href="&url.icu.formatparse;">ICU formatting documentation</link></member>
-    <member><link xlink:href="&url.icu.formatnumbers;">ICU number formatters</link></member>
-    <member><link xlink:href="&url.icu.decimalformat;">ICU decimal formatters</link></member>
-    <member><link xlink:href="&uri.icu.ruleformat;">ICU rule-based number formatters</link></member>
-   </simplelist>
-  </para>
+  <section xml:id="numberformatter.seealso">
+   &reftitle.seealso;
+   <para>
+    <simplelist>
+     <member><link xlink:href="&url.icu.formatparse;">ICU formatting documentation</link></member>
+     <member><link xlink:href="&url.icu.formatnumbers;">ICU number formatters</link></member>
+     <member><link xlink:href="&url.icu.decimalformat;">ICU decimal formatters</link></member>
+     <member><link xlink:href="&url.icu.ruleformat;">ICU rule-based number formatters</link></member>
+    </simplelist>
+   </para>
+  </section>
  </partintro>
  
  &reference.intl.numberformatter.entities;

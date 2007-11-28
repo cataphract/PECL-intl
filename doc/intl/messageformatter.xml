@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <reference xml:id="class.messageformatter" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"  xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The MessageFormatter class</title>
   <titleabbrev>MessageFormatter</titleabbrev>
@@ -61,18 +61,17 @@
  
   </section>
  
- </partintro>
-
- <partintro xml:id="messageformatter.seealso">
-  &reftitle.seealso;
-  <para>
-   <simplelist>
-    <member><link xlink:href="&url.icu.formatparse;">ICU formatting documentation</link></member>
-    <member><link xlink:href="&url.icu.formatmsg;">ICU message formatting description</link></member>
-    <member><link xlink:href="&url.icu.msgformat;">ICU message formatters</link></member>
-    <member><link xlink:href="&uri.icu.choiceformat;">ICU choice formatters</link></member>
-   </simplelist>
-  </para>
+  <section xml:id="messageformatter.seealso">
+   &reftitle.seealso;
+   <para>
+    <simplelist>
+     <member><link xlink:href="&url.icu.formatparse;">ICU formatting documentation</link></member>
+     <member><link xlink:href="&url.icu.formatmsg;">ICU message formatting description</link></member>
+     <member><link xlink:href="&url.icu.msgformat;">ICU message formatters</link></member>
+     <member><link xlink:href="&url.icu.choiceformat;">ICU choice formatters</link></member>
+    </simplelist>
+   </para>
+  </section>
  </partintro>
  
  &reference.intl.messageformatter.entities;

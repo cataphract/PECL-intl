@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
-<refsect2 xml:id="intl.locale-constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- $Revision: 1.2 $ -->
+<section xml:id="intl.locale-constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.constants;
  <para>
  These constants define how the Locale 
@@ -132,7 +132,7 @@
  </variablelist>
  </para>
  </section>
-</refsect2>
+</section>
     
 <!-- Keep this comment at the end of the file
 Local variables:

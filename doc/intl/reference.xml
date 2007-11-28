@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.9 $ -->
+<!-- $Revision: 1.10 $ -->
 
 <book xml:id="ref.intl" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <title>Internationalization Functions</title>
@@ -224,7 +224,12 @@ echo $formatter->format( 1234567 );
  &reference.intl.locale;
  &reference.intl.normalizer;
  &reference.intl.messageformatter;
- &reference.intl.functions.entities;
+
+ <reference xml:id="functions.intl" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>intl &Functions;</title>
+
+  &reference.intl.functions.entities;
+ </reference>
 
 </book>
 

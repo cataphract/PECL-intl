@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <reference xml:id="class.normalizer" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
  <title>The Normalizer class</title>
  <titleabbrev>Normalizer</titleabbrev>
@@ -14,7 +14,7 @@
     underlying representation. This process is most important when text needs to be compared for sorting and searching,
     but it is also used when storing text to ensure that the text is stored in a consistent representation.
     </simpara>
-    <simpara>
+    <para>
     The Unicode Consortium has defined a number of normalization forms reflecting the various needs of applications:
     <simplelist>
     <member>Normalization Form D (NFD) - Canonical Decomposition</member>
@@ -24,7 +24,7 @@
     </simplelist>
     The different forms are defined in terms of a set of transformations on the text, transformations that are expressed
     by both an algorithm and a set of data files.
-    </simpara>
+    </para>
   </section>
 <!-- }}} -->
  
@@ -78,18 +78,18 @@
 }}} -->
  
   &reference.intl.normalizer-constants;
- </partintro>
  
- <partintro xml:id="normalizer.seealso">
-  &reftitle.seealso;
-  <para>
-   <simplelist>
-    <member><link xlink:href="&uri.unicode.normalization;">Unicode Normalization</link></member>
-    <member><link xlink:href="&uri.unicode.normalization.faq;">Unicode Normalization FAQ</link></member>
-    <member><link xlink:href="&uri.icu.normalization.guide;">ICU User Guide - Normalization</link></member>
-    <member><link xlink:href="&uri.icu.normalization.api;">ICU API Reference - Normalization</link></member>
-   </simplelist>
-  </para>
+  <section xml:id="normalizer.seealso">
+   &reftitle.seealso;
+   <para>
+    <simplelist>
+     <member><link xlink:href="&url.unicode.normalization;">Unicode Normalization</link></member>
+     <member><link xlink:href="&url.unicode.normalization.faq;">Unicode Normalization FAQ</link></member>
+     <member><link xlink:href="&url.icu.normalization.guide;">ICU User Guide - Normalization</link></member>
+     <member><link xlink:href="&url.icu.normalization.api;">ICU API Reference - Normalization</link></member>
+    </simplelist>
+   </para>
+  </section>
  </partintro>
 
  &reference.intl.normalizer.entities;

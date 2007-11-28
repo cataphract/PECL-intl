@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <reference xml:id="class.locale" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
  <title>The Locale class</title>
  <titleabbrev>Locale</titleabbrev>
@@ -95,20 +95,19 @@
 }}} -->
  
   &reference.intl.locale-constants;
- </partintro>
- 
- <partintro xml:id="locale.seealso">
-  &reftitle.seealso;
-  <para>
-   <simplelist>
-    <member><link xlink:href="&url.rfc4646;">RFC 4646 - Tags for Identifying Languages</link></member>
-    <member><link xlink:href="&url.rfc4647;">RFC 4647 - Matching of Language Tags</link></member>
-    <member><link xlink:href="&url.cldr.locale;">Unicode CLDR Project:Common Locale Data Repository</link></member>
-    <member><link xlink:href="&uri.iana.locale.subtags;">IANA Language Subtags Registry</link></member>
-    <member><link xlink:href="&uri.icu.locale.guide;">ICU User Guide - Locale </link></member>
-    <member><link xlink:href="&uri.icu.locale.api;">ICU Locale api</link></member>
-   </simplelist>
-  </para>
+  <section xml:id="locale.seealso">
+   &reftitle.seealso;
+   <para>
+    <simplelist>
+     <member><link xlink:href="&url.rfc;4646">RFC 4646 - Tags for Identifying Languages</link></member>
+     <member><link xlink:href="&url.rfc;4647">RFC 4647 - Matching of Language Tags</link></member>
+     <member><link xlink:href="&url.cldr.locale;">Unicode CLDR Project:Common Locale Data Repository</link></member>
+     <member><link xlink:href="&url.iana.locale.subtags;">IANA Language Subtags Registry</link></member>
+     <member><link xlink:href="&url.icu.locale.guide;">ICU User Guide - Locale </link></member>
+     <member><link xlink:href="&url.icu.locale.api;">ICU Locale api</link></member>
+    </simplelist>
+   </para>
+  </section>
  </partintro>
 
  &reference.intl.locale.entities;
