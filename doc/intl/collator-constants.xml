@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
 <section xml:id="intl.collator-constants"
  xmlns="http://docbook.org/ns/docbook"
  xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -18,20 +18,22 @@
       <emphasis>On</emphasis>
       for the French locales and a few others. Users normally would not need
       to explicitly set this attribute. There is a string comparison
-      performance cost when it is set
-      <emphasis>On</emphasis>
-      , but sort key length is unaffected. Possible values are:
-      <constant>Collator::ON</constant>
-      <constant>Collator::OFF</constant>
-      (default)
-      <constant>Collator::DEFAULT</constant>
+      performance cost when it is set <emphasis>On</emphasis>,
+      but sort key length is unaffected. Possible values are:
+      <simplelist>
+       <member><constant>Collator::ON</constant></member>
+       <member><constant>Collator::OFF</constant>(default)</member>
+       <member><constant>Collator::DEFAULT</constant></member>
+      </simplelist>
      </simpara>
      <para>
       <example>
        <title>FRENCH_COLLATION rules</title>
        <para>
-        F=OFF cote &lt; coté &lt; côte &lt; côté F=ON cote &lt; côte &lt; coté
-        &lt; côté
+        <simplelist>
+         <member>F=OFF cote &lt; coté &lt; côte &lt; côté </member>
+         <member>F=ON cote &lt; côte &lt; coté &lt; côté</member>
+        </simplelist>
        </para>
       </example>
      </para>
@@ -72,18 +74,27 @@
      </para>
      <para>
       Possible values are:
-      <constant>Collator::NON_IGNORABLE</constant>
-      (default)
-      <constant>Collator::SHIFTED</constant>
-      <constant>Collator::DEFAULT</constant>
+      <simplelist>
+       <member><constant>Collator::NON_IGNORABLE</constant>(default)</member>
+       <member><constant>Collator::SHIFTED</constant></member>
+       <member><constant>Collator::DEFAULT</constant></member>
+      </simplelist>
      </para>
      <para>
       <example>
        <title>ALTERNATE_HANDLING rules</title>
        <para>
-        S=3, A=N di Silva &lt; Di Silva &lt; diSilva &lt; U.S.A. &lt; USA S=3,
-        A=S di Silva = diSilva &lt; Di Silva &lt; U.S.A. = USA S=4, A=S di
-        Silva &lt; diSilva &lt; Di Silva &lt; U.S.A. &lt; USA
+        <simplelist>
+         <member>
+         S=3, A=N di Silva &lt; Di Silva &lt; diSilva &lt; U.S.A. &lt; USA
+         </member> 
+         <member>
+         S=3, A=S di Silva = diSilva &lt; Di Silva &lt; U.S.A. = USA
+         </member> 
+         <member>
+         S=4, A=S di Silva &lt; diSilva &lt; Di Silva &lt; U.S.A. &lt; USA
+         </member>
+        </simplelist>
        </para>
       </example>
      </para>
@@ -113,18 +124,21 @@
      </para>
      <para>
       Possible values are:
-      <constant>Collator::OFF</constant>
-      (default)
-      <constant>Collator::LOWER_FIRST</constant>
-      <constant>Collator::UPPER_FIRST</constant>
-      <constant>Collator:DEFAULT</constant>
+      <simplelist>
+       <member><constant>Collator::OFF</constant>(default)</member>
+       <member><constant>Collator::LOWER_FIRST</constant></member>
+       <member><constant>Collator::UPPER_FIRST</constant></member>
+       <member><constant>Collator:DEFAULT</constant></member>
+      </simplelist>
      </para>
      <para>
       <example>
        <title>CASE_FIRST rules</title>
        <para>
-        C=X or C=L "china" &lt; "China" &lt; "denmark" &lt; "Denmark" C=U
-        "China" &lt; "china" &lt; "Denmark" &lt; "denmark"
+        <simplelist>
+         <member>C=X or C=L "china" &lt; "China" &lt; "denmark" &lt; "Denmark"</member> 
+         <member>C=U "China" &lt; "china" &lt; "Denmark" &lt; "denmark"</member>
+        </simplelist>
        </para>
       </example>
      </para>
@@ -147,15 +161,21 @@
      </para>
      <para>
       Possible values are:
-      <constant>Collator::OFF</constant>
-      (default)
-      <constant>Collator::ON</constant>
-      <constant>Collator::DEFAULT</constant>
+      <simplelist>
+       <member><constant>Collator::OFF</constant>(default)</member>
+       <member><constant>Collator::ON</constant></member>
+       <member><constant>Collator::DEFAULT</constant></member>
+      </simplelist>
      </para>
      <para>
       <example>
        <title>CASE_LEVEL rules</title>
-       <para>S=1, E=X role = Role = rôle S=1, E=O role = rôle &lt; Role</para>
+       <para>
+        <simplelist>
+         <member>S=1, E=X role = Role = rôle</member> 
+         <member>S=1, E=O role = rôle &lt; Role</member>
+        </simplelist>
+       </para>
       </example>
      </para>
     </listitem>
@@ -173,22 +193,22 @@
       the default for many locales), text as represented in common usage will
       compare correctly (for details, see UTN #5). Only if the accent marks
       are in noncanonical order will there be a problem. If the setting is
-      <emphasis>On</emphasis>
-      , then the best results are guaranteed for all possible text input.
+      <emphasis>On</emphasis>,
+      then the best results are guaranteed for all possible text input.
       There is a medium string comparison performance cost if this attribute
-      is
-      <emphasis>On</emphasis>
-      , depending on the frequency of sequences that require normalization.
+      is <emphasis>On</emphasis>,
+      depending on the frequency of sequences that require normalization.
       There is no significant effect on sort key length. If the input text is
       known to be in NFD or NFKD normalization forms, there is no need to
       enable this Normalization option.
      </para>
      <para>
       Possible values are:
-      <constant>Collator::OFF</constant>
-      (default)
-      <constant>Collator::ON</constant>
-      <constant>Collator::DEFAULT</constant>
+      <simplelist>
+       <member><constant>Collator::OFF</constant>(default)</member>
+       <member><constant>Collator::ON</constant></member>
+       <member><constant>Collator::DEFAULT</constant></member>
+      </simplelist>
      </para>
     </listitem>
    </varlistentry>
@@ -210,14 +230,14 @@
      </para>
      <para>
       Possible values are:
-      <constant>Collator::PRIMARY</constant>
-      <constant>Collator::SECONDARY</constant>
-      ,
-      <constant>Collator::TERTIARY</constant>
-      (default)
-      <constant>Collator::QUATERNARY</constant>
-      <constant>Collator::IDENTICAL</constant>
-      <constant>Collator::DEFAULT</constant>
+      <simplelist>
+       <member><constant>Collator::PRIMARY</constant></member>
+       <member><constant>Collator::SECONDARY</constant></member>
+       <member><constant>Collator::TERTIARY</constant>(default)</member>
+       <member><constant>Collator::QUATERNARY</constant></member>
+       <member><constant>Collator::IDENTICAL</constant></member>
+       <member><constant>Collator::DEFAULT</constant></member>
+      </simplelist>
      </para>
     </listitem>
    </varlistentry>
@@ -232,16 +252,17 @@
       Compatibility with JIS x 4061 requires the introduction of an additional
       level to distinguish Hiragana and Katakana characters. If compatibility
       with that standard is required, then this attribute should be set
-      <emphasis>On</emphasis>
-      , and the strength set to Quaternary. This will affect sort key length
+      <emphasis>On</emphasis>,
+      and the strength set to Quaternary. This will affect sort key length
       and string comparison string comparison performance.
      </para>
      <para>
       Possible values are:
-      <constant>Collator::OFF</constant>
-      (default)
-      <constant>Collator::ON</constant>
-      <constant>Collator::DEFAULT</constant>
+      <simplelist>
+       <member><constant>Collator::OFF</constant>(default)</member>
+       <member><constant>Collator::ON</constant></member>
+       <member><constant>Collator::DEFAULT</constant></member>
+      </simplelist>
      </para>
     </listitem>
    </varlistentry>
@@ -259,10 +280,11 @@
      </para>
      <para>
       Possible values are:
-      <constant>Collator::OFF</constant>
-      (default)
-      <constant>Collator::ON</constant>
-      <constant>Collator::DEFAULT</constant>
+      <simplelist>
+       <member><constant>Collator::OFF</constant>(default)</member>
+       <member><constant>Collator::ON</constant></member>
+       <member><constant>Collator::DEFAULT</constant></member>
+      </simplelist>
      </para>
     </listitem>
    </varlistentry>
