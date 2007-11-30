@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <section xml:id="intl.building" xmlns="http://docbook.org/ns/docbook">
  <title>Building</title>
 
@@ -10,8 +10,11 @@
   <emphasis>/opt/icu/</emphasis>. Run the following commands:
  </para>
  <screen>
-  $ /opt/php5/bin/phpize $ ./configure
-  --with-php-config=/opt/php5/bin/php-config \ --with-icu-dir=/opt/icu $ make
+  <![CDATA[
+$ /opt/php5/bin/phpize 
+$ ./configure  --with-php-config=/opt/php5/bin/php-config --with-icu-dir=/opt/icu 
+$ make
+]]>
  </screen>
  <para>
   If your ICU is installed to a non-standard directory then you might want to
