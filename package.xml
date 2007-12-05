@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package xmlns="http://pear.php.net/dtd/package-2.0"
+ xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.7"
+ version="2.0"
+ xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>intl</name>
+ <channel>pecl.php.net</channel>
+ <summary>Internationalization extension</summary>
+ <description>Internationalization extension implements ICU library functionality in PHP.</description>
+ <lead>
+  <name>Stanislav Malyshev</name>
+  <user>stas</user>
+  <email>stas@php.net</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>Kirti Velankar</name>
+  <user>kirtig</user>
+  <email>kirtig@php.net</email>
+  <active>yes</active>
+ </developer>
+
+ <date>2007-12-05</date>
+ <version>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP License</license>
+
+ <notes>
+* First beta release of the intl extension
+</notes>
+
+ <contents>
+  <dir name="/">
+   <file role="src" name="autogen.sh" />
+   <file role="src" name="config.m4" />
+   <file role="src" name="config.w32" />
+   <file role="doc" name="CREDITS" />
+   <file role="doc" name="EXPERIMENTAL" />
+   <file role="src" name="intl_common.h" />
+   <file role="src" name="intl_convert.c" />
+   <file role="src" name="intl_convert.h" />
+   <file role="src" name="intl_data.h" />
+   <file role="src" name="intl_error.c" />
+   <file role="src" name="intl_error.h" />
+   <file role="src" name="php_intl.c" />
+   <file role="src" name="php_intl.h" />
+
+   <dir name="common">
+    <file role="src" name="common_error.c" />
+    <file role="src" name="common_error.h" />
+   </dir>
+
+   <dir name="collator">
+    <file role="src" name="collator.c" />
+    <file role="src" name="collator.h" />
+    <file role="src" name="collator_attr.c" />
+    <file role="src" name="collator_attr.h" />
+    <file role="src" name="collator_class.c" />
+    <file role="src" name="collator_class.h" />
+    <file role="src" name="collator_compare.c" />
+    <file role="src" name="collator_compare.h" />
+    <file role="src" name="collator_convert.c" />
+    <file role="src" name="collator_convert.h" />
+    <file role="src" name="collator_create.c" />
+    <file role="src" name="collator_create.h" />
+    <file role="src" name="collator_error.c" />
+    <file role="src" name="collator_error.h" />
+    <file role="src" name="collator_is_numeric.c" />
+    <file role="src" name="collator_is_numeric.h" />
+    <file role="src" name="collator_locale.c" />
+    <file role="src" name="collator_locale.h" />
+    <file role="src" name="collator_sort.c" />
+    <file role="src" name="collator_sort.h" />
+   </dir>
+
+   <dir name="doc">
+    <file role="doc" name="collator_api.php" />
+    <file role="doc" name="common_api.php" />
+    <file role="doc" name="formatter_api.php" />
+    <file role="doc" name="locale_api.php" />
+    <file role="doc" name="msgfmt_api.php" />
+    <file role="doc" name="normalizer_api.php" />
+    <file role="doc" name="README" />
+    <file role="doc" name="Tutorial.txt" />
+    <file role="doc" name="Tutorial_U.txt" />
+   </dir>
+
+   <dir name="formatter">
+    <file role="src" name="formatter.c" />
+    <file role="src" name="formatter.h" />
+    <file role="src" name="formatter_attr.c" />
+    <file role="src" name="formatter_attr.h" />
+    <file role="src" name="formatter_class.c" />
+    <file role="src" name="formatter_class.h" />
+    <file role="src" name="formatter_data.c" />
+    <file role="src" name="formatter_data.h" />
+    <file role="src" name="formatter_format.c" />
+    <file role="src" name="formatter_format.h" />
+    <file role="src" name="formatter_main.c" />
+    <file role="src" name="formatter_main.h" />
+    <file role="src" name="formatter_parse.c" />
+    <file role="src" name="formatter_parse.h" />
+   </dir>
+
+   <dir name="locale">
+    <file role="src" name="locale.c" />
+    <file role="src" name="locale.h" />
+    <file role="src" name="locale_class.c" />
+    <file role="src" name="locale_class.h" />
+    <file role="src" name="locale_methods.c" />
+    <file role="src" name="locale_methods.h" />
+   </dir>
+
+   <dir name="msgformat">
+    <file role="src" name="msgformat.c" />
+    <file role="src" name="msgformat.h" />
+    <file role="src" name="msgformat_attr.c" />
+    <file role="src" name="msgformat_attr.h" />
+    <file role="src" name="msgformat_class.c" />
+    <file role="src" name="msgformat_class.h" />
+    <file role="src" name="msgformat_data.c" />
+    <file role="src" name="msgformat_data.h" />
+    <file role="src" name="msgformat_format.c" />
+    <file role="src" name="msgformat_format.h" />
+    <file role="src" name="msgformat_helpers.cpp" />
+    <file role="src" name="msgformat_helpers.h" />
+    <file role="src" name="msgformat_parse.c" />
+    <file role="src" name="msgformat_parse.h" />
+   </dir>
+
+   <dir name="normalizer">
+    <file role="src" name="normalizer.c" />
+    <file role="src" name="normalizer.h" />
+    <file role="src" name="normalizer_class.c" />
+    <file role="src" name="normalizer_class.h" />
+    <file role="src" name="normalizer_create.c" />
+    <file role="src" name="normalizer_create.h" />
+    <file role="src" name="normalizer_normalize.c" />
+    <file role="src" name="normalizer_normalize.h" />
+   </dir>
+
+   <dir name="samples">
+    <file role="doc" name="collator_oo.php" />
+    <file role="doc" name="collator_proc.php" />
+   </dir>
+
+   <dir name="tests">
+    <file role="test" name="collation_customization.phpt" />
+    <file role="test" name="collator_asort.phpt" />
+    <file role="test" name="collator_compare.phpt" />
+    <file role="test" name="collator_create.phpt" />
+    <file role="test" name="collator_get_error_code.phpt" />
+    <file role="test" name="collator_get_error_message.phpt" />
+    <file role="test" name="collator_get_locale.phpt" />
+    <file role="test" name="collator_get_set_attribute.phpt" />
+    <file role="test" name="collator_get_set_strength.phpt" />
+    <file role="test" name="collator_sort.phpt" />
+    <file role="test" name="collator_sort_with_sort_keys.phpt" />
+    <file role="test" name="formatter_fail.phpt" />
+    <file role="test" name="formatter_format.phpt" />
+    <file role="test" name="formatter_format_currency.phpt" />
+    <file role="test" name="formatter_get_error.phpt" />
+    <file role="test" name="formatter_get_locale.phpt" />
+    <file role="test" name="formatter_get_set_attribute.phpt" />
+    <file role="test" name="formatter_get_set_pattern.phpt" />
+    <file role="test" name="formatter_get_set_symbol.phpt" />
+    <file role="test" name="formatter_get_set_text_attribute.phpt" />
+    <file role="test" name="formatter_parse.phpt" />
+    <file role="test" name="formatter_parse_currency.phpt" />
+    <file role="test" name="intl_error_name.phpt" />
+    <file role="test" name="intl_get_error_code.phpt" />
+    <file role="test" name="intl_get_error_message.phpt" />
+    <file role="test" name="intl_is_failure.phpt" />
+    <file role="test" name="locale_compose_locale.phpt" />
+    <file role="test" name="locale_filter_matches.phpt" />
+    <file role="test" name="locale_get_all_variants.phpt" />
+    <file role="test" name="locale_get_default.phpt" />
+    <file role="test" name="locale_get_display_language.phpt" />
+    <file role="test" name="locale_get_display_name.phpt" />
+    <file role="test" name="locale_get_display_region.phpt" />
+    <file role="test" name="locale_get_display_script.phpt" />
+    <file role="test" name="locale_get_display_variant.phpt" />
+    <file role="test" name="locale_get_keywords.phpt" />
+    <file role="test" name="locale_get_primary_language.phpt" />
+    <file role="test" name="locale_get_region.phpt" />
+    <file role="test" name="locale_get_script.phpt" />
+    <file role="test" name="locale_lookup.phpt" />
+    <file role="test" name="locale_parse_locale.phpt" />
+    <file role="test" name="locale_set_default.phpt" />
+    <file role="test" name="msgfmt_fail.phpt" />
+    <file role="test" name="msgfmt_format.phpt" />
+    <file role="test" name="msgfmt_get_error.phpt" />
+    <file role="test" name="msgfmt_get_locale.phpt" />
+    <file role="test" name="msgfmt_get_set_pattern.phpt" />
+    <file role="test" name="msgfmt_parse.phpt" />
+    <file role="test" name="normalizer_normalize.phpt" />
+    <file role="test" name="regression_sortwsk_and_cow.phpt" />
+    <file role="test" name="regression_sortwsk_eq.phpt" />
+    <file role="test" name="regression_sort_and_cow.phpt" />
+    <file role="test" name="regression_sort_eq.phpt" />
+    <file role="test" name="ut_common.php" />
+   </dir>
+  </dir>
+ </contents>
+
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.0.0</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+
+ <providesextension>intl</providesextension>
+
+ <extsrcrelease>
+  <configureoption name="with-icu-dir" default="DEFAULT"
+   prompt="Specify where ICU libraries and headers can be found" />
+ </extsrcrelease>
+
+ <changelog>
+  <release>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <date>2007-12-05</date>
+   <notes>
+* Initial beta release of the extension
+* Includes following modules: locale, collator, number formatter,
+  message formatter, normalizer. 
+     </notes>
+  </release>
+ </changelog>
+</package>
+<!--
+ vim:et:ts=1:sw=1
+-->
