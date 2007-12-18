@@ -22,6 +22,13 @@ function ut_main()
 		Normalizer::NONE,
 	);
 
+	$forms_str = array (
+		Normalizer::FORM_C => 'UNORM_FORM_C',
+		Normalizer::FORM_D => 'UNORM_FORM_D',
+		Normalizer::FORM_KC => 'UNORM_FORM_KC',
+		Normalizer::FORM_KD => 'UNORM_FORM_KD',
+		Normalizer::NONE => 'UNORM_NONE',
+	);
 
 	/* just make sure all the form constants are defined as in the api spec */
 	if ( Normalizer::FORM_C != Normalizer::NFC ||
@@ -71,7 +78,7 @@ function ut_main()
 
 			$str_hex = urlencode($str);
 			$str_norm_hex = urlencode($str_norm);
-			$res_str .= "'$str_hex' normalized to form '$form' is '$str_norm_hex'" 
+			$res_str .= "'$str_hex' normalized to form '{$forms_str[$form]}' is '$str_norm_hex'" 
 					 .	"\terror info: '$error_message' ($error_code)\n" 
 					 .	"";
 			
@@ -79,7 +86,7 @@ function ut_main()
 			$error_code = intl_get_error_code();
 			$error_message = intl_get_error_message();
 
-			$res_str .= "		is in form '$form'? = " . ($is_norm ? "yes" : "no") 
+			$res_str .= "		is in form '{$forms_str[$form]}'? = " . ($is_norm ? "yes" : "no") 
 					 .	"\terror info: '$error_message' ($error_code)\n"
 					 .	"";
 		}
