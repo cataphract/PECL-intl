@@ -47,8 +47,6 @@ extern zend_class_entry *Normalizer_ce_ptr;
 /* Auxiliary macros */
 
 #define NORMALIZER_METHOD_INIT_VARS     \
-    zval*             object  = NULL;   \
-    Normalizer_object*  co      = NULL; \
     intl_error_reset( NULL TSRMLS_CC ); \
 
 #endif // #ifndef NORMALIZER_CLASS_H

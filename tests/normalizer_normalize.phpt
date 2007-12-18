@@ -23,6 +23,16 @@ function ut_main()
 	);
 
 
+	/* just make sure all the form constants are defined as in the api spec */
+	if ( Normalizer::FORM_C != Normalizer::NFC ||
+		 Normalizer::FORM_D != Normalizer::NFD ||
+		 Normalizer::FORM_KC != Normalizer::NFKC ||
+		 Normalizer::FORM_KD != Normalizer::NFKD ||
+		 Normalizer::NONE == Normalizer::FORM_C ) {
+
+			$res_str .= "Invalid normalization form declarations!\n";
+	}
+		 
 	$char_a_diaeresis = "\xC3\xA4";	// 'LATIN SMALL LETTER A WITH DIAERESIS' (U+00E4)
 	$char_a_ring = "\xC3\xA5";		// 'LATIN SMALL LETTER A WITH RING ABOVE' (U+00E5)
 	$char_o_diaeresis = "\xC3\xB6";    // 'LATIN SMALL LETTER O WITH DIAERESIS' (U+00F6)

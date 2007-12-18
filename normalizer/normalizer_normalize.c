@@ -20,6 +20,7 @@
 
 #include "php_intl.h"
 #include "unicode/unorm.h"
+#include "normalizer.h"
 #include "normalizer_class.h"
 #include "normalizer_normalize.h"
 #include "intl_convert.h"
@@ -32,15 +33,14 @@
 PHP_FUNCTION( normalizer_normalize )
 {
 	char*			input = NULL;
-	char*			form = NULL;
+	// form is optional, defaults to FORM_C
+	int			form = NORMALIZER_DEFAULT;
 	int			input_len = 0;
-	int			form_len = 0;
 	zval*			options_array;
 		
 	UChar*			uinput = NULL;
 	int			uinput_len = 0;
 	int			expansion_factor = 1;
-	int			mode = UNORM_NFC;
 	int			options = 0; 
 	UErrorCode		status = U_ZERO_ERROR;
 		
@@ -57,8 +57,8 @@ PHP_FUNCTION( normalizer_normalize )
 	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|sa",
-				&input, &input_len, &form, &form_len, &options_array) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|la",
+				&input, &input_len, &form, &options_array) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 						 "normalizer_normalize: unable to parse input params", 1 TSRMLS_CC );
@@ -66,34 +66,24 @@ PHP_FUNCTION( normalizer_normalize )
 		RETURN_NULL();
 	}
 
-	// form is optional, defaults to FORM_C
-	if ( form_len > 0 ) {
-		// estimate how much the buffer will need to expand during normalization
-		expansion_factor = 1;
+	expansion_factor = 1;
 
-		if ( strcmp(form, "UNORM_FORM_C") == 0 ) {
-			mode = UNORM_NFC;
-		}
-		else if ( strcmp(form, "UNORM_FORM_D") == 0 ) {
-			mode = UNORM_NFD;
+	switch(form) {
+		case NORMALIZER_NONE:
+			break;
+		case NORMALIZER_FORM_D:
 			expansion_factor = 3;
-		}
-		else if ( strcmp(form, "UNORM_FORM_KC") == 0 ) {
-			mode = UNORM_NFKC;
-		}
-		else if ( strcmp(form, "UNORM_FORM_KD") == 0 ) {
-			mode = UNORM_NFKD;
+			break;
+		case NORMALIZER_FORM_KD:
 			expansion_factor = 3;
-		}
-		else if ( strcmp(form, "UNORM_NONE") == 0 ) {
-			mode = UNORM_NONE;
-		}
-		else {
+			break;
+		case NORMALIZER_FORM_C:
+		case NORMALIZER_FORM_KC:
+			break;
+		default:
 			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-						 "normalizer_normalize: illegal normalization form", 1 TSRMLS_CC );
-
+						"normalizer_normalize: illegal normalization form", 1 TSRMLS_CC );
 			RETURN_NULL();
-		}
 	}
 
 	/*
@@ -120,7 +110,7 @@ PHP_FUNCTION( normalizer_normalize )
 	uret_buf = eumalloc( uret_len + 1 );
 
 	// normalize
-	size_needed = unorm_normalize( uinput, uinput_len, mode, options, uret_buf, uret_len, &status);
+	size_needed = unorm_normalize( uinput, uinput_len, form, options, uret_buf, uret_len, &status);
 	
 	// Bail out if an unexpected error occured.
 	// (U_BUFFER_OVERFLOW_ERROR means that *target buffer is not large enough).
@@ -141,7 +131,7 @@ PHP_FUNCTION( normalizer_normalize )
 		status = U_ZERO_ERROR;
 
 		// try normalize again
-		size_needed = unorm_normalize( uinput, uinput_len, mode, options, uret_buf, uret_len, &status);
+		size_needed = unorm_normalize( uinput, uinput_len, form, options, uret_buf, uret_len, &status);
 
 		// Bail out if an unexpected error occured.
 		if( U_FAILURE(status)  ) {
@@ -181,20 +171,16 @@ PHP_FUNCTION( normalizer_normalize )
 PHP_FUNCTION( normalizer_is_normalized )
 {
 	char*	 	input = NULL;
-	char*	 	form = NULL;
+	// form is optional, defaults to FORM_C
+	int			form = NORMALIZER_DEFAULT;
 	int		input_len = 0;
-	int		form_len = 0;
 	zval*	 	options_array = NULL;
 
 	UChar*	 	uinput = NULL;
 	int		uinput_len = 0;
-	int		mode = UNORM_NFC;
 	int		options = 0; 
 	UErrorCode	status = U_ZERO_ERROR;
 		
-	UChar*		uret_buf = NULL;
-	int		uret_len = 0;
-
 	UBool		uret = FALSE;
 		
 	NORMALIZER_METHOD_INIT_VARS
@@ -202,8 +188,8 @@ PHP_FUNCTION( normalizer_is_normalized )
 	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|sa",
-				&input, &input_len, &form, &form_len, &options_array) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|la",
+				&input, &input_len, &form, &options_array) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 				"normalizer_is_normalized: unable to parse input params", 1 TSRMLS_CC );
@@ -211,30 +197,20 @@ PHP_FUNCTION( normalizer_is_normalized )
 		RETURN_FALSE;
 	}
 
-	if ( form_len > 0 ) {
-		if ( strcmp(form, "UNORM_FORM_C") == 0 ) {
-			mode = UNORM_NFC;
-		}
-		else if ( strcmp(form, "UNORM_FORM_D") == 0 ) {
-			mode = UNORM_NFD;
-		}
-		else if ( strcmp(form, "UNORM_FORM_KC") == 0 ) {
-			mode = UNORM_NFKC;
-		}
-		else if ( strcmp(form, "UNORM_FORM_KD") == 0 ) {
-			mode = UNORM_NFKD;
-		}
-		// 'none' doesn't make any sense and is not allowed
-		//else if ( strcmp(form, "UNORM_NONE") == 0 ) {
-		//	 mode = UNORM_NONE;
-		//}
-		else {
-			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-					 "normalizer_normalize: illegal normalization form", 1 TSRMLS_CC );
+	switch(form) {
+		// case NORMALIZER_NONE: not allowed - doesn't make sense
 
-			RETURN_FALSE;
-		}
+		case NORMALIZER_FORM_D:
+		case NORMALIZER_FORM_KD:
+		case NORMALIZER_FORM_C:
+		case NORMALIZER_FORM_KC:
+			break;
+		default:
+			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
+						"normalizer_normalize: illegal normalization form", 1 TSRMLS_CC );
+			RETURN_NULL();
 	}
+
 
 	/*
 	 * Test normalization of string (converting it to UTF-16 first).
@@ -256,7 +232,7 @@ PHP_FUNCTION( normalizer_is_normalized )
 
 
 	// test string
-	uret = unorm_isNormalizedWithOptions( uinput, uinput_len, mode, options, &status);
+	uret = unorm_isNormalizedWithOptions( uinput, uinput_len, form, options, &status);
 	
 	efree( uinput );
 
