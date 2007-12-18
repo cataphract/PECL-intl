@@ -26,7 +26,7 @@
 #include "collator_convert.h"
 #include "intl_convert.h"
 
-#ifndef HAVE_PTRDIFF_T
+#if !defined(HAVE_PTRDIFF_T) && !defined(_PTRDIFF_T_DEFINED)
 typedef long ptrdiff_t;
 #endif
 
