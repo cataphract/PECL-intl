@@ -52,7 +52,7 @@ include_once( 'ut_common.php' );
 ut_run();
 
 ?>
---EXPECT--
+--EXPECTF--
 Locale: 'EN-US-ODESSA'
   ULOC_REQUESTED_LOCALE = 'EN-US-ODESSA'
   ULOC_VALID_LOCALE     = 'en_US'
@@ -67,8 +67,8 @@ Locale: 'uk-ua_CALIFORNIA@currency=;currency=GRN'
   ULOC_ACTUAL_LOCALE    = 'uk'
 Locale: ''
   ULOC_REQUESTED_LOCALE = ''
-  ULOC_VALID_LOCALE     = 'en_US'
-  ULOC_ACTUAL_LOCALE    = 'en'
+  ULOC_VALID_LOCALE     = '%s'
+  ULOC_ACTUAL_LOCALE    = '%s'
 Locale: 'root'
   ULOC_REQUESTED_LOCALE = 'root'
   ULOC_VALID_LOCALE     = 'root'
