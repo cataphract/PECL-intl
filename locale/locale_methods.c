@@ -1118,7 +1118,7 @@ static void filter_matches_internal( INTERNAL_FUNCTION_PARAMETERS) {
     char*       can_loc_range        = NULL;
     int         can_loc_range_len    = 0;
 
-	zend_bool 	boolCanonical 		 = NULL;	
+	zend_bool 	boolCanonical 		 = 0;	
 	UErrorCode	status			= U_ZERO_ERROR;
 
     intl_error_reset( NULL TSRMLS_CC );
@@ -1193,7 +1193,8 @@ PHP_FUNCTION(locale_filter_matches){
 * returns the lookup result to lookup_loc_range_src_php 
 * internal function
 */
-static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanonical){
+static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanonical TSRMLS_DC)
+{
 	int		cur_arr_ind 		= 0;
 	int		i 					= 0;
 	int 	result 				= 0;
@@ -1263,7 +1264,7 @@ static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanon
 * returns the lookup result  
 * or -1 if no token
 */
-static char* lookup_internal_src_php( INTERNAL_FUNCTION_PARAMETERS) {
+static void lookup_internal_src_php( INTERNAL_FUNCTION_PARAMETERS) {
     char*       fallback_loc  	= NULL;
     int         fallback_loc_len= 0;
     char*       lang_tag        = NULL;
@@ -1309,7 +1310,7 @@ static char* lookup_internal_src_php( INTERNAL_FUNCTION_PARAMETERS) {
 		result = empty_result;
 	}
 	else{
-		result = lookup_loc_range( loc_range ,hash_arr ,(boolCanonical?1:0) );
+		result = lookup_loc_range( loc_range ,hash_arr ,(boolCanonical?1:0) TSRMLS_CC);
 		if( !result ){
 			if( fallback_loc ) {
 				result = estrndup( fallback_loc , fallback_loc_len);
