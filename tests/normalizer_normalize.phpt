@@ -65,14 +65,11 @@ function ut_main()
 		$char_long_s_dot,
 	);
 	
-	// Create Normalizer
-	$norm = ut_norm_create( );
-		
 	foreach( $forms as $form )
 	{
 		foreach( $strs as $str )
 		{
-			$str_norm = ut_norm_normalize( $norm, $str, $form );
+			$str_norm = ut_norm_normalize( $str, $form );
 			$error_code = intl_get_error_code();
 			$error_message = intl_get_error_message();
 
@@ -82,7 +79,7 @@ function ut_main()
 					 .	"\terror info: '$error_message' ($error_code)\n" 
 					 .	"";
 			
-			$is_norm = ut_norm_is_normalized( $norm, $str, $form );
+			$is_norm = ut_norm_is_normalized( $str, $form );
 			$error_code = intl_get_error_code();
 			$error_message = intl_get_error_message();
 

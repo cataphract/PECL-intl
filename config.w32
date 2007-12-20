@@ -50,7 +50,6 @@ if (PHP_INTL != "no") {
 		ADD_SOURCES(configure_module_dirname + "/normalizer", "\
 				normalizer.c \
 				normalizer_class.c \
-				normalizer_create.c \
 				normalizer_normalize.c \
 				", "intl");
 		ADD_FLAG("LIBS_INTL", "icudt.lib icuin.lib icuio.lib icule.lib iculx.lib");

@@ -48,7 +48,6 @@
 
 #include "normalizer/normalizer.h"
 #include "normalizer/normalizer_class.h"
-#include "normalizer/normalizer_create.h"
 #include "normalizer/normalizer_normalize.h"
 
 #include "locale/locale.h"
