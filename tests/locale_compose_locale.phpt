@@ -12,51 +12,49 @@ locale_compose_locale()
 
 function ut_main()
 {
-
 	$loc_parts_arr1 = array( 
-		'language'=>'sl' ,
-		'script'=>'Latn' ,
-		'region'=>'IT' ,
-		'variant'=>'nedis' 
+		Locale::LANG_TAG =>'sl' ,
+		Locale::SCRIPT_TAG =>'Latn' ,
+		Locale::REGION_TAG =>'IT' ,
+		Locale::VARIANT_TAG =>'nedis' 
 	);
 	$loc_parts_arr2 = array( 
-		'language'=>'de' ,
-		'region'=>'DE'
+		Locale::LANG_TAG =>'de' ,
+		Locale::REGION_TAG =>'DE'
 	);
 	$loc_parts_arr3 = array( 
-		'language'=>'hi'
+		Locale::LANG_TAG =>'hi'
 	);
 	$loc_parts_arr4 = array( 
-		'language'=>'zh' ,
-		'script'=>'Hans' ,
-		'region'=>'CN'
+		Locale::LANG_TAG =>'zh' ,
+		Locale::SCRIPT_TAG =>'Hans' ,
+		Locale::REGION_TAG =>'CN'
 	);
 	$loc_parts_arr5 = array( 
-		'language'=>'en' ,
-		'language'=>'es' ,
-		'script'=>'Hans' ,
-		'region'=>'CN'
+		Locale::LANG_TAG =>'es' ,
+		Locale::SCRIPT_TAG =>'Hans' ,
+		Locale::REGION_TAG =>'CN'
 	);
 	$loc_parts_arr6 = array( 
-		'language'=>'en' ,
-		'script'=>'Hans' ,
-		'region'=>'CN',
-		'variant18'=>'rozaj' ,
+		Locale::LANG_TAG =>'en' ,
+		Locale::SCRIPT_TAG =>'Hans' ,
+		Locale::REGION_TAG =>'CN',
+		Locale::VARIANT_TAG.'14' =>'rozaj' ,
 		'variant1'=>'nedis' 
 	);
 	$loc_parts_arr7 = array( 
-		'language'=>'en' ,
-		'script'=>'Hans' ,
-		'region'=>'CN',
+		Locale::LANG_TAG =>'en' ,
+		Locale::SCRIPT_TAG =>'Hans' ,
+		Locale::REGION_TAG =>'CN',
 		'variant14'=>'rozaj' ,
 		'variant1'=>'nedis' ,
 		'extlang0'=>'lng' ,
-		'extlang10'=>'ing'
+		'extlang1'=>'ing'
 	);
 	$loc_parts_arr8 = array( 
-		'language'=>'en' ,
-		'script'=>'Hans' ,
-		'region'=>'CN',
+		Locale::LANG_TAG =>'en' ,
+		Locale::SCRIPT_TAG =>'Hans' ,
+		Locale::REGION_TAG =>'CN',
 		'variant14'=>'rozaj' ,
 		'variant1'=>'nedis' ,
 		'extlang0'=>'lng' ,
@@ -65,17 +63,7 @@ function ut_main()
 		'private9'=>'prv2'
 	);
 	$loc_parts_arr9 = array( 
-		'region'=>'DE'
-	);
-	$loc_parts_arr10 = array( 
-		'grandfathered'=>'zh-hakka' 
-	);
-	$loc_parts_arr11 = array( 
-		'grandfathered'=>'i-tay' 
-	);
-	$loc_parts_arr12 = array( 
-		'grandfathered'=>'zh-hakka' ,
-		'language'=>'en' 
+		Locale::REGION_TAG =>'DE'
 	);
 
 	$loc_parts_arr = array(
@@ -87,16 +75,11 @@ function ut_main()
 		'loc6' => $loc_parts_arr6	,
 		'loc7' => $loc_parts_arr7	,
 		'loc8' => $loc_parts_arr8	,
-		'loc9' => $loc_parts_arr9	,
-		'loc10' => $loc_parts_arr10	,
-		'loc11' => $loc_parts_arr11	,
-		'loc12' => $loc_parts_arr12	
+		'loc9' => $loc_parts_arr9
 	);
 /*
 	$loc_parts_arr = array(
-		'loc6' => $loc_parts_arr6	,
-		'loc7' => $loc_parts_arr7	,
-		'loc8' => $loc_parts_arr8	
+		'loc1' => $loc_parts_arr1
 	);
 */
 
@@ -126,10 +109,7 @@ Locale: de_DE
 Locale: hi
 Locale: zh_Hans_CN
 Locale: es_Hans_CN
-Locale: en_Hans_CN_nedis
-Locale: en_lng_Hans_CN_nedis_rozaj
+Locale: en_Hans_CN_nedis_rozaj
+Locale: en_lng_ing_Hans_CN_nedis_rozaj
 Locale: en_lng_ing_Hans_CN_nedis_rozaj_x_prv1_prv2
 Locale: No values found from Locale compose.
-Locale: zh-hakka
-Locale: i-tay
-Locale: zh-hakka

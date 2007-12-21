@@ -23,6 +23,7 @@
 PHP_FUNCTION( locale_get_primary_language );
 PHP_FUNCTION( locale_get_script );
 PHP_FUNCTION( locale_get_region );
+PHP_FUNCTION( locale_get_all_variants);
 
 PHP_NAMED_FUNCTION( zif_locale_get_default );
 PHP_NAMED_FUNCTION( zif_locale_set_default );
@@ -38,7 +39,6 @@ PHP_FUNCTION( locale_canonicalize);
 
 PHP_FUNCTION( locale_compose);
 PHP_FUNCTION( locale_parse);
-PHP_FUNCTION( locale_get_all_variants);
 
 PHP_FUNCTION( locale_filter_matches);
 PHP_FUNCTION( locale_lookup);

@@ -17,19 +17,7 @@ function ut_main()
     $disp_locales=array('en','fr','de');
 
     $locales = array(
-        'sl_IT_nedis_KIRTI',
-        'sl_IT_nedis-a-kirti-x-xyz',
-        'sl_IT_rozaj',
-        'sl_IT_NEDIS_ROJAZ_1901',
-        'i-enochian',
-        'zh-hakka',
-        'zh-wuu',
-        'i-tay',
-        'sgn-BE-nl',
-        'sgn-CH-de',
-        'sl_IT_rozaj@currency=EUR',
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
-        '',
         'root',
         'uk@currency=EURO',
         'Hindi',
@@ -69,8 +57,8 @@ function ut_main()
         'qaa-Qaaa-QM-x-southern',
         'sr-Latn-QM',
         'sr-Qaaa-CS',
-//Tags that use extensions (examples ONLY: extensions MUST be defined
-   //by revision or update to this document or by RFC):
+/*Tags that use extensions (examples ONLY: extensions MUST be defined
+   by revision or update to this document or by RFC): */
         'en-US-u-islamCal',
         'zh-CN-a-myExt-x-private',
         'en-a-myExt-b-another',
@@ -79,6 +67,7 @@ function ut_main()
         'a-DE',
         'ar-a-aaa-b-bbb-a-ccc'
     );
+
 
     $res_str = '';
 
@@ -103,70 +92,10 @@ ut_run();
 
 ?>
 --EXPECT--
-locale='sl_IT_nedis_KIRTI'
-disp_locale=en :  display_variant=NEDIS_KIRTI
-disp_locale=fr :  display_variant=NEDIS_KIRTI
-disp_locale=de :  display_variant=NEDIS_KIRTI
------------------
-locale='sl_IT_nedis-a-kirti-x-xyz'
-disp_locale=en :  display_variant=Natisone dialect
-disp_locale=fr :  display_variant=dialecte de Natisone
-disp_locale=de :  display_variant=NEDIS
------------------
-locale='sl_IT_rozaj'
-disp_locale=en :  display_variant=Resian
-disp_locale=fr :  display_variant=dialecte de Resia
-disp_locale=de :  display_variant=ROZAJ
------------------
-locale='sl_IT_NEDIS_ROJAZ_1901'
-disp_locale=en :  display_variant=NEDIS_ROJAZ_1901
-disp_locale=fr :  display_variant=NEDIS_ROJAZ_1901
-disp_locale=de :  display_variant=NEDIS_ROJAZ_1901
------------------
-locale='i-enochian'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
------------------
-locale='zh-hakka'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
------------------
-locale='zh-wuu'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
------------------
-locale='i-tay'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
------------------
-locale='sgn-BE-nl'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
------------------
-locale='sgn-CH-de'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
------------------
-locale='sl_IT_rozaj@currency=EUR'
-disp_locale=en :  display_variant=Resian
-disp_locale=fr :  display_variant=dialecte de Resia
-disp_locale=de :  display_variant=ROZAJ
------------------
 locale='uk-ua_CALIFORNIA@currency=;currency=GRN'
 disp_locale=en :  display_variant=CALIFORNIA
 disp_locale=fr :  display_variant=CALIFORNIA
 disp_locale=de :  display_variant=CALIFORNIA
------------------
-locale=''
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
 -----------------
 locale='root'
 disp_locale=en :  display_variant=
@@ -274,14 +203,14 @@ disp_locale=fr :  display_variant=
 disp_locale=de :  display_variant=
 -----------------
 locale='de-CH-x-phonebk'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
+disp_locale=en :  display_variant=X_PHONEBK
+disp_locale=fr :  display_variant=X_PHONEBK
+disp_locale=de :  display_variant=X_PHONEBK
 -----------------
 locale='az-Arab-x-AZE-derbend'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
+disp_locale=en :  display_variant=AZE_DERBEND
+disp_locale=fr :  display_variant=AZE_DERBEND
+disp_locale=de :  display_variant=AZE_DERBEND
 -----------------
 locale='zh-min'
 disp_locale=en :  display_variant=
@@ -299,9 +228,9 @@ disp_locale=fr :  display_variant=
 disp_locale=de :  display_variant=
 -----------------
 locale='qaa-Qaaa-QM-x-southern'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
+disp_locale=en :  display_variant=X_SOUTHERN
+disp_locale=fr :  display_variant=X_SOUTHERN
+disp_locale=de :  display_variant=X_SOUTHERN
 -----------------
 locale='sr-Latn-QM'
 disp_locale=en :  display_variant=
@@ -314,19 +243,19 @@ disp_locale=fr :  display_variant=
 disp_locale=de :  display_variant=
 -----------------
 locale='en-US-u-islamCal'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
+disp_locale=en :  display_variant=U_ISLAMCAL
+disp_locale=fr :  display_variant=U_ISLAMCAL
+disp_locale=de :  display_variant=U_ISLAMCAL
 -----------------
 locale='zh-CN-a-myExt-x-private'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
+disp_locale=en :  display_variant=A_MYEXT_X_PRIVATE
+disp_locale=fr :  display_variant=A_MYEXT_X_PRIVATE
+disp_locale=de :  display_variant=A_MYEXT_X_PRIVATE
 -----------------
 locale='en-a-myExt-b-another'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
+disp_locale=en :  display_variant=MYEXT_B_ANOTHER
+disp_locale=fr :  display_variant=MYEXT_B_ANOTHER
+disp_locale=de :  display_variant=MYEXT_B_ANOTHER
 -----------------
 locale='de-419-DE'
 disp_locale=en :  display_variant=DE
@@ -339,7 +268,7 @@ disp_locale=fr :  display_variant=
 disp_locale=de :  display_variant=
 -----------------
 locale='ar-a-aaa-b-bbb-a-ccc'
-disp_locale=en :  display_variant=
-disp_locale=fr :  display_variant=
-disp_locale=de :  display_variant=
+disp_locale=en :  display_variant=AAA_B_BBB_A_CCC
+disp_locale=fr :  display_variant=AAA_B_BBB_A_CCC
+disp_locale=de :  display_variant=AAA_B_BBB_A_CCC
 -----------------

@@ -21,7 +21,7 @@
 
 void locale_register_constants( INIT_FUNC_ARGS );
  
-#define LOC_DEFAULT NULL
+#define OPTION_DEFAULT NULL
 #define LOC_LANG_TAG "language"
 #define LOC_SCRIPT_TAG "script"
 #define LOC_REGION_TAG "region"
@@ -30,5 +30,7 @@ void locale_register_constants( INIT_FUNC_ARGS );
 #define LOC_GRANDFATHERED_LANG_TAG "grandfathered"
 #define LOC_PRIVATE_TAG "private"
 #define LOC_CANONICALIZE_TAG "canonicalize"
+
+#define LOCALE_INI_NAME "intl.default_locale"
 
 #endif // LOCALE_LOCALE_H

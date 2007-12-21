@@ -53,6 +53,8 @@
 #include "locale/locale.h"
 #include "locale/locale_class.h"
 #include "locale/locale_methods.h"
+#include <unicode/uloc.h>
+#include "php_ini.h"
 
 #include "common/common_error.h"
 
@@ -218,6 +220,8 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( normalizer_is_normalized, normalizer_3_args )
 
 	//Locale functions
+        PHP_NAMED_FE( locale_get_default, zif_locale_get_default, locale_0_args)
+        PHP_NAMED_FE( locale_set_default, zif_locale_set_default, locale_1_arg )
 	PHP_FE( locale_get_primary_language, locale_1_arg )
 	PHP_FE( locale_get_script, locale_1_arg )
 	PHP_FE( locale_get_region, locale_1_arg )
@@ -255,6 +259,14 @@ zend_function_entry intl_functions[] = {
 	{ NULL, NULL, NULL }
 };
 /* }}} */
+
+/* {{{ INI Settings */
+PHP_INI_BEGIN()
+    STD_PHP_INI_ENTRY(LOCALE_INI_NAME, NULL, PHP_INI_ALL, OnUpdateStringUnempty, default_locale, zend_intl_globals, intl_globals)
+
+PHP_INI_END()
+/* }}} */
+
 
 static PHP_GINIT_FUNCTION(intl);
 
@@ -295,6 +307,9 @@ static PHP_GINIT_FUNCTION(intl)
  */
 PHP_MINIT_FUNCTION( intl )
 {
+        //For the default locale php.ini setting
+        REGISTER_INI_ENTRIES();
+
 	// Register 'Collator' PHP class
 	collator_register_Collator_class( TSRMLS_C );
 
@@ -327,6 +342,11 @@ PHP_MINIT_FUNCTION( intl )
 	// Global error handling.
 	intl_error_init( NULL TSRMLS_CC );
 
+        //Set the default_locale value
+        if( INTL_G(default_locale) == NULL ) {
+                INTL_G(default_locale) = pestrdup(uloc_getDefault(), 1) ;
+        }
+
 	return SUCCESS;
 }
 /* }}} */
@@ -335,6 +355,9 @@ PHP_MINIT_FUNCTION( intl )
  */
 PHP_MSHUTDOWN_FUNCTION( intl )
 {
+    	//For the default locale php.ini setting
+   	 UNREGISTER_INI_ENTRIES();
+
 	return SUCCESS;
 }
 /* }}} */
@@ -343,6 +366,11 @@ PHP_MSHUTDOWN_FUNCTION( intl )
  */
 PHP_RINIT_FUNCTION( intl )
 {
+        //Set the default_locale value
+	if( INTL_G(default_locale) == NULL ) {
+		INTL_G(default_locale) = pestrdup(uloc_getDefault(), 1) ;
+	}
+
 	return SUCCESS;
 }
 /* }}} */
@@ -353,9 +381,6 @@ PHP_RSHUTDOWN_FUNCTION( intl )
 {
 	if(INTL_G(current_collator)) {
 		INTL_G(current_collator) = NULL;
-	}
-	if(INTL_G(current_locale)) {
-		INTL_G(current_locale) = NULL;
 	}
 	intl_error_reset( NULL TSRMLS_CC);
 	return SUCCESS;
@@ -370,6 +395,10 @@ PHP_MINFO_FUNCTION( intl )
 	php_info_print_table_header( 2, "Internationalization support", "enabled" );
 	php_info_print_table_row( 2, "version", INTL_MODULE_VERSION );
 	php_info_print_table_end();
+
+	//For the default locale php.ini setting
+	DISPLAY_INI_ENTRIES() ;
+
 }
 /* }}} */
 

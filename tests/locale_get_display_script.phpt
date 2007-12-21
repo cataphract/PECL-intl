@@ -17,9 +17,7 @@ function ut_main()
     $disp_locales=array('en','fr','de');
 
     $locales = array(
-
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
-        '',
         'root',
         'uk@currency=EURO',
         'Hindi',
@@ -95,11 +93,6 @@ ut_run();
 ?>
 --EXPECT--
 locale='uk-ua_CALIFORNIA@currency=;currency=GRN'
-disp_locale=en :  display_script=
-disp_locale=fr :  display_script=
-disp_locale=de :  display_script=
------------------
-locale=''
 disp_locale=en :  display_script=
 disp_locale=fr :  display_script=
 disp_locale=de :  display_script=

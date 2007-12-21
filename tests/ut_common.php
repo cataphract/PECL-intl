@@ -299,10 +299,6 @@ function ut_loc_get_region( $locale )
 {
     return $GLOBALS['oo-mode'] ? Locale::getRegion( $locale ) : locale_get_region( $locale );
 }
-function ut_loc_get_variant( $locale )
-{
-    return $GLOBALS['oo-mode'] ? Locale::getVariant( $locale ) : locale_get_variant( $locale );
-}
 function ut_loc_get_keywords( $locale )
 {
     return $GLOBALS['oo-mode'] ? Locale::getKeywords( $locale ) : locale_get_keywords( $locale );
@@ -339,26 +335,19 @@ function ut_loc_locale_get_all_variants( $locale )
 {
     return $GLOBALS['oo-mode'] ? Locale::getAllVariants( $locale ) : locale_get_all_variants( $locale );
 }
-function ut_loc_locale_filter_matches( $lang_tag,$loc_range  )
+function ut_loc_locale_filter_matches( $lang_tag,$loc_range  ,$isCanonical)
 {
-    return $GLOBALS['oo-mode'] ? Locale::filterMatches( $lang_tag,$loc_range ) : locale_filter_matches( $lang_tag,$loc_range );
-}
-function ut_loc_locale_canonical_filter_matches( $lang_tag,$loc_range  )
-{
-    return $GLOBALS['oo-mode'] ? Locale::canonicalFilterMatches( $lang_tag,$loc_range ) : locale_canonical_filter_matches( $lang_tag,$loc_range );
+    return $GLOBALS['oo-mode'] ? Locale::filterMatches( $lang_tag,$loc_range ,$isCanonical) : locale_filter_matches( $lang_tag,$loc_range ,$isCanonical);
 }
 function ut_loc_canonicalize( $locale )
 {
     return $GLOBALS['oo-mode'] ? Locale::canonicalize( $locale ) : locale_canonicalize( $locale );
 }
-function ut_loc_locale_lookup( $lang_tag_arr,$loc_range,$default_loc  )
+function ut_loc_locale_lookup( $lang_tag_arr,$loc_range,$isCanonical,$default_loc)
 {
-    return $GLOBALS['oo-mode'] ? Locale::lookup( $lang_tag_arr,$loc_range,$default_loc ) : locale_lookup( $lang_tag_arr,$loc_range,$default_loc );
+    return $GLOBALS['oo-mode'] ? Locale::lookup( $lang_tag_arr,$loc_range,$isCanonical,$default_loc ) : locale_lookup( $lang_tag_arr,$loc_range,$isCanonical,$default_loc );
 }
-function ut_loc_locale_canonical_lookup( $lang_tag_arr,$loc_range  )
-{
-    return $GLOBALS['oo-mode'] ? Locale::canonical_lookup( $lang_tag_arr,$loc_range ) : locale_canonical_lookup( $lang_tag_arr,$loc_range );
-}
+
 /* MessageFormatter functions */
 function ut_msgfmt_create( $locale, $pattern)
 {

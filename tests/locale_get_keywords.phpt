@@ -20,8 +20,7 @@ function ut_main()
 	);
 
     $locales = array(
-		'de_DE@currency=EUR;collation=PHONEBOOK',
-        '',
+	'de_DE@currency=EUR;collation=PHONEBOOK',
         'root',
         'uk@currency=EURO',
         'Hindi',
@@ -102,7 +101,6 @@ ut_run();
 de_DE@currency=EUR;collation=PHONEBOOK: Key is collation and Value is PHONEBOOK 
 Key is currency and Value is EUR 
 
-: No keywords found.
 root: No keywords found.
 uk@currency=EURO: Key is currency and Value is EURO 
 

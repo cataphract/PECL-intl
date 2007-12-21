@@ -17,19 +17,7 @@ function ut_main()
 	$disp_locales=array('en','fr','de');
 
     $locales = array(
-        'sl_IT_nedis_KIRTI',
-        'sl_IT_nedis-a-kirti-x-xyz',
-        'sl_IT_rozaj',
-        'sl_IT_NEDIS_ROJAZ_1901',
-        'i-enochian',
-        'zh-hakka',
-        'zh-wuu',
-        'i-tay',
-        'sgn-BE-nl',
-        'sgn-CH-de',
-        'sl_IT_rozaj@currency=EUR',
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
-        '',
         'root',
         'uk@currency=EURO',
         'Hindi',
@@ -38,6 +26,7 @@ function ut_main()
         'fr',
         'ja',
         'i-enochian', //(example of a grandfathered tag)
+        'art-lojban', //(example of a grandfathered tag)
 //Language subtag plus Script subtag:
         'zh-Hant',
         'zh-Hans',
@@ -104,70 +93,10 @@ ut_run();
 
 ?>
 --EXPECT--
-locale='sl_IT_nedis_KIRTI'
-disp_locale=en :  display_language=Slovenian
-disp_locale=fr :  display_language=slovène
-disp_locale=de :  display_language=Slowenisch
------------------
-locale='sl_IT_nedis-a-kirti-x-xyz'
-disp_locale=en :  display_language=Slovenian
-disp_locale=fr :  display_language=slovène
-disp_locale=de :  display_language=Slowenisch
------------------
-locale='sl_IT_rozaj'
-disp_locale=en :  display_language=Slovenian
-disp_locale=fr :  display_language=slovène
-disp_locale=de :  display_language=Slowenisch
------------------
-locale='sl_IT_NEDIS_ROJAZ_1901'
-disp_locale=en :  display_language=Slovenian
-disp_locale=fr :  display_language=slovène
-disp_locale=de :  display_language=Slowenisch
------------------
-locale='i-enochian'
-disp_locale=en :  display_language=i-enochian
-disp_locale=fr :  display_language=i-enochian
-disp_locale=de :  display_language=i-enochian
------------------
-locale='zh-hakka'
-disp_locale=en :  display_language=Chinese
-disp_locale=fr :  display_language=chinois
-disp_locale=de :  display_language=Chinesisch
------------------
-locale='zh-wuu'
-disp_locale=en :  display_language=Chinese
-disp_locale=fr :  display_language=chinois
-disp_locale=de :  display_language=Chinesisch
------------------
-locale='i-tay'
-disp_locale=en :  display_language=i-tay
-disp_locale=fr :  display_language=i-tay
-disp_locale=de :  display_language=i-tay
------------------
-locale='sgn-BE-nl'
-disp_locale=en :  display_language=Sign Languages
-disp_locale=fr :  display_language=langues des signes
-disp_locale=de :  display_language=Gebärdensprache
------------------
-locale='sgn-CH-de'
-disp_locale=en :  display_language=Sign Languages
-disp_locale=fr :  display_language=langues des signes
-disp_locale=de :  display_language=Gebärdensprache
------------------
-locale='sl_IT_rozaj@currency=EUR'
-disp_locale=en :  display_language=Slovenian
-disp_locale=fr :  display_language=slovène
-disp_locale=de :  display_language=Slowenisch
------------------
 locale='uk-ua_CALIFORNIA@currency=;currency=GRN'
 disp_locale=en :  display_language=Ukrainian
 disp_locale=fr :  display_language=ukrainien
 disp_locale=de :  display_language=Ukrainisch
------------------
-locale=''
-disp_locale=en :  display_language=
-disp_locale=fr :  display_language=
-disp_locale=de :  display_language=
 -----------------
 locale='root'
 disp_locale=en :  display_language=Root
@@ -203,6 +132,11 @@ locale='i-enochian'
 disp_locale=en :  display_language=i-enochian
 disp_locale=fr :  display_language=i-enochian
 disp_locale=de :  display_language=i-enochian
+-----------------
+locale='art-lojban'
+disp_locale=en :  display_language=Lojban
+disp_locale=fr :  display_language=lojban
+disp_locale=de :  display_language=Lojban
 -----------------
 locale='zh-Hant'
 disp_locale=en :  display_language=Chinese
@@ -335,9 +269,9 @@ disp_locale=fr :  display_language=allemand
 disp_locale=de :  display_language=Deutsch
 -----------------
 locale='a-DE'
-disp_locale=en :  display_language=
-disp_locale=fr :  display_language=
-disp_locale=de :  display_language=
+disp_locale=en :  display_language=a
+disp_locale=fr :  display_language=a
+disp_locale=de :  display_language=a
 -----------------
 locale='ar-a-aaa-b-bbb-a-ccc'
 disp_locale=en :  display_language=Arabic

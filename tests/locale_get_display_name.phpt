@@ -29,7 +29,6 @@ function ut_main()
         'sgn-CH-de',
         'sl_IT_rozaj@currency=EUR',
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
-        '',
         'root',
         'uk@currency=EURO',
         'Hindi',
@@ -163,11 +162,6 @@ locale='uk-ua_CALIFORNIA@currency=;currency=GRN'
 disp_locale=en :  display_name=Ukrainian (Ukraine, CALIFORNIA, Currency)
 disp_locale=fr :  display_name=ukrainien (Ukraine, CALIFORNIA, Devise)
 disp_locale=de :  display_name=Ukrainisch (Ukraine, CALIFORNIA, Währung)
------------------
-locale=''
-disp_locale=en :  display_name=
-disp_locale=fr :  display_name=
-disp_locale=de :  display_name=
 -----------------
 locale='root'
 disp_locale=en :  display_name=Root

@@ -25,6 +25,7 @@
 
 zend_class_entry *Locale_ce_ptr = NULL;
 
+
 /////////////////////////////////////////////////////////////////////////////
 // 'Locale' class registration structures & functions
 /////////////////////////////////////////////////////////////////////////////
@@ -51,17 +52,17 @@ ZEND_END_ARG_INFO()
 
 static
 ZEND_BEGIN_ARG_INFO_EX( locale_3_args, 0, 0, 3 )
-	ZEND_ARG_INFO( 0, arg1 )
-	ZEND_ARG_INFO( 0, arg2 )
-	ZEND_ARG_INFO( 0, arg3 )
+        ZEND_ARG_INFO( 0, arg1 )
+        ZEND_ARG_INFO( 0, arg2 )
+        ZEND_ARG_INFO( 0, arg3 )
 ZEND_END_ARG_INFO()
 
 static
 ZEND_BEGIN_ARG_INFO_EX( locale_4_args, 0, 0, 4 )
-	ZEND_ARG_INFO( 0, arg1 )
-	ZEND_ARG_INFO( 0, arg2 )
-	ZEND_ARG_INFO( 0, arg3 )
-	ZEND_ARG_INFO( 0, arg4 )
+        ZEND_ARG_INFO( 0, arg1 )
+        ZEND_ARG_INFO( 0, arg2 )
+        ZEND_ARG_INFO( 0, arg3 )
+        ZEND_ARG_INFO( 0, arg4 )
 ZEND_END_ARG_INFO()
 
 /* }}} */

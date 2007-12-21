@@ -40,7 +40,7 @@ extern zend_module_entry intl_module_entry;
 
 ZEND_BEGIN_MODULE_GLOBALS(intl)
 	zval* current_collator;
-	char* current_locale;
+	char* default_locale;
 	collator_compare_func_t compare_func;
 	intl_error g_error;
 ZEND_END_MODULE_GLOBALS(intl)

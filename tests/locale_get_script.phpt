@@ -12,22 +12,9 @@ locale_get_script()
 
 function ut_main()
 {
-    $res_str = '';
 
     $locales = array(
-        'sl_IT_nedis_KIRTI',
-        'sl_IT_nedis-a-kirti-x-xyz',
-        'sl_IT_rozaj',
-        'sl_IT_NEDIS_ROJAZ_1901',
-        'i-enochian',
-        'zh-hakka',
-        'zh-wuu',
-        'i-tay',
-        'sgn-BE-nl',
-        'sgn-CH-de',
-        'sl_IT_rozaj@currency=EUR',
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
-        '',
         'root',
         'uk@currency=EURO',
         'Hindi',
@@ -67,8 +54,8 @@ function ut_main()
         'qaa-Qaaa-QM-x-southern',
         'sr-Latn-QM',
         'sr-Qaaa-CS',
-//Tags that use extensions (examples ONLY: extensions MUST be defined
-//   by revision or update to this document or by RFC): 
+/*Tags that use extensions (examples ONLY: extensions MUST be defined
+   by revision or update to this document or by RFC): */
         'en-US-u-islamCal',
         'zh-CN-a-myExt-x-private',
         'en-a-myExt-b-another',
@@ -96,19 +83,7 @@ ut_run();
 
 ?>
 --EXPECT--
-sl_IT_nedis_KIRTI:  script=''
-sl_IT_nedis-a-kirti-x-xyz:  script=''
-sl_IT_rozaj:  script=''
-sl_IT_NEDIS_ROJAZ_1901:  script=''
-i-enochian:  script=''
-zh-hakka:  script=''
-zh-wuu:  script=''
-i-tay:  script=''
-sgn-BE-nl:  script=''
-sgn-CH-de:  script=''
-sl_IT_rozaj@currency=EUR:  script=''
 uk-ua_CALIFORNIA@currency=;currency=GRN:  script=''
-:  script=''
 root:  script=''
 uk@currency=EURO:  script=''
 Hindi:  script=''
@@ -144,3 +119,4 @@ en-a-myExt-b-another:  script=''
 de-419-DE:  script=''
 a-DE:  script=''
 ar-a-aaa-b-bbb-a-ccc:  script=''
+
