@@ -49,14 +49,17 @@ PHP_FUNCTION( msgfmt_get_pattern )
 	MSG_FORMAT_METHOD_FETCH_OBJECT;
 
 	length = umsg_toPattern(MSG_FORMAT_OBJECT(mfo), value, length, &INTL_DATA_ERROR_CODE(mfo));
-	INTL_METHOD_CHECK_STATUS(mfo, "Error getting formatter pattern" );
-
-	if( length >= USIZE( value_buf ) )
-	{
-		value = eumalloc( length );
-		umsg_toPattern(MSG_FORMAT_OBJECT(mfo), value_buf, length, &INTL_DATA_ERROR_CODE(mfo) );
-		INTL_METHOD_CHECK_STATUS(mfo, "Error getting formatter pattern");
+	if(INTL_DATA_ERROR_CODE(mfo) == U_BUFFER_OVERFLOW_ERROR && length >= USIZE( value_buf )) {
+		++length; // to avoid U_STRING_NOT_TERMINATED_WARNING
+		INTL_DATA_ERROR_CODE(mfo) = U_ZERO_ERROR;
+		value = eumalloc(length);
+		length = umsg_toPattern(MSG_FORMAT_OBJECT(mfo), value, length, &INTL_DATA_ERROR_CODE(mfo) );
+		if(U_FAILURE(INTL_DATA_ERROR_CODE(mfo))) {
+			efree(value);
+			value = value_buf;
+		}
 	}
+	INTL_METHOD_CHECK_STATUS(mfo, "Error getting formatter pattern" );
 
 	RETURN_UNICODEL(value_buf, length, ( value == value_buf ) );
 }

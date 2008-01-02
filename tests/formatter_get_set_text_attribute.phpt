@@ -13,12 +13,14 @@ numfmt_get/set_text_attribute()
 function ut_main()
 {
     // Array with data for testing
+	$long_str = str_repeat('blah', 100);
     $attributes = array(
         'POSITIVE_PREFIX' => array( NumberFormatter::POSITIVE_PREFIX, '_+_', 12345.1234 ),
         'POSITIVE_SUFFIX' => array( NumberFormatter::POSITIVE_SUFFIX, '_+_', 12345.1234 ),
         'NEGATIVE_PREFIX' => array( NumberFormatter::NEGATIVE_PREFIX, '_-_', -12345.1234 ),
         'NEGATIVE_SUFFIX' => array( NumberFormatter::NEGATIVE_SUFFIX, '_-_', -12345.1234 ),
         'PADDING_CHARACTER' => array( NumberFormatter::PADDING_CHARACTER, '^', 12345.1234 ),
+	'POSITIVE_PREFIX-2' => array( NumberFormatter::POSITIVE_PREFIX, $long_str, 12345.1234 ),
 //        'CURRENCY_CODE' => array( NumberFormatter::CURRENCY_CODE, '_C_', 12345.1234 )
 //        'DEFAULT_RULESET' => array( NumberFormatter::DEFAULT_RULESET, '_DR_', 12345.1234 ),
 //        'PUBLIC_RULESETS' => array( NumberFormatter::PUBLIC_RULESETS, '_PR_', 12345.1234 )
@@ -108,4 +110,12 @@ Formatting number with default value: ***********12,345.123
 New value: [^]
 Formatting number with new value: ^^^^^^^^^^^12,345.123
 
+Attribute POSITIVE_PREFIX-2
+Default value: []
+Formatting number with default value: 12,345.123
+New value: [blahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblah]
+Formatting number with new value: blahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblah12,345.123
+
 Currency ISO-code for locale 'uk_UA' is: UAH
+
+

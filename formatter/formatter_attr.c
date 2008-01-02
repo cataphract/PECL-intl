@@ -121,24 +121,17 @@ PHP_FUNCTION( numfmt_get_text_attribute )
 	FORMATTER_METHOD_FETCH_OBJECT;
 
 	length = unum_getTextAttribute( FORMATTER_OBJECT(nfo), attribute, value, value_buf_size, &INTL_DATA_ERROR_CODE(nfo) );
-
-	INTL_METHOD_CHECK_STATUS( nfo, "Error getting attribute value" );
-	if( length >= value_buf_size )
-	{
+	if(INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR && length >= value_buf_size) {
 		++length; // to avoid U_STRING_NOT_TERMINATED_WARNING
-		value = eumalloc( length );
-
-		intl_error_reset( INTL_DATA_ERROR_P(nfo) TSRMLS_CC );
+		INTL_DATA_ERROR_CODE(nfo) = U_ZERO_ERROR;
+		value = eumalloc(length);
 		length = unum_getTextAttribute( FORMATTER_OBJECT(nfo), attribute, value, length, &INTL_DATA_ERROR_CODE(nfo) );
-
-		if( U_FAILURE( INTL_DATA_ERROR_CODE((nfo)) ) )
-		{
-			intl_error_set_code( NULL, INTL_DATA_ERROR_CODE((nfo)) TSRMLS_CC );
-			intl_errors_set_custom_msg( INTL_DATA_ERROR_P(nfo), "Error getting attribute value", 0 TSRMLS_CC );
-			efree( value );
-			RETURN_FALSE;
+		if(U_FAILURE(INTL_DATA_ERROR_CODE(nfo))) {
+			efree(value);
+			value = value_buf;
 		}
 	}
+	INTL_METHOD_CHECK_STATUS( nfo, "Error getting attribute value" );
 
 	RETVAL_UNICODEL( value, length, ( value == value_buf ) );
 }
@@ -247,8 +240,8 @@ PHP_FUNCTION( numfmt_set_text_attribute )
 PHP_FUNCTION( numfmt_get_symbol )
 {
 	long symbol;
-	UChar value[4];
-	UChar *value_buf = value;
+	UChar value_buf[4];
+	UChar *value = value_buf;
 	int length = USIZE(value);
 	FORMATTER_METHOD_INIT_VARS;
 
@@ -266,15 +259,19 @@ PHP_FUNCTION( numfmt_get_symbol )
 	FORMATTER_METHOD_FETCH_OBJECT;
 
 	length = unum_getSymbol(FORMATTER_OBJECT(nfo), symbol, value_buf, length, &INTL_DATA_ERROR_CODE(nfo));
-	INTL_METHOD_CHECK_STATUS( nfo, "Error getting symbol value" );
-	if(length >= USIZE(value)) {
+	if(INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR && length >= USIZE( value )) {
 		++length; // to avoid U_STRING_NOT_TERMINATED_WARNING
-		value_buf = eumalloc(length);
-		length = unum_getSymbol(FORMATTER_OBJECT(nfo), symbol, value_buf, length, &INTL_DATA_ERROR_CODE(nfo));
-		INTL_METHOD_CHECK_STATUS( nfo, "Error getting symbol value" );
+		INTL_DATA_ERROR_CODE(nfo) = U_ZERO_ERROR;
+		value = eumalloc(length);
+		length = unum_getSymbol(FORMATTER_OBJECT(nfo), symbol, value, length, &INTL_DATA_ERROR_CODE(nfo));
+		if(U_FAILURE(INTL_DATA_ERROR_CODE(nfo))) {
+			efree(value);
+			value = value_buf;
+		}
 	}
+	INTL_METHOD_CHECK_STATUS( nfo, "Error getting symbol value" );
 
-	RETVAL_UNICODEL( value_buf, length, ( value_buf == value ) );
+	RETVAL_UNICODEL( value, length, ( value_buf == value ) );
 }
 /* }}} */
 
@@ -337,16 +334,19 @@ PHP_FUNCTION( numfmt_get_pattern )
 	FORMATTER_METHOD_FETCH_OBJECT;
 
 	length = unum_toPattern(FORMATTER_OBJECT(nfo), 0, value, length, &INTL_DATA_ERROR_CODE(nfo));
+	if(INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR && length >= USIZE( value_buf )) {
+		++length; // to avoid U_STRING_NOT_TERMINATED_WARNING
+		INTL_DATA_ERROR_CODE(nfo) = U_ZERO_ERROR;
+		value = eumalloc(length);
+		length = unum_toPattern( FORMATTER_OBJECT(nfo), 0, value, length, &INTL_DATA_ERROR_CODE(nfo) );
+		if(U_FAILURE(INTL_DATA_ERROR_CODE(nfo))) {
+			efree(value);
+			value = value_buf;
+		}
+	}
 	INTL_METHOD_CHECK_STATUS( nfo, "Error getting formatter pattern" );
 
-	if( length >= USIZE( value_buf ) )
-	{
-		value = eumalloc( length );
-		unum_toPattern( FORMATTER_OBJECT(nfo), 0, value_buf, length, &INTL_DATA_ERROR_CODE(nfo) );
-		INTL_METHOD_CHECK_STATUS( nfo, "Error getting formatter pattern" );
-	}
-
-	RETVAL_UNICODEL( value_buf, length, ( value == value_buf ) );
+	RETVAL_UNICODEL( value, length, ( value == value_buf ) );
 }
 /* }}} */
 

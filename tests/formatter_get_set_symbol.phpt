@@ -12,6 +12,7 @@ numfmt_get/set_symbol()
 
 function ut_main()
 {
+	$longstr = str_repeat("blah", 10);
     $symbols = array(
         'DECIMAL_SEPARATOR_SYMBOL' => array( NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, '_._', 12345.123456, NumberFormatter::DECIMAL ),
         'GROUPING_SEPARATOR_SYMBOL' => array( NumberFormatter::GROUPING_SEPARATOR_SYMBOL, '_,_', 12345.123456, NumberFormatter::DECIMAL ),
@@ -30,7 +31,9 @@ function ut_main()
         'INFINITY_SYMBOL' => array( NumberFormatter::INFINITY_SYMBOL, '_IS_', 12345.123456, NumberFormatter::DECIMAL ),
         'NAN_SYMBOL' => array( NumberFormatter::NAN_SYMBOL, '_N_', 12345.123456, NumberFormatter::DECIMAL ),
         'SIGNIFICANT_DIGIT_SYMBOL' => array( NumberFormatter::SIGNIFICANT_DIGIT_SYMBOL, '_SD_', 12345.123456, NumberFormatter::DECIMAL ),
-        'MONETARY_GROUPING_SEPARATOR_SYMBOL' => array( NumberFormatter::MONETARY_GROUPING_SEPARATOR_SYMBOL, '_MG_', 12345.123456, NumberFormatter::CURRENCY )
+        'MONETARY_GROUPING_SEPARATOR_SYMBOL' => array( NumberFormatter::MONETARY_GROUPING_SEPARATOR_SYMBOL, '_MG_', 12345.123456, NumberFormatter::CURRENCY ),
+	'MONETARY_GROUPING_SEPARATOR_SYMBOL-2' => array( NumberFormatter::MONETARY_GROUPING_SEPARATOR_SYMBOL, "&nbsp;", 12345.123456, NumberFormatter::CURRENCY ),
+	'MONETARY_GROUPING_SEPARATOR_SYMBOL-3' => array( NumberFormatter::MONETARY_GROUPING_SEPARATOR_SYMBOL, $longstr, 12345.123456, NumberFormatter::CURRENCY ),
     );
 
     $res_str = '';
@@ -168,3 +171,14 @@ Symbol 'MONETARY_GROUPING_SEPARATOR_SYMBOL'
 Default symbol: [,]
 New symbol: [_MG_]
 A number formatted with the new symbol: $12_MG_345.12
+
+Symbol 'MONETARY_GROUPING_SEPARATOR_SYMBOL-2'
+Default symbol: [,]
+New symbol: [&nbsp;]
+A number formatted with the new symbol: $12&nbsp;345.12
+
+Symbol 'MONETARY_GROUPING_SEPARATOR_SYMBOL-3'
+Default symbol: [,]
+New symbol: [blahblahblahblahblahblahblahblahblahblah]
+A number formatted with the new symbol: $12blahblahblahblahblahblahblahblahblahblah345.12
+
