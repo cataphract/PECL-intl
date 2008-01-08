@@ -61,7 +61,7 @@ PHP_FUNCTION( msgfmt_get_pattern )
 	}
 	INTL_METHOD_CHECK_STATUS(mfo, "Error getting formatter pattern" );
 
-	RETURN_UNICODEL(value_buf, length, ( value == value_buf ) );
+	RETURN_UNICODEL(value, length, ( value == value_buf ) );
 }
 /* }}} */
 
