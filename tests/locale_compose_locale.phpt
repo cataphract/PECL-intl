@@ -65,6 +65,11 @@ function ut_main()
 	$loc_parts_arr9 = array( 
 		Locale::REGION_TAG =>'DE'
 	);
+	$longstr = str_repeat("blah", 500);
+	$loc_parts_arr10 = array(
+		Locale::LANG_TAG =>'en' ,
+		'private0' => $longstr
+	);
 
 	$loc_parts_arr = array(
 		'loc1' => $loc_parts_arr1	,
@@ -75,7 +80,8 @@ function ut_main()
 		'loc6' => $loc_parts_arr6	,
 		'loc7' => $loc_parts_arr7	,
 		'loc8' => $loc_parts_arr8	,
-		'loc9' => $loc_parts_arr9
+		'loc9' => $loc_parts_arr9	,
+		'loc10' => $loc_parts_arr10
 	);
 /*
 	$loc_parts_arr = array(
