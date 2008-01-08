@@ -70,6 +70,13 @@ function ut_main()
 		Locale::LANG_TAG =>'en' ,
 		'private0' => $longstr
 	);
+	loc_parts_arr11 = array(
+		Locale::LANG_TAG =>'de' ,
+		Locale::REGION_TAG =>'DE', 
+		'private0' => 13,
+		'variant1' => array(),
+		'extlang2' => false
+	);	
 
 	$loc_parts_arr = array(
 		'loc1' => $loc_parts_arr1	,
@@ -81,13 +88,9 @@ function ut_main()
 		'loc7' => $loc_parts_arr7	,
 		'loc8' => $loc_parts_arr8	,
 		'loc9' => $loc_parts_arr9	,
-		'loc10' => $loc_parts_arr10
+		'loc10' => $loc_parts_arr10	,
+		'loc11' => $loc_parts_arr11
 	);
-/*
-	$loc_parts_arr = array(
-		'loc1' => $loc_parts_arr1
-	);
-*/
 
     $res_str = '';
 	foreach($loc_parts_arr as $key => $value ){
