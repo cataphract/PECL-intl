@@ -1593,8 +1593,6 @@ PHP_FUNCTION(locale_lookup){
 		loc_range = UG(default_locale);
 	}
 
-
-	//MAKE_STD_ZVAL(hash_arr);
 	hash_arr = HASH_OF( arr );
 
 	if( !hash_arr || zend_hash_num_elements( hash_arr ) == 0 ){
@@ -1603,7 +1601,7 @@ PHP_FUNCTION(locale_lookup){
 	else{
 		result = lookup_loc_range( loc_range ,hash_arr ,(boolCanonical?1:0) TSRMLS_CC);
 
-	if( strcmp( result , empty_result )==0 ){
+	if( result == NULL || result[0] == '\0' ){
 		if( fallback_loc ) {
 			result = estrndup( fallback_loc , fallback_loc_len);
 		}else{
