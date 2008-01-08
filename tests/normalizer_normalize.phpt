@@ -73,8 +73,8 @@ function ut_main()
 			$error_code = intl_get_error_code();
 			$error_message = intl_get_error_message();
 
-			$str_hex = urlencode($str);
-			$str_norm_hex = urlencode($str_norm);
+			$str_hex = urlencode((binary)$str);
+			$str_norm_hex = urlencode((binary)$str_norm);
 			$res_str .= "'$str_hex' normalized to form '{$forms_str[$form]}' is '$str_norm_hex'" 
 					 .	"\terror info: '$error_message' ($error_code)\n" 
 					 .	"";
