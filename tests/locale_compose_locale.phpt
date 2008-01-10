@@ -12,11 +12,12 @@ locale_compose_locale()
 
 function ut_main()
 {
+	$longstr = str_repeat("blah", 500);
 	$loc_parts_arr1 = array( 
 		Locale::LANG_TAG =>'sl' ,
 		Locale::SCRIPT_TAG =>'Latn' ,
 		Locale::REGION_TAG =>'IT' ,
-		Locale::VARIANT_TAG =>'nedis' 
+		Locale::VARIANT_TAG => $longstr
 	);
 	$loc_parts_arr2 = array( 
 		Locale::LANG_TAG =>'de' ,
@@ -65,13 +66,20 @@ function ut_main()
 	$loc_parts_arr9 = array( 
 		Locale::REGION_TAG =>'DE'
 	);
-	$longstr = str_repeat("blah", 500);
 	$loc_parts_arr10 = array(
+		Locale::LANG_TAG => $longstr
+	);	
+	$loc_parts_arr11 = array(
 		Locale::LANG_TAG =>'en' ,
 		'private0' => $longstr
 	);
-	loc_parts_arr11 = array(
-		Locale::LANG_TAG =>'de' ,
+	$loc_parts_arr12 = array( 
+		Locale::LANG_TAG => 45,
+		Locale::REGION_TAG => false,
+		Locale::SCRIPT_TAG => 15
+	);
+	$loc_parts_arr13 = array(
+		Locale::LANG_TAG =>'de'  , 
 		Locale::REGION_TAG =>'DE', 
 		'private0' => 13,
 		'variant1' => array(),
@@ -89,20 +97,35 @@ function ut_main()
 		'loc8' => $loc_parts_arr8	,
 		'loc9' => $loc_parts_arr9	,
 		'loc10' => $loc_parts_arr10	,
-		'loc11' => $loc_parts_arr11
+		'loc11' => $loc_parts_arr11	,
+		'loc12' => $loc_parts_arr12	,
+		'loc13' => $loc_parts_arr13
 	);
 
+    error_reporting( E_ERROR );
+	
+    $cnt  = 0;
     $res_str = '';
 	foreach($loc_parts_arr as $key => $value ){
+		$res_str .= "\n------------";
+		$res_str .= "\nInput Array name is : loc".(++$cnt) ;
+/*	
+		foreach($value as $valKey => $valValue ){
+			$res_str .=  $valKey ."->".$valValue."  " ;
+		}
+*/
+
 		$locale = ut_loc_locale_compose( $value);
-		$res_str .= "Locale: ";
+		$res_str .= "\n\nComposed Locale: ";
 		if( $locale){
-			$res_str .= "$locale\n";
+			$res_str .= "$locale";
 		}else{
-			$res_str .= "No values found from Locale compose.\n";
+			$res_str .= "No values found from Locale compose due to the following error:\n";
+			$res_str .= intl_get_error_message() ;
 		}
 	}
 
+	$res_str .= "\n------------";
 	$res_str .= "\n";
     return $res_str;
 
@@ -113,12 +136,65 @@ ut_run();
 
 ?>
 --EXPECT--
-Locale: sl_Latn_IT_nedis
-Locale: de_DE
-Locale: hi
-Locale: zh_Hans_CN
-Locale: es_Hans_CN
-Locale: en_Hans_CN_nedis_rozaj
-Locale: en_lng_ing_Hans_CN_nedis_rozaj
-Locale: en_lng_ing_Hans_CN_nedis_rozaj_x_prv1_prv2
-Locale: No values found from Locale compose.
+------------
+Input Array name is : loc1
+
+Composed Locale: No values found from Locale compose due to the following error:
+Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512
+bytes including separator character and prefixes. : U_BUFFER_OVERFLOW_ERROR
+------------
+Input Array name is : loc2
+
+Composed Locale: de_DE
+------------
+Input Array name is : loc3
+
+Composed Locale: hi
+------------
+Input Array name is : loc4
+
+Composed Locale: zh_Hans_CN
+------------
+Input Array name is : loc5
+
+Composed Locale: es_Hans_CN
+------------
+Input Array name is : loc6
+
+Composed Locale: en_Hans_CN_nedis_rozaj
+------------
+Input Array name is : loc7
+
+Composed Locale: en_lng_ing_Hans_CN_nedis_rozaj
+------------
+Input Array name is : loc8
+
+Composed Locale: en_lng_ing_Hans_CN_nedis_rozaj_x_prv1_prv2
+------------
+Input Array name is : loc9
+
+Composed Locale: No values found from Locale compose due to the following error:
+locale_compose: parameter array does not contain 'language' tag.: U_ILLEGAL_ARGUMENT_ERROR
+------------
+Input Array name is : loc10
+
+Composed Locale: No values found from Locale compose due to the following error:
+Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512
+bytes including separator character and prefixes. : U_BUFFER_OVERFLOW_ERROR
+------------
+Input Array name is : loc11
+
+Composed Locale: No values found from Locale compose due to the following error:
+Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512
+bytes including separator character and prefixes. : U_BUFFER_OVERFLOW_ERROR
+------------
+Input Array name is : loc12
+
+Composed Locale: No values found from Locale compose due to the following error:
+Aborting locale_compose: parameter array element is not a string : U_ILLEGAL_ARGUMENT_ERROR
+------------
+Input Array name is : loc13
+
+Composed Locale: No values found from Locale compose due to the following error:
+Aborting locale_compose: parameter array element is not a string : U_ILLEGAL_ARGUMENT_ERROR
+------------
