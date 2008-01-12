@@ -974,8 +974,7 @@ static int handleAppendResult( int result,char* loc_name TSRMLS_DC){
         }
         if( result == -2 ){
                 intl_error_set( NULL, U_BUFFER_OVERFLOW_ERROR,
-                 "Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512
-bytes including separator character and prefixes. ", 0 TSRMLS_CC );
+                 "Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512 bytes including separator character and prefixes. ", 0 TSRMLS_CC );
 
                 if( loc_name){
                         efree(loc_name);
