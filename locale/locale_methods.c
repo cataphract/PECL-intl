@@ -731,36 +731,28 @@ PHP_FUNCTION( locale_get_keywords )
     	array_init( return_value );
 
     	while( ( kw_key = uenum_next( e, &kw_key_len, &status ) ) != NULL ){
-
-			if( kw_value){
-				efree(kw_value);
-			}
 			kw_value = ecalloc( 1 , kw_value_len  );
 
 			//Get the keyword value for each keyword
 			kw_value_len=uloc_getKeywordValue( loc_name,kw_key, kw_value, kw_value_len ,  &status );
 			if (status == U_BUFFER_OVERFLOW_ERROR) {
 				status = U_ZERO_ERROR;
-				kw_value = erealloc( kw_value , kw_value_len);
-				kw_value_len=uloc_getKeywordValue( loc_name,kw_key, kw_value, kw_value_len ,  &status );
-			}
-			if (status == FAILURE) {
+				kw_value = erealloc( kw_value , kw_value_len+1);
+				kw_value_len=uloc_getKeywordValue( loc_name,kw_key, kw_value, kw_value_len+1 ,  &status );
+			} else if(!U_FAILURE(status)) {
+				kw_value = erealloc( kw_value , kw_value_len+1);
+			} 
+			if (U_FAILURE(status)) {
         		intl_error_set( NULL, FAILURE, "locale_get_keywords: Error encountered while getting the keyword  value for the  keyword", 0 TSRMLS_CC );
 				if( kw_value){
 					efree( kw_value );
 				}
+				zval_dtor(return_value);
         		RETURN_FALSE;
 			}
 
-			//Add the obtained keyword name and value pair to the return-array
-			if( kw_value ){
-       			add_assoc_stringl( return_value, (char *)kw_key, kw_value , kw_value_len ,TRUE );
-			}//end of if
-
+       		add_assoc_stringl( return_value, (char *)kw_key, kw_value , kw_value_len, 0);
 		} //end of while
-		if( kw_value){
-			efree(kw_value);
-		}
 
 	}//end of if e!=NULL
 
