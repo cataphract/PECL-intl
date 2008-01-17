@@ -140,8 +140,7 @@ ut_run();
 Input Array name is : loc1
 
 Composed Locale: No values found from Locale compose due to the following error:
-Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512
-bytes including separator character and prefixes. : U_BUFFER_OVERFLOW_ERROR
+Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512 bytes including separator character and prefixes. : U_BUFFER_OVERFLOW_ERROR
 ------------
 Input Array name is : loc2
 
@@ -179,14 +178,12 @@ locale_compose: parameter array does not contain 'language' tag.: U_ILLEGAL_ARGU
 Input Array name is : loc10
 
 Composed Locale: No values found from Locale compose due to the following error:
-Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512
-bytes including separator character and prefixes. : U_BUFFER_OVERFLOW_ERROR
+Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512 bytes including separator character and prefixes. : U_BUFFER_OVERFLOW_ERROR
 ------------
 Input Array name is : loc11
 
 Composed Locale: No values found from Locale compose due to the following error:
-Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512
-bytes including separator character and prefixes. : U_BUFFER_OVERFLOW_ERROR
+Aborting locale_compose: array element will cause the buffer overflow. Maximum size allowed for locale_compose parameters is 512 bytes including separator character and prefixes. : U_BUFFER_OVERFLOW_ERROR
 ------------
 Input Array name is : loc12
 
