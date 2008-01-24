@@ -213,7 +213,7 @@
  <dependencies>
   <required>
    <php>
-    <min>5.2.0</min>
+    <min>5.2.4</min>
    </php>
    <pearinstaller>
     <min>1.0.0</min>
