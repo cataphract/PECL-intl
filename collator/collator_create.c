@@ -45,6 +45,7 @@ PHP_FUNCTION( collator_create )
 		RETURN_NULL();
 	}
 
+	INTL_CHECK_LOCALE_LEN(locale_len);
 	// Create a Collator object and save the ICU collator into it.
 	if( ( object = getThis() ) == NULL )
 		object = return_value;
@@ -84,6 +85,7 @@ PHP_METHOD( Collator, __construct )
 
 	COLLATOR_METHOD_INIT_VARS
 
+	object = getThis();
 	// Parse parameters.
 	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "s",
 		&locale, &locale_len ) == FAILURE )
@@ -91,11 +93,13 @@ PHP_METHOD( Collator, __construct )
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			"__construct: unable to parse input params", 0 TSRMLS_CC );
 
+		zval_dtor(object);
+		ZVAL_NULL(object);
 		RETURN_NULL();
 	}
 
+	INTL_CHECK_LOCALE_LEN_OBJ(locale_len, object);
 	/* Fetch the object. */
-	object = getThis();
 	co  = (Collator_object*) zend_object_store_get_object( object TSRMLS_CC );
 
 	intl_error_reset( COLLATOR_ERROR_P( co ) TSRMLS_CC );

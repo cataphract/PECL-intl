@@ -53,4 +53,23 @@ typedef struct _intl_data {
         RETURN_FALSE;										\
     }
 
+#define INTL_MAX_LOCALE_LEN 64
+
+#define INTL_CHECK_LOCALE_LEN(locale_len)												\
+	if((locale_len) > INTL_MAX_LOCALE_LEN) {											\
+		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,									\
+	"Locale string too long, should be no longer than 64 characters", 0 TSRMLS_CC );	\
+		RETURN_NULL();																	\
+	}
+
+#define INTL_CHECK_LOCALE_LEN_OBJ(locale_len, object)									\
+	if((locale_len) > INTL_MAX_LOCALE_LEN) {											\
+		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,									\
+	"Locale string too long, should be no longer than 64 characters", 0 TSRMLS_CC );	\
+		zval_dtor(object);																\
+		ZVAL_NULL(object);																\
+		RETURN_NULL();																	\
+	}
+
+
 #endif // INTL_DATA_H

@@ -50,6 +50,7 @@ PHP_FUNCTION( msgfmt_create )
 		RETURN_NULL();
 	}
 
+	INTL_CHECK_LOCALE_LEN(locale_len);
 	// Create a MessageFormatter object and save the ICU formatter into it.
 	if( ( object = getThis() ) == NULL )
 		object = return_value;
@@ -104,6 +105,7 @@ PHP_METHOD( MessageFormatter, __construct )
 		RETURN_NULL();
 	}
 
+	INTL_CHECK_LOCALE_LEN_OBJ(locale_len, object);
 	mfo = (MessageFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
 	intl_error_reset( &mfo->mf_data.error TSRMLS_CC );

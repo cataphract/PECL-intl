@@ -20,16 +20,17 @@ function ut_main()
         'uk-ua_CALIFORNIA@currency=;currency=GRN',
         '',
         'root',
-        'uk@currency=EURO'
+        'uk@currency=EURO',
+	'1234567891113151719212325272931333537394143454749515357596163656769717375777981838587899193959799'
     );
 
     foreach( $locales as $locale )
     {
         // Create Collator with the current locale.
         $coll = ut_coll_create( $locale );
-        if( $coll === false )
+        if( !is_object($coll) )
         {
-            echo "Error creating collator with '$locale' locale: " .
+            $res_str .= "Error creating collator with '$locale' locale: " .
                  intl_get_error_message() . "\n";
             continue;
         }
@@ -77,3 +78,4 @@ Locale: 'uk@currency=EURO'
   ULOC_REQUESTED_LOCALE = 'uk@currency=EURO'
   ULOC_VALID_LOCALE     = 'uk'
   ULOC_ACTUAL_LOCALE    = 'uk'
+Error creating collator with '1234567891113151719212325272931333537394143454749515357596163656769717375777981838587899193959799' locale: Locale string too long, should be no longer than 64 characters: U_ILLEGAL_ARGUMENT_ERROR
