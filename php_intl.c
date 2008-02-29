@@ -310,6 +310,8 @@ PHP_MINIT_FUNCTION( intl )
         //For the default locale php.ini setting
         REGISTER_INI_ENTRIES();
 
+	REGISTER_LONG_CONSTANT("INTL_MAX_LOCALE_LEN", INTL_MAX_LOCALE_LEN, CONST_CS);
+
 	// Register 'Collator' PHP class
 	collator_register_Collator_class( TSRMLS_C );
 
