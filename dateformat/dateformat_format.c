@@ -28,11 +28,6 @@
 #include "dateformat_format.h"
 #include "dateformat_data.h"
 
-#define TIMESTAMP_ARG 0
-#define ARRAY_ARG 1
-#define DATETIME_OBJ_ARG 2
-#define BUFFER_SIZE 512
-
 /* {{{ 
  * Internal function which calls the udat_format
 */
@@ -53,10 +48,7 @@ static void internal_format(DateFormatter_object *mfo, double timestamp , zval *
 	}
 
 	INTL_METHOD_CHECK_STATUS( mfo, "Date formatting failed" );
-	INTL_METHOD_RETVAL_UTF8( mfo, formatted, resultlengthneeded, 0 );
-	if (formatted ) {
-		efree(formatted);
-	}
+	INTL_METHOD_RETVAL_UTF8( mfo, formatted, resultlengthneeded, 1 );
 
 }
 /* }}} */
@@ -120,14 +112,13 @@ static void internal_create_ucal(DateFormatter_object *mfo, HashTable* hash_arr 
 }
 
 
-/* {{{ proto string DateFormatter::format( [mixed]int $args or array $args or DateTime $args)
+/* {{{ proto string DateFormatter::format( [mixed]int $args or array $args )
  * Format the time value as a string. }}}*/
-/* {{{ proto string datefmt_format( [mixed]int $args or array $args or DateTime $args)
+/* {{{ proto string datefmt_format( [mixed]int $args or array $args )
  * Format the time value as a string. }}}*/
 PHP_FUNCTION(datefmt_format) 
 {
 	double 		timestamp =0;
-	zval*		datetime_obj = NULL;
 	UCalendar*    	temp_cal ; 
 	HashTable*      hash_arr        = NULL;
 	zval*		zarg	= NULL;
@@ -146,9 +137,15 @@ PHP_FUNCTION(datefmt_format)
 	// Fetch the object.
 	DATE_FORMAT_METHOD_FETCH_OBJECT;
 
+
 	switch(Z_TYPE_P(zarg) ){
 		case IS_LONG:
-			timestamp = Z_LVAL_P(zarg);
+			//timestamp*1000 since ICU expects it in milliseconds
+			timestamp = (Z_LVAL_P(zarg) * 1000);
+			break;
+		case IS_DOUBLE:
+			//timestamp*1000 since ICU expects it in milliseconds
+			timestamp = (Z_LVAL_P(zarg) * 1000);
 			break;
 		case IS_ARRAY:
 			hash_arr = Z_ARRVAL_P(zarg);
@@ -171,15 +168,11 @@ PHP_FUNCTION(datefmt_format)
 		default:
 			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 				"datefmt_format: takes either an array  or a DateTime object or an integer TimeStamp value ", 0 TSRMLS_CC );
-			// drop the temporary formatter
-			dateformat_data_free(&mfo->datef_data TSRMLS_CC);
 			RETURN_FALSE;
 	}
 
 	internal_format( mfo, timestamp ,return_value TSRMLS_CC);
 	
-	// drop the temporary formatter
-	dateformat_data_free(&mfo->datef_data TSRMLS_CC);
 }
 
 /* }}} */
