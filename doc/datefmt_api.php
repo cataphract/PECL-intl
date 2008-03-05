@@ -23,25 +23,20 @@ class DateFormatter {
     * The following constants are used to specify different formats
     * in the constructor.
     */
-    const SHORT = 8;
-    const MEDIUM = 4;
-    const LONG = 2;
-    const FULL = 1;
-    const NONE = 0;
+    const NONE = -1;
+    const FULL = 0;
+    const LONG = 1;
+    const MEDIUM = 2;
+    const SHORT = 3;
 
     /**
      * The following int constants are used to specify the calendar. 
      * These calendars are all based directly on the Gregorian calendar 
-     *   -r are implemented inside ICU "by magic". Other, non-Gregorian, 
-     * calendars require either extensions to ICU or special coding 
-     * to handle. Examples might include Hijri or the Chinese 
-     * lunar-solar calendar.
+     * Non-Gregorian calendars need to be specified in locale. 
+     * Examples might include locale="hi@calendar=BUDDHIST"
      */
-
+    const TRADITIONAL = 0 // non-Gregorian calendar that is locale-defined, required by ICU
     const GREGORIAN = 1 // Gregorian calendar
-    const CUSTOMARY = 2 // non-Gregorian calendar that is locale-defined, required by ICU
-    const BUDDHIST  = 3 // the Thai Buddhist calendar
-    const JAPANESE_IMPERIAL = 4 // the Japanese Imperial calendar 
 	
 	/**
 	 * Create a date formatter 
@@ -171,11 +166,12 @@ class DateFormatter {
 	 /**
 	  * @param  [integer]  which locale should be returned? 
 	  *                    values may include ULOC_ACTUAL_LOCALE,
-	  *                    ULOC_VALID_LOCALE, and ULOC_REQUESTED_LOCALE. By default the requested
-          *                    locale is returned.
-	  * @return string     the locale of this formatter
-	  */
-         public function getLocale($type = ULOC_REQUESTED_LOCALE) {}
+	  *                    ULOC_VALID_LOCALE. By default the actual
+	  *                    locale is returned.
+	  * @return string     the locale of this formatter  or 'false' if error
+	 */
+
+	 public function getLocale($type = ULOC_ACTUAL_LOCALE) {}
 
          /**
 	  * @return string ID string for the time zone used by this formatter
@@ -203,9 +199,7 @@ class DateFormatter {
          * sets the calendar used to the appropriate calendar, which must be 
 	 * one of the constants defined above. Some examples include:
          *   - Gregorian calendar
-         *   - Thai Buddhist Era calendar
-         *   - Japanese Imperial calendar
-         *   - etc. 
+         *   - Traditional
          * Default value is GREGORIAN
 	 * @param integer $which the calendar (an enumerated constant) to use.
          * @return boolean 'true' if successful, 'false' if an error occurred or if the calendar was not recognized 
