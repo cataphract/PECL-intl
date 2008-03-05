@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <package xmlns="http://pear.php.net/dtd/package-2.0"
  xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.7"
- version="2.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
  xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>intl</name>
  <channel>pecl.php.net</channel>
@@ -23,7 +22,7 @@
 
  <date>2007-12-05</date>
  <version>
-  <release>1.0.0</release>
+  <release>1.0.0beta</release>
   <api>1.0.0</api>
  </version>
  <stability>
@@ -146,6 +145,21 @@
     <file role="src" name="normalizer_normalize.h" />
    </dir>
 
+   <dir name="dateformat">
+    <file role="src" name="dateformat.c" />
+    <file role="src" name="dateformat.h" />
+    <file role="src" name="dateformat_attr.c" />
+    <file role="src" name="dateformat_attr.h" />
+    <file role="src" name="dateformat_class.c" />
+    <file role="src" name="dateformat_class.h" />
+    <file role="src" name="dateformat_data.c" />
+    <file role="src" name="dateformat_data.h" />
+    <file role="src" name="dateformat_format.c" />
+    <file role="src" name="dateformat_format.h" />
+    <file role="src" name="dateformat_parse.c" />
+    <file role="src" name="dateformat_parse.h" />
+   </dir>
+
    <dir name="samples">
     <file role="doc" name="collator_oo.php" />
     <file role="doc" name="collator_proc.php" />
@@ -213,10 +227,10 @@
  <dependencies>
   <required>
    <php>
-    <min>5.2.4</min>
+    <min>6.0.0-dev</min>
    </php>
    <pearinstaller>
-    <min>1.0.0</min>
+    <min>1.4.0</min>
    </pearinstaller>
   </required>
  </dependencies>
