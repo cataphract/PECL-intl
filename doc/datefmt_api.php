@@ -37,8 +37,8 @@ class DateFormatter {
      * Non-Gregorian calendars need to be specified in locale. 
      * Examples might include locale="hi@calendar=BUDDHIST"
      */
-    const TRADITIONAL = 0 // non-Gregorian calendar that is locale-defined, required by ICU
-    const GREGORIAN = 1 // Gregorian calendar
+    const TRADITIONAL = 0; // non-Gregorian calendar that is locale-defined, required by ICU
+    const GREGORIAN = 1; // Gregorian calendar
 	
 	/**
 	 * Create a date formatter 
@@ -53,7 +53,7 @@ class DateFormatter {
 	 * @see __construct
 	 * @see datefmt_create
 	 */
-	public static function __construct($locale, $datetype, $timetype, $timezone = null, $calendar= null) {}
+	public function __construct($locale, $datetype, $timetype, $timezone = null, $calendar= null) {}
 
 	/**
 	 * Create a date formatter 
