@@ -1,0 +1,2 @@
+- Fix Locale functions for Unicode
+- Update dateformat for PHP 6
