@@ -389,4 +389,73 @@ function ut_msgfmt_get_error_message( $fmt )
 {
     return $GLOBALS['oo-mode'] ? $fmt->getErrorMessage() : msgfmt_get_error_message( $fmt );
 }
+/* DateFormatter functions */
+function ut_datefmt_create( $locale, $datetype, $timetype, $timezone = null, $calendar = null ,$pattern = null)
+{
+    return $GLOBALS['oo-mode'] ? datefmt_create( $locale, $datetype, $timetype, $timezone, $calendar ,$pattern ) : datefmt_create( $locale, $datetype, $timetype, $timezone, $calendar ,$pattern);
+}
+function ut_datefmt_get_datetype( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getDateType( ) : datefmt_get_datetype( $fmt );
+}
+function ut_datefmt_get_timetype( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getTimeType( ) : datefmt_get_timetype( $fmt );
+}
+function ut_datefmt_get_calendar( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getCalendar( ) : datefmt_get_calendar( $fmt );
+}
+function ut_datefmt_set_calendar( $fmt ,$calendar )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->setCalendar( $calendar ) : datefmt_set_calendar( $fmt , $calendar );
+}
+function ut_datefmt_get_timezone_id( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getTimeZoneId( ) : datefmt_get_timezone_id( $fmt );
+}
+function ut_datefmt_set_timezone_id( $fmt ,$timezone_id )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->setTimeZoneId( $timezone_id ) : datefmt_set_timezone_id( $fmt ,$timezone_id);
+}
+function ut_datefmt_get_pattern( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getPattern() : datefmt_get_pattern( $fmt );
+}
+function ut_datefmt_set_pattern( $fmt , $pattern )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->setPattern( $pattern ) : datefmt_set_pattern( $fmt ,  $pattern);
+}
+function ut_datefmt_get_locale( $fmt ,$type=ULOC_ACTUAL_LOCALE)
+{
+    return $GLOBALS['oo-mode'] ? $fmt->getLocale($type ) : datefmt_get_locale( $fmt ,$type);
+}
+function ut_datefmt_is_lenient( $fmt )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->isLenient() : datefmt_is_lenient( $fmt );
+}
+function ut_datefmt_set_lenient( $fmt , $lenient )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->setLenient(  $lenient ) : datefmt_set_lenient( $fmt ,  $lenient);
+}
+function ut_datefmt_format( $fmt , $value )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->format(  $value ) : datefmt_format( $fmt ,  $value);
+}
+function ut_datefmt_parse_to_timestamp( $fmt , $value )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->parseToTimestamp(  $value ) : datefmt_parse_to_timestamp( $fmt ,  $value);
+}
+function ut_datefmt_parse( $fmt , $value ,$parse_pos , $parse_error)
+{
+    return $GLOBALS['oo-mode'] ? $fmt->parse(  $value ,$parse_pos , $parse_error) : datefmt_parse( $fmt ,  $value,$parse_pos , $parse_error);
+}
+function ut_datefmt_parse_to_localtime( $fmt , $value )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->parseToLocaltime(  $value ) : datefmt_parse_to_localtime( $fmt ,  $value);
+}
+function ut_datefmt_localtime( $fmt , $value ,$parse_pos , $parse_error )
+{
+    return $GLOBALS['oo-mode'] ? $fmt->localtime(  $value , $parse_pos , $parse_error) : datefmt_localtime( $fmt ,  $value , $parse_pos , $parse_error);
+}
 ?>
