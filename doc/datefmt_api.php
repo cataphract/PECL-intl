@@ -13,8 +13,10 @@
  * echo $formatter->format(time());
  * </code>
  *
- * @see 
- * @see 
+ * <code>
+ *  $datefmt = new DateFormatter("de-DE", LONG, SHORT, date_default_timezone_get() , GREGORIAN , "yyyy-MM-dd HH:mm:ss z");
+ *  echo $formatter->format(time());
+ * </code>
  *
  */
 class DateFormatter {
@@ -44,7 +46,7 @@ class DateFormatter {
 	 * @param string  $locale     Locale to use when formatting or parsing
 	 * @param integer $datetype   Date type to use (none, short, medium, long, full)
 	 * @param integer $timetype   Time type to use (none, short, medium, long, full)
-	 * @param [mixed] $timezone   Time zone ID or DateTimeZone object; default is system default
+	 * @param [String] $timezone  Time zone ID ; default is system default
 	 * @param [integer] $calendar Calendar to use for formatting or parsing; default is
 	 *                            GREGORIAN
 	 * @return DateFormatter
@@ -59,7 +61,7 @@ class DateFormatter {
 	 * @param string  $locale     Locale to use when formatting or parsing
 	 * @param integer $datetype   Date type to use (none, short, medium, long, full)
 	 * @param integer $timetype   Time type to use (none, short, medium, long, full)
-	 * @param [mixed] $timezone   Time zone ID or DateTimeZone object; default is system default
+	 * @param [string] $timezone  Time zone ID ; default is system default
 	 * @param [integer] $calendar Calendar to use for formatting or parsing; default is
 	 *                            GREGORIAN
 	 * @return DateFormatter
@@ -73,18 +75,10 @@ class DateFormatter {
 	 * @param [mixed] $value - value to format
          *     integer: a unix timestamp value (seconds since epoch, UTC)
          *     array: a localtime array 
-	 *     DateTime: a DateTime value
          * @return string  a formatted string or, if an error occurred, 'null'. 
 	 */
         public function format($value) {}
 
-        /**
-         * converts string $value to a DateTime object
-	 *
-	 * @param string $value   string to convert to a time
-	 * @return DateTime       value of the parsed string as a DateTime or null if error
-	 */
-         public function parseDate($value) {}
 
 	 /**
 	  * converts the string $value to a Unix timestamp (a time_t integer
@@ -93,7 +87,7 @@ class DateFormatter {
 	  * @param  string  $value   string to convert to a time
 	  * @return integer          timestamp value
 	  */
-	 public function parseTimestamp($value) {}
+	 public function parseToTimestamp($value) {}
 
 	 /**
 	  * Field-based equivalent of parse(). 
@@ -103,7 +97,7 @@ class DateFormatter {
 	  * @see http://www.php.net/manual/en/function.localtime.php
 	  * @see http://www.w3.org/TR/2005/NOTE-timezone-20051013/
 	  */
-         public function parseLocaltime($value) {}
+         public function parseToLocaltime($value) {}
 
         /**
          * converts string $value to an incremental time value, starting at
@@ -140,9 +134,14 @@ class DateFormatter {
 	 public function localtime($value, $localtime, $parse_pos, $error) {}
 
 	 /**
-	  * @return integer the current 'type' value of the formatter
+	  * @return integer the current 'datetype' value of the formatter
 	  */
-         public function getType() {}
+         public function getDateType() {}
+
+	 /**
+	  * @return integer the current 'timetype' value of the formatter
+	  */
+         public function getTimeType() {}
 
 	 /**
 	  * @return boolean   'true' if parser is lenient, 'false' if parser is strict
@@ -180,14 +179,8 @@ class DateFormatter {
 
 
 	/**
-	 * @return DateTimeZone DateTimeZone used by this formatter
-	 */
-        public function getTimeZone() {}
-
-
-	/**
 	 * sets the time zone to use
-	 * @param mixed $zone  DateTimeZone or zone ID string of the time zone to use.
+	 * @param string $zone zone ID string of the time zone to use.
 	 *                     if null or the empty string, the default time zone for
 	 *                     the runtime is used.
 	 * @return boolean 'true' on successful setting of the time zone, 'false'
