@@ -23,6 +23,7 @@
 
 #include "php_intl.h"
 #include "msgformat_class.h"
+#include "intl_data.h"
 
 /* {{{ proto MessageFormatter MesssageFormatter::create( string $locale, string $pattern )
  * Create formatter. }}} */
@@ -36,6 +37,7 @@ PHP_FUNCTION( msgfmt_create )
 	UChar*      spattern     = NULL;
 	int         spattern_len = 0;
 	zval*       object;
+	int free_pattern = 0;
 	MessageFormatter_object* mfo;
 
 	intl_error_reset( NULL TSRMLS_CC );
@@ -65,8 +67,21 @@ PHP_FUNCTION( msgfmt_create )
 		locale = UG(default_locale);
 	}
 
+	(mfo)->mf_data.orig_format = eustrndup(spattern, spattern_len);
+	(mfo)->mf_data.orig_format_len = spattern_len;
+	
+	if(msfgotmat_fix_quotes(&spattern, &spattern_len, &INTL_DATA_ERROR_CODE(mfo), &free_pattern) != SUCCESS) {
+		intl_error_set( NULL, U_INVALID_FORMAT_ERROR,
+			"msgfmt_create: error converting pattern to quote-friendly format", 0 TSRMLS_CC );
+		zval_dtor(return_value);
+		RETURN_NULL();
+	}
+
 	// Create an ICU message formatter.
 	MSG_FORMAT_OBJECT(mfo) = umsg_open(spattern, spattern_len, locale, NULL, &INTL_DATA_ERROR_CODE(mfo));
+	if(free_pattern) {
+		efree(spattern);
+	}
 
 	if( U_FAILURE( INTL_DATA_ERROR_CODE((mfo)) ) )
 	{
@@ -88,6 +103,7 @@ PHP_METHOD( MessageFormatter, __construct )
 	UChar*      spattern     = NULL;
 	int         spattern_len = 0;
 	zval*       object;
+	int free_pattern = 0;
 	MessageFormatter_object* mfo;
 
 	intl_error_reset( NULL TSRMLS_CC );
@@ -114,8 +130,22 @@ PHP_METHOD( MessageFormatter, __construct )
 		locale = UG(default_locale);
 	}
 
+	(mfo)->mf_data.orig_format = eustrndup(spattern, spattern_len);
+	(mfo)->mf_data.orig_format_len = spattern_len;
+	
+	if(msfgotmat_fix_quotes(&spattern, &spattern_len, &INTL_DATA_ERROR_CODE(mfo), &free_pattern) != SUCCESS) {
+		intl_error_set( NULL, U_INVALID_FORMAT_ERROR,
+			"__construct: error converting pattern to quote-friendly format", 0 TSRMLS_CC );
+		zval_dtor(object);
+		ZVAL_NULL(object);
+		RETURN_NULL();
+	}
+
 	// Create an ICU message formatter.
 	MSG_FORMAT_OBJECT(mfo) = umsg_open(spattern, spattern_len, locale, NULL, &INTL_DATA_ERROR_CODE(mfo));
+	if(free_pattern) {
+		efree(spattern);
+	}
 
 	if( U_FAILURE( INTL_DATA_ERROR_CODE((mfo)) ) )
 	{

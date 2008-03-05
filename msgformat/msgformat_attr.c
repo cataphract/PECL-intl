@@ -32,9 +32,6 @@
  */
 PHP_FUNCTION( msgfmt_get_pattern )
 {
-	UChar  value_buf[64];
-	int    length = USIZE( value_buf );
-	UChar* value  = value_buf;
 	MSG_FORMAT_METHOD_INIT_VARS;
 
 	// Parse parameters.
@@ -48,20 +45,11 @@ PHP_FUNCTION( msgfmt_get_pattern )
 	// Fetch the object.
 	MSG_FORMAT_METHOD_FETCH_OBJECT;
 
-	length = umsg_toPattern(MSG_FORMAT_OBJECT(mfo), value, length, &INTL_DATA_ERROR_CODE(mfo));
-	if(INTL_DATA_ERROR_CODE(mfo) == U_BUFFER_OVERFLOW_ERROR && length >= USIZE( value_buf )) {
-		++length; // to avoid U_STRING_NOT_TERMINATED_WARNING
-		INTL_DATA_ERROR_CODE(mfo) = U_ZERO_ERROR;
-		value = eumalloc(length);
-		length = umsg_toPattern(MSG_FORMAT_OBJECT(mfo), value, length, &INTL_DATA_ERROR_CODE(mfo) );
-		if(U_FAILURE(INTL_DATA_ERROR_CODE(mfo))) {
-			efree(value);
-			value = value_buf;
-		}
-	}
-	INTL_METHOD_CHECK_STATUS(mfo, "Error getting formatter pattern" );
-
-	RETURN_UNICODEL(value, length, ( value == value_buf ) );
+ 	if(mfo->mf_data.orig_format) {
+ 		RETURN_UNICODEL(mfo->mf_data.orig_format, mfo->mf_data.orig_format_len, 1);
+  	}
+  
+ 	RETURN_FALSE;
 }
 /* }}} */
 
@@ -74,6 +62,7 @@ PHP_FUNCTION( msgfmt_set_pattern )
 {
 	int         slength = 0;
 	UChar*	    svalue  = NULL;
+	int free_pattern = 0;
 	MSG_FORMAT_METHOD_INIT_VARS;
 
 	// Parse parameters.
@@ -87,9 +76,25 @@ PHP_FUNCTION( msgfmt_set_pattern )
 
 	MSG_FORMAT_METHOD_FETCH_OBJECT;
 
+	if(mfo->mf_data.orig_format) {
+ 		efree(mfo->mf_data.orig_format);
+ 	}
+ 	mfo->mf_data.orig_format = eustrndup(svalue, slength);
+ 	mfo->mf_data.orig_format_len = slength;
+
+	if(msfgotmat_fix_quotes(&svalue, &slength, &INTL_DATA_ERROR_CODE(mfo), &free_pattern) != SUCCESS) {
+ 		intl_error_set( NULL, U_INVALID_FORMAT_ERROR,
+ 			"msgfmt_set_pattern: error converting pattern to quote-friendly format", 0 TSRMLS_CC );
+ 		RETURN_FALSE;
+ 	}
+
 	// TODO: add parse error information
 	umsg_applyPattern(MSG_FORMAT_OBJECT(mfo), svalue, slength, NULL, &INTL_DATA_ERROR_CODE(mfo));
+	if(free_pattern) {
+		efree(svalue);
+	}
 	INTL_METHOD_CHECK_STATUS(mfo, "Error setting symbol value");
+
 
 	RETURN_TRUE;
 }

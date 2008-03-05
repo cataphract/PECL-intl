@@ -18,6 +18,7 @@
 #include "config.h"
 #endif
 
+#include <unicode/ustring.h>
 #include "msgformat_data.h"
 
 /* {{{ void msgformat_data_init( msgformat_data* mf_data )
@@ -29,6 +30,7 @@ void msgformat_data_init( msgformat_data* mf_data TSRMLS_DC )
 		return;
 
 	mf_data->umsgf = NULL;
+	mf_data->orig_format = NULL;
 	intl_error_reset( &mf_data->error TSRMLS_CC );
 }
 /* }}} */
@@ -43,6 +45,11 @@ void msgformat_data_free( msgformat_data* mf_data TSRMLS_DC )
 
 	if( mf_data->umsgf )
 		umsg_close( mf_data->umsgf );
+
+	if(mf_data->orig_format) {
+		efree(mf_data->orig_format);
+		mf_data->orig_format = NULL;
+	}
 
 	mf_data->umsgf = NULL;
 	intl_error_reset( &mf_data->error TSRMLS_CC );
@@ -61,6 +68,27 @@ msgformat_data* msgformat_data_create( TSRMLS_D )
 	return mf_data;
 }
 /* }}} */
+
+int msfgotmat_fix_quotes(UChar **spattern, uint32_t *spattern_len, UErrorCode *ec, int *free_pattern) 
+{
+	*free_pattern = 0;
+	if(*spattern && *spattern_len && u_strchr(*spattern, (UChar)'\'')) {
+		UChar *npattern = eumalloc(2*(*spattern_len)+1);
+		uint32_t npattern_len;
+		npattern_len = umsg_autoQuoteApostrophe(*spattern, *spattern_len, npattern, 2*(*spattern_len)+1, ec);
+		if( U_FAILURE(*ec) )
+		{
+			efree(npattern);			
+			return FAILURE;
+		}
+		npattern = eurealloc(npattern, npattern_len+1);
+		*spattern = npattern;
+		*spattern_len = npattern_len;
+		*free_pattern = 1;
+	}
+	return SUCCESS;
+}
+
 
 /*
  * Local variables:
