@@ -1,12 +1,12 @@
 --TEST--
-datefmt_parse_to_localtime_code()
+datefmt_parse_localtime() with parse pos
 --SKIPIF--
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
 --FILE--
 <?php
 
 /*
- * Test for the datefmt_parse_to_localtime  function
+ * Test for the datefmt_parse_localtime  function with parse pos
  */
 
 
@@ -58,7 +58,7 @@ function ut_main()
 			$res_str .= "\n------------";
 			$res_str .= "\nDateFormatter : ".$fmt_desc_array[$cnt];
 			$cnt++;		
-			$parsed_arr = ut_datefmt_parse_to_localtime( $fmt_entry , $text_entry);
+			$parsed_arr = ut_datefmt_localtime( $fmt_entry , $text_entry);
 
 				if( $parsed_arr){
 				    $res_str .= "\n";

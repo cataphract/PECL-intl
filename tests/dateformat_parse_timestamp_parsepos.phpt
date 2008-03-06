@@ -1,12 +1,12 @@
 --TEST--
-datefmt_parse_to_timestamp_code()
+datefmt_parse_timestamp_code()  with parse pos
 --SKIPIF--
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
 --FILE--
 <?php
 
 /*
- * Test for the datefmt_parse_to_timestamp  function
+ * Test for the datefmt_parse_timestamp  function with parse_pos
  */
 
 
@@ -46,7 +46,7 @@ function ut_main()
 			{
 				$res_str .= "\ndatetype = $datetype_entry ,timetype =$datetype_entry ";
 				$fmt = ut_datefmt_create( $locale_entry , $datetype_entry ,$datetype_entry);
-				$parsed = ut_datefmt_parse_to_timestamp( $fmt , $text_entry);
+				$parsed = ut_datefmt_parse( $fmt , $text_entry);
 				if( intl_get_error_code() == U_ZERO_ERROR){
 					$res_str .= "\nParsed text is : $parsed";
 				}else{

@@ -442,19 +442,11 @@ function ut_datefmt_format( $fmt , $value )
 {
     return $GLOBALS['oo-mode'] ? $fmt->format(  $value ) : datefmt_format( $fmt ,  $value);
 }
-function ut_datefmt_parse_to_timestamp( $fmt , $value )
-{
-    return $GLOBALS['oo-mode'] ? $fmt->parseToTimestamp(  $value ) : datefmt_parse_to_timestamp( $fmt ,  $value);
-}
-function ut_datefmt_parse( $fmt , $value ,$parse_pos , $parse_error)
+function ut_datefmt_parse( $fmt , $value ,$parse_pos=0 , $parse_error=0)
 {
     return $GLOBALS['oo-mode'] ? $fmt->parse(  $value ,$parse_pos , $parse_error) : datefmt_parse( $fmt ,  $value,$parse_pos , $parse_error);
 }
-function ut_datefmt_parse_to_localtime( $fmt , $value )
-{
-    return $GLOBALS['oo-mode'] ? $fmt->parseToLocaltime(  $value ) : datefmt_parse_to_localtime( $fmt ,  $value);
-}
-function ut_datefmt_localtime( $fmt , $value ,$parse_pos , $parse_error )
+function ut_datefmt_localtime( $fmt , $value ,$parse_pos=0 , $parse_error=0 )
 {
     return $GLOBALS['oo-mode'] ? $fmt->localtime(  $value , $parse_pos , $parse_error) : datefmt_localtime( $fmt ,  $value , $parse_pos , $parse_error);
 }
