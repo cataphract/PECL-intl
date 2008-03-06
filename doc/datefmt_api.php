@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Date Formatter class - locale-dependent formatting/parsing of dates.
+ * Date Formatter class - locale-dependent formatting/parsing of dates using pattern strings and/or canned patterns.
  *
  * This class represents the ICU date formatting functionality. It allows users to
- * display dates in a localized format or to parse strings that follow a pre-determined
- * pattern into PHP date values.
+ * display dates in a localized format or to parse strings 
+ * into PHP date values using pattern strings and/or canned patterns.
  * 
  * Example:
  * <code>
@@ -100,6 +100,7 @@ class DateFormatter {
 	  */
 	 public function parseToTimestamp($value) {}
 
+
 	 /**
 	  * Field-based equivalent of parse(). 
 	  *
@@ -109,6 +110,7 @@ class DateFormatter {
 	  * @see http://www.w3.org/TR/2005/NOTE-timezone-20051013/
 	  */
          public function parseToLocaltime($value) {}
+
 
         /**
          * converts string $value to an incremental time value, starting at
@@ -125,6 +127,7 @@ class DateFormatter {
 	 * @return integer timestamp  parsed value
 	 */
 	 public function parse($value, $parse_pos, $error) {}
+
 	 
         /**
          * converts string $value to a field-based time value, starting at
@@ -144,21 +147,25 @@ class DateFormatter {
 	 */
 	 public function localtime($value, $localtime, $parse_pos, $error) {}
 
+
 	 /**
 	  * @return integer the current 'datetype' value of the formatter
 	  */
          public function getDateType() {}
+
 
 	 /**
 	  * @return integer the current 'timetype' value of the formatter
 	  */
          public function getTimeType() {}
 
+
 	 /**
 	  * @return boolean   'true' if parser is lenient, 'false' if parser is strict
 	  *                   default value for parser is 'false'.
 	  */
          public function isLenient() {}
+
 
 	 /**
 	  * @param boolean $lenient  sets whether the parser is lenient or not, default is 'false'
@@ -183,6 +190,7 @@ class DateFormatter {
 
 	 public function getLocale($type = ULOC_ACTUAL_LOCALE) {}
 
+
          /**
 	  * @return string ID string for the time zone used by this formatter
 	  */
@@ -199,6 +207,7 @@ class DateFormatter {
 	 */
         public function setTimeZoneId($zone) {}
 
+
         /**
          * sets the calendar used to the appropriate calendar, which must be 
 	 * one of the constants defined above. Some examples include:
@@ -210,15 +219,18 @@ class DateFormatter {
 	 */
          public function setCalendar($which) {}
 
+
         /**
 	 * @return integer the calendar being used by the formatter
 	 */
          public function getCalendar() {}
 
+
         /**
     	 * @return string the pattern string being used to format/parse 
 	 */
 	public function getPattern() {}
+
 
         /**
          * @param  string $pattern new pattern string to use
@@ -226,6 +238,7 @@ class DateFormatter {
          *                 strings are usually the cause of the latter.
          */
 	public function setPattern($pattern) {}
+
 
 	/**
 	 * Get the error code from last operation
@@ -235,12 +248,15 @@ class DateFormatter {
 	 * @return integer the error code, one of UErrorCode values. Initial value is U_ZERO_ERROR.
 	 */
 	public function getErrorCode() {}
+
+
 	/**
 	 * Get the error text from the last operation.
 	 *
 	 * @return string Description of the last error.
 	 */
 	public function getErrorMessage() {}
+
 
 }
 
@@ -264,6 +280,7 @@ class DateFormatter {
 	 */
 	public static function datefmt_create($locale, $datetype, $timetype, $timezone = null, $calendar= null ,$pattern=null ) {}
 
+
 	/**
          * formats the time value as a string.
          * @param DateFormatter $fmt The date formatter resource
@@ -285,6 +302,7 @@ class DateFormatter {
 	  */
 	 public function datefmt_parse_to_timestamp($fmt , $value) {}
 
+
 	 /**
 	  * Field-based equivalent of parse(). 
 	  *
@@ -294,6 +312,7 @@ class DateFormatter {
 	  * @see http://www.w3.org/TR/2005/NOTE-timezone-20051013/
 	  */
          public function datefmt_parse_to_localtime($fmt , $value) {}
+
 
         /**
          * converts string $value to an incremental time value, starting at
@@ -310,6 +329,7 @@ class DateFormatter {
 	 * @return integer timestamp  parsed value
 	 */
 	 public function datefmt_parse($fmt , $value, $parse_pos, $error) {}
+
 	 
         /**
          * converts string $value to a field-based time value, starting at
@@ -329,21 +349,25 @@ class DateFormatter {
 	 */
 	 public function datefmt_localtime($fmt , $value, $localtime, $parse_pos, $error) {}
 
+
 	 /**
 	  * @return integer the current 'datetype' value of the formatter
 	  */
          public function datefmt_get_datetype($fmt ) {}
+
 
 	 /**
 	  * @return integer the current 'timetype' value of the formatter
 	  */
          public function datefmt_get_timetype($fmt) {}
 
+
 	 /**
 	  * @return boolean   'true' if parser is lenient, 'false' if parser is strict
 	  *                   default value for parser is 'false'.
 	  */
          public function datefmt_is_lenient($fmt) {}
+
 
 	 /**
 	  * @param boolean $lenient  sets whether the parser is lenient or not, default is 'false'
@@ -365,8 +389,8 @@ class DateFormatter {
 	  *                    locale is returned.
 	  * @return string     the locale of this formatter  or 'false' if error
 	 */
-
 	 public function datefmt_get_locale($fmt , $type = ULOC_ACTUAL_LOCALE) {}
+
 
          /**
 	  * @return string ID string for the time zone used by this formatter
@@ -384,6 +408,7 @@ class DateFormatter {
 	 */
         public function datefmt_set_timezone_id($fmt , $zone) {}
 
+
         /**
          * sets the calendar used to the appropriate calendar, which must be 
 	 * one of the constants defined above. Some examples include:
@@ -395,15 +420,18 @@ class DateFormatter {
 	 */
          public function datefmt_set_calendar($fmt , $which) {}
 
+
         /**
 	 * @return integer the calendar being used by the formatter
 	 */
          public function datefmt_get_calendar($fmt) {}
 
+
         /**
          * @return string the pattern string being used to format/parse
          */
         public function  datefmt_get_pattern($fmt) {}
+
 
         /**
          * @param  string $pattern new pattern string to use
@@ -421,13 +449,14 @@ class DateFormatter {
 	 * @return integer the error code, one of UErrorCode values. Initial value is U_ZERO_ERROR.
 	 */
 	public function datefmt_get_error_code($fmt) {}
+
+
 	/**
 	 * Get the error text from the last operation.
 	 *
 	 * @return string Description of the last error.
 	 */
 	public function datefmt_get_error_message($fmt) {}
-
 
 
 ?>
