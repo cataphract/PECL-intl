@@ -278,7 +278,7 @@ class DateFormatter {
 	 * @return DateFormatter
 	 * @see datefmt_create
 	 */
-	public static function datefmt_create($locale, $datetype, $timetype, $timezone = null, $calendar= null ,$pattern=null ) {}
+	function datefmt_create($locale, $datetype, $timetype, $timezone = null, $calendar= null ,$pattern=null ) {}
 
 
 	/**
@@ -289,29 +289,30 @@ class DateFormatter {
          *     array: a localtime array 
          * @return string  a formatted string or, if an error occurred, 'null'. 
 	 */
-        public function datefmt_format($fmt , $value) {}
+        function datefmt_format($fmt , $value) {}
 
 
 	 /**
 	  * converts the string $value to a Unix timestamp (a time_t integer
 	  * value, seconds since epoch).
 	  *
-	  * @param  DateFormatter $formatter The formatter resource
+	  * @param  DateFormatter $fmt The formatter resource
 	  * @param  string  $value   string to convert to a time
 	  * @return integer          timestamp value
 	  */
-	 public function datefmt_parse_to_timestamp($fmt , $value) {}
+	 function datefmt_parse_to_timestamp($fmt , $value) {}
 
 
 	 /**
 	  * Field-based equivalent of parse(). 
 	  *
+	  * @param  DateFormatter $fmt The formatter resource
 	  * @param string $value  String value to parse into a date. 
 	  * @return array         An array in the same format as localtime produces
 	  * @see http://www.php.net/manual/en/function.localtime.php
 	  * @see http://www.w3.org/TR/2005/NOTE-timezone-20051013/
 	  */
-         public function datefmt_parse_to_localtime($fmt , $value) {}
+         function datefmt_parse_to_localtime($fmt , $value) {}
 
 
         /**
@@ -321,6 +322,7 @@ class DateFormatter {
 	 * otherwise it will contain the position at which parsing ended (and the error
 	 * occurred). $error will contain the error code. Note that this function
 	 * does not change the value in get_error().
+	 * @param  DateFormatter $fmt The formatter resource
 	 * @param string  $value      string to convert to a time
 	 * @param integer $parse_pos  position at which to start the parsing in $value (zero-based)
 	 *                            This variable will contain the end position if the parse fails
@@ -328,9 +330,8 @@ class DateFormatter {
 	 * @param integer $error      error value of any error that occurs during parsing
 	 * @return integer timestamp  parsed value
 	 */
-	 public function datefmt_parse($fmt , $value, $parse_pos, $error) {}
-
-	 
+	 function datefmt_parse($fmt , $value, $parse_pos, $error) {}
+ 
         /**
          * converts string $value to a field-based time value, starting at
 	 * $parse_pos and consuming as much of the input value as possible
@@ -338,6 +339,7 @@ class DateFormatter {
 	 * otherwise it will contain the position at which parsing ended (and the error
 	 * occurred). $error will contain the error code. Note that this function
 	 * does not change the value in get_error().
+	 * @param  DateFormatter $fmt The formatter resource
 	 * @param string  $value      string to convert to a time
 	 * @param array   $localtime  the array to store the parsed value; values in this array will
 	 *                            be overwritten!
@@ -347,29 +349,33 @@ class DateFormatter {
 	 * @param integer $error      error value of any error that occurs during parsing
 	 * @return array localtime compatible array of integers
 	 */
-	 public function datefmt_localtime($fmt , $value, $localtime, $parse_pos, $error) {}
+	 function datefmt_localtime($fmt , $value, $localtime, $parse_pos, $error) {}
 
 
 	 /**
+	  * @param  DateFormatter $fmt The formatter resource
 	  * @return integer the current 'datetype' value of the formatter
 	  */
-         public function datefmt_get_datetype($fmt ) {}
+         function datefmt_get_datetype($fmt ) {}
 
 
 	 /**
+	  * @param  DateFormatter $fmt The formatter resource
 	  * @return integer the current 'timetype' value of the formatter
 	  */
-         public function datefmt_get_timetype($fmt) {}
+         function datefmt_get_timetype($fmt) {}
 
 
 	 /**
+	  * @param  DateFormatter $fmt The formatter resource
 	  * @return boolean   'true' if parser is lenient, 'false' if parser is strict
 	  *                   default value for parser is 'false'.
 	  */
-         public function datefmt_is_lenient($fmt) {}
+         function datefmt_is_lenient($fmt) {}
 
 
 	 /**
+	  * @param  DateFormatter $fmt The formatter resource
 	  * @param boolean $lenient  sets whether the parser is lenient or not, default is 'false'
           *                          'true' sets the parser to accept otherwise flawed date or 
 	  *                          time patterns, parsing as much as possible to obtain a value.
@@ -379,10 +385,11 @@ class DateFormatter {
 	  *
           * @return boolean          'true' if successful; 'false' if an error occurred. 
 	  */
-	 public function datefmt_set_lenient($fmt , $lenient) {}
+	 function datefmt_set_lenient($fmt , $lenient) {}
 
 
 	 /**
+	  * @param  DateFormatter $fmt The formatter resource
 	  * @param  [integer]  which locale should be returned? 
 	  *                    values may include ULOC_ACTUAL_LOCALE,
 	  *                    ULOC_VALID_LOCALE. By default the actual
@@ -391,22 +398,25 @@ class DateFormatter {
 	 */
 	 public function datefmt_get_locale($fmt , $type = ULOC_ACTUAL_LOCALE) {}
 
+	 function datefmt_get_locale($fmt , $type = ULOC_ACTUAL_LOCALE) {}
 
          /**
+	  * @param  DateFormatter $fmt The formatter resource
 	  * @return string ID string for the time zone used by this formatter
 	  */
-	 public function datefmt_get_timezone_id($fmt) {}
+	 function datefmt_get_timezone_id($fmt) {}
 
 
 	/**
 	 * sets the time zone to use
+	 * @param  DateFormatter $fmt The formatter resource
 	 * @param string $zone zone ID string of the time zone to use.
 	 *                     if null or the empty string, the default time zone for
 	 *                     the runtime is used.
 	 * @return boolean 'true' on successful setting of the time zone, 'false'
 	 *                 if an error occurred (such as the time zone wasn't recognized).
 	 */
-        public function datefmt_set_timezone_id($fmt , $zone) {}
+        function datefmt_set_timezone_id($fmt , $zone) {}
 
 
         /**
@@ -415,30 +425,34 @@ class DateFormatter {
          *   - Gregorian calendar
          *   - Traditional
          * Default value is GREGORIAN
+	 * @param  DateFormatter $fmt The formatter resource
 	 * @param integer $which the calendar (an enumerated constant) to use.
          * @return boolean 'true' if successful, 'false' if an error occurred or if the calendar was not recognized 
 	 */
-         public function datefmt_set_calendar($fmt , $which) {}
+         function datefmt_set_calendar($fmt , $which) {}
 
 
         /**
+	 * @param  DateFormatter $fmt The formatter resource
 	 * @return integer the calendar being used by the formatter
 	 */
-         public function datefmt_get_calendar($fmt) {}
+         function datefmt_get_calendar($fmt) {}
 
 
         /**
+	 * @param  DateFormatter $fmt The formatter resource
          * @return string the pattern string being used to format/parse
          */
-        public function  datefmt_get_pattern($fmt) {}
+        function  datefmt_get_pattern($fmt) {}
 
 
         /**
+	 * @param  DateFormatter $fmt The formatter resource
          * @param  string $pattern new pattern string to use
          * @return boolean 'true' if successful, 'false' if an error occured. Bad format
          *                 strings are usually the cause of the latter.
          */
-        public function datefmt_set_pattern($fmt , $pattern) {}
+        function datefmt_set_pattern($fmt , $pattern) {}
 
 
 	/**
@@ -446,17 +460,18 @@ class DateFormatter {
 	 *
 	 * Returns error code from the last number formatting operation.
 	 *
+	 * @param  DateFormatter $fmt The formatter resource
 	 * @return integer the error code, one of UErrorCode values. Initial value is U_ZERO_ERROR.
 	 */
-	public function datefmt_get_error_code($fmt) {}
-
+	function datefmt_get_error_code($fmt) {}
 
 	/**
 	 * Get the error text from the last operation.
 	 *
+	 * @param  DateFormatter $fmt The formatter resource
 	 * @return string Description of the last error.
 	 */
-	public function datefmt_get_error_message($fmt) {}
+	function datefmt_get_error_message($fmt) {}
 
 
 ?>
