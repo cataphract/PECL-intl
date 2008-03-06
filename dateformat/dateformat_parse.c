@@ -59,7 +59,8 @@ static void internal_parse_to_timestamp(DateFormatter_object *mfo, char* text_to
 	}
 	INTL_METHOD_CHECK_STATUS( mfo, "Date parsing failed" );
 
-	RETURN_LONG( timestamp);
+	//Since return is in  sec.
+	RETURN_LONG( timestamp / 1000 );
 }
 /* }}} */
 

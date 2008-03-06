@@ -74,7 +74,7 @@ Input text is : Thursday, December 18, 1969 8:49:59 AM PST
 Locale is : en_US_CA
 ------------
 datetype = 0 ,timetype =0 
-Parsed text is : -1149001000
+Parsed text is : -1149001
 datetype = 1 ,timetype =1 
 Error while parsing as: 'Date parsing failed: U_PARSE_ERROR'
 datetype = 2 ,timetype =2 
@@ -92,9 +92,9 @@ Locale is : en_US_CA
 datetype = 0 ,timetype =0 
 Error while parsing as: 'Date parsing failed: U_PARSE_ERROR'
 datetype = 1 ,timetype =1 
-Parsed text is : -1149001000
+Parsed text is : -1149001
 datetype = 2 ,timetype =2 
-Parsed text is : -1149001000
+Parsed text is : -1149001
 datetype = 3 ,timetype =3 
 Error while parsing as: 'Date parsing failed: U_PARSE_ERROR'
 datetype = -1 ,timetype =-1 
@@ -112,7 +112,7 @@ Error while parsing as: 'Date parsing failed: U_PARSE_ERROR'
 datetype = 2 ,timetype =2 
 Error while parsing as: 'Date parsing failed: U_PARSE_ERROR'
 datetype = 3 ,timetype =3 
-Parsed text is : -1149060000
+Parsed text is : -1149060
 datetype = -1 ,timetype =-1 
 Error while parsing as: 'Date parsing failed: U_PARSE_ERROR'
 ------------
@@ -130,4 +130,4 @@ Error while parsing as: 'Date parsing failed: U_PARSE_ERROR'
 datetype = 3 ,timetype =3 
 Error while parsing as: 'Date parsing failed: U_PARSE_ERROR'
 datetype = -1 ,timetype =-1 
-Parsed text is : -1149060000
+Parsed text is : -1149060

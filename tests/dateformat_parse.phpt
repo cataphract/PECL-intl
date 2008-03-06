@@ -63,12 +63,12 @@ include_once( 'ut_common.php' );
 ut_run();
 ?>
 --EXPECT--
-Input text :Thursday, December 18, 1969 8:49:59 AM PST ; Parsed text : 208740000 ; parse_pos : 30
-Input text :Thursday, December 18, 1969 8:49:59 AM PST ; Parsed text : 64740000 ; parse_pos : 31
-Input text :December 18, 1969 8:49:59 AM PST ; Parsed text : 208740000 ; parse_pos : 20
-Input text :December 18, 1969 8:49:59 AM PST ; Parsed text : 64740000 ; parse_pos : 21
-Input text :12/18/69 8:49 AM ; Parsed text : 60540000 ; parse_pos : 8
-Input text :12/18/69 8:49 AM ; Parsed text : 60540000 ; parse_pos : 9
-Input text :19691218 08:49 AM ; Parsed text : 60540000 ; parse_pos : 8
-Input text :19691218 08:49 AM ; Parsed text : 60540000 ; parse_pos : 9
-Input text :19691218 08:49 AM ; Parsed text : 60540000 ; parse_pos : 10
+Input text :Thursday, December 18, 1969 8:49:59 AM PST ; Parsed text : 208740 ; parse_pos : 30
+Input text :Thursday, December 18, 1969 8:49:59 AM PST ; Parsed text : 64740 ; parse_pos : 31
+Input text :December 18, 1969 8:49:59 AM PST ; Parsed text : 208740 ; parse_pos : 20
+Input text :December 18, 1969 8:49:59 AM PST ; Parsed text : 64740 ; parse_pos : 21
+Input text :12/18/69 8:49 AM ; Parsed text : 60540 ; parse_pos : 8
+Input text :12/18/69 8:49 AM ; Parsed text : 60540 ; parse_pos : 9
+Input text :19691218 08:49 AM ; Parsed text : 60540 ; parse_pos : 8
+Input text :19691218 08:49 AM ; Parsed text : 60540 ; parse_pos : 9
+Input text :19691218 08:49 AM ; Parsed text : 60540 ; parse_pos : 10
