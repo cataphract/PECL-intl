@@ -18,9 +18,7 @@
 
 #include <php.h>
 
-PHP_FUNCTION( datefmt_parse_to_timestamp );	//Same as datefmt_parse without parse_position option
 PHP_FUNCTION( datefmt_parse );
-PHP_FUNCTION( datefmt_parse_to_localtime );	//Same as datefmt_localtime without parse_position option
 PHP_FUNCTION( datefmt_localtime );
 
 #endif // DATE_FORMAT_PARSE_H

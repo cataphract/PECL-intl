@@ -140,9 +140,7 @@ PHP_FUNCTION(datefmt_format)
 
 	switch(Z_TYPE_P(zarg) ){
 		case IS_LONG:
-			//timestamp*1000 since ICU expects it in milliseconds
-			timestamp = (Z_LVAL_P(zarg) * 1000);
-			break;
+			//Purposely fallthrough 
 		case IS_DOUBLE:
 			//timestamp*1000 since ICU expects it in milliseconds
 			timestamp = (Z_LVAL_P(zarg) * 1000);

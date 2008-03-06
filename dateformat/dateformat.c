@@ -139,7 +139,12 @@ PHP_FUNCTION( datefmt_create )
 
         // Create an ICU date formatter.
         while(  U_FAILURE( INTL_DATA_ERROR_CODE(mfo)) || (all_done==0) ){
-                DATE_FORMAT_OBJECT(mfo) = udat_open(time_type,date_type, locale, timezone_utf16, timezone_utf16_len ,svalue ,slength , &INTL_DATA_ERROR_CODE((mfo)));
+		// Convert pattern (if specified) to UTF-16.
+		if( pattern_str && pattern_str_len>0 ){
+			DATE_FORMAT_OBJECT(mfo) = udat_open(UDAT_IGNORE,UDAT_IGNORE, locale, timezone_utf16, timezone_utf16_len ,svalue ,slength , &INTL_DATA_ERROR_CODE((mfo)));
+		}else{
+			DATE_FORMAT_OBJECT(mfo) = udat_open(time_type,date_type, locale, timezone_utf16, timezone_utf16_len ,svalue ,slength , &INTL_DATA_ERROR_CODE((mfo)));
+		}
 
                 //Set the calendar if passed
                 if( calendar) {
@@ -261,7 +266,12 @@ PHP_METHOD( DateFormatter, __construct )
 
         // Create an ICU date formatter.
         while(  U_FAILURE( INTL_DATA_ERROR_CODE(mfo)) || (all_done==0) ){
-                DATE_FORMAT_OBJECT(mfo) = udat_open(time_type,date_type, locale, timezone_utf16, timezone_utf16_len ,svalue ,slength , &INTL_DATA_ERROR_CODE((mfo)));
+		if( pattern_str && pattern_str_len>0 ){
+			DATE_FORMAT_OBJECT(mfo) = udat_open(UDAT_IGNORE,UDAT_IGNORE, locale, timezone_utf16, timezone_utf16_len ,svalue ,slength , &INTL_DATA_ERROR_CODE((mfo)));
+		}else{
+			DATE_FORMAT_OBJECT(mfo) = udat_open(time_type,date_type, locale, timezone_utf16, timezone_utf16_len ,svalue ,slength , &INTL_DATA_ERROR_CODE((mfo)));
+		}
+
 
                 //Set the calendar if passed
                 if( calendar) {

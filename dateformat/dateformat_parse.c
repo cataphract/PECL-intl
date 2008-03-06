@@ -116,34 +116,6 @@ static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to
 }
 /* }}} */
 
-/* {{{ proto integer DateFormatter::parseToTimestamp( string $text_to_parse)
- * Parse the string $value to a Unix timestamp -int }}}*/
-/* {{{ proto integer datefmt_parse_to_timestamp( DateFormatter $fmt, string $text_to_parse)
- * Parse the string $value to a Unix timestamp -int }}}*/
-PHP_FUNCTION(datefmt_parse_to_timestamp) 
-{
-
-	char* 		text_to_parse = NULL;
-	int32_t		text_len =0;
-        int         	parse_error =0;
-
-	DATE_FORMAT_METHOD_INIT_VARS;
-
-	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os",
-		&object, DateFormatter_ce_ptr,  &text_to_parse ,  &text_len ) == FAILURE ){
-			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-				"datefmt_parse_to_timestamp: unable to parse input params", 0 TSRMLS_CC );
-			RETURN_FALSE;
-        }
-
-        // Fetch the object.
-        DATE_FORMAT_METHOD_FETCH_OBJECT;
-
-        internal_parse_to_timestamp( mfo, text_to_parse ,  text_len , PARSE_POS_START, parse_error , DO_NOT_STORE_ERROR , return_value TSRMLS_CC);
-
-}
-/* }}} */
 
 /* {{{ proto integer DateFormatter::parse( string $text_to_parse  , int $parse_pos , int $error)
  * Parse the string $value starting at parse_pos to a Unix timestamp -int }}}*/
@@ -160,7 +132,7 @@ PHP_FUNCTION(datefmt_parse)
         DATE_FORMAT_METHOD_INIT_VARS;
 
         // Parse parameters.
-        if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Osll",
+        if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os|ll",
                 &object, DateFormatter_ce_ptr,  &text_to_parse ,  &text_len , &parse_pos, &parse_error) == FAILURE ){
                         intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
                                 "datefmt_parse: unable to parse input params", 0 TSRMLS_CC );
@@ -170,36 +142,11 @@ PHP_FUNCTION(datefmt_parse)
         // Fetch the object.
         DATE_FORMAT_METHOD_FETCH_OBJECT;
 
-        internal_parse_to_timestamp( mfo, text_to_parse ,  text_len , parse_pos , parse_error , STORE_ERROR , return_value TSRMLS_CC);
-
-}
-/* }}} */
-
-/* {{{ proto integer DateFormatter::parseToLocaltime( string $text_to_parse)
- * Parse the string $value to a Unix timestamp -int }}}*/
-/* {{{ proto integer datefmt_parse_to_localtime( DateFormatter $fmt, string $text_to_parse)
- * Parse the string $value to a Unix timestamp -int }}}*/
-PHP_FUNCTION(datefmt_parse_to_localtime)
-{
-
-        char*           text_to_parse = NULL;
-        int32_t         text_len =0;
-        int             parse_error =0;
-
-        DATE_FORMAT_METHOD_INIT_VARS;
-
-        // Parse parameters.
-        if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os",
-                &object, DateFormatter_ce_ptr,  &text_to_parse ,  &text_len ) == FAILURE ){
-                        intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-                                "datefmt_parse_to_localtime: unable to parse input params", 0 TSRMLS_CC );
-                        RETURN_FALSE;
-        }
-
-        // Fetch the object.
-        DATE_FORMAT_METHOD_FETCH_OBJECT;
-
-        internal_parse_to_localtime( mfo, text_to_parse ,  text_len , PARSE_POS_START, parse_error , DO_NOT_STORE_ERROR , return_value TSRMLS_CC);
+	internal_parse_to_timestamp( mfo, text_to_parse ,  text_len , 
+		parse_pos , parse_error , 
+		//(parse_error !=0 ), 
+		0,
+		return_value TSRMLS_CC);
 
 }
 /* }}} */
@@ -230,7 +177,11 @@ PHP_FUNCTION(datefmt_localtime)
         // Fetch the object.
         DATE_FORMAT_METHOD_FETCH_OBJECT;
 
-        internal_parse_to_localtime( mfo, text_to_parse ,  text_len , parse_pos, parse_error , STORE_ERROR , return_value TSRMLS_CC);
+        internal_parse_to_localtime( mfo, text_to_parse ,  text_len , 
+		parse_pos, parse_error ,
+		//(parse_error !=0 ), 
+		0,
+		return_value TSRMLS_CC);
 
 }
 /* }}} */

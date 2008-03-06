@@ -102,13 +102,8 @@ static function_entry DateFormatter_class_functions[] = {
 	PHP_NAMED_FE( setLenient, ZEND_FN( datefmt_set_lenient ), NULL )
 	PHP_NAMED_FE( isLenient, ZEND_FN( datefmt_is_lenient ), NULL )
 	PHP_NAMED_FE( format, ZEND_FN( datefmt_format ), NULL )
-	PHP_NAMED_FE( parseToTimestamp, ZEND_FN( datefmt_parse_to_timestamp ), NULL )
 	PHP_NAMED_FE( parse, ZEND_FN( datefmt_parse), NULL )
-	PHP_NAMED_FE( parseToLocaltime, ZEND_FN( datefmt_parse_to_localtime ), NULL )
 	PHP_NAMED_FE( localtime, ZEND_FN( datefmt_localtime ), NULL )
-/*
-	PHP_NAMED_FE( parseToDate, ZEND_FN( datefmt_parse_to_date ), NULL )
-*/
 	PHP_NAMED_FE( getErrorCode, ZEND_FN( datefmt_get_error_code ), NULL )
 	PHP_NAMED_FE( getErrorMessage, ZEND_FN( datefmt_get_error_message ), NULL )
 	{ NULL, NULL, NULL }
