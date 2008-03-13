@@ -29,6 +29,7 @@ function ut_main()
 
 	$text_arr = array (
 		"Thursday, December 18, 1969 8:49:59 AM PST",
+		"Thursday, December 18, 1969 8:49:59 PM PST",
 		"December 18, 1969 8:49:59 AM PST",
 		"12/18/69 8:49 AM",
 		"19691218 08:49 AM"
@@ -64,6 +65,8 @@ ut_run();
 --EXPECT--
 Input text :Thursday, December 18, 1969 8:49:59 AM PST ; Parsed text : 208740 ; parse_pos : 30
 Input text :Thursday, December 18, 1969 8:49:59 AM PST ; Parsed text : 64740 ; parse_pos : 31
+Input text :Thursday, December 18, 1969 8:49:59 PM PST ; Parsed text : 251940 ; parse_pos : 30
+Input text :Thursday, December 18, 1969 8:49:59 PM PST ; Parsed text : 107940 ; parse_pos : 31
 Input text :December 18, 1969 8:49:59 AM PST ; Parsed text : 208740 ; parse_pos : 20
 Input text :December 18, 1969 8:49:59 AM PST ; Parsed text : 64740 ; parse_pos : 21
 Input text :12/18/69 8:49 AM ; Parsed text : 60540 ; parse_pos : 8

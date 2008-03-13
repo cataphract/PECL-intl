@@ -70,10 +70,23 @@ function ut_main()
             'tm_yday' => 92,
             'tm_isdst' => 1
         );
+        $localtime_arr4 = array (
+            'tm_sec' => 0 ,
+            'tm_min' => 0,
+            'tm_hour' => 21,
+            'tm_mday' => 12,
+            'tm_mon' => 12,
+            'tm_year' => 205,
+            'tm_wday' => 0,
+            'tm_yday' => 92,
+            'tm_isdst' => 1
+        );
 
 	$localtime_arr = array (
 		$localtime_arr1,
-		$localtime_arr2
+		$localtime_arr2,
+		$localtime_arr3,
+		$localtime_arr4
 	);
 
 	//Test format with input as a timestamp : integer
@@ -263,3 +276,33 @@ DateFormatter locale= en_US ,datetype = 3 ,timetype =3
 Formatted localtime_array is : 4/3/05 3:03 AM
 DateFormatter locale= en_US ,datetype = -1 ,timetype =-1 
 Formatted localtime_array is : 02050403 03:03 AM
+------------
+
+Input localtime is : tm_sec : '0' , tm_min : '0' , tm_hour : '5' , tm_mday : '12' , tm_mon : '12' , tm_year : '205' , tm_wday : '0' , tm_yday : '92' , tm_isdst : '1' , 
+------------
+
+DateFormatter locale= en_US ,datetype = 0 ,timetype =0 
+Formatted localtime_array is : Sunday, January 12, 0206 5:00:00 AM PT
+DateFormatter locale= en_US ,datetype = 1 ,timetype =1 
+Formatted localtime_array is : January 12, 0206 5:00:00 AM PDT
+DateFormatter locale= en_US ,datetype = 2 ,timetype =2 
+Formatted localtime_array is : Jan 12, 0206 5:00:00 AM
+DateFormatter locale= en_US ,datetype = 3 ,timetype =3 
+Formatted localtime_array is : 1/12/06 5:00 AM
+DateFormatter locale= en_US ,datetype = -1 ,timetype =-1 
+Formatted localtime_array is : 02060112 05:00 AM
+------------
+
+Input localtime is : tm_sec : '0' , tm_min : '0' , tm_hour : '21' , tm_mday : '12' , tm_mon : '12' , tm_year : '205' , tm_wday : '0' , tm_yday : '92' , tm_isdst : '1' , 
+------------
+
+DateFormatter locale= en_US ,datetype = 0 ,timetype =0 
+Formatted localtime_array is : Sunday, January 12, 0206 9:00:00 PM PT
+DateFormatter locale= en_US ,datetype = 1 ,timetype =1 
+Formatted localtime_array is : January 12, 0206 9:00:00 PM PDT
+DateFormatter locale= en_US ,datetype = 2 ,timetype =2 
+Formatted localtime_array is : Jan 12, 0206 9:00:00 PM
+DateFormatter locale= en_US ,datetype = 3 ,timetype =3 
+Formatted localtime_array is : 1/12/06 9:00 PM
+DateFormatter locale= en_US ,datetype = -1 ,timetype =-1 
+Formatted localtime_array is : 02060112 09:00 PM

@@ -29,6 +29,7 @@ function ut_main()
 
 	$text_arr = array (
 		"Thursday, December 18, 1969 8:49:59 AM PST",
+		"Thursday, December 18, 1969 8:49:59 PM PST",
 		"June 18, 1969 8:49:59 AM PST",
 		"12/18/69 8:49:59 AM",
 		"19691218 08:49:59 AM"
@@ -105,6 +106,20 @@ DateFormatter : DateType::MEDIUM, TimeType::MEDIUM
 ------------
 DateFormatter : DateType::FULL, TimeType::FULL
 tm_sec : '59' , tm_min : '49' , tm_hour : '8' , tm_year : '1969' , tm_mday : '18' , tm_wday : '5' , tm_yday : '352' , tm_mon : '11' , tm_isdst : '0' , 
+-------------------------------
+
+Input text is : Thursday, December 18, 1969 8:49:59 PM PST
+------------
+DateFormatter : DateType::SHORT, TimeType::SHORT
+------------
+DateFormatter : DateType::NONE, TimeType::NONE
+------------
+DateFormatter : DateType::LONG, TimeType::LONG
+------------
+DateFormatter : DateType::MEDIUM, TimeType::MEDIUM
+------------
+DateFormatter : DateType::FULL, TimeType::FULL
+tm_sec : '59' , tm_min : '49' , tm_hour : '20' , tm_year : '1969' , tm_mday : '18' , tm_wday : '5' , tm_yday : '352' , tm_mon : '11' , tm_isdst : '0' , 
 -------------------------------
 
 Input text is : June 18, 1969 8:49:59 AM PST

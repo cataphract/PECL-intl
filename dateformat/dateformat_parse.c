@@ -96,7 +96,7 @@ static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to
 	//Add  entries from various fields of the obtained parsed_calendar
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_SECOND , CALENDAR_SEC TSRMLS_CC);
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_MINUTE , CALENDAR_MIN TSRMLS_CC);
-	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_HOUR , CALENDAR_HOUR TSRMLS_CC);
+	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_HOUR_OF_DAY , CALENDAR_HOUR TSRMLS_CC);
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_YEAR , CALENDAR_YEAR TSRMLS_CC);
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_DAY_OF_MONTH , CALENDAR_MDAY TSRMLS_CC);
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_DAY_OF_WEEK  , CALENDAR_WDAY TSRMLS_CC);
