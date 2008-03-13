@@ -35,11 +35,10 @@ function ut_main()
 	);
 
 	$parse_pos = 0;
-	$parse_error =0;
 	foreach( $text_arr as $text_entry){
 		for ( $parse_pos = 0 ; $parse_pos < strlen($text_entry) ; $parse_pos++ ){
 				$fmt = ut_datefmt_create( 'en_US_CA', DateFormatter::NONE, DateFormatter::SHORT);
-				$parsed = ut_datefmt_parse( $fmt , $text_entry , $parse_pos , $parse_error);
+				$parsed = ut_datefmt_parse( $fmt , $text_entry , $parse_pos );
 				if( intl_get_error_code() == U_ZERO_ERROR){
 					$res_str .= "\nInput text :$text_entry ; Parsed text : $parsed";
 					$res_str .= " ; parse_pos : $parse_pos";

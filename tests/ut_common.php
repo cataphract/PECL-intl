@@ -442,12 +442,12 @@ function ut_datefmt_format( $fmt , $value )
 {
     return $GLOBALS['oo-mode'] ? $fmt->format(  $value ) : datefmt_format( $fmt ,  $value);
 }
-function ut_datefmt_parse( $fmt , $value ,$parse_pos=0 , $parse_error=0)
+function ut_datefmt_parse( $fmt , $value ,$parse_pos=0 )
 {
-    return $GLOBALS['oo-mode'] ? $fmt->parse(  $value ,$parse_pos , $parse_error) : datefmt_parse( $fmt ,  $value,$parse_pos , $parse_error);
+    return $GLOBALS['oo-mode'] ? $fmt->parse(  $value ,$parse_pos ) : datefmt_parse( $fmt ,  $value,$parse_pos );
 }
-function ut_datefmt_localtime( $fmt , $value ,$parse_pos=0 , $parse_error=0 )
+function ut_datefmt_localtime( $fmt , $value ,$parse_pos=0 )
 {
-    return $GLOBALS['oo-mode'] ? $fmt->localtime(  $value , $parse_pos , $parse_error) : datefmt_localtime( $fmt ,  $value , $parse_pos , $parse_error);
+    return $GLOBALS['oo-mode'] ? $fmt->localtime(  $value , $parse_pos ) : datefmt_localtime( $fmt ,  $value , $parse_pos );
 }
 ?>

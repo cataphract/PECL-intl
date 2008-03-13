@@ -56,14 +56,13 @@ function ut_main()
 		$cnt =0;
 
 		$parse_pos = 0;
-		$parse_error =0;
                 //for ( $parse_pos = 0 ; $parse_pos < strlen($text_entry) ; $parse_pos++ ){
 
                     foreach( $fmt_array as $fmt_entry ){
 			$res_str .= "\n------------";
 			$res_str .= "\nDateFormatter : ".$fmt_desc_array[$cnt];
 			$cnt++;		
-			$parsed_arr = ut_datefmt_localtime( $fmt_entry , $text_entry , $parse_pos , $parse_error);
+			$parsed_arr = ut_datefmt_localtime( $fmt_entry , $text_entry , $parse_pos );
 
 				if( $parsed_arr){
 				    $res_str .= "\n";
