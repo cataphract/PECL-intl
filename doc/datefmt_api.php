@@ -122,18 +122,21 @@ class DateFormatter {
 
 
 	 /**
+	  * Gets the datetype in use 
 	  * @return integer the current 'datetype' value of the formatter
 	  */
          public function getDateType() {}
 
 
 	 /**
+	  * Gets the timetype in use 
 	  * @return integer the current 'timetype' value of the formatter
 	  */
          public function getTimeType() {}
 
 
 	 /**
+	  * Gets the leniency in use 
 	  * @return boolean   'true' if parser is lenient, 'false' if parser is strict
 	  *                   default value for parser is 'false'.
 	  */
@@ -141,6 +144,7 @@ class DateFormatter {
 
 
 	 /**
+	  * Sets the leniency to use 
 	  * @param boolean $lenient  sets whether the parser is lenient or not, default is 'false'
           *                          'true' sets the parser to accept otherwise flawed date or 
 	  *                          time patterns, parsing as much as possible to obtain a value.
@@ -154,6 +158,7 @@ class DateFormatter {
 
 
 	 /**
+	  * Gets the locale in use 
 	  * @param  [integer]  which locale should be returned? 
 	  *                    values may include ULOC_ACTUAL_LOCALE,
 	  *                    ULOC_VALID_LOCALE. By default the actual
@@ -182,7 +187,7 @@ class DateFormatter {
 
 
         /**
-         * sets the calendar used to the appropriate calendar, which must be 
+         * Sets the calendar used to the appropriate calendar, which must be 
 	 * one of the constants defined above. Some examples include:
          *   - Gregorian calendar
          *   - Traditional
@@ -194,18 +199,21 @@ class DateFormatter {
 
 
         /**
+	 * Gets the Calendar in use 
 	 * @return integer the calendar being used by the formatter
 	 */
          public function getCalendar() {}
 
 
         /**
+	 * Gets the pattern in use 
     	 * @return string the pattern string being used to format/parse 
 	 */
 	public function getPattern() {}
 
 
         /**
+	 * Sets the pattern to  use 
          * @param  string $pattern new pattern string to use
          * @return boolean 'true' if successful, 'false' if an error occured. Bad format
          *                 strings are usually the cause of the latter.
@@ -298,18 +306,24 @@ class DateFormatter {
 
 
 	 /**
+	  * Gets the  Datetype in use
+          * @param DateFormatter $fmt The date formatter resource
 	  * @return integer the current 'datetype' value of the formatter
 	  */
          function datefmt_get_datetype($fmt ) {}
 
 
 	 /**
+	  * Gets the  timetype in use
+          * @param DateFormatter $fmt The date formatter resource
 	  * @return integer the current 'timetype' value of the formatter
 	  */
          function datefmt_get_timetype($fmt) {}
 
 
 	 /**
+	  * Gets the leniency of the formatter 
+          * @param DateFormatter $fmt The date formatter resource
 	  * @return boolean   'true' if parser is lenient, 'false' if parser is strict
 	  *                   default value for parser is 'false'.
 	  */
@@ -317,6 +331,8 @@ class DateFormatter {
 
 
 	 /**
+	  * Sets the leniency of the formatter 
+          * @param DateFormatter $fmt The date formatter resource
 	  * @param boolean $lenient  sets whether the parser is lenient or not, default is 'false'
           *                          'true' sets the parser to accept otherwise flawed date or 
 	  *                          time patterns, parsing as much as possible to obtain a value.
@@ -330,6 +346,8 @@ class DateFormatter {
 
 
 	 /**
+	  * Gets the locale in  use
+          * @param DateFormatter $fmt The date formatter resource
 	  * @param  [integer]  which locale should be returned? 
 	  *                    values may include ULOC_ACTUAL_LOCALE,
 	  *                    ULOC_VALID_LOCALE. By default the actual
@@ -340,13 +358,16 @@ class DateFormatter {
 
 
          /**
+	  * Gets the time zone id in  use
+          * @param DateFormatter $fmt The date formatter resource
 	  * @return string ID string for the time zone used by this formatter
 	  */
 	 function datefmt_get_timezone_id($fmt) {}
 
 
 	/**
-	 * sets the time zone to use
+	 * Sets the time zone to use
+         * @param DateFormatter $fmt The date formatter resource
 	 * @param string $zone zone ID string of the time zone to use.
 	 *                     if null or the empty string, the default time zone for
 	 *                     the runtime is used.
@@ -357,11 +378,12 @@ class DateFormatter {
 
 
         /**
-         * sets the calendar used to the appropriate calendar, which must be 
+         * Sets the calendar used to the appropriate calendar, which must be 
 	 * one of the constants defined above. Some examples include:
          *   - Gregorian calendar
          *   - Traditional
          * Default value is GREGORIAN
+         * @param DateFormatter $fmt The date formatter resource
 	 * @param integer $which the calendar (an enumerated constant) to use.
          * @return boolean 'true' if successful, 'false' if an error occurred or if the calendar was not recognized 
 	 */
@@ -369,18 +391,24 @@ class DateFormatter {
 
 
         /**
+	 * Gets the calendar in use
+         * @param DateFormatter $fmt The date formatter resource
 	 * @return integer the calendar being used by the formatter
 	 */
          function datefmt_get_calendar($fmt) {}
 
 
         /**
+	 * Gets the pattern in use
+         * @param DateFormatter $fmt The date formatter resource
          * @return string the pattern string being used to format/parse
          */
         function  datefmt_get_pattern($fmt) {}
 
 
         /**
+	 * Sets the pattern to use
+         * @param DateFormatter $fmt The date formatter resource
          * @param  string $pattern new pattern string to use
          * @return boolean 'true' if successful, 'false' if an error occured. Bad format
          *                 strings are usually the cause of the latter.
@@ -391,6 +419,7 @@ class DateFormatter {
 	/**
 	 * Get the error code from last operation
 	 *
+         * @param DateFormatter $fmt The date formatter resource
 	 * Returns error code from the last number formatting operation.
 	 *
 	 * @return integer the error code, one of UErrorCode values. Initial value is U_ZERO_ERROR.
@@ -401,6 +430,7 @@ class DateFormatter {
 	/**
 	 * Get the error text from the last operation.
 	 *
+         * @param DateFormatter $fmt The date formatter resource
 	 * @return string Description of the last error.
 	 */
 	function datefmt_get_error_message($fmt) {}
