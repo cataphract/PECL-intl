@@ -60,7 +60,7 @@
 
 #include <ext/standard/info.h>
 
-#define INTL_MODULE_VERSION "0.1a"
+#define INTL_MODULE_VERSION PHP_INTL_VERSION
 
 /*
  * locale_get_default has a conflict since ICU also has 
