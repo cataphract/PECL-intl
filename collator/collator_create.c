@@ -117,10 +117,10 @@ PHP_METHOD( Collator, __construct )
 		intl_error_set( NULL, COLLATOR_ERROR_CODE( co ),
 			"__construct: unable to open ICU collator", 0 TSRMLS_CC );
 
+		zval_dtor(object);
+		ZVAL_NULL(object);
 		RETURN_NULL();
 	}
-
-	php_set_error_handling( EH_NORMAL, NULL TSRMLS_CC );
 }
 /* }}} */
 
