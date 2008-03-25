@@ -13,7 +13,6 @@ datefmt_get_locale_code()
 function ut_main()
 {
 	$locale_arr = array (
-		'i-enochian',
 		'de-DE',
 		'sl-IT-nedis',
 		'en_UK',
@@ -41,9 +40,6 @@ include_once( 'ut_common.php' );
 ut_run();
 ?>
 --EXPECT--
-Creating DateFormatter with locale = i-enochian
-After call to get_locale :  locale= en_US_POSIX
-
 Creating DateFormatter with locale = de-DE
 After call to get_locale :  locale= de_DE
 
