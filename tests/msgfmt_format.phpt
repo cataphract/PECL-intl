@@ -17,8 +17,9 @@ function ut_main()
         'ru_UA' => "{0,number,integer} мавп на {1,number,integer} деревах це {2,number} мавпи на кожному деревi",
         'de' => "{0,number,integer} Affen über {1,number,integer} Bäume um {2,number} Affen pro Baum", 
         'en_UK' => "{0,number,integer} monkeys on {1,number,integer} trees make {2,number} monkeys per tree", 
-		'root' => '{0,whatever} would not work!',
-    );
+	'root' => '{0,whatever} would not work!',
+	'fr' => "C'est la vie!",
+    );  
 
     $str_res = '';
 	$m = 4560;
@@ -63,3 +64,7 @@ Locale is: en_UK
 
 Locale is: root
 'msgfmt_create: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR'
+
+Locale is: fr
+'C'est la vie!'
+'C'est la vie!'
