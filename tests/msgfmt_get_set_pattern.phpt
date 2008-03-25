@@ -13,14 +13,14 @@ msgfmt_get/set_pattern()
 function ut_main()
 {
     $res_str = '';
-    $fmt = ut_msgfmt_create( "en_US", "{0, number} monkeys on {1, number} trees" );
+    $fmt = ut_msgfmt_create( "en_US", "{0,number} monkeys on {1,number} trees" );
 
     // Get default patten.
     $res_str .= "Default pattern: '" . ut_msgfmt_get_pattern( $fmt ) . "'\n";
     $res_str .= "Formatting result: " . ut_msgfmt_format( $fmt, array(123, 456) ) . "\n";
 
     // Set a new pattern.
-    $pattern = "{0, number} trees hosting {1, number} monkeys";
+    $pattern = "{0,number} trees hosting {1,number} monkeys";
     $res = ut_msgfmt_set_pattern( $fmt, $pattern );
     if( $res === false )
         $res_str .= ut_msgfmt_get_error_message( $fmt ) . " (" . ut_msgfmt_get_error_code( $fmt ) . ")\n";
