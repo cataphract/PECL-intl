@@ -31,10 +31,10 @@
 /* {{{ 
  * Internal function which calls the udat_format
 */
-static void internal_format(DateFormatter_object *mfo, double timestamp , zval *return_value TSRMLS_DC){
+static void internal_format(DateFormatter_object *mfo, UDate timestamp , zval *return_value TSRMLS_DC){
 	UChar* 	formatted =  NULL;
-	int	resultlengthneeded =0 ;
-
+	int32_t	resultlengthneeded =0 ;
+	
 	resultlengthneeded=udat_format( DATE_FORMAT_OBJECT(mfo), timestamp, NULL, resultlengthneeded, NULL, &INTL_DATA_ERROR_CODE(mfo));
 	if(INTL_DATA_ERROR_CODE(mfo)==U_BUFFER_OVERFLOW_ERROR)
 	{
@@ -59,17 +59,17 @@ static void internal_format(DateFormatter_object *mfo, double timestamp , zval *
 */
 static double internal_get_arr_ele(DateFormatter_object *mfo  , HashTable* hash_arr  ,char* key_name TSRMLS_DC){
 	zval**  ele_value       = NULL;
-	int result = -1;
+	UDate result = -1;
 
         if( zend_hash_find( hash_arr , key_name , strlen(key_name) + 1 ,(void **)&ele_value ) == SUCCESS ){
                 if( Z_TYPE_PP(ele_value)!= IS_LONG ){
-                        //key_value is not a string
 			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-				"datefmt_format: parameter array does not contain an integer or double element", 0 TSRMLS_CC );
+				"datefmt_format: parameter array does not contain a long element.", 0 TSRMLS_CC );
                 }else{
 			result =  Z_LVAL_PP(ele_value);
 		}
 	}
+	//printf("\n Inside internal_get_arr_ele key_name= %s , result = %g \n" , key_name, result);
 	return result;
 }
 /* }}} */
@@ -78,18 +78,18 @@ static double internal_get_arr_ele(DateFormatter_object *mfo  , HashTable* hash_
  * Internal function which creates a UCalendar  from the passed array
 */
 static void internal_create_ucal(DateFormatter_object *mfo, HashTable* hash_arr , UCalendar* pcal  TSRMLS_DC){
-	int year =0;
-	int month =0;
-	int hour =0;
-	int minute =0;
-	int second =0;
-	int wday =0;
-	int yday =0;
-	int mday =0;
+	long year =0;
+	long month =0;
+	long hour =0;
+	long minute =0;
+	long second =0;
+	long wday =0;
+	long yday =0;
+	long mday =0;
 	UBool isInDST = FALSE;
 
 	//Fetch  values from the incoming array
-	year = internal_get_arr_ele( mfo , hash_arr , CALENDAR_YEAR TSRMLS_CC);
+	year = internal_get_arr_ele( mfo , hash_arr , CALENDAR_YEAR TSRMLS_CC) + 1900; //tm_year is years since 1900
 	month = internal_get_arr_ele( mfo , hash_arr , CALENDAR_MON TSRMLS_CC);
 	hour = internal_get_arr_ele( mfo , hash_arr , CALENDAR_HOUR TSRMLS_CC);
 	minute = internal_get_arr_ele( mfo , hash_arr , CALENDAR_MIN TSRMLS_CC);
@@ -100,6 +100,8 @@ static void internal_create_ucal(DateFormatter_object *mfo, HashTable* hash_arr 
 	//For the ucal_setDateTime() function , this is the 'date'  value
 	mday = internal_get_arr_ele( mfo , hash_arr , CALENDAR_MDAY TSRMLS_CC);
 
+	//printf("\n year= %ld , month = %ld , hour = %ld , minute = %ld , second = %ld \n" , year, month , hour , minute , second);
+	//printf("\n wday= %ld , yday = %ld , mday = %ld , isInDST = %ld , \n" , wday , yday , mday , isInDST );
 	//set the incoming values for the calendar 	
 	ucal_setDateTime( pcal, year, month  , mday , hour , minute , second , &INTL_DATA_ERROR_CODE(mfo));
 	if( INTL_DATA_ERROR_CODE(mfo) != U_ZERO_ERROR){
@@ -118,7 +120,8 @@ static void internal_create_ucal(DateFormatter_object *mfo, HashTable* hash_arr 
  * Format the time value as a string. }}}*/
 PHP_FUNCTION(datefmt_format) 
 {
-	double 		timestamp =0;
+	UDate 		timestamp =0;
+	UDate 		p_timestamp =0;
 	UCalendar*    	temp_cal ; 
 	HashTable*      hash_arr        = NULL;
 	zval*		zarg	= NULL;
@@ -140,10 +143,13 @@ PHP_FUNCTION(datefmt_format)
 
 	switch(Z_TYPE_P(zarg) ){
 		case IS_LONG:
-			//Purposely fallthrough 
+			p_timestamp = Z_LVAL_P(zarg) ;
+			timestamp = p_timestamp * 1000;
+			break;
 		case IS_DOUBLE:
 			//timestamp*1000 since ICU expects it in milliseconds
-			timestamp = (Z_LVAL_P(zarg) * 1000);
+			p_timestamp = Z_DVAL_P(zarg) ;
+			timestamp = p_timestamp * 1000;
 			break;
 		case IS_ARRAY:
 			hash_arr = Z_ARRVAL_P(zarg);
@@ -165,7 +171,7 @@ PHP_FUNCTION(datefmt_format)
 */
 		default:
 			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-				"datefmt_format: takes either an array  or a DateTime object or an integer TimeStamp value ", 0 TSRMLS_CC );
+				"datefmt_format: takes either an array  or an integer TimeStamp value ", 0 TSRMLS_CC );
 			RETURN_FALSE;
 	}
 

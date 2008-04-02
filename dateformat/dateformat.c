@@ -79,9 +79,9 @@ PHP_FUNCTION( datefmt_create )
 	int         locale_len = 0;
 	zval*       object;
 
-        int         date_type = 0;
-        int         time_type = 0;
-        int         calendar = 1;
+        long         date_type = 0;
+        long         time_type = 0;
+        long         calendar = 1;
         int         all_done = 0;
         //zval*       timezone = NULL;
 
@@ -197,10 +197,9 @@ PHP_METHOD( DateFormatter, __construct )
 {
 	char*       locale = NULL;
 	int         locale_len = 0;
-	int         date_type = 0;
-	int         time_type = 0;
-	int         calendar = 1;
-	//zval*       timezone = NULL;
+	long        date_type = 0;
+	long        time_type = 0;
+	long        calendar = 1;
 
 	char*       timezone_str = NULL;
 	int         timezone_str_len = 0;

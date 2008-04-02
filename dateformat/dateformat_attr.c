@@ -381,7 +381,7 @@ PHP_FUNCTION( datefmt_set_lenient )
  */
 PHP_FUNCTION( datefmt_set_calendar )
 {
-	int 	    calendar = 0;
+	long	calendar = 0;
 
         DATE_FORMAT_METHOD_INIT_VARS;
 

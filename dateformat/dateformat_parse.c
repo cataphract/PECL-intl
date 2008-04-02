@@ -27,20 +27,15 @@
 #include "dateformat_parse.h"
 #include "dateformat_data.h"
 
-#define PARSE_POS_START 0
-#define DO_NOT_STORE_ERROR 0
-#define STORE_ERROR 1
-
-
 /* {{{ 
  * Internal function which calls the udat_parse
  * param int store_error acts like a boolean 
  *	if set to 1 - store any error encountered  in the parameter parse_error  
  *	if set to 0 - no need to store any error encountered  in the parameter parse_error  
 */
-static void internal_parse_to_timestamp(DateFormatter_object *mfo, char* text_to_parse , int text_len, int parse_pos , zval *return_value TSRMLS_DC){
-
-	int32_t timestamp   =0;
+static void internal_parse_to_timestamp(DateFormatter_object *mfo, char* text_to_parse , int32_t text_len, long parse_pos , zval *return_value TSRMLS_DC){
+	long	result =  0;
+	UDate 	timestamp   =0;
 	UChar* 	text_utf16  = NULL;
 	int32_t text_utf16_len = 0;
 
@@ -48,36 +43,42 @@ static void internal_parse_to_timestamp(DateFormatter_object *mfo, char* text_to
         intl_convert_utf8_to_utf16(&text_utf16 , &text_utf16_len , text_to_parse , text_len, &INTL_DATA_ERROR_CODE(mfo));
         INTL_METHOD_CHECK_STATUS(mfo, "Error converting timezone to UTF-16" );
 
-
 	timestamp = udat_parse( DATE_FORMAT_OBJECT(mfo), text_utf16 , text_utf16_len , &parse_pos , &INTL_DATA_ERROR_CODE(mfo));
 	if( text_utf16 ){
 		efree(text_utf16);
 	}
 
 	INTL_METHOD_CHECK_STATUS( mfo, "Date parsing failed" );
-
+	
 	//Since return is in  sec.
-	RETURN_LONG( timestamp / 1000 );
+	result = (long )( timestamp / 1000 );
+	if( result != (timestamp/1000) ) {
+		intl_error_set( NULL, U_BUFFER_OVERFLOW_ERROR,
+                                "datefmt_parse: parsing of input parametrs resulted in value larger than data type long can handle.\nThe valid range of a timestamp is typically from Fri, 13 Dec 1901 20:45:54 GMT to Tue, 19 Jan 2038 03:14:07 GMT.", 0 TSRMLS_CC );
+	}
+	RETURN_LONG( result );
 }
 /* }}} */
 
-static void add_to_localtime_arr( DateFormatter_object *mfo, zval* return_value ,UCalendar parsed_calendar , int32_t calendar_field , char* key_name TSRMLS_DC){
-	int calendar_field_val = ucal_get( parsed_calendar , calendar_field , &INTL_DATA_ERROR_CODE(mfo));	
+static void add_to_localtime_arr( DateFormatter_object *mfo, zval* return_value ,UCalendar parsed_calendar , long calendar_field , char* key_name TSRMLS_DC){
+	long calendar_field_val = ucal_get( parsed_calendar , calendar_field , &INTL_DATA_ERROR_CODE(mfo));	
 	INTL_METHOD_CHECK_STATUS( mfo, "Date parsing - localtime failed : could not get a field from calendar" );
-	add_assoc_long( return_value, key_name , calendar_field_val ); 
+	if( strcmp(key_name , CALENDAR_YEAR )==0 ){
+		//since tm_year is years from 1900
+		add_assoc_long( return_value, key_name ,( calendar_field_val-1900) ); 
+	}else{
+		add_assoc_long( return_value, key_name , calendar_field_val ); 
+	}
 }
 
 /* {{{
  * Internal function which calls the udat_parseCalendar
- * param int store_error acts like a boolean
- *      if set to 1 - store any error encountered  in the parameter parse_error
- *      if set to 0 - no need to store any error encountered  in the parameter parse_error
 */
-static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to_parse , int text_len, int parse_pos , zval *return_value TSRMLS_DC){
+static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to_parse , int32_t text_len, long parse_pos , zval *return_value TSRMLS_DC){
         UCalendar* 	parsed_calendar = NULL ;
         UChar*  	text_utf16  = NULL;
         int32_t 	text_utf16_len = 0;
-	UBool 		isInDST = 0;
+	long 		isInDST = 0;
 
         // Convert timezone to UTF-16.
         intl_convert_utf8_to_utf16(&text_utf16 , &text_utf16_len , text_to_parse , text_len, &INTL_DATA_ERROR_CODE(mfo));
@@ -97,7 +98,7 @@ static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_SECOND , CALENDAR_SEC TSRMLS_CC);
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_MINUTE , CALENDAR_MIN TSRMLS_CC);
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_HOUR_OF_DAY , CALENDAR_HOUR TSRMLS_CC);
-	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_YEAR , CALENDAR_YEAR TSRMLS_CC);
+	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_YEAR , CALENDAR_YEAR TSRMLS_CC); 
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_DAY_OF_MONTH , CALENDAR_MDAY TSRMLS_CC);
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_DAY_OF_WEEK  , CALENDAR_WDAY TSRMLS_CC);
 	add_to_localtime_arr( mfo , return_value , parsed_calendar , UCAL_DAY_OF_YEAR  , CALENDAR_YDAY TSRMLS_CC);
@@ -106,7 +107,7 @@ static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to
 	//Is in DST?
 	isInDST = ucal_inDaylightTime(parsed_calendar	 , &INTL_DATA_ERROR_CODE(mfo));
         INTL_METHOD_CHECK_STATUS( mfo, "Date parsing - localtime failed : while checking if currently in DST." );
-	add_assoc_long( return_value, CALENDAR_ISDST ,isInDST); 
+	add_assoc_long( return_value, CALENDAR_ISDST ,(isInDST==1?1:0)); 
 }
 /* }}} */
 
@@ -120,7 +121,7 @@ PHP_FUNCTION(datefmt_parse)
 
         char*           text_to_parse = NULL;
         int32_t         text_len =0;
-        int         	parse_pos =0;
+        long         	parse_pos =0;
 
         DATE_FORMAT_METHOD_INIT_VARS;
 
@@ -151,7 +152,7 @@ PHP_FUNCTION(datefmt_localtime)
 
         char*           text_to_parse = NULL;
         int32_t         text_len =0;
-        int         	parse_pos =0;
+        long         	parse_pos =0;
 
         DATE_FORMAT_METHOD_INIT_VARS;
 
