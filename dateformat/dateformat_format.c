@@ -90,6 +90,7 @@ static void internal_create_ucal(DateFormatter_object *mfo, HashTable* hash_arr 
 
 	//Fetch  values from the incoming array
 	year = internal_get_arr_ele( mfo , hash_arr , CALENDAR_YEAR TSRMLS_CC) + 1900; //tm_year is years since 1900
+	//Month in ICU and PHP starts from January =0
 	month = internal_get_arr_ele( mfo , hash_arr , CALENDAR_MON TSRMLS_CC);
 	hour = internal_get_arr_ele( mfo , hash_arr , CALENDAR_HOUR TSRMLS_CC);
 	minute = internal_get_arr_ele( mfo , hash_arr , CALENDAR_MIN TSRMLS_CC);
@@ -100,14 +101,14 @@ static void internal_create_ucal(DateFormatter_object *mfo, HashTable* hash_arr 
 	//For the ucal_setDateTime() function , this is the 'date'  value
 	mday = internal_get_arr_ele( mfo , hash_arr , CALENDAR_MDAY TSRMLS_CC);
 
-	//printf("\n year= %ld , month = %ld , hour = %ld , minute = %ld , second = %ld \n" , year, month , hour , minute , second);
-	//printf("\n wday= %ld , yday = %ld , mday = %ld , isInDST = %ld , \n" , wday , yday , mday , isInDST );
 	//set the incoming values for the calendar 	
 	ucal_setDateTime( pcal, year, month  , mday , hour , minute , second , &INTL_DATA_ERROR_CODE(mfo));
 	if( INTL_DATA_ERROR_CODE(mfo) != U_ZERO_ERROR){
 		return;
 	}
-	ucal_set( pcal, UCAL_DAY_OF_WEEK , wday);
+	//ICU UCAL_DAY_OF_WEEK starts from SUNDAY=1  thru SATURDAY=7 
+	//whereas PHP localtime has tm_wday SUNDAY=0 thru SATURDAY=6
+	ucal_set( pcal, UCAL_DAY_OF_WEEK , (wday+1));
 	ucal_set( pcal, UCAL_DAY_OF_YEAR , yday);
 	
 	//TO DO :How to set the isInDST field?Is it required to set

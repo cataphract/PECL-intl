@@ -63,9 +63,13 @@ static void internal_parse_to_timestamp(DateFormatter_object *mfo, char* text_to
 static void add_to_localtime_arr( DateFormatter_object *mfo, zval* return_value ,UCalendar parsed_calendar , long calendar_field , char* key_name TSRMLS_DC){
 	long calendar_field_val = ucal_get( parsed_calendar , calendar_field , &INTL_DATA_ERROR_CODE(mfo));	
 	INTL_METHOD_CHECK_STATUS( mfo, "Date parsing - localtime failed : could not get a field from calendar" );
+
 	if( strcmp(key_name , CALENDAR_YEAR )==0 ){
 		//since tm_year is years from 1900
 		add_assoc_long( return_value, key_name ,( calendar_field_val-1900) ); 
+	}else if( strcmp(key_name , CALENDAR_WDAY )==0 ){
+		//since tm_wday starts from 0 whereas ICU WDAY start from 1
+		add_assoc_long( return_value, key_name ,( calendar_field_val-1) ); 
 	}else{
 		add_assoc_long( return_value, key_name , calendar_field_val ); 
 	}
