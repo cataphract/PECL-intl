@@ -46,7 +46,7 @@ function ut_main()
 	    'tm_mon' => 3,
 	    'tm_year' => 105,
 	    'tm_wday' => 0,
-	    'tm_yday' => 92,
+	    'tm_yday' => 93,
 	    'tm_isdst' => 1
 	);
 	$localtime_arr2 = array (
@@ -56,8 +56,8 @@ function ut_main()
 	    'tm_mday' => 3,
 	    'tm_mon' => 3,
 	    'tm_year' => 205,
-	    'tm_wday' => 0,
-	    'tm_yday' => 92,
+	    'tm_wday' => 5,
+	    'tm_yday' => 93,
 	    'tm_isdst' => 1
 	);
 	$localtime_arr3 = array (
@@ -66,9 +66,9 @@ function ut_main()
             'tm_hour' => 3,
             'tm_mday' => 3,
             'tm_mon' => 3,
-            'tm_year' => -205,
-            'tm_wday' => 0,
-            'tm_yday' => 92,
+            'tm_year' => -5,
+            'tm_wday' => 3,
+            'tm_yday' => 93,
             'tm_isdst' => 1
         );
 
@@ -252,7 +252,7 @@ DateFormatter locale= en_US ,datetype = -1 ,timetype =-1
 Formatted timestamp is : 19691231 03:00 PM
 ------------
 
-Input localtime is : tm_sec : '24' , tm_min : '3' , tm_hour : '19' , tm_mday : '3' , tm_mon : '3' , tm_year : '105' , tm_wday : '0' , tm_yday : '92' , tm_isdst : '1' , 
+Input localtime is : tm_sec : '24' , tm_min : '3' , tm_hour : '19' , tm_mday : '3' , tm_mon : '3' , tm_year : '105' , tm_wday : '0' , tm_yday : '93' , tm_isdst : '1' , 
 ------------
 
 DateFormatter locale= en_US ,datetype = 0 ,timetype =0 
@@ -267,7 +267,7 @@ DateFormatter locale= en_US ,datetype = -1 ,timetype =-1
 Formatted localtime_array is : 20050403 07:03 PM
 ------------
 
-Input localtime is : tm_sec : '24' , tm_min : '3' , tm_hour : '3' , tm_mday : '3' , tm_mon : '3' , tm_year : '205' , tm_wday : '0' , tm_yday : '92' , tm_isdst : '1' , 
+Input localtime is : tm_sec : '24' , tm_min : '3' , tm_hour : '3' , tm_mday : '3' , tm_mon : '3' , tm_year : '205' , tm_wday : '5' , tm_yday : '93' , tm_isdst : '1' , 
 ------------
 
 DateFormatter locale= en_US ,datetype = 0 ,timetype =0 
@@ -282,16 +282,16 @@ DateFormatter locale= en_US ,datetype = -1 ,timetype =-1
 Formatted localtime_array is : 21050403 03:03 AM
 ------------
 
-Input localtime is : tm_sec : '24' , tm_min : '3' , tm_hour : '3' , tm_mday : '3' , tm_mon : '3' , tm_year : '-205' , tm_wday : '0' , tm_yday : '92' , tm_isdst : '1' , 
+Input localtime is : tm_sec : '24' , tm_min : '3' , tm_hour : '3' , tm_mday : '3' , tm_mon : '3' , tm_year : '-5' , tm_wday : '3' , tm_yday : '93' , tm_isdst : '1' , 
 ------------
 
 DateFormatter locale= en_US ,datetype = 0 ,timetype =0 
-Formatted localtime_array is : Sunday, April 3, 1695 3:03:24 AM PT
+Formatted localtime_array is : Wednesday, April 3, 1895 3:03:24 AM PT
 DateFormatter locale= en_US ,datetype = 1 ,timetype =1 
-Formatted localtime_array is : April 3, 1695 3:03:24 AM PDT
+Formatted localtime_array is : April 3, 1895 3:03:24 AM PDT
 DateFormatter locale= en_US ,datetype = 2 ,timetype =2 
-Formatted localtime_array is : Apr 3, 1695 3:03:24 AM
+Formatted localtime_array is : Apr 3, 1895 3:03:24 AM
 DateFormatter locale= en_US ,datetype = 3 ,timetype =3 
 Formatted localtime_array is : 4/3/95 3:03 AM
 DateFormatter locale= en_US ,datetype = -1 ,timetype =-1 
-Formatted localtime_array is : 16950403 03:03 AM
+Formatted localtime_array is : 18950403 03:03 AM

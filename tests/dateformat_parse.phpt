@@ -28,6 +28,8 @@ function ut_main()
 
 
 	$text_arr = array (
+		"Sunday, September 18, 2039 4:06:40 PM PT",
+		"Wednesday, December 17, 1969 6:40:00 PM PT",
 		"Thursday, December 18, 1969 8:49:59 AM PST",
 		"Thursday, December 18, 1969 8:49:59 PM PST",
 		"December 18, 1969 8:49:59 AM PST",
@@ -63,6 +65,10 @@ include_once( 'ut_common.php' );
 ut_run();
 ?>
 --EXPECT--
+Input text :Sunday, September 18, 2039 4:06:40 PM PT ; Parsed text : 96000 ; parse_pos : 29
+Input text :Sunday, September 18, 2039 4:06:40 PM PT ; Parsed text : 96000 ; parse_pos : 30
+Input text :Wednesday, December 17, 1969 6:40:00 PM PT ; Parsed text : 216000 ; parse_pos : 31
+Input text :Wednesday, December 17, 1969 6:40:00 PM PT ; Parsed text : 72000 ; parse_pos : 32
 Input text :Thursday, December 18, 1969 8:49:59 AM PST ; Parsed text : 208740 ; parse_pos : 30
 Input text :Thursday, December 18, 1969 8:49:59 AM PST ; Parsed text : 64740 ; parse_pos : 31
 Input text :Thursday, December 18, 1969 8:49:59 PM PST ; Parsed text : 251940 ; parse_pos : 30
