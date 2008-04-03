@@ -209,17 +209,25 @@ function ut_nfmt_format( $fmt, $number, $type = null )
 {
     return $GLOBALS['oo-mode'] ? $fmt->format( $number, $type ) : numfmt_format( $fmt, $number, $type );
 }
-function ut_nfmt_parse( $fmt, $string, $type = NumberFormatter::TYPE_DOUBLE, $position = 0 )
+function ut_nfmt_parse( $fmt, $string, $type = NumberFormatter::TYPE_DOUBLE, &$position = null )
 {
+    if(is_null($position)) {
+    return $GLOBALS['oo-mode'] ? $fmt->parse( $string, $type ) : numfmt_parse( $fmt, $string, $type );
+    } else {
     return $GLOBALS['oo-mode'] ? $fmt->parse( $string, $type, $position ) : numfmt_parse( $fmt, $string, $type, $position );
+    }
 }
 function ut_nfmt_format_currency( $fmt, $number, $currency )
 {
     return $GLOBALS['oo-mode'] ? $fmt->formatCurrency( $number, $currency ) : numfmt_format_currency( $fmt, $number, $currency );
 }
-function ut_nfmt_parse_currency( $fmt, $string, &$currency, &$position )
+function ut_nfmt_parse_currency( $fmt, $string, &$currency, &$position = null )
 {
+    if(is_null($position)) {
+    return $GLOBALS['oo-mode'] ? $fmt->parseCurrency( $string, $currency ) : numfmt_parse_currency( $fmt, $string, $currency );
+    } else {
     return $GLOBALS['oo-mode'] ? $fmt->parseCurrency( $string, $currency, $position ) : numfmt_parse_currency( $fmt, $string, $currency, $position );
+   }
 }
 function ut_nfmt_set_attribute( $fmt, $attribute, $value )
 {

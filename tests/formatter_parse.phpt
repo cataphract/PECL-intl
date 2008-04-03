@@ -25,8 +25,9 @@ function ut_main()
     // Test specifying non-zero parsing start position.
     $fmt = ut_nfmt_create( "en_US", NumberFormatter::DECIMAL );
     $pos = 2;
-    $res_str .= ut_nfmt_parse( $fmt, "0.123", NumberFormatter::TYPE_DOUBLE, $pos ) . "\n";
-    
+    $res_str .= ut_nfmt_parse( $fmt, "0.123 here", NumberFormatter::TYPE_DOUBLE, $pos ) . "\n";
+    $res_str .= "$pos\n";
+
     return $res_str;
 }
 
@@ -38,3 +39,4 @@ ut_run();
 0.123
 1
 123
+5
