@@ -43,7 +43,7 @@ PHP_FUNCTION( numfmt_parse )
 	FORMATTER_METHOD_INIT_VARS;
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ou|lz",
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ou|lz!",
 		&object, NumberFormatter_ce_ptr,  &str, &str_len, &type, &zposition ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
@@ -56,6 +56,7 @@ PHP_FUNCTION( numfmt_parse )
 	FORMATTER_METHOD_FETCH_OBJECT;
 
 	if(zposition) {
+		convert_to_long(zposition);
 		position = Z_LVAL_P( zposition );
 		position_p = &position;
 	}
@@ -109,7 +110,7 @@ PHP_FUNCTION( numfmt_parse_currency )
 	FORMATTER_METHOD_INIT_VARS;
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ouz|z",
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ouz|z!",
 		&object, NumberFormatter_ce_ptr, &str, &str_len, &zcurrency, &zposition ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
@@ -122,6 +123,7 @@ PHP_FUNCTION( numfmt_parse_currency )
 	FORMATTER_METHOD_FETCH_OBJECT;
 
 	if(zposition) {
+		convert_to_long(zposition);
 		position = Z_LVAL_P( zposition );
 		position_p = &position;
 	}

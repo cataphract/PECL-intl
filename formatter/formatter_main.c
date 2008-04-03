@@ -32,7 +32,8 @@ PHP_FUNCTION( numfmt_create )
 {
 	char*       locale;
 	UChar*      pattern = NULL;
-	int         locale_len = 0, style, pattern_len = 0;
+	int         locale_len = 0, pattern_len = 0;
+	long        style;
 	FORMATTER_METHOD_INIT_VARS;
 
 	// Parse parameters.
@@ -78,7 +79,8 @@ PHP_METHOD( NumberFormatter, __construct )
 {
 	char*       locale;
 	UChar*      pattern = NULL;
-	int         locale_len = 0, style, pattern_len = 0;
+	int         locale_len = 0, pattern_len = 0;
+	long        style;
 	FORMATTER_METHOD_INIT_VARS;
 
 	object = getThis();
