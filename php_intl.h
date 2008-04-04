@@ -23,6 +23,7 @@
 #include <php.h>
 
 #include "collator/collator_sort.h"
+#include "grapheme/grapheme.h"
 #include "intl_error.h"
 
 extern zend_module_entry intl_module_entry;
@@ -42,6 +43,7 @@ ZEND_BEGIN_MODULE_GLOBALS(intl)
 	zval* current_collator;
 	char* default_locale;
 	collator_compare_func_t compare_func;
+	UBreakIterator* grapheme_iterator;
 	intl_error g_error;
 ZEND_END_MODULE_GLOBALS(intl)
 

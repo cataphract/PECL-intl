@@ -175,6 +175,28 @@ ZEND_BEGIN_ARG_INFO_EX( normalizer_3_args, 0, 0, 3 )
 	ZEND_ARG_INFO( 0, arg3 )
 ZEND_END_ARG_INFO()
 
+static
+ZEND_BEGIN_ARG_INFO_EX( grapheme_0_args, 0, 0, 0 )
+ZEND_END_ARG_INFO()
+
+static
+ZEND_BEGIN_ARG_INFO_EX( grapheme_1_arg, 0, 0, 1 )
+        ZEND_ARG_INFO( 0, arg1 )
+ZEND_END_ARG_INFO()
+
+static
+ZEND_BEGIN_ARG_INFO_EX( grapheme_2_args, 0, 0, 2 )
+        ZEND_ARG_INFO( 0, arg1 )
+        ZEND_ARG_INFO( 0, arg2 )
+ZEND_END_ARG_INFO()
+
+static
+ZEND_BEGIN_ARG_INFO_EX( grapheme_3_args, 0, 0, 3 )
+        ZEND_ARG_INFO( 0, arg1 )
+        ZEND_ARG_INFO( 0, arg2 )
+        ZEND_ARG_INFO( 0, arg3 )
+ZEND_END_ARG_INFO()
+
 /* }}} */
 
 /* {{{ intl_functions[]
@@ -249,6 +271,19 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( msgfmt_get_locale, NULL )
 	PHP_FE( msgfmt_get_error_code, NULL )
 	PHP_FE( msgfmt_get_error_message, NULL )
+
+	// grapheme functions
+	PHP_FE( grapheme_strlen, grapheme_1_arg )
+	PHP_FE( grapheme_strpos, grapheme_3_args )
+	PHP_FE( grapheme_stripos, grapheme_3_args )
+	PHP_FE( grapheme_strrpos, grapheme_3_args )
+	PHP_FE( grapheme_strripos, grapheme_3_args )
+	PHP_FE( grapheme_substr, grapheme_3_args )
+	PHP_FE( grapheme_strstr, grapheme_3_args )
+	PHP_FE( grapheme_stristr, grapheme_3_args )
+	PHP_FE( grapheme_extract, grapheme_3_args )
+	PHP_FE( grapheme_extractB, grapheme_3_args )
+
 
 	// common functions
 	PHP_FE( intl_get_error_code, intl_0_args )
@@ -384,6 +419,11 @@ PHP_RSHUTDOWN_FUNCTION( intl )
 	if(INTL_G(current_collator)) {
 		INTL_G(current_collator) = NULL;
 	}
+	if (INTL_G(grapheme_iterator)) {
+		grapheme_close_global_iterator( TSRMLS_C );
+		INTL_G(grapheme_iterator) = NULL;
+	}
+
 	intl_error_reset( NULL TSRMLS_CC);
 	return SUCCESS;
 }

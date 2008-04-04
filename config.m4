@@ -44,6 +44,8 @@ if test "$PHP_INTL" != "no"; then
 		msgformat/msgformat_format.c \
 		msgformat/msgformat_helpers.cpp \
 		msgformat/msgformat_parse.c \
+		grapheme/grapheme_string.c \
+		grapheme/grapheme_util.c \
 		    ,$ext_shared,,$ICU_INCS)
 
 	PHP_ADD_BUILD_DIR($ext_builddir/collator)
@@ -52,4 +54,5 @@ if test "$PHP_INTL" != "no"; then
 	PHP_ADD_BUILD_DIR($ext_builddir/normalizer)
 	PHP_ADD_BUILD_DIR($ext_builddir/locale)
 	PHP_ADD_BUILD_DIR($ext_builddir/msgformat)
+	PHP_ADD_BUILD_DIR($ext_builddir/grapheme)
 fi
