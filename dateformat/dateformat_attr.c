@@ -296,7 +296,7 @@ PHP_FUNCTION( datefmt_set_pattern )
 PHP_FUNCTION( datefmt_get_locale )
 {
 	char *loc;
-	int  loc_type =ULOC_ACTUAL_LOCALE;
+	long  loc_type =ULOC_ACTUAL_LOCALE;
 
 	DATE_FORMAT_METHOD_INIT_VARS;
 
