@@ -33,7 +33,7 @@
  *	if set to 1 - store any error encountered  in the parameter parse_error  
  *	if set to 0 - no need to store any error encountered  in the parameter parse_error  
 */
-static void internal_parse_to_timestamp(DateFormatter_object *mfo, char* text_to_parse , int32_t text_len, long parse_pos , zval *return_value TSRMLS_DC){
+static void internal_parse_to_timestamp(DateFormatter_object *mfo, char* text_to_parse , int32_t text_len, int parse_pos , zval *return_value TSRMLS_DC){
 	long	result =  0;
 	UDate 	timestamp   =0;
 	UChar* 	text_utf16  = NULL;
@@ -78,7 +78,7 @@ static void add_to_localtime_arr( DateFormatter_object *mfo, zval* return_value 
 /* {{{
  * Internal function which calls the udat_parseCalendar
 */
-static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to_parse , int32_t text_len, long parse_pos , zval *return_value TSRMLS_DC){
+static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to_parse , int32_t text_len, int parse_pos , zval *return_value TSRMLS_DC){
         UCalendar* 	parsed_calendar = NULL ;
         UChar*  	text_utf16  = NULL;
         int32_t 	text_utf16_len = 0;
