@@ -30,7 +30,7 @@ PHP_FUNCTION(grapheme_substr);
 PHP_FUNCTION(grapheme_strstr);
 PHP_FUNCTION(grapheme_stristr);
 PHP_FUNCTION(grapheme_extract);
-PHP_FUNCTION(grapheme_extractB);
+PHP_FUNCTION(grapheme_extractb);
 
 void grapheme_register_constants( INIT_FUNC_ARGS );
 void grapheme_close_global_iterator( TSRMLS_D );

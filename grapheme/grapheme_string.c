@@ -737,9 +737,9 @@ PHP_FUNCTION(grapheme_extract)
 
 /* }}} */
 
-/* {{{ proto string grapheme_extractB(string str, bsize[, start])
+/* {{{ proto string grapheme_extractb(string str, bsize[, start])
 	Function to extract a sequence of default grapheme clusters up to a byte limit */
-PHP_FUNCTION(grapheme_extractB)
+PHP_FUNCTION(grapheme_extractb)
 {
 	char *str, *pstr;
 	UChar *ustr;
