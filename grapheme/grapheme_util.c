@@ -357,7 +357,7 @@ grapheme_strpos_utf16(unsigned char *haystack, int haystack_len, unsigned char*n
 /* }}} */
 
 /* {{{ grapheme_ascii_check: ASCII check */
-inline int grapheme_ascii_check(const unsigned char *day, size_t len)
+int grapheme_ascii_check(const unsigned char *day, size_t len)
 {
 	int ret_len = len;
 	while ( len-- ) {

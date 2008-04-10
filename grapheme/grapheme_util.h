@@ -32,7 +32,7 @@ grapheme_strrpos_utf16(unsigned char *haystack, int haystack_len, unsigned char*
 int
 grapheme_strpos_utf16(unsigned char *haystack, int haystack_len, unsigned char*needle, int needle_len, int offset, int *puchar_pos, int f_ignore_case TSRMLS_DC);
 
-inline int grapheme_ascii_check(const unsigned char *day, size_t len);
+int grapheme_ascii_check(const unsigned char *day, size_t len);
 
 int grapheme_split_string(const UChar *text, int32_t text_length, int boundary_array[], int boundary_array_len TSRMLS_DC );
 
