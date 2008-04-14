@@ -106,8 +106,6 @@ PHP_FUNCTION( datefmt_create )
         {
                 intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
                         "datefmt_create: unable to parse input params", 0 TSRMLS_CC );
-                zval_dtor(object);
-                ZVAL_NULL(object);
                 RETURN_NULL();
         }
 
