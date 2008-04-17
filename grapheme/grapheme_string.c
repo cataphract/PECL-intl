@@ -656,7 +656,7 @@ PHP_FUNCTION(grapheme_extract)
 		RETURN_FALSE;
 	}
 
-    if ( start > str_len ) {
+    if ( start < 0 || start > str_len ) {
 
         intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extract: start not contained in string", 1 TSRMLS_CC );
 
@@ -754,14 +754,14 @@ PHP_FUNCTION(grapheme_extractb)
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|l", (char **)&str, &str_len, &bsize, &start) == FAILURE) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			 "grapheme_extractB: unable to parse input param", 0 TSRMLS_CC );
+			 "grapheme_extractb: unable to parse input param", 0 TSRMLS_CC );
 			 
 		RETURN_FALSE;
 	}
 
-    if ( start > str_len ) {
+    if ( start < 0 || start > str_len ) {
 
-        intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extractB: start not contained in string", 1 TSRMLS_CC );
+        intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extractb: start not contained in string", 1 TSRMLS_CC );
 
         RETURN_FALSE;
     }
