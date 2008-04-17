@@ -21,3 +21,4 @@
 <!ENTITY uri.unicode.normalization.faq "http://unicode.org/faq/normalization.html">
 <!ENTITY uri.icu.normalization.guide "http://www.icu-project.org/userguide/normalization.html">
 <!ENTITY uri.icu.normalization.api "http://www.icu-project.org/apiref/icu4c/unorm_8h.html">
+<!ENTITY uri.unicode.graphemes "http://unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries">
