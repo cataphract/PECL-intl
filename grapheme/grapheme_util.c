@@ -87,7 +87,7 @@ grapheme_intl_case_fold(UChar** ptr_to_free, UChar **str, int32_t *str_len, UErr
 }
 /* }}} */
 
-/* {{{ grapheme_substr_ascii */
+/* {{{ grapheme_substr_ascii f='from' - starting point, l='length' */
 void
 grapheme_substr_ascii(char *str, int str_len, int f, int l, int argc, char **sub_str, int *sub_str_len)
 {
@@ -149,7 +149,7 @@ grapheme_substr_ascii(char *str, int str_len, int f, int l, int argc, char **sub
 
 /* {{{ grapheme_strrpos_utf16 - strrpos using utf16 */
 int
-grapheme_strrpos_utf16(unsigned char *haystack, int haystack_len, unsigned char*needle, int needle_len, int offset, int f_ignore_case TSRMLS_DC)
+grapheme_strrpos_utf16(unsigned char *haystack, int32_t haystack_len, unsigned char*needle, int32_t needle_len, int32_t offset, int f_ignore_case TSRMLS_DC)
 {
     UChar *uhaystack, *puhaystack, *uhaystack_end, *uneedle;
     int32_t uhaystack_len, uneedle_len;
@@ -271,7 +271,7 @@ exit:
 
 /* {{{ grapheme_strpos_utf16 - strrpos using utf16*/
 int
-grapheme_strpos_utf16(unsigned char *haystack, int haystack_len, unsigned char*needle, int needle_len, int offset, int *puchar_pos, int f_ignore_case TSRMLS_DC)
+grapheme_strpos_utf16(unsigned char *haystack, int32_t haystack_len, unsigned char*needle, int32_t needle_len, int32_t offset, int32_t *puchar_pos, int f_ignore_case TSRMLS_DC)
 {
 	UChar *uhaystack, *puhaystack, *uneedle;
 	int32_t uhaystack_len, uneedle_len;
@@ -357,7 +357,7 @@ grapheme_strpos_utf16(unsigned char *haystack, int haystack_len, unsigned char*n
 /* }}} */
 
 /* {{{ grapheme_ascii_check: ASCII check */
-int grapheme_ascii_check(const unsigned char *day, size_t len)
+int grapheme_ascii_check(const unsigned char *day, int32_t len)
 {
 	int ret_len = len;
 	while ( len-- ) {
@@ -477,7 +477,7 @@ grapheme_memnstr_grapheme(UBreakIterator *bi, UChar *haystack, UChar *needle, in
 /* }}} */
 
 /* {{{ grapheme_memrstr_grapheme: reverse find needle in haystack using grapheme boundaries */
-inline void *grapheme_memrchr_grapheme(const void *s, int c, size_t n)
+inline void *grapheme_memrchr_grapheme(const void *s, int c, int32_t n)
 {
 	register unsigned char *e;
 

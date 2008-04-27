@@ -98,10 +98,11 @@ PHP_FUNCTION(grapheme_strpos)
 	unsigned char *haystack, *needle;
 	int haystack_len, needle_len;
 	unsigned char *found;
-	int offset = 0;
+	long loffset = 0;
+	int32_t offset = 0;
 	int ret_pos, uchar_pos;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|l", (char **)&haystack, &haystack_len, (char **)&needle, &needle_len, &offset) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|l", (char **)&haystack, &haystack_len, (char **)&needle, &needle_len, &loffset) == FAILURE) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			 "grapheme_strpos: unable to parse input param", 0 TSRMLS_CC );
@@ -109,13 +110,16 @@ PHP_FUNCTION(grapheme_strpos)
 		RETURN_FALSE;
 	}
 
-	if ( OUTSIDE_STRING(offset, haystack_len) ) {
+	if ( OUTSIDE_STRING(loffset, haystack_len) ) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_strpos: Offset not contained in string", 1 TSRMLS_CC );
 		
 		RETURN_FALSE;
 	}
-	
+
+	/* we checked that it will fit: */	
+	offset = (int32_t) loffset;
+
 	/* the offset is 'grapheme count offset' so it still might be invalid - we'll check it later */
 
 	if (needle_len == 0) {
@@ -161,11 +165,12 @@ PHP_FUNCTION(grapheme_stripos)
 	unsigned char *haystack, *needle, *haystack_dup, *needle_dup;
 	int haystack_len, needle_len;
 	unsigned char *found;
-	int offset = 0;
+	long loffset = 0;
+	int32_t offset = 0;
 	int ret_pos, uchar_pos;
 	int is_ascii;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|l", (char **)&haystack, &haystack_len, (char **)&needle, &needle_len, &offset) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|l", (char **)&haystack, &haystack_len, (char **)&needle, &needle_len, &loffset) == FAILURE) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			 "grapheme_stripos: unable to parse input param", 0 TSRMLS_CC );
@@ -173,13 +178,16 @@ PHP_FUNCTION(grapheme_stripos)
 		RETURN_FALSE;
 	}
 
-	if ( OUTSIDE_STRING(offset, haystack_len) ) {
+	if ( OUTSIDE_STRING(loffset, haystack_len) ) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_stripos: Offset not contained in string", 1 TSRMLS_CC );
 		
 		RETURN_FALSE;
 	}
 	
+	/* we checked that it will fit: */
+	offset = (int32_t) loffset;
+
 	/* the offset is 'grapheme count offset' so it still might be invalid - we'll check it later */
 
 	if (needle_len == 0) {
@@ -231,11 +239,12 @@ PHP_FUNCTION(grapheme_strrpos)
 {
 	unsigned char *haystack, *needle;
 	int haystack_len, needle_len;
+	long loffset = 0;
 	int32_t offset = 0;
 	int32_t ret_pos;
 	int is_ascii;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|l", (char **)&haystack, &haystack_len, (char **)&needle, &needle_len, &offset) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|l", (char **)&haystack, &haystack_len, (char **)&needle, &needle_len, &loffset) == FAILURE) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			 "grapheme_strrpos: unable to parse input param", 0 TSRMLS_CC );
@@ -243,13 +252,16 @@ PHP_FUNCTION(grapheme_strrpos)
 		RETURN_FALSE;
 	}
 
-	if ( OUTSIDE_STRING(offset, haystack_len) ) {
+	if ( OUTSIDE_STRING(loffset, haystack_len) ) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_strpos: Offset not contained in string", 1 TSRMLS_CC );
 		
 		RETURN_FALSE;
 	}
 	
+	/* we checked that it will fit: */
+	offset = (int32_t) loffset;
+
 	/* the offset is 'grapheme count offset' so it still might be invalid - we'll check it later */
 
 	if (needle_len == 0) {
@@ -259,7 +271,7 @@ PHP_FUNCTION(grapheme_strrpos)
 		RETURN_FALSE;
 	}
 
-    is_ascii = grapheme_ascii_check(haystack, haystack_len) >= 0;
+	is_ascii = grapheme_ascii_check(haystack, haystack_len) >= 0;
 
 	if ( is_ascii ) {
 	
@@ -297,11 +309,12 @@ PHP_FUNCTION(grapheme_strripos)
 {
 	unsigned char *haystack, *needle;
 	int haystack_len, needle_len;
+	long loffset = 0;
 	int32_t offset = 0;
 	int32_t ret_pos;
 	int is_ascii;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|l", (char **)&haystack, &haystack_len, (char **)&needle, &needle_len, &offset) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|l", (char **)&haystack, &haystack_len, (char **)&needle, &needle_len, &loffset) == FAILURE) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			 "grapheme_strrpos: unable to parse input param", 0 TSRMLS_CC );
@@ -309,12 +322,15 @@ PHP_FUNCTION(grapheme_strripos)
 		RETURN_FALSE;
 	}
 
-	if ( OUTSIDE_STRING(offset, haystack_len) ) {
+	if ( OUTSIDE_STRING(loffset, haystack_len) ) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_strpos: Offset not contained in string", 1 TSRMLS_CC );
 		
 		RETURN_FALSE;
 	}
+
+	/* we checked that it will fit: */
+	offset = (int32_t) loffset;
 	
 	/* the offset is 'grapheme count offset' so it still might be invalid - we'll check it later */
 
@@ -325,7 +341,7 @@ PHP_FUNCTION(grapheme_strripos)
 		RETURN_FALSE;
 	}
 
-    is_ascii = grapheme_ascii_check(haystack, haystack_len) >= 0;
+	is_ascii = grapheme_ascii_check(haystack, haystack_len) >= 0;
 
 	if ( is_ascii ) {
 		unsigned char *needle_dup, *haystack_dup;
@@ -371,7 +387,9 @@ PHP_FUNCTION(grapheme_substr)
 {
 	unsigned char *str, *sub_str;
 	UChar *ustr;
-	int str_len, sub_str_len, ustr_len, start = 0, length = 0;
+	int str_len, sub_str_len, ustr_len;
+	long lstart = 0, length = 0;
+	int32_t start = 0;
 	int iter_val;
 	UErrorCode status;
 	unsigned char u_break_iterator_buffer[U_BRK_SAFECLONE_BUFFERSIZE];
@@ -379,7 +397,7 @@ PHP_FUNCTION(grapheme_substr)
 	int sub_str_start_pos, sub_str_end_pos;
 	int32_t (*iter_func)(UBreakIterator *);
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|l", (char **)&str, &str_len, &start, &length) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|l", (char **)&str, &str_len, &lstart, &length) == FAILURE) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			 "grapheme_substr: unable to parse input param", 0 TSRMLS_CC );
@@ -387,12 +405,15 @@ PHP_FUNCTION(grapheme_substr)
 		RETURN_FALSE;
 	}
 
-	if ( OUTSIDE_STRING(start, str_len) ) {
+	if ( OUTSIDE_STRING(lstart, str_len) ) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_substr: start not contained in string", 1 TSRMLS_CC );
 		
 		RETURN_FALSE;
 	}
+
+	/* we checked that it will fit: */
+	start = (int32_t) lstart;
 
 	/* the offset is 'grapheme count offset' so it still might be invalid - we'll check it later */
 
@@ -641,8 +662,8 @@ PHP_FUNCTION(grapheme_extract)
 	unsigned char *str, *pstr;
 	UChar *ustr;
 	int str_len, ustr_len;
-	int size; /* maximum number of grapheme clusters to return */
-	int start = 0; /* starting position in str in bytes */
+	long size; /* maximum number of grapheme clusters to return */
+	long start = 0; /* starting position in str in bytes */
 	UErrorCode status;
 	unsigned char u_break_iterator_buffer[U_BRK_SAFECLONE_BUFFERSIZE];
 	UBreakIterator* bi = NULL;
@@ -744,8 +765,8 @@ PHP_FUNCTION(grapheme_extractb)
 	char *str, *pstr;
 	UChar *ustr;
 	int str_len, ustr_len;
-	int bsize; /* maximum number of bytes to return */
-	int start = 0; /* starting position in str in bytes */
+	long bsize; /* maximum number of bytes to return */
+	long start = 0; /* starting position in str in bytes */
 	UErrorCode status;
 	unsigned char u_break_iterator_buffer[U_BRK_SAFECLONE_BUFFERSIZE];
 	UBreakIterator* bi = NULL;
@@ -759,12 +780,12 @@ PHP_FUNCTION(grapheme_extractb)
 		RETURN_FALSE;
 	}
 
-    if ( start < 0 || start > str_len ) {
+	if ( start < 0 || start > str_len ) {
 
-        intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extractb: start not contained in string", 1 TSRMLS_CC );
+        	intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extractb: start not contained in string", 1 TSRMLS_CC );
 
-        RETURN_FALSE;
-    }
+        	RETURN_FALSE;
+	}
 
 	pstr = str + start;
 
