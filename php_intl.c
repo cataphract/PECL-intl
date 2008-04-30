@@ -283,7 +283,7 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( grapheme_stristr, grapheme_3_args )
 	PHP_FE( grapheme_extract, grapheme_3_args )
 	PHP_FE( grapheme_extractb, grapheme_3_args )
-
+	PHP_FE( grapheme_extractc, grapheme_3_args )
 
 	// common functions
 	PHP_FE( intl_get_error_code, intl_0_args )

@@ -589,7 +589,7 @@ function ut_main()
 	
 
 	//=====================================================================================
-	$res_str .= "\n" . 'function grapheme_extractB($haystack, $size, $start = 0)' . "\n\n";
+	$res_str .= "\n" . 'function grapheme_extractb($haystack, $size, $start = 0)' . "\n\n";
 
 	$tests = array(
 		array( "abc", 3, "abc" ),
@@ -627,13 +627,13 @@ function ut_main()
 
 	foreach( $tests as $test ) {
 	    $arg0 = urlencode($test[0]);
-		$res_str .= "extract from \"$arg0\" \"$test[1]\" graphemes - grapheme_extractB";
+		$res_str .= "extract from \"$arg0\" \"$test[1]\" graphemes - grapheme_extractb";
 		if ( 3 == count( $test ) ) {
-			$result = grapheme_extractB($test[0], $test[1]);
+			$result = grapheme_extractb($test[0], $test[1]);
 		}
 		else {
 			$res_str .= " starting at byte position $test[2]";
-			$result = grapheme_extractB($test[0], $test[1], $test[2]);
+			$result = grapheme_extractb($test[0], $test[1], $test[2]);
 		}
 		$res_str .= " = ";
 		if ( $result === false ) {
@@ -644,6 +644,68 @@ function ut_main()
 		}
 		$res_str .= " == " . urlencode($test[count($test)-1]) . check_result($result, $test[count($test)-1]) . "\n";
 	}
+	
+
+	//=====================================================================================
+	$res_str .= "\n" . 'function grapheme_extractc($haystack, $size, $start = 0)' . "\n\n";
+
+	$tests = array(
+		array( "abc", 3, "abc" ),
+		array( "abc", 2, "ab" ),
+		array( "abc", 1, "a" ),
+		array( "abc", 0, "" ),
+		array( "abc" . $char_o_diaeresis_nfd, 0, "" ),
+		array( "abc" . $char_o_diaeresis_nfd, 1, "a" ),
+		array( "abc" . $char_o_diaeresis_nfd, 2, "ab" ),
+		array( "abc" . $char_o_diaeresis_nfd, 3, "abc" ),
+		array( "abc" . $char_o_diaeresis_nfd, 4, "abc" ),
+		array( "abc" . $char_o_diaeresis_nfd, 5, "abc" . $char_o_diaeresis_nfd),
+		array( "abc" . $char_o_diaeresis_nfd, 6, "abc" . $char_o_diaeresis_nfd),
+		array( $char_o_diaeresis_nfd . "abc", 0, "" ),
+		array( $char_o_diaeresis_nfd . "abc", 1, "" ),
+		array( $char_o_diaeresis_nfd . "abc", 2, $char_o_diaeresis_nfd ),
+		array( $char_o_diaeresis_nfd . "abc", 3, $char_o_diaeresis_nfd . "a" ),
+		array( $char_o_diaeresis_nfd . "abc", 4, $char_o_diaeresis_nfd . "ab" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 5, $char_o_diaeresis_nfd . "abc" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 6, $char_o_diaeresis_nfd . "abc" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 7, $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 8, $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "x" ),
+
+		array( "abc", 3, 0, "abc" ),
+		array( "abc", 2, 1, "bc" ),
+		array( "abc", 1, 2, "c" ),
+		array( "abc", 0, 3, "" ),
+		array( "abc", 1, 3, "" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 8, 0, $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "x" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 8, 1, $char_diaeresis . "abc" . $char_a_ring_nfd . "xy" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 8, 2, "abc" . $char_a_ring_nfd . "xyz" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 8, 3, "abc" . $char_a_ring_nfd . "xyz" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 8, 4, "bc" . $char_a_ring_nfd . "xyz" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 8, 5, "c" . $char_a_ring_nfd . "xyz" ),
+		array( $char_o_diaeresis_nfd . "abc" . $char_a_ring_nfd . "xyz", 8, 6, $char_a_ring_nfd . "xyz" ),
+
+	);
+
+	foreach( $tests as $test ) {
+	    $arg0 = urlencode($test[0]);
+		$res_str .= "extract from \"$arg0\" \"$test[1]\" graphemes - grapheme_extractc";
+		if ( 3 == count( $test ) ) {
+			$result = grapheme_extractc($test[0], $test[1]);
+		}
+		else {
+			$res_str .= " starting at byte position $test[2]";
+			$result = grapheme_extractc($test[0], $test[1], $test[2]);
+		}
+		$res_str .= " = ";
+		if ( $result === false ) {
+			$res_str .= 'false';
+		}
+		else {
+			$res_str .= urlencode($result);
+		}
+		$res_str .= " == " . urlencode($test[count($test)-1]) . check_result($result, $test[count($test)-1]) . "\n";
+	}
+	
 	
 	//=====================================================================================
 	
@@ -998,34 +1060,69 @@ extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "2" graphemes - grapheme_extract sta
 extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "2" graphemes - grapheme_extract starting at byte position 10 = %CC%88 == %CC%88
 extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "2" graphemes - grapheme_extract starting at byte position 11 = false == false
 
-function grapheme_extractB($haystack, $size, $start = 0)
+function grapheme_extractb($haystack, $size, $start = 0)
 
-extract from "abc" "3" graphemes - grapheme_extractB = abc == abc
-extract from "abc" "2" graphemes - grapheme_extractB = ab == ab
-extract from "abc" "1" graphemes - grapheme_extractB = a == a
-extract from "abc" "0" graphemes - grapheme_extractB =  == 
-extract from "a%CC%8Abc" "5" graphemes - grapheme_extractB = a%CC%8Abc == a%CC%8Abc
-extract from "a%CC%8Abc" "4" graphemes - grapheme_extractB = a%CC%8Ab == a%CC%8Ab
-extract from "a%CC%8Abc" "1" graphemes - grapheme_extractB =  == 
-extract from "a%CC%8Ao%CC%88o%CC%88" "9" graphemes - grapheme_extractB = a%CC%8Ao%CC%88o%CC%88 == a%CC%8Ao%CC%88o%CC%88
-extract from "a%CC%8Ao%CC%88o%CC%88" "10" graphemes - grapheme_extractB = a%CC%8Ao%CC%88o%CC%88 == a%CC%8Ao%CC%88o%CC%88
-extract from "a%CC%8Ao%CC%88o%CC%88" "11" graphemes - grapheme_extractB = a%CC%8Ao%CC%88o%CC%88 == a%CC%8Ao%CC%88o%CC%88
-extract from "a%CC%8Ao%CC%88o%CC%88" "6" graphemes - grapheme_extractB = a%CC%8Ao%CC%88 == a%CC%8Ao%CC%88
-extract from "a%CC%8Ao%CC%88c" "3" graphemes - grapheme_extractB = a%CC%8A == a%CC%8A
-extract from "a%CC%8Ao%CC%88c" "4" graphemes - grapheme_extractB = a%CC%8A == a%CC%8A
-extract from "a%CC%8Ao%CC%88c" "5" graphemes - grapheme_extractB = a%CC%8A == a%CC%8A
-extract from "a%CC%8Ao%CC%88c" "6" graphemes - grapheme_extractB = a%CC%8Ao%CC%88 == a%CC%8Ao%CC%88
-extract from "a%CC%8Ao%CC%88c" "7" graphemes - grapheme_extractB = a%CC%8Ao%CC%88c == a%CC%8Ao%CC%88c
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractB starting at byte position 0 = o%CC%88 == o%CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractB starting at byte position 2 = o%CC%88 == o%CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractB starting at byte position 3 = o%CC%88 == o%CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractB starting at byte position 4 = %CC%88 == %CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "6" graphemes - grapheme_extractB starting at byte position 0 = o%CC%88o%CC%88 == o%CC%88o%CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "6" graphemes - grapheme_extractB starting at byte position 2 = o%CC%88o%CC%88 == o%CC%88o%CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "6" graphemes - grapheme_extractB starting at byte position 3 = o%CC%88o%CC%88 == o%CC%88o%CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "5" graphemes - grapheme_extractB starting at byte position 4 = %CC%88o%CC%88 == %CC%88o%CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "5" graphemes - grapheme_extractB starting at byte position 7 = %CC%88o%CC%88 == %CC%88o%CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractB starting at byte position 8 = o%CC%88 == o%CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "2" graphemes - grapheme_extractB starting at byte position 10 = %CC%88 == %CC%88
-extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "2" graphemes - grapheme_extractB starting at byte position 11 = false == false
+extract from "abc" "3" graphemes - grapheme_extractb = abc == abc
+extract from "abc" "2" graphemes - grapheme_extractb = ab == ab
+extract from "abc" "1" graphemes - grapheme_extractb = a == a
+extract from "abc" "0" graphemes - grapheme_extractb =  == 
+extract from "a%CC%8Abc" "5" graphemes - grapheme_extractb = a%CC%8Abc == a%CC%8Abc
+extract from "a%CC%8Abc" "4" graphemes - grapheme_extractb = a%CC%8Ab == a%CC%8Ab
+extract from "a%CC%8Abc" "1" graphemes - grapheme_extractb =  == 
+extract from "a%CC%8Ao%CC%88o%CC%88" "9" graphemes - grapheme_extractb = a%CC%8Ao%CC%88o%CC%88 == a%CC%8Ao%CC%88o%CC%88
+extract from "a%CC%8Ao%CC%88o%CC%88" "10" graphemes - grapheme_extractb = a%CC%8Ao%CC%88o%CC%88 == a%CC%8Ao%CC%88o%CC%88
+extract from "a%CC%8Ao%CC%88o%CC%88" "11" graphemes - grapheme_extractb = a%CC%8Ao%CC%88o%CC%88 == a%CC%8Ao%CC%88o%CC%88
+extract from "a%CC%8Ao%CC%88o%CC%88" "6" graphemes - grapheme_extractb = a%CC%8Ao%CC%88 == a%CC%8Ao%CC%88
+extract from "a%CC%8Ao%CC%88c" "3" graphemes - grapheme_extractb = a%CC%8A == a%CC%8A
+extract from "a%CC%8Ao%CC%88c" "4" graphemes - grapheme_extractb = a%CC%8A == a%CC%8A
+extract from "a%CC%8Ao%CC%88c" "5" graphemes - grapheme_extractb = a%CC%8A == a%CC%8A
+extract from "a%CC%8Ao%CC%88c" "6" graphemes - grapheme_extractb = a%CC%8Ao%CC%88 == a%CC%8Ao%CC%88
+extract from "a%CC%8Ao%CC%88c" "7" graphemes - grapheme_extractb = a%CC%8Ao%CC%88c == a%CC%8Ao%CC%88c
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractb starting at byte position 0 = o%CC%88 == o%CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractb starting at byte position 2 = o%CC%88 == o%CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractb starting at byte position 3 = o%CC%88 == o%CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractb starting at byte position 4 = %CC%88 == %CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "6" graphemes - grapheme_extractb starting at byte position 0 = o%CC%88o%CC%88 == o%CC%88o%CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "6" graphemes - grapheme_extractb starting at byte position 2 = o%CC%88o%CC%88 == o%CC%88o%CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "6" graphemes - grapheme_extractb starting at byte position 3 = o%CC%88o%CC%88 == o%CC%88o%CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "5" graphemes - grapheme_extractb starting at byte position 4 = %CC%88o%CC%88 == %CC%88o%CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "5" graphemes - grapheme_extractb starting at byte position 7 = %CC%88o%CC%88 == %CC%88o%CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "3" graphemes - grapheme_extractb starting at byte position 8 = o%CC%88 == o%CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "2" graphemes - grapheme_extractb starting at byte position 10 = %CC%88 == %CC%88
+extract from "o%CC%88o%CC%88o%CC%88o%CC%88" "2" graphemes - grapheme_extractb starting at byte position 11 = false == false
+
+function grapheme_extractc($haystack, $size, $start = 0)
+
+extract from "abc" "3" graphemes - grapheme_extractc = abc == abc
+extract from "abc" "2" graphemes - grapheme_extractc = ab == ab
+extract from "abc" "1" graphemes - grapheme_extractc = a == a
+extract from "abc" "0" graphemes - grapheme_extractc =  == 
+extract from "abco%CC%88" "0" graphemes - grapheme_extractc =  == 
+extract from "abco%CC%88" "1" graphemes - grapheme_extractc = a == a
+extract from "abco%CC%88" "2" graphemes - grapheme_extractc = ab == ab
+extract from "abco%CC%88" "3" graphemes - grapheme_extractc = abc == abc
+extract from "abco%CC%88" "4" graphemes - grapheme_extractc = abc == abc
+extract from "abco%CC%88" "5" graphemes - grapheme_extractc = abco%CC%88 == abco%CC%88
+extract from "abco%CC%88" "6" graphemes - grapheme_extractc = abco%CC%88 == abco%CC%88
+extract from "o%CC%88abc" "0" graphemes - grapheme_extractc =  == 
+extract from "o%CC%88abc" "1" graphemes - grapheme_extractc =  == 
+extract from "o%CC%88abc" "2" graphemes - grapheme_extractc = o%CC%88 == o%CC%88
+extract from "o%CC%88abc" "3" graphemes - grapheme_extractc = o%CC%88a == o%CC%88a
+extract from "o%CC%88abc" "4" graphemes - grapheme_extractc = o%CC%88ab == o%CC%88ab
+extract from "o%CC%88abca%CC%8Axyz" "5" graphemes - grapheme_extractc = o%CC%88abc == o%CC%88abc
+extract from "o%CC%88abca%CC%8Axyz" "6" graphemes - grapheme_extractc = o%CC%88abc == o%CC%88abc
+extract from "o%CC%88abca%CC%8Axyz" "7" graphemes - grapheme_extractc = o%CC%88abca%CC%8A == o%CC%88abca%CC%8A
+extract from "o%CC%88abca%CC%8Axyz" "8" graphemes - grapheme_extractc = o%CC%88abca%CC%8Ax == o%CC%88abca%CC%8Ax
+extract from "abc" "3" graphemes - grapheme_extractc starting at byte position 0 = abc == abc
+extract from "abc" "2" graphemes - grapheme_extractc starting at byte position 1 = bc == bc
+extract from "abc" "1" graphemes - grapheme_extractc starting at byte position 2 = c == c
+extract from "abc" "0" graphemes - grapheme_extractc starting at byte position 3 =  == 
+extract from "abc" "1" graphemes - grapheme_extractc starting at byte position 3 =  == 
+extract from "o%CC%88abca%CC%8Axyz" "8" graphemes - grapheme_extractc starting at byte position 0 = o%CC%88abca%CC%8Ax == o%CC%88abca%CC%8Ax
+extract from "o%CC%88abca%CC%8Axyz" "8" graphemes - grapheme_extractc starting at byte position 1 = %CC%88abca%CC%8Axy == %CC%88abca%CC%8Axy
+extract from "o%CC%88abca%CC%8Axyz" "8" graphemes - grapheme_extractc starting at byte position 2 = abca%CC%8Axyz == abca%CC%8Axyz
+extract from "o%CC%88abca%CC%8Axyz" "8" graphemes - grapheme_extractc starting at byte position 3 = abca%CC%8Axyz == abca%CC%8Axyz
+extract from "o%CC%88abca%CC%8Axyz" "8" graphemes - grapheme_extractc starting at byte position 4 = bca%CC%8Axyz == bca%CC%8Axyz
+extract from "o%CC%88abca%CC%8Axyz" "8" graphemes - grapheme_extractc starting at byte position 5 = ca%CC%8Axyz == ca%CC%8Axyz
+extract from "o%CC%88abca%CC%8Axyz" "8" graphemes - grapheme_extractc starting at byte position 6 = a%CC%8Axyz == a%CC%8Axyz
 
