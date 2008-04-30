@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
 <refentry xml:id="function.grapheme-extractb" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>grapheme_extractb</refname>
-  <refpurpose>Function to extract a sequence of default grapheme clusters from a text buffer, which must be encoded in UTF-8.</refpurpose>
+  <refpurpose>Function to extract a sequence of default grapheme clusters from
+  a UTF-8 text buffer, limited by a byte count.</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
@@ -15,8 +16,8 @@
   <methodparam choice='opt'><type>int</type><parameter>start</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Function to extract a sequence of default grapheme clusters from a text
-   buffer, which must be encoded in UTF-8, limited by a byte count.
+   Function to extract a sequence of default grapheme clusters from a UTF-8 text
+   buffer, limited by a byte count.
   </para> 
   </refsect1>
 
@@ -94,6 +95,7 @@ a%CC%8A
   <para>
    <simplelist>
     <member><function>grapheme_extract</function></member>
+    <member><function>grapheme_extractc</function></member>
     <member><function>grapheme_substr</function></member>
     <member>
      <link xlink:href="&uri.unicode.graphemes;">
