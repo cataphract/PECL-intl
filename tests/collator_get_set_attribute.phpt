@@ -33,7 +33,7 @@ function ut_main()
     return $res;
 }
 
-include( 'ut_common.php' );
+include( 'ut_common.inc' );
 ut_run();
 ?>
 --EXPECT--

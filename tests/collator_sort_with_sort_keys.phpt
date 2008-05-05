@@ -93,7 +93,7 @@ function ut_main()
     return $res_str . "\n";
 }
 
-include_once( 'ut_common.php' );
+include_once( 'ut_common.inc' );
 ut_run();
 ?>
 --EXPECT--

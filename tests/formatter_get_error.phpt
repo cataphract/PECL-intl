@@ -22,7 +22,7 @@ function ut_main()
         return "Ooops, an error should have occured.";
 }
 
-include_once( 'ut_common.php' );
+include_once( 'ut_common.inc' );
 
 // Run the test
 ut_run();

@@ -39,7 +39,7 @@ function ut_main()
     return $str_res;
 }
 
-include_once( 'ut_common.php' );
+include_once( 'ut_common.inc' );
 
 // Run the test
 ut_run();

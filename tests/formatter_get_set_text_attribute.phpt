@@ -75,7 +75,7 @@ function ut_main()
     return $res_str;
 }
 
-include_once( 'ut_common.php' );
+include_once( 'ut_common.inc' );
 ut_run();
 
 ?>

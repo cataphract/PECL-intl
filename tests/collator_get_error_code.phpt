@@ -39,7 +39,7 @@ function ut_main()
 # Suppress warning messages.
 error_reporting( E_ERROR );
 
-include_once( 'ut_common.php' );
+include_once( 'ut_common.inc' );
 ut_run();
 ?>
 --EXPECT--

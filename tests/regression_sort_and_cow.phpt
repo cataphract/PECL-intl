@@ -52,7 +52,7 @@ function ut_main()
     return $res_str;
 }
 
-require_once( 'ut_common.php' );
+require_once( 'ut_common.inc' );
 ut_run();
 ?>
 --EXPECT--

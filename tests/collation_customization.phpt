@@ -61,7 +61,7 @@ function ut_main()
         check_alternate_handling( $coll );
 }
 
-include_once( 'ut_common.php' );
+include_once( 'ut_common.inc' );
 ut_run();
 ?>
 --EXPECT--

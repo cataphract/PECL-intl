@@ -38,7 +38,7 @@ function ut_main()
     return $res_str . "\n";
 }
 
-include_once( 'ut_common.php' );
+include_once( 'ut_common.inc' );
 ut_run();
 ?>
 --EXPECT--
@@ -49,4 +49,4 @@ Locale of type -100 is false
 Locale of type -9999999999999 is false
 Locale of type 9999999999999 is false
 Locale of type 1.2 is 'en_US'
-Locale of type 1.0E+46 is 'en'
+Locale of type 1.0E+46 is false

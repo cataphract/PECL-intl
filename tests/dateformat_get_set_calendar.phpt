@@ -2,6 +2,7 @@
 datefmt_get_calendar_code() datefmt_set_calendar_code()
 --SKIPIF--
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
+<?php print 'skip'; ?>
 --FILE--
 <?php
 
@@ -40,7 +41,7 @@ function ut_main()
 
 }
 
-include_once( 'ut_common.php' );
+include_once( 'ut_common.inc' );
 
 // Run the test
 ut_run();
