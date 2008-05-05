@@ -23,23 +23,23 @@
 #include "dateformat.h"
 #include "dateformat_attr.h"
 
-zend_class_entry *DateFormatter_ce_ptr = NULL;
+zend_class_entry *IntlDateFormatter_ce_ptr = NULL;
 
 /////////////////////////////////////////////////////////////////////////////
-// Auxiliary functions needed by objects of 'DateFormatter' class
+// Auxiliary functions needed by objects of 'IntlDateFormatter' class
 /////////////////////////////////////////////////////////////////////////////
 
-/* {{{ DateFormatter_objects_dtor */
-static void DateFormatter_object_dtor(void *object, zend_object_handle handle TSRMLS_DC )
+/* {{{ IntlDateFormatter_objects_dtor */
+static void IntlDateFormatter_object_dtor(void *object, zend_object_handle handle TSRMLS_DC )
 {
 	zend_objects_destroy_object( object, handle TSRMLS_CC );
 }
 /* }}} */
 
-/* {{{ DateFormatter_objects_free */
-void DateFormatter_object_free( zend_object *object TSRMLS_DC )
+/* {{{ IntlDateFormatter_objects_free */
+void IntlDateFormatter_object_free( zend_object *object TSRMLS_DC )
 {
-	DateFormatter_object* mfo = (DateFormatter_object*)object;
+	IntlDateFormatter_object* mfo = (IntlDateFormatter_object*)object;
 
 	zend_object_std_dtor( &mfo->zo TSRMLS_CC );
 
@@ -53,13 +53,13 @@ void DateFormatter_object_free( zend_object *object TSRMLS_DC )
 }
 /* }}} */
 
-/* {{{ DateFormatter_object_create */
-zend_object_value DateFormatter_object_create(zend_class_entry *ce TSRMLS_DC)
+/* {{{ IntlDateFormatter_object_create */
+zend_object_value IntlDateFormatter_object_create(zend_class_entry *ce TSRMLS_DC)
 {
 	zend_object_value    retval;
-	DateFormatter_object*     intern;
+	IntlDateFormatter_object*     intern;
 
-	intern = ecalloc( 1, sizeof(DateFormatter_object) );
+	intern = ecalloc( 1, sizeof(IntlDateFormatter_object) );
 	dateformat_data_init( &intern->datef_data TSRMLS_CC );
 	zend_object_std_init( &intern->zo, ce TSRMLS_CC );
 	intern->date_type = 0;
@@ -69,8 +69,8 @@ zend_object_value DateFormatter_object_create(zend_class_entry *ce TSRMLS_DC)
 
 	retval.handle = zend_objects_store_put(
 		intern,
-		DateFormatter_object_dtor,
-		(zend_objects_free_object_storage_t)DateFormatter_object_free,
+		IntlDateFormatter_object_dtor,
+		(zend_objects_free_object_storage_t)IntlDateFormatter_object_free,
 		NULL TSRMLS_CC );
 
 	retval.handlers = zend_get_std_object_handlers();
@@ -80,15 +80,15 @@ zend_object_value DateFormatter_object_create(zend_class_entry *ce TSRMLS_DC)
 /* }}} */
 
 /////////////////////////////////////////////////////////////////////////////
-// 'DateFormatter' class registration structures & functions
+// 'IntlDateFormatter' class registration structures & functions
 /////////////////////////////////////////////////////////////////////////////
 
-/* {{{ DateFormatter_class_functions
- * Every 'DateFormatter' class method has an entry in this table
+/* {{{ IntlDateFormatter_class_functions
+ * Every 'IntlDateFormatter' class method has an entry in this table
  */
 
-static function_entry DateFormatter_class_functions[] = {
-	PHP_ME( DateFormatter, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR )
+static function_entry IntlDateFormatter_class_functions[] = {
+	PHP_ME( IntlDateFormatter, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR )
 	ZEND_FENTRY(  create, ZEND_FN( datefmt_create ), NULL, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	PHP_NAMED_FE( getDateType, ZEND_FN( datefmt_get_datetype ), NULL )
 	PHP_NAMED_FE( getTimeType, ZEND_FN( datefmt_get_timetype ), NULL )
@@ -111,21 +111,21 @@ static function_entry DateFormatter_class_functions[] = {
 /* }}} */
 
 /* {{{ dateformat_register_class
- * Initialize 'DateFormatter' class
+ * Initialize 'IntlDateFormatter' class
  */
-void dateformat_register_DateFormatter_class( TSRMLS_D )
+void dateformat_register_IntlDateFormatter_class( TSRMLS_D )
 {
 	zend_class_entry ce;
 
-	// Create and register 'DateFormatter' class.
-	INIT_CLASS_ENTRY( ce, "DateFormatter", DateFormatter_class_functions );
-	ce.create_object = DateFormatter_object_create;
-	DateFormatter_ce_ptr = zend_register_internal_class( &ce TSRMLS_CC );
+	// Create and register 'IntlDateFormatter' class.
+	INIT_CLASS_ENTRY( ce, "IntlDateFormatter", IntlDateFormatter_class_functions );
+	ce.create_object = IntlDateFormatter_object_create;
+	IntlDateFormatter_ce_ptr = zend_register_internal_class( &ce TSRMLS_CC );
 
-	// Declare 'DateFormatter' class properties.
-	if( !DateFormatter_ce_ptr )
+	// Declare 'IntlDateFormatter' class properties.
+	if( !IntlDateFormatter_ce_ptr )
 	{
-		zend_error(E_ERROR, "Failed to register DateFormatter class");
+		zend_error(E_ERROR, "Failed to register IntlDateFormatter class");
 		return;
 	}
 }

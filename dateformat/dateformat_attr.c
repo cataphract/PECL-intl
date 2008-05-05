@@ -26,7 +26,7 @@
 #include <unicode/udat.h>
 #include <unicode/ucal.h>
 
-static void internal_set_calendar(DateFormatter_object *mfo, char* timezone_id , int timezone_id_len , int calendar  ,zval* return_value TSRMLS_DC){
+static void internal_set_calendar(IntlDateFormatter_object *mfo, char* timezone_id , int timezone_id_len , int calendar  ,zval* return_value TSRMLS_DC){
 
         int         timezone_utf16_len = 0;
         UChar*      timezone_utf16  = NULL;             //timezone_id in UTF-16
@@ -63,9 +63,9 @@ static void internal_set_calendar(DateFormatter_object *mfo, char* timezone_id ,
 
 }
 
-/* {{{ proto unicode DateFormatter::getDateType( )
+/* {{{ proto unicode IntlDateFormatter::getDateType( )
  * Get formatter datetype. }}} */
-/* {{{ proto string datefmt_get_datetype( DateFormatter $mf )
+/* {{{ proto string datefmt_get_datetype( IntlDateFormatter $mf )
  * Get formatter datetype.
  */
 PHP_FUNCTION( datefmt_get_datetype )
@@ -73,7 +73,7 @@ PHP_FUNCTION( datefmt_get_datetype )
 	DATE_FORMAT_METHOD_INIT_VARS;
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, DateFormatter_ce_ptr ) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, IntlDateFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL , U_ILLEGAL_ARGUMENT_ERROR,	
 			"datefmt_get_datetype: unable to parse input params", 0 TSRMLS_CC );
@@ -89,9 +89,9 @@ PHP_FUNCTION( datefmt_get_datetype )
 }
 /* }}} */
 
-/* {{{ proto unicode DateFormatter::getTimeType( )
+/* {{{ proto unicode IntlDateFormatter::getTimeType( )
  * Get formatter timetype. }}} */
-/* {{{ proto string datefmt_get_timetype( DateFormatter $mf )
+/* {{{ proto string datefmt_get_timetype( IntlDateFormatter $mf )
  * Get formatter timetype.
  */
 PHP_FUNCTION( datefmt_get_timetype )
@@ -99,7 +99,7 @@ PHP_FUNCTION( datefmt_get_timetype )
 	DATE_FORMAT_METHOD_INIT_VARS;
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, DateFormatter_ce_ptr ) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, IntlDateFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL , U_ILLEGAL_ARGUMENT_ERROR,	
 			"datefmt_get_timetype: unable to parse input params", 0 TSRMLS_CC );
@@ -116,9 +116,9 @@ PHP_FUNCTION( datefmt_get_timetype )
 /* }}} */
 
 
-/* {{{ proto unicode DateFormatter::getCalendar( )
+/* {{{ proto unicode IntlDateFormatter::getCalendar( )
  * Get formatter calendar. }}} */
-/* {{{ proto string datefmt_get_calendar( DateFormatter $mf )
+/* {{{ proto string datefmt_get_calendar( IntlDateFormatter $mf )
  * Get formatter calendar.
  */
 PHP_FUNCTION( datefmt_get_calendar )
@@ -126,7 +126,7 @@ PHP_FUNCTION( datefmt_get_calendar )
 	DATE_FORMAT_METHOD_INIT_VARS;
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, DateFormatter_ce_ptr ) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, IntlDateFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL , U_ILLEGAL_ARGUMENT_ERROR,	
 			"datefmt_get_calendar: unable to parse input params", 0 TSRMLS_CC );
@@ -142,9 +142,9 @@ PHP_FUNCTION( datefmt_get_calendar )
 }
 /* }}} */
 
-/* {{{ proto unicode DateFormatter::getTimeZoneId( )
+/* {{{ proto unicode IntlDateFormatter::getTimeZoneId( )
  * Get formatter timezone_id. }}} */
-/* {{{ proto string datefmt_get_timezone_id( DateFormatter $mf )
+/* {{{ proto string datefmt_get_timezone_id( IntlDateFormatter $mf )
  * Get formatter timezone_id.
  */
 PHP_FUNCTION( datefmt_get_timezone_id )
@@ -152,7 +152,7 @@ PHP_FUNCTION( datefmt_get_timezone_id )
 	DATE_FORMAT_METHOD_INIT_VARS;
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, DateFormatter_ce_ptr ) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, IntlDateFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL , U_ILLEGAL_ARGUMENT_ERROR,	
 			"datefmt_get_timezone_id: unable to parse input params", 0 TSRMLS_CC );
@@ -171,9 +171,9 @@ PHP_FUNCTION( datefmt_get_timezone_id )
 	}
 }
 
-/* {{{ proto boolean DateFormatter::setTimeZoneId( $timezone_id)
+/* {{{ proto boolean IntlDateFormatter::setTimeZoneId( $timezone_id)
  * Set formatter timezone_id. }}} */
-/* {{{ proto boolean datefmt_set_timezone_id( DateFormatter $mf ,$timezone_id)
+/* {{{ proto boolean datefmt_set_timezone_id( IntlDateFormatter $mf ,$timezone_id)
  * Set formatter timezone_id.
  */
 PHP_FUNCTION( datefmt_set_timezone_id )
@@ -184,7 +184,7 @@ PHP_FUNCTION( datefmt_set_timezone_id )
         DATE_FORMAT_METHOD_INIT_VARS;
 
         // Parse parameters.
-        if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &object, DateFormatter_ce_ptr ,&timezone_id , &timezone_id_len) == FAILURE )
+        if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &object, IntlDateFormatter_ce_ptr ,&timezone_id , &timezone_id_len) == FAILURE )
         {
                 intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
                         "datefmt_set_timezone_id: unable to parse input params", 0 TSRMLS_CC );
@@ -197,7 +197,7 @@ PHP_FUNCTION( datefmt_set_timezone_id )
 	//set the timezone for the calendar
 	internal_set_calendar( mfo , timezone_id , timezone_id_len , mfo->calendar ,return_value TSRMLS_CC );
 
-	//Set the DateFormatter variable
+	//Set the IntlDateFormatter variable
         if( mfo->timezone_id ){
 		efree(mfo->timezone_id);
 	}
@@ -206,9 +206,9 @@ PHP_FUNCTION( datefmt_set_timezone_id )
 	RETURN_TRUE;
 }
 
-/* {{{ proto string DateFormatter::getPattern( )
+/* {{{ proto string IntlDateFormatter::getPattern( )
  * Get formatter pattern. }}} */
-/* {{{ proto string datefmt_get_pattern( DateFormatter $mf )
+/* {{{ proto string datefmt_get_pattern( IntlDateFormatter $mf )
  * Get formatter pattern.
  */
 PHP_FUNCTION( datefmt_get_pattern )
@@ -221,7 +221,7 @@ PHP_FUNCTION( datefmt_get_pattern )
 	DATE_FORMAT_METHOD_INIT_VARS;
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, DateFormatter_ce_ptr ) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &object, IntlDateFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,	
 			"datefmt_get_pattern: unable to parse input params", 0 TSRMLS_CC );
@@ -248,9 +248,9 @@ PHP_FUNCTION( datefmt_get_pattern )
 }
 /* }}} */
 
-/* {{{ proto bool DateFormatter::setPattern( string $pattern )
+/* {{{ proto bool IntlDateFormatter::setPattern( string $pattern )
  * Set formatter pattern. }}} */
-/* {{{ proto bool datefmt_set_pattern( DateFormatter $mf, string $pattern )
+/* {{{ proto bool datefmt_set_pattern( IntlDateFormatter $mf, string $pattern )
  * Set formatter pattern.
  */
 PHP_FUNCTION( datefmt_set_pattern )
@@ -266,7 +266,7 @@ PHP_FUNCTION( datefmt_set_pattern )
 
 	// Parse parameters.
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os",
-		&object, DateFormatter_ce_ptr,  &value, &value_len ) == FAILURE )
+		&object, IntlDateFormatter_ce_ptr,  &value, &value_len ) == FAILURE )
 	{
 		intl_error_set(NULL, U_ILLEGAL_ARGUMENT_ERROR,	
 			"datefmt_set_pattern: unable to parse input params", 0 TSRMLS_CC);
@@ -288,9 +288,9 @@ PHP_FUNCTION( datefmt_set_pattern )
 }
 /* }}} */
 
-/* {{{ proto string DateFormatter::getLocale()
+/* {{{ proto string IntlDateFormatter::getLocale()
  * Get formatter locale. }}} */
-/* {{{ proto string datefmt_get_locale(DateFormatter $mf)
+/* {{{ proto string datefmt_get_locale(IntlDateFormatter $mf)
  * Get formatter locale.
  */
 PHP_FUNCTION( datefmt_get_locale )
@@ -302,7 +302,7 @@ PHP_FUNCTION( datefmt_get_locale )
 
 	// Parse parameters.
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O|l",
-		&object, DateFormatter_ce_ptr ,&loc_type) == FAILURE )
+		&object, IntlDateFormatter_ce_ptr ,&loc_type) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			"datefmt_get_locale: unable to parse input params", 0 TSRMLS_CC );
@@ -318,9 +318,9 @@ PHP_FUNCTION( datefmt_get_locale )
 }
 /* }}} */
 
-/* {{{ proto string DateFormatter::isLenient()
+/* {{{ proto string IntlDateFormatter::isLenient()
  * Get formatter isLenient. }}} */
-/* {{{ proto string datefmt_isLenient(DateFormatter $mf)
+/* {{{ proto string datefmt_isLenient(IntlDateFormatter $mf)
  * Get formatter locale.
  */
 PHP_FUNCTION( datefmt_is_lenient )
@@ -330,7 +330,7 @@ PHP_FUNCTION( datefmt_is_lenient )
 
 	// Parse parameters.
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O",
-		&object, DateFormatter_ce_ptr ) == FAILURE )
+		&object, IntlDateFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			"datefmt_is_lenient: unable to parse input params", 0 TSRMLS_CC );
@@ -345,9 +345,9 @@ PHP_FUNCTION( datefmt_is_lenient )
 }
 /* }}} */
 
-/* {{{ proto string DateFormatter::setLenient()
+/* {{{ proto string IntlDateFormatter::setLenient()
  * Set formatter lenient. }}} */
-/* {{{ proto string datefmt_setLenient(DateFormatter $mf)
+/* {{{ proto string datefmt_setLenient(IntlDateFormatter $mf)
  * Set formatter lenient.
  */
 PHP_FUNCTION( datefmt_set_lenient )
@@ -359,7 +359,7 @@ PHP_FUNCTION( datefmt_set_lenient )
 
         // Parse parameters.
         if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ob",
-                &object, DateFormatter_ce_ptr ,&isLenient ) == FAILURE )
+                &object, IntlDateFormatter_ce_ptr ,&isLenient ) == FAILURE )
         {
                 intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
                         "datefmt_set_lenient: unable to parse input params", 0 TSRMLS_CC );
@@ -374,9 +374,9 @@ PHP_FUNCTION( datefmt_set_lenient )
 }
 /* }}} */
 
-/* {{{ proto bool DateFormatter::setPattern( int $calendar )
+/* {{{ proto bool IntlDateFormatter::setPattern( int $calendar )
  * Set formatter calendar. }}} */
-/* {{{ proto bool datefmt_set_calendar( DateFormatter $mf, int $calendar )
+/* {{{ proto bool datefmt_set_calendar( IntlDateFormatter $mf, int $calendar )
  * Set formatter calendar.
  */
 PHP_FUNCTION( datefmt_set_calendar )
@@ -387,7 +387,7 @@ PHP_FUNCTION( datefmt_set_calendar )
 
         // Parse parameters.
         if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ol",
-                &object, DateFormatter_ce_ptr, &calendar ) == FAILURE )
+                &object, IntlDateFormatter_ce_ptr, &calendar ) == FAILURE )
         {
                 intl_error_set(NULL, U_ILLEGAL_ARGUMENT_ERROR,
                         "datefmt_set_calendar: unable to parse input params", 0 TSRMLS_CC);
@@ -406,7 +406,7 @@ PHP_FUNCTION( datefmt_set_calendar )
 
 	internal_set_calendar( mfo , mfo->timezone_id , strlen(mfo->timezone_id) , calendar ,return_value TSRMLS_CC );
 
-	//Set the calendar  value in the DateFormatter object
+	//Set the calendar  value in the IntlDateFormatter object
         mfo->calendar = calendar ;
 
         RETURN_TRUE;

@@ -32,16 +32,16 @@
  */
 void dateformat_register_constants( INIT_FUNC_ARGS )
 {
-	if( DateFormatter_ce_ptr == NULL) {
+	if( IntlDateFormatter_ce_ptr == NULL) {
 		zend_error(E_ERROR, "DateFormat class not defined");
 		return;
 	}
 
 	#define DATEFORMATTER_EXPOSE_CONST(x) REGISTER_LONG_CONSTANT(#x, x, CONST_CS)
-	#define DATEFORMATTER_EXPOSE_CLASS_CONST(x) zend_declare_class_constant_long( DateFormatter_ce_ptr, ZEND_STRS( #x ) - 1, UDAT_##x TSRMLS_CC );
-	#define DATEFORMATTER_EXPOSE_CUSTOM_CLASS_CONST(name, value) zend_declare_class_constant_long( DateFormatter_ce_ptr, ZEND_STRS( name ) - 1, value TSRMLS_CC );
+	#define DATEFORMATTER_EXPOSE_CLASS_CONST(x) zend_declare_class_constant_long( IntlDateFormatter_ce_ptr, ZEND_STRS( #x ) - 1, UDAT_##x TSRMLS_CC );
+	#define DATEFORMATTER_EXPOSE_CUSTOM_CLASS_CONST(name, value) zend_declare_class_constant_long( IntlDateFormatter_ce_ptr, ZEND_STRS( name ) - 1, value TSRMLS_CC );
 
-	#define DATEFORMATTER_EXPOSE_UCAL_CLASS_CONST(x) zend_declare_class_constant_long( DateFormatter_ce_ptr, ZEND_STRS( #x ) - 1, UCAL_##x TSRMLS_CC );
+	#define DATEFORMATTER_EXPOSE_UCAL_CLASS_CONST(x) zend_declare_class_constant_long( IntlDateFormatter_ce_ptr, ZEND_STRS( #x ) - 1, UCAL_##x TSRMLS_CC );
 
 	// UDateFormatStyle constants
 	DATEFORMATTER_EXPOSE_CLASS_CONST( FULL );
@@ -67,9 +67,9 @@ void dateformat_register_constants( INIT_FUNC_ARGS )
 }
 /* }}} */
 
-/* {{{ proto DateFormatter DateFormatter::create( string $locale , long date_type, long time_type[,string $timezone_str, long $calendar , string $pattern] )
+/* {{{ proto IntlDateFormatter IntlDateFormatter::create( string $locale , long date_type, long time_type[,string $timezone_str, long $calendar , string $pattern] )
  * Create formatter. }}} */
-/* {{{ proto DateFormatter datefmt_create( string $locale, long date_type, long time_type[,string $timezone_str, long $calendar , string $pattern] )
+/* {{{ proto IntlDateFormatter datefmt_create( string $locale, long date_type, long time_type[,string $timezone_str, long $calendar , string $pattern] )
  
  * Create formatter.
  */
@@ -96,7 +96,7 @@ PHP_FUNCTION( datefmt_create )
 	UCalendar   ucal_obj = NULL;
 	
 
-	DateFormatter_object* mfo;
+	IntlDateFormatter_object* mfo;
 
 	intl_error_reset( NULL TSRMLS_CC );
 
@@ -110,12 +110,12 @@ PHP_FUNCTION( datefmt_create )
         }
 
 
-	// Create a DateFormatter object and save the ICU formatter into it.
+	// Create a IntlDateFormatter object and save the ICU formatter into it.
 	if( ( object = getThis() ) == NULL )
 		object = return_value;
 
 	if( Z_TYPE_P( object ) != IS_OBJECT )
-		object_init_ex( object, DateFormatter_ce_ptr );
+		object_init_ex( object, IntlDateFormatter_ce_ptr );
 
 	DATE_FORMAT_METHOD_FETCH_OBJECT;
 
@@ -188,10 +188,10 @@ PHP_FUNCTION( datefmt_create )
 }
 /* }}} */
 
-/* {{{ proto void DateFormatter::__construct( string $locale, string $pattern )
- * DateFormatter object constructor.
+/* {{{ proto void IntlDateFormatter::__construct( string $locale, string $pattern )
+ * IntlDateFormatter object constructor.
  */
-PHP_METHOD( DateFormatter, __construct )
+PHP_METHOD( IntlDateFormatter, __construct )
 {
 	char*       locale = NULL;
 	int         locale_len = 0;
@@ -212,7 +212,7 @@ PHP_METHOD( DateFormatter, __construct )
 	int         all_done = 0; 
 
 	zval*       object;
-	DateFormatter_object* mfo;
+	IntlDateFormatter_object* mfo;
 
 	intl_error_reset( NULL TSRMLS_CC );
 
@@ -240,7 +240,7 @@ PHP_METHOD( DateFormatter, __construct )
 	}
 */
 
-	mfo = (DateFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
+	mfo = (IntlDateFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
 	intl_error_reset( &mfo->datef_data.error TSRMLS_CC );
 
@@ -306,19 +306,19 @@ PHP_METHOD( DateFormatter, __construct )
 }
 /* }}} */
 
-/* {{{ proto int DateFormatter::getErrorCode()
+/* {{{ proto int IntlDateFormatter::getErrorCode()
  * Get formatter's last error code. }}} */
-/* {{{ proto int datefmt_get_error_code( DateFormatter $nf )
+/* {{{ proto int datefmt_get_error_code( IntlDateFormatter $nf )
  * Get formatter's last error code.
  */
 PHP_FUNCTION( datefmt_get_error_code )
 {
 	zval*                    object  = NULL;
-	DateFormatter_object*  mfo     = NULL;
+	IntlDateFormatter_object*  mfo     = NULL;
 
 	// Parse parameters.
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O",
-		&object, DateFormatter_ce_ptr ) == FAILURE )
+		&object, IntlDateFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			"datefmt_get_error_code: unable to parse input params", 0 TSRMLS_CC );
@@ -326,27 +326,27 @@ PHP_FUNCTION( datefmt_get_error_code )
 		RETURN_FALSE;
 	}
 
-	mfo = (DateFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
+	mfo = (IntlDateFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
 	// Return formatter's last error code.
 	RETURN_LONG( INTL_DATA_ERROR_CODE(mfo) );
 }
 /* }}} */
 
-/* {{{ proto string DateFormatter::getErrorMessage( )
+/* {{{ proto string IntlDateFormatter::getErrorMessage( )
  * Get text description for formatter's last error code. }}} */
-/* {{{ proto string datefmt_get_error_message( DateFormatter $coll )
+/* {{{ proto string datefmt_get_error_message( IntlDateFormatter $coll )
  * Get text description for formatter's last error code.
  */
 PHP_FUNCTION( datefmt_get_error_message )
 {
 	char*                    message = NULL;
 	zval*                    object  = NULL;
-	DateFormatter_object*  mfo     = NULL;
+	IntlDateFormatter_object*  mfo     = NULL;
 
 	// Parse parameters.
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O",
-		&object, DateFormatter_ce_ptr ) == FAILURE )
+		&object, IntlDateFormatter_ce_ptr ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			"datefmt_get_error_message: unable to parse input params", 0 TSRMLS_CC );
@@ -354,7 +354,7 @@ PHP_FUNCTION( datefmt_get_error_message )
 		RETURN_FALSE;
 	}
 
-	mfo = (DateFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
+	mfo = (IntlDateFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
 	// Return last error message.
 	message = intl_error_get_message( &mfo->datef_data.error TSRMLS_CC );

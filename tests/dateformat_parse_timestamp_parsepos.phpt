@@ -18,11 +18,11 @@ function ut_main()
 	);
 	
 	$datetype_arr = array (
-                DateFormatter::FULL,
-                DateFormatter::LONG,
-                DateFormatter::MEDIUM,
-                DateFormatter::SHORT,
-                DateFormatter::NONE
+                IntlDateFormatter::FULL,
+                IntlDateFormatter::LONG,
+                IntlDateFormatter::MEDIUM,
+                IntlDateFormatter::SHORT,
+                IntlDateFormatter::NONE
         );
 
         $res_str = '';

@@ -23,7 +23,7 @@ function ut_main()
 	
 	$res_str = '';
 
-	$fmt = ut_datefmt_create( "en_US",  DateFormatter::FULL, DateFormatter::FULL, 'America/San_Francisco' , DateFormatter::GREGORIAN  );
+	$fmt = ut_datefmt_create( "en_US",  IntlDateFormatter::FULL, IntlDateFormatter::FULL, 'America/San_Francisco' , IntlDateFormatter::GREGORIAN  );
 	$timezone_id = ut_datefmt_get_timezone_id( $fmt );
 	$res_str .= "\nAfter creation of the dateformatter :  timezone_id= $timezone_id\n";
 

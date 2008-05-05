@@ -22,7 +22,7 @@ PHP_FUNCTION( datefmt_create );
 PHP_FUNCTION( datefmt_get_error_code );
 PHP_FUNCTION( datefmt_get_error_message );
 PHP_FUNCTION( datefmt_register_constants );
-PHP_METHOD( DateFormatter, __construct );
+PHP_METHOD( IntlDateFormatter, __construct );
 
 /*
 These are not necessary at this point of time

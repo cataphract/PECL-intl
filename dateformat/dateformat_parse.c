@@ -33,7 +33,7 @@
  *	if set to 1 - store any error encountered  in the parameter parse_error  
  *	if set to 0 - no need to store any error encountered  in the parameter parse_error  
 */
-static void internal_parse_to_timestamp(DateFormatter_object *mfo, char* text_to_parse , int32_t text_len, int parse_pos , zval *return_value TSRMLS_DC){
+static void internal_parse_to_timestamp(IntlDateFormatter_object *mfo, char* text_to_parse , int32_t text_len, int parse_pos , zval *return_value TSRMLS_DC){
 	long	result =  0;
 	UDate 	timestamp   =0;
 	UChar* 	text_utf16  = NULL;
@@ -60,7 +60,7 @@ static void internal_parse_to_timestamp(DateFormatter_object *mfo, char* text_to
 }
 /* }}} */
 
-static void add_to_localtime_arr( DateFormatter_object *mfo, zval* return_value ,UCalendar parsed_calendar , long calendar_field , char* key_name TSRMLS_DC){
+static void add_to_localtime_arr( IntlDateFormatter_object *mfo, zval* return_value ,UCalendar parsed_calendar , long calendar_field , char* key_name TSRMLS_DC){
 	long calendar_field_val = ucal_get( parsed_calendar , calendar_field , &INTL_DATA_ERROR_CODE(mfo));	
 	INTL_METHOD_CHECK_STATUS( mfo, "Date parsing - localtime failed : could not get a field from calendar" );
 
@@ -78,7 +78,7 @@ static void add_to_localtime_arr( DateFormatter_object *mfo, zval* return_value 
 /* {{{
  * Internal function which calls the udat_parseCalendar
 */
-static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to_parse , int32_t text_len, int parse_pos , zval *return_value TSRMLS_DC){
+static void internal_parse_to_localtime(IntlDateFormatter_object *mfo, char* text_to_parse , int32_t text_len, int parse_pos , zval *return_value TSRMLS_DC){
         UCalendar* 	parsed_calendar = NULL ;
         UChar*  	text_utf16  = NULL;
         int32_t 	text_utf16_len = 0;
@@ -116,9 +116,9 @@ static void internal_parse_to_localtime(DateFormatter_object *mfo, char* text_to
 /* }}} */
 
 
-/* {{{ proto integer DateFormatter::parse( string $text_to_parse  , int $parse_pos )
+/* {{{ proto integer IntlDateFormatter::parse( string $text_to_parse  , int $parse_pos )
  * Parse the string $value starting at parse_pos to a Unix timestamp -int }}}*/
-/* {{{ proto integer datefmt_parse( DateFormatter $fmt, string $text_to_parse , int $parse_pos )
+/* {{{ proto integer datefmt_parse( IntlDateFormatter $fmt, string $text_to_parse , int $parse_pos )
  * Parse the string $value starting at parse_pos to a Unix timestamp -int }}}*/
 PHP_FUNCTION(datefmt_parse)
 {
@@ -131,7 +131,7 @@ PHP_FUNCTION(datefmt_parse)
 
         // Parse parameters.
         if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os|l",
-                &object, DateFormatter_ce_ptr,  &text_to_parse ,  &text_len , &parse_pos ) == FAILURE ){
+                &object, IntlDateFormatter_ce_ptr,  &text_to_parse ,  &text_len , &parse_pos ) == FAILURE ){
                         intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
                                 "datefmt_parse: unable to parse input params", 0 TSRMLS_CC );
                         RETURN_FALSE;
@@ -147,9 +147,9 @@ PHP_FUNCTION(datefmt_parse)
 }
 /* }}} */
 
-/* {{{ proto integer DateFormatter::localtime( string $text_to_parse, int $parse_pos ))
+/* {{{ proto integer IntlDateFormatter::localtime( string $text_to_parse, int $parse_pos ))
  * Parse the string $value to a localtime array  }}}*/
-/* {{{ proto integer datefmt_localtime( DateFormatter $fmt, string $text_to_parse, int $parse_pos ))
+/* {{{ proto integer datefmt_localtime( IntlDateFormatter $fmt, string $text_to_parse, int $parse_pos ))
  * Parse the string $value to a localtime array  }}}*/
 PHP_FUNCTION(datefmt_localtime)
 {
@@ -162,7 +162,7 @@ PHP_FUNCTION(datefmt_localtime)
 
         // Parse parameters.
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Osl",
-                &object, DateFormatter_ce_ptr,  &text_to_parse ,  &text_len , &parse_pos ) == FAILURE ){
+                &object, IntlDateFormatter_ce_ptr,  &text_to_parse ,  &text_len , &parse_pos ) == FAILURE ){
 
                         intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
                                 "datefmt_parse_to_localtime: unable to parse input params", 0 TSRMLS_CC );

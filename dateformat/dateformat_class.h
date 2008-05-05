@@ -30,15 +30,15 @@ typedef struct {
 	int			time_type ;
 	int			calendar ;
 	char*			timezone_id;
-} DateFormatter_object;
+} IntlDateFormatter_object;
 
-void dateformat_register_DateFormatter_class( TSRMLS_D );
-extern zend_class_entry *DateFormatter_ce_ptr;
+void dateformat_register_IntlDateFormatter_class( TSRMLS_D );
+extern zend_class_entry *IntlDateFormatter_ce_ptr;
 
 /* Auxiliary macros */
 
-#define DATE_FORMAT_METHOD_INIT_VARS	INTL_METHOD_INIT_VARS(DateFormatter, mfo)
-#define DATE_FORMAT_METHOD_FETCH_OBJECT	INTL_METHOD_FETCH_OBJECT(DateFormatter, mfo)
+#define DATE_FORMAT_METHOD_INIT_VARS	INTL_METHOD_INIT_VARS(IntlDateFormatter, mfo)
+#define DATE_FORMAT_METHOD_FETCH_OBJECT	INTL_METHOD_FETCH_OBJECT(IntlDateFormatter, mfo)
 #define DATE_FORMAT_OBJECT(mfo)		(mfo)->datef_data.udatf
 
 #endif // #ifndef DATE_FORMAT_CLASS_H

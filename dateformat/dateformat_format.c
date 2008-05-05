@@ -31,7 +31,7 @@
 /* {{{ 
  * Internal function which calls the udat_format
 */
-static void internal_format(DateFormatter_object *mfo, UDate timestamp , zval *return_value TSRMLS_DC){
+static void internal_format(IntlDateFormatter_object *mfo, UDate timestamp , zval *return_value TSRMLS_DC){
 	UChar* 	formatted =  NULL;
 	int32_t	resultlengthneeded =0 ;
 	
@@ -57,7 +57,7 @@ static void internal_format(DateFormatter_object *mfo, UDate timestamp , zval *r
 /* {{{ 
  * Internal function which fetches an element from the passed array for the key_name passed 
 */
-static double internal_get_arr_ele(DateFormatter_object *mfo  , HashTable* hash_arr  ,char* key_name TSRMLS_DC){
+static double internal_get_arr_ele(IntlDateFormatter_object *mfo  , HashTable* hash_arr  ,char* key_name TSRMLS_DC){
 	zval**  ele_value       = NULL;
 	UDate result = -1;
 
@@ -77,7 +77,7 @@ static double internal_get_arr_ele(DateFormatter_object *mfo  , HashTable* hash_
 /* {{{ 
  * Internal function which creates a UCalendar  from the passed array
 */
-static void internal_create_ucal(DateFormatter_object *mfo, HashTable* hash_arr , UCalendar* pcal  TSRMLS_DC){
+static void internal_create_ucal(IntlDateFormatter_object *mfo, HashTable* hash_arr , UCalendar* pcal  TSRMLS_DC){
 	long year =0;
 	long month =0;
 	long hour =0;
@@ -115,7 +115,7 @@ static void internal_create_ucal(DateFormatter_object *mfo, HashTable* hash_arr 
 }
 
 
-/* {{{ proto string DateFormatter::format( [mixed]int $args or array $args )
+/* {{{ proto string IntlDateFormatter::format( [mixed]int $args or array $args )
  * Format the time value as a string. }}}*/
 /* {{{ proto string datefmt_format( [mixed]int $args or array $args )
  * Format the time value as a string. }}}*/
@@ -130,7 +130,7 @@ PHP_FUNCTION(datefmt_format)
 	DATE_FORMAT_METHOD_INIT_VARS;
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Oz", &object, DateFormatter_ce_ptr ,&zarg ) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Oz", &object, IntlDateFormatter_ce_ptr ,&zarg ) == FAILURE )
         {
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			 "datefmt_format: unable to parse input params", 0 TSRMLS_CC );

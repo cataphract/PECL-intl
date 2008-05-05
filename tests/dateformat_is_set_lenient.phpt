@@ -18,8 +18,8 @@ function ut_main()
         $res_str = '';
 
 	//Create
-        $fmt = ut_datefmt_create( "en-US",  DateFormatter::SHORT, DateFormatter::SHORT , 'America/New_York', DateFormatter::GREGORIAN );
-        $res_str .= "\nDateFormatter Created.\n";
+        $fmt = ut_datefmt_create( "en-US",  IntlDateFormatter::SHORT, IntlDateFormatter::SHORT , 'America/New_York', IntlDateFormatter::GREGORIAN );
+        $res_str .= "\nIntlDateFormatter Created.\n";
 
         $resLenient1 = ut_datefmt_is_lenient( $fmt);
         $res_str .= "After call to get_lenient :  lenient= ";
@@ -32,7 +32,7 @@ function ut_main()
 	//Set and test
         $res_str .= "--------------------\n";
         $isLenient = TRUE;
-	$res_str .= "Setting DateFormatter with lenient = ";
+	$res_str .= "Setting IntlDateFormatter with lenient = ";
 	if( $isLenient){
 		$res_str .= "TRUE\n";
 	}else{
@@ -51,7 +51,7 @@ function ut_main()
 	//Set and test
         $res_str .= "--------------------\n";
         $isLenient = FALSE;
-	$res_str .= "Setting DateFormatter with lenient =";
+	$res_str .= "Setting IntlDateFormatter with lenient =";
 	if( $isLenient){
 		$res_str .= "TRUE\n";
 	}else{
@@ -78,12 +78,12 @@ include_once( 'ut_common.inc' );
 ut_run();
 ?>
 --EXPECT--
-DateFormatter Created.
+IntlDateFormatter Created.
 After call to get_lenient :  lenient= TRUE
 --------------------
-Setting DateFormatter with lenient = TRUE
+Setting IntlDateFormatter with lenient = TRUE
 After call to is_lenient :  lenient= TRUE
 --------------------
-Setting DateFormatter with lenient =FALSE
+Setting IntlDateFormatter with lenient =FALSE
 After call to is_lenient :  lenient= FALSE
 --------------------
