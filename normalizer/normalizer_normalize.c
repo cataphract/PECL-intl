@@ -25,9 +25,9 @@
 #include "normalizer_normalize.h"
 #include "intl_convert.h"
 
-/* {{{ proto string Normalizer::normalize( string $input [, string $form = FORM_C] [, array $options] )
+/* {{{ proto string Normalizer::normalize( string $input [, string $form = FORM_C] )
  * Normalize a string. }}} */
-/* {{{ proto string normalizer_normalize( string $input [, string $form = FORM_C] [, array $options]  )
+/* {{{ proto string normalizer_normalize( string $input [, string $form = FORM_C] )
  * Normalize a string.
  */
 PHP_FUNCTION( normalizer_normalize )
@@ -36,12 +36,10 @@ PHP_FUNCTION( normalizer_normalize )
 	// form is optional, defaults to FORM_C
 	long			form = NORMALIZER_DEFAULT;
 	int			input_len = 0;
-	zval*			options_array;
 		
 	UChar*			uinput = NULL;
 	int			uinput_len = 0;
 	int			expansion_factor = 1;
-	int			options = 0; 
 	UErrorCode		status = U_ZERO_ERROR;
 		
 	UChar*			uret_buf = NULL;
@@ -57,8 +55,8 @@ PHP_FUNCTION( normalizer_normalize )
 	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|la",
-				&input, &input_len, &form, &options_array) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|l",
+				&input, &input_len, &form ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 						 "normalizer_normalize: unable to parse input params", 1 TSRMLS_CC );
@@ -110,7 +108,7 @@ PHP_FUNCTION( normalizer_normalize )
 	uret_buf = eumalloc( uret_len + 1 );
 
 	// normalize
-	size_needed = unorm_normalize( uinput, uinput_len, form, options, uret_buf, uret_len, &status);
+	size_needed = unorm_normalize( uinput, uinput_len, form, (int32_t) 0 /* options */, uret_buf, uret_len, &status);
 	
 	// Bail out if an unexpected error occured.
 	// (U_BUFFER_OVERFLOW_ERROR means that *target buffer is not large enough).
@@ -131,7 +129,7 @@ PHP_FUNCTION( normalizer_normalize )
 		status = U_ZERO_ERROR;
 
 		// try normalize again
-		size_needed = unorm_normalize( uinput, uinput_len, form, options, uret_buf, uret_len, &status);
+		size_needed = unorm_normalize( uinput, uinput_len, form, (int32_t) 0 /* options */, uret_buf, uret_len, &status);
 
 		// Bail out if an unexpected error occured.
 		if( U_FAILURE(status)  ) {
@@ -163,9 +161,9 @@ PHP_FUNCTION( normalizer_normalize )
 }
 /* }}} */
 
-/* {{{ proto bool Normalizer::isNormalized( string $input [, string $form = FORM_C] [, array $options] )
+/* {{{ proto bool Normalizer::isNormalized( string $input [, string $form = FORM_C] )
  * Test if a string is in a given normalization form. }}} */
-/* {{{ proto bool normalizer_is_normalize( string $input [, string $form = FORM_C] [, array $options]  )
+/* {{{ proto bool normalizer_is_normalize( string $input [, string $form = FORM_C] )
  * Test if a string is in a given normalization form.
  */
 PHP_FUNCTION( normalizer_is_normalized )
@@ -174,11 +172,9 @@ PHP_FUNCTION( normalizer_is_normalized )
 	// form is optional, defaults to FORM_C
 	long		form = NORMALIZER_DEFAULT;
 	int		input_len = 0;
-	zval*	 	options_array = NULL;
 
 	UChar*	 	uinput = NULL;
 	int		uinput_len = 0;
-	int		options = 0; 
 	UErrorCode	status = U_ZERO_ERROR;
 		
 	UBool		uret = FALSE;
@@ -188,8 +184,8 @@ PHP_FUNCTION( normalizer_is_normalized )
 	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|la",
-				&input, &input_len, &form, &options_array) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|l",
+				&input, &input_len, &form) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 				"normalizer_is_normalized: unable to parse input params", 1 TSRMLS_CC );
@@ -232,7 +228,7 @@ PHP_FUNCTION( normalizer_is_normalized )
 
 
 	// test string
-	uret = unorm_isNormalizedWithOptions( uinput, uinput_len, form, options, &status);
+	uret = unorm_isNormalizedWithOptions( uinput, uinput_len, form, (int32_t) 0 /* options */, &status);
 	
 	efree( uinput );
 
