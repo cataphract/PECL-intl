@@ -1,16 +1,16 @@
 /*
    +----------------------------------------------------------------------+
-   | PHP Version 5                                                        |
+   | PHP Version 5														  |
    +----------------------------------------------------------------------+
-   | This source file is subject to version 3.01 of the PHP license,      |
-   | that is bundled with this package in the file LICENSE, and is        |
-   | available through the world-wide-web at the following url:           |
-   | http://www.php.net/license/3_01.txt                                  |
+   | This source file is subject to version 3.01 of the PHP license,	  |
+   | that is bundled with this package in the file LICENSE, and is		  |
+   | available through the world-wide-web at the following url:			  |
+   | http://www.php.net/license/3_01.txt								  |
    | If you did not receive a copy of the PHP license and are unable to   |
-   | obtain it through the world-wide-web, please send a note to          |
-   | license@php.net so we can mail you a copy immediately.               |
+   | obtain it through the world-wide-web, please send a note to		  |
+   | license@php.net so we can mail you a copy immediately.				  |
    +----------------------------------------------------------------------+
-   | Author: Ed Batutis <ed@batutis.com>                                  |
+   | Author: Ed Batutis <ed@batutis.com>								  |
    +----------------------------------------------------------------------+
  */
 
@@ -32,12 +32,21 @@
 
 /* }}} */
 
+#define GRAPHEME_EXTRACT_TYPE_COUNT		0
+#define GRAPHEME_EXTRACT_TYPE_MAXBYTES	1
+#define GRAPHEME_EXTRACT_TYPE_MAXCHARS	2
+#define GRAPHEME_EXTRACT_TYPE_MIN	GRAPHEME_EXTRACT_TYPE_COUNT
+#define GRAPHEME_EXTRACT_TYPE_MAX	GRAPHEME_EXTRACT_TYPE_MAXCHARS
+
+
 /* {{{ grapheme_register_constants
  * Register API constants
  */
 void grapheme_register_constants( INIT_FUNC_ARGS )
 {
-
+	REGISTER_LONG_CONSTANT("GRAPHEME_EXTR_COUNT", GRAPHEME_EXTRACT_TYPE_COUNT, CONST_CS | CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("GRAPHEME_EXTR_MAXBYTES", GRAPHEME_EXTRACT_TYPE_MAXBYTES, CONST_CS | CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("GRAPHEME_EXTR_MAXCHARS", GRAPHEME_EXTRACT_TYPE_MAXCHARS, CONST_CS | CONST_PERSISTENT);
 }
 /* }}} */
 
@@ -60,9 +69,9 @@ PHP_FUNCTION(grapheme_strlen)
 		RETURN_FALSE;
 	}
 
-    ret_len = grapheme_ascii_check(string, string_len);
-    
-    if ( ret_len >= 0 ) 
+	ret_len = grapheme_ascii_check(string, string_len);
+	
+	if ( ret_len >= 0 ) 
 		RETURN_LONG(ret_len);
 
 	/* convert the string to UTF-16. */
@@ -568,7 +577,7 @@ PHP_FUNCTION(grapheme_substr)
 }
 /* }}} */
 
-/* {{{  strstr_common_handler */
+/* {{{	strstr_common_handler */
 static void strstr_common_handler(INTERNAL_FUNCTION_PARAMETERS, int f_ignore_case)
 {
 	unsigned char *haystack, *needle, *found;
@@ -655,34 +664,151 @@ PHP_FUNCTION(grapheme_stristr)
 }
 /* }}} */
 
-/* {{{ proto string grapheme_extract(string str, size[, start])
+/* {{{ grapheme_extract_charcount_iter - grapheme iterator for grapheme_extract MAXCHARS */
+inline int32_t
+grapheme_extract_charcount_iter(UBreakIterator *bi, int32_t csize, unsigned char *pstr, int32_t str_len)
+{
+	int pos = 0, prev_pos = 0;
+	int ret_pos = 0, prev_ret_pos = 0;
+
+	while ( 1 ) {
+		pos = ubrk_next(bi);
+
+		if ( UBRK_DONE == pos ) {
+			break;
+		}
+
+		/* if we are beyond our limit, then the loop is done */
+		if ( pos > csize ) {
+			break;
+		}
+
+		/* update our pointer in the original UTF-8 buffer by as many characters
+		   as ubrk_next iterated over */
+
+		prev_ret_pos = ret_pos;
+		U8_FWD_N(pstr, ret_pos, str_len, pos - prev_pos);
+
+		if ( prev_ret_pos == ret_pos ) {
+			/* something wrong - malformed utf8? */
+			break;
+		}
+
+		prev_pos = pos;
+	}
+
+	return ret_pos;
+}
+/* }}} */
+
+/* {{{ grapheme_extract_bytecount_iter - grapheme iterator for grapheme_extract MAXBYTES */
+inline int32_t
+grapheme_extract_bytecount_iter(UBreakIterator *bi, int32_t bsize, unsigned char *pstr, int32_t str_len)
+{
+	int pos = 0, prev_pos = 0;
+	int ret_pos = 0, prev_ret_pos = 0;
+
+	while ( 1 ) {
+		pos = ubrk_next(bi);
+
+		if ( UBRK_DONE == pos ) {
+			break;
+		}
+
+		prev_ret_pos = ret_pos;
+		U8_FWD_N(pstr, ret_pos, str_len, pos - prev_pos);
+
+		if ( ret_pos > bsize ) {
+			ret_pos = prev_ret_pos;
+			break;
+		}
+
+		if ( prev_ret_pos == ret_pos ) {
+			/* something wrong - malformed utf8? */
+			break;
+		}
+
+		prev_pos = pos;
+	}
+
+	return ret_pos;
+}
+/* }}} */
+
+/* {{{ grapheme_extract_count_iter - grapheme iterator for grapheme_extract COUNT */
+inline int32_t
+grapheme_extract_count_iter(UBreakIterator *bi, int32_t size, unsigned char *pstr, int32_t str_len)
+{
+	int pos = 0, next_pos = 0;
+	int ret_pos = 0;
+
+	while ( size ) {
+		next_pos = ubrk_next(bi);
+
+		if ( UBRK_DONE == next_pos ) {
+			break;
+		}
+		pos = next_pos;
+		size--;
+	}
+
+	/* pos is one past the last UChar - and represent the number of code units to 
+		advance in the utf-8 buffer
+	*/
+
+	U8_FWD_N(pstr, ret_pos, str_len, pos);
+
+	return ret_pos;
+}
+/* }}} */
+
+/* {{{ grapheme extract iter function pointer array */
+typedef int32_t (*grapheme_extract_iter)(UBreakIterator * /*bi*/, int32_t /*size*/, unsigned char * /*pstr*/, int32_t /*str_len*/);
+
+static grapheme_extract_iter grapheme_extract_iters[] = {
+	&grapheme_extract_count_iter,
+	&grapheme_extract_bytecount_iter,
+	&grapheme_extract_charcount_iter,
+};
+/* }}} */
+
+/* {{{ proto string grapheme_extract(string str, size[, extract_type[, start]])
 	Function to extract a sequence of default grapheme clusters */
 PHP_FUNCTION(grapheme_extract)
 {
 	unsigned char *str, *pstr;
 	UChar *ustr;
 	int str_len, ustr_len;
-	long size; /* maximum number of grapheme clusters to return */
+	long size; /* maximum number of grapheme clusters, bytes, or characters (based on extract_type) to return */
 	long start = 0; /* starting position in str in bytes */
+	long extract_type = GRAPHEME_EXTRACT_TYPE_COUNT;
 	UErrorCode status;
 	unsigned char u_break_iterator_buffer[U_BRK_SAFECLONE_BUFFERSIZE];
 	UBreakIterator* bi = NULL;
-	int ret_pos, pos, next_pos;
+	int ret_pos;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|l", (char **)&str, &str_len, &size, &start) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|ll", (char **)&str, &str_len, &size, &extract_type, &start) == FAILURE) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			 "grapheme_strstr: unable to parse input param", 0 TSRMLS_CC );
+			 "grapheme_extract: unable to parse input param", 0 TSRMLS_CC );
 			 
 		RETURN_FALSE;
 	}
 
-    if ( start < 0 || start > str_len ) {
+	if ( extract_type < GRAPHEME_EXTRACT_TYPE_MIN || extract_type > GRAPHEME_EXTRACT_TYPE_MAX ) {
 
-        intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extract: start not contained in string", 1 TSRMLS_CC );
+		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
+			 "grapheme_extract: unknown extract type param", 0 TSRMLS_CC );
+			 
+		RETURN_FALSE;
+	}
 
-        RETURN_FALSE;
-    }
+	if ( start < 0 || start >= str_len ) {
+
+		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extract: start not contained in string", 1 TSRMLS_CC );
+
+		RETURN_FALSE;
+	}
 
 	pstr = str + start;
 
@@ -702,6 +828,14 @@ PHP_FUNCTION(grapheme_extract)
 	}
 
 	str_len -= (pstr - str);
+
+	/* if the string is all ASCII up to size+1 - or str_len whichever is first - then we are done.
+		(size + 1 because the size-th character might be the beginning of a grapheme cluster)
+	 */
+	
+	if ( -1 != grapheme_ascii_check(pstr, size + 1 < str_len ? size + 1 : str_len ) ) {
+		RETURN_STRINGL(((char *)pstr), size, 1);
+	}
 
 	/* convert the strings to UTF-16. */
 	ustr = NULL;
@@ -732,250 +866,13 @@ PHP_FUNCTION(grapheme_extract)
 		can't back up. So, we will not do anything. */
 
 	/* now we need to find the end of the chunk the user wants us to return */
-	pos = 0;
-	while ( size ) {
-		next_pos = ubrk_next(bi);
 
-		if ( UBRK_DONE == next_pos ) {
-			break;
-		}
-		pos = next_pos;
-		size--;
-	}
+	ret_pos = (*grapheme_extract_iters[extract_type])(bi, size, pstr, str_len);
 
 	efree(ustr);
 	ubrk_close(bi);
-
-	/* pos is one past the last UChar - and represent the number of code units to 
-		advance in the utf-8 buffer
-	*/
-
-	ret_pos = 0;
-	U8_FWD_N(pstr, ret_pos, str_len, pos);
 
 	RETURN_STRINGL(((char *)pstr), ret_pos, 1);
-}
-
-/* }}} */
-
-/* {{{ proto string grapheme_extractb(string str, bsize[, start])
-	Function to extract a sequence of default grapheme clusters up to a byte limit */
-PHP_FUNCTION(grapheme_extractb)
-{
-	char *str, *pstr;
-	UChar *ustr;
-	int str_len, ustr_len;
-	long bsize; /* maximum number of bytes to return */
-	long start = 0; /* starting position in str in bytes */
-	UErrorCode status;
-	unsigned char u_break_iterator_buffer[U_BRK_SAFECLONE_BUFFERSIZE];
-	UBreakIterator* bi = NULL;
-	int ret_pos, pos, prev_pos, prev_ret_pos;
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|l", (char **)&str, &str_len, &bsize, &start) == FAILURE) {
-	
-		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			 "grapheme_extractb: unable to parse input param", 0 TSRMLS_CC );
-			 
-		RETURN_FALSE;
-	}
-
-	if ( start < 0 || start > str_len ) {
-
-        	intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extractb: start not contained in string", 1 TSRMLS_CC );
-
-        	RETURN_FALSE;
-	}
-
-	pstr = str + start;
-
-	/* just in case pstr points in the middle of a character, move forward to the start of the next char */
-	if ( !UTF8_IS_SINGLE(*pstr) && !U8_IS_LEAD(*pstr) ) {
-		char *str_end = str + str_len;
-
-		while ( !UTF8_IS_SINGLE(*pstr) && !U8_IS_LEAD(*pstr) ) {
-			pstr++;
-			if ( pstr >= str_end ) {
-				intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-								"grapheme_extract: invalid input string", 0 TSRMLS_CC );
-			 
-				RETURN_FALSE;
-			}
-		}
-	}
-
-	str_len -= (pstr - str);
-
-	/* convert the strings to UTF-16. */
-	ustr = NULL;
-	ustr_len = 0;
-	status = U_ZERO_ERROR;
-	intl_convert_utf8_to_utf16(&ustr, &ustr_len, pstr, str_len, &status );
-
-	if ( U_FAILURE( status ) ) {
-		/* Set global error code. */
-		intl_error_set_code( NULL, status TSRMLS_CC );
-
-		/* Set error messages. */
-		intl_error_set_custom_msg( NULL, "Error converting input string to UTF-16", 1 TSRMLS_CC );
-
-		if ( NULL != ustr )
-			efree( ustr );
-
-		RETURN_FALSE;
-	}
-
-	bi = NULL;
-	status = U_ZERO_ERROR;
-	bi = grapheme_get_break_iterator(u_break_iterator_buffer, &status TSRMLS_CC );
-
-	ubrk_setText(bi, ustr, ustr_len, &status);
-
-	pos = 0;
-	prev_pos = 0;
-	ret_pos = 0;
-	prev_ret_pos = 0;
-
-	while ( 1 ) {
-		pos = ubrk_next(bi);
-
-		if ( UBRK_DONE == pos ) {
-			break;
-		}
-
-		prev_ret_pos = ret_pos;
-		U8_FWD_N(pstr, ret_pos, str_len, pos - prev_pos);
-
-		if ( ret_pos > bsize ) {
-			ret_pos = prev_ret_pos;
-			break;
-		}
-
-		if ( prev_ret_pos == ret_pos ) {
-			/* something wrong - malformed utf8? */
-			break;
-		}
-
-		prev_pos = pos;
-	}
-
-	efree(ustr);
-	ubrk_close(bi);
-
-	RETURN_STRINGL(pstr, ret_pos, 1);
-}
-
-/* }}} */
-
-
-/* {{{ proto string grapheme_extractc(string str, bsize[, start])
-	Function to extract a sequence of default grapheme clusters up to a character limit */
-PHP_FUNCTION(grapheme_extractc)
-{
-	char *str, *pstr;
-	UChar *ustr;
-	int str_len, ustr_len;
-	long csize; /* maximum number of characters to return */
-	long start = 0; /* starting position in str in bytes */
-	UErrorCode status;
-	unsigned char u_break_iterator_buffer[U_BRK_SAFECLONE_BUFFERSIZE];
-	UBreakIterator* bi = NULL;
-	int ret_pos, pos, prev_pos, prev_ret_pos;
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|l", (char **)&str, &str_len, &csize, &start) == FAILURE) {
-	
-		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			 "grapheme_extractb: unable to parse input param", 0 TSRMLS_CC );
-			 
-		RETURN_FALSE;
-	}
-
-	if ( start < 0 || start > str_len ) {
-
-		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extractc: start not contained in string", 1 TSRMLS_CC );
-
-		RETURN_FALSE;
-	}
-
-	pstr = str + start;
-
-	/* just in case pstr points in the middle of a character, move forward to the start of the next char */
-	if ( !UTF8_IS_SINGLE(*pstr) && !U8_IS_LEAD(*pstr) ) {
-		char *str_end = str + str_len;
-
-		while ( !UTF8_IS_SINGLE(*pstr) && !U8_IS_LEAD(*pstr) ) {
-			pstr++;
-			if ( pstr >= str_end ) {
-				intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-								"grapheme_extract: invalid input string", 0 TSRMLS_CC );
-			 
-				RETURN_FALSE;
-			}
-		}
-	}
-
-	str_len -= (pstr - str);
-
-	/* convert the string to UTF-16. */
-	ustr = NULL;
-	ustr_len = 0;
-	status = U_ZERO_ERROR;
-	intl_convert_utf8_to_utf16(&ustr, &ustr_len, pstr, str_len, &status );
-
-	if ( U_FAILURE( status ) ) {
-		/* Set global error code. */
-		intl_error_set_code( NULL, status TSRMLS_CC );
-
-		/* Set error messages. */
-		intl_error_set_custom_msg( NULL, "Error converting input string to UTF-16", 1 TSRMLS_CC );
-
-		if ( NULL != ustr )
-			efree( ustr );
-
-		RETURN_FALSE;
-	}
-
-	bi = NULL;
-	status = U_ZERO_ERROR;
-	bi = grapheme_get_break_iterator(u_break_iterator_buffer, &status TSRMLS_CC );
-
-	ubrk_setText(bi, ustr, ustr_len, &status);
-
-	pos = 0;
-	prev_pos = 0;
-	ret_pos = 0;
-	prev_ret_pos = 0;
-
-	while ( 1 ) {
-		pos = ubrk_next(bi);
-
-		if ( UBRK_DONE == pos ) {
-			break;
-		}
-
-		/* if we are beyond our limit, then the loop is done */
-		if ( pos > csize ) {
-			break;
-		}
-
-		/* update our pointer in the original UTF-8 buffer by as many characters
-		   as ubrk_next iterated over */
-
-		prev_ret_pos = ret_pos;
-		U8_FWD_N(pstr, ret_pos, str_len, pos - prev_pos);
-
-		if ( prev_ret_pos == ret_pos ) {
-			/* something wrong - malformed utf8? */
-			break;
-		}
-
-		prev_pos = pos;
-	}
-
-	efree(ustr);
-	ubrk_close(bi);
-
-	RETURN_STRINGL(pstr, ret_pos, 1);
 }
 
 /* }}} */

@@ -1,4 +1,19 @@
 <?php
+#############################################################################
+# Grapheme constants.
+#############################################################################
+
+	/**
+	 * grapheme_extract extract_type
+	 *
+	*/
+	/** Extract the given number of whole grapheme clusters from the string: */
+	const GRAPHEME_EXTR_COUNT	= 0;
+	/** Extract as many whole grapheme clusters as will fit into the given number of bytes: */
+	const GRAPHEME_EXTR_MAXBYTES	= 1;
+	/** Extract whole grapheme clusters up to a maximum number of UTF-8 characters: */
+	const GRAPHEME_EXTR_MAXCHARS	= 2;
+
 
 #############################################################################
 # Grapheme API
@@ -103,33 +118,13 @@
 	/**
 	 * Function to extract a sequence of default grapheme clusters from a text buffer, which must be encoded in UTF-8.
 	 * @param string 	$haystack	string to search
-	 * @param int		$size		maximum number of grapheme clusters to return
+	 * @param int		$size		maximum number of units - based on the $extract_type - to return
+	 * @param [long]	$extract_type	one of GRAPHEME_EXTR_COUNT (default), GRAPHEME_EXTR_MAXBYTES, or GRAPHEME_EXTR_MAXCHARS
 	 * @param [int]		$start		starting position in $haystack in bytes
 	 * @return string	A string starting at offset $start containing no more than $size grapheme clusters 
 				and ending on a default grapheme cluster boundary.
 	*/
-	public function grapheme_extract($haystack, $size, $start = 0) {}
-
-
-	/**
-	 * Function to extract a sequence of default grapheme clusters from a UTF-8 text buffer limited by a byte count.
-	 * @param string	$haystack	string to search
-	 * @param int		$bsize		maximum number of bytes to return
-	 * @param [int]		$start		starting position in $haystack in bytes
-	 * @return string	A string starting at offset $start containing no more than $bsize bytes 
-				and ending on a default grapheme cluster boundary.
-  	*/
-	public function grapheme_extractb($haystack, $bsize, $start = 0) {}
-
-	/**
-	 * Function to extract a sequence of default grapheme clusters from a UTF-8 text buffer limited by a character count.
-	 * @param string	$haystack	string to search
-	 * @param int		$csize		maximum number of characters to return
-	 * @param [int]		$start		starting position in $haystack in bytes
-	 * @return string	A string starting at offset $start containing no more than $csize characters 
-				and ending on a default grapheme cluster boundary.
-  	*/
-	public function grapheme_extractc($haystack, $bsize, $start = 0) {}
+	public function grapheme_extract($haystack, $size, $extract_type = GRAPHEME_EXTR_COUNT, $start = 0) {}
 
 ?>
 

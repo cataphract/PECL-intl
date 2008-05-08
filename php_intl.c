@@ -282,8 +282,6 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( grapheme_strstr, grapheme_3_args )
 	PHP_FE( grapheme_stristr, grapheme_3_args )
 	PHP_FE( grapheme_extract, grapheme_3_args )
-	PHP_FE( grapheme_extractb, grapheme_3_args )
-	PHP_FE( grapheme_extractc, grapheme_3_args )
 
 	// common functions
 	PHP_FE( intl_get_error_code, intl_0_args )
@@ -372,6 +370,8 @@ PHP_MINIT_FUNCTION( intl )
 	locale_register_constants( INIT_FUNC_ARGS_PASSTHRU );
 
 	msgformat_register_class(TSRMLS_C);
+
+	grapheme_register_constants( INIT_FUNC_ARGS_PASSTHRU );
 
 	// Expose ICU error codes to PHP scripts.
 	intl_expose_icu_error_codes( INIT_FUNC_ARGS_PASSTHRU );
