@@ -119,12 +119,13 @@
 	 * Function to extract a sequence of default grapheme clusters from a text buffer, which must be encoded in UTF-8.
 	 * @param string 	$haystack	string to search
 	 * @param int		$size		maximum number of units - based on the $extract_type - to return
-	 * @param [long]	$extract_type	one of GRAPHEME_EXTR_COUNT (default), GRAPHEME_EXTR_MAXBYTES, or GRAPHEME_EXTR_MAXCHARS
+	 * @param [int]		$extract_type	one of GRAPHEME_EXTR_COUNT (default), GRAPHEME_EXTR_MAXBYTES, or GRAPHEME_EXTR_MAXCHARS
 	 * @param [int]		$start		starting position in $haystack in bytes
+	 * @param [&int]	$next		set to next starting position in bytes
 	 * @return string	A string starting at offset $start containing no more than $size grapheme clusters 
 				and ending on a default grapheme cluster boundary.
 	*/
-	public function grapheme_extract($haystack, $size, $extract_type = GRAPHEME_EXTR_COUNT, $start = 0) {}
+	public function grapheme_extract($haystack, $size, $extract_type = GRAPHEME_EXTR_COUNT, $start = 0, &$next) {}
 
 ?>
 

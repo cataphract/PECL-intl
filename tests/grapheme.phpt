@@ -537,16 +537,39 @@ function ut_main()
 	
 
 	//=====================================================================================
-	$res_str .= "\n" . 'function grapheme_extract($haystack, $size, $extract_type = GRAPHEME_EXTR_COUNT, $start = 0)' . "\n\n";
+	$res_str .= "\n" . 'function grapheme_extract($haystack, $size, $extract_type = GRAPHEME_EXTR_COUNT, $start = 0[, $next])' . "\n\n";
 
 	$tests = array(
+		// haystack, count, [[offset], [next]], result
 		array( "abc", 3, "abc" ),
 		array( "abc", 2, "ab" ),
 		array( "abc", 1, "a" ),
 		array( "abc", 0, "" ),
+		array( "abc", 1, 0, "a" ),
+		array( "abc", 1, 1, "b" ),
+		array( "abc", 1, 2, "c" ),
+		array( "abc", 0, 2, "" ),
+
+		array( "abc", 3, 0, 3, "abc" ),
+		array( "abc", 2, 0, 2, "ab" ),
+		array( "abc", 1, 0, 1, "a" ),
+		array( "abc", 0, 0, 0, "" ),
+		array( "abc", 1, 0, 1, "a" ),
+		array( "abc", 1, 1, 2, "b" ),
+		array( "abc", 1, 2, 3, "c" ),
+		array( "abc", 0, 2, 2, "" ),
+
+
 		array( $char_a_ring_nfd . "bc", 3, $char_a_ring_nfd . "bc" ),
 		array( $char_a_ring_nfd . "bc", 2, $char_a_ring_nfd . "b" ),
 		array( $char_a_ring_nfd . "bc", 1, $char_a_ring_nfd . "" ),
+		array( $char_a_ring_nfd . "bc", 3, 0, 5, $char_a_ring_nfd . "bc" ),
+		array( $char_a_ring_nfd . "bc", 2, 0, 4, $char_a_ring_nfd . "b" ),
+		array( $char_a_ring_nfd . "bc", 1, 0, 3, $char_a_ring_nfd . "" ),
+		array( $char_a_ring_nfd . "bcde", 2, 3, 5, "bc" ),
+		array( $char_a_ring_nfd . "bcde", 2, 4, 6, "cd" ),
+		array( $char_a_ring_nfd . "bcde" . $char_a_ring_nfd . "f", 4, 5, 11, "de" . $char_a_ring_nfd . "f" ),
+
 		array( $char_a_ring_nfd . $char_o_diaeresis_nfd . $char_o_diaeresis_nfd, 3, $char_a_ring_nfd . $char_o_diaeresis_nfd . $char_o_diaeresis_nfd ),
 		array( $char_a_ring_nfd . $char_o_diaeresis_nfd . $char_o_diaeresis_nfd, 2, $char_a_ring_nfd . $char_o_diaeresis_nfd ),
 		array( $char_a_ring_nfd . $char_o_diaeresis_nfd . "c", 1, $char_a_ring_nfd . "" ),
@@ -567,15 +590,20 @@ function ut_main()
 
 	);
 
+	$next = -1;
 	foreach( $tests as $test ) {
 	    $arg0 = urlencode($test[0]);
 		$res_str .= "extract from \"$arg0\" \"$test[1]\" graphemes - grapheme_extract";
 		if ( 3 == count( $test ) ) {
 			$result = grapheme_extract($test[0], $test[1]);
 		}
-		else {
+		elseif ( 4 == count ( $test ) ) {
 			$res_str .= " starting at byte position $test[2]";
 			$result = grapheme_extract($test[0], $test[1], GRAPHEME_EXTR_COUNT, $test[2]);
+		}
+		else {
+			$res_str .= " starting at byte position $test[2] with \$next";
+			$result = grapheme_extract($test[0], $test[1], GRAPHEME_EXTR_COUNT, $test[2], $next);
 		}
 		$res_str .= " = ";
 		if ( $result === false ) {
@@ -584,7 +612,14 @@ function ut_main()
 		else {
 			$res_str .= urlencode($result);
 		}
-		$res_str .= " == " . urlencode($test[count($test)-1]) . check_result($result, $test[count($test)-1]) . "\n";
+		$res_str .= " == " . urlencode($test[count($test)-1]) . check_result($result, $test[count($test)-1]);
+		if ( 5 == count ( $test ) ) {
+			$res_str .= " \$next=$next == $test[3] ";
+			if ( $next != $test[3] ) {
+				$res_str .= "***FAILED***";
+			}
+		}
+		$res_str .= "\n";
 	}
 	
 
@@ -1038,15 +1073,33 @@ find "baa%CC%8Ab" in "abaA%CC%8Abc" - grapheme_stristr before flag is TRUE = a =
 find "aBcA%CC%8A" in "ababca%CC%8A" - grapheme_stristr before flag is TRUE = ab == ab
 find "aba%CC%8Ac" in "abABA%CC%8Ac" - grapheme_stristr before flag is FALSE = ABA%CC%8Ac == ABA%CC%8Ac
 
-function grapheme_extract($haystack, $size, $extract_type = GRAPHEME_EXTR_COUNT, $start = 0)
+function grapheme_extract($haystack, $size, $extract_type = GRAPHEME_EXTR_COUNT, $start = 0[, $next])
 
 extract from "abc" "3" graphemes - grapheme_extract = abc == abc
 extract from "abc" "2" graphemes - grapheme_extract = ab == ab
 extract from "abc" "1" graphemes - grapheme_extract = a == a
 extract from "abc" "0" graphemes - grapheme_extract =  == 
+extract from "abc" "1" graphemes - grapheme_extract starting at byte position 0 = a == a
+extract from "abc" "1" graphemes - grapheme_extract starting at byte position 1 = b == b
+extract from "abc" "1" graphemes - grapheme_extract starting at byte position 2 = c == c
+extract from "abc" "0" graphemes - grapheme_extract starting at byte position 2 =  == 
+extract from "abc" "3" graphemes - grapheme_extract starting at byte position 0 with $next = abc == abc $next=3 == 3 
+extract from "abc" "2" graphemes - grapheme_extract starting at byte position 0 with $next = ab == ab $next=2 == 2 
+extract from "abc" "1" graphemes - grapheme_extract starting at byte position 0 with $next = a == a $next=1 == 1 
+extract from "abc" "0" graphemes - grapheme_extract starting at byte position 0 with $next =  ==  $next=0 == 0 
+extract from "abc" "1" graphemes - grapheme_extract starting at byte position 0 with $next = a == a $next=1 == 1 
+extract from "abc" "1" graphemes - grapheme_extract starting at byte position 1 with $next = b == b $next=2 == 2 
+extract from "abc" "1" graphemes - grapheme_extract starting at byte position 2 with $next = c == c $next=3 == 3 
+extract from "abc" "0" graphemes - grapheme_extract starting at byte position 2 with $next =  ==  $next=2 == 2 
 extract from "a%CC%8Abc" "3" graphemes - grapheme_extract = a%CC%8Abc == a%CC%8Abc
 extract from "a%CC%8Abc" "2" graphemes - grapheme_extract = a%CC%8Ab == a%CC%8Ab
 extract from "a%CC%8Abc" "1" graphemes - grapheme_extract = a%CC%8A == a%CC%8A
+extract from "a%CC%8Abc" "3" graphemes - grapheme_extract starting at byte position 0 with $next = a%CC%8Abc == a%CC%8Abc $next=5 == 5 
+extract from "a%CC%8Abc" "2" graphemes - grapheme_extract starting at byte position 0 with $next = a%CC%8Ab == a%CC%8Ab $next=4 == 4 
+extract from "a%CC%8Abc" "1" graphemes - grapheme_extract starting at byte position 0 with $next = a%CC%8A == a%CC%8A $next=3 == 3 
+extract from "a%CC%8Abcde" "2" graphemes - grapheme_extract starting at byte position 3 with $next = bc == bc $next=5 == 5 
+extract from "a%CC%8Abcde" "2" graphemes - grapheme_extract starting at byte position 4 with $next = cd == cd $next=6 == 6 
+extract from "a%CC%8Abcdea%CC%8Af" "4" graphemes - grapheme_extract starting at byte position 5 with $next = dea%CC%8Af == dea%CC%8Af $next=11 == 11 
 extract from "a%CC%8Ao%CC%88o%CC%88" "3" graphemes - grapheme_extract = a%CC%8Ao%CC%88o%CC%88 == a%CC%8Ao%CC%88o%CC%88
 extract from "a%CC%8Ao%CC%88o%CC%88" "2" graphemes - grapheme_extract = a%CC%8Ao%CC%88 == a%CC%8Ao%CC%88
 extract from "a%CC%8Ao%CC%88c" "1" graphemes - grapheme_extract = a%CC%8A == a%CC%8A

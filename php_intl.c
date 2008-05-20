@@ -197,6 +197,15 @@ ZEND_BEGIN_ARG_INFO_EX( grapheme_3_args, 0, 0, 3 )
         ZEND_ARG_INFO( 0, arg3 )
 ZEND_END_ARG_INFO()
 
+static
+ZEND_BEGIN_ARG_INFO_EX( grapheme_extract_args, 0, 0, 2 )
+		ZEND_ARG_INFO( 0, arg1 )
+		ZEND_ARG_INFO( 0, arg2 )
+		ZEND_ARG_INFO( 0, arg3 )
+		ZEND_ARG_INFO( 0, arg4 )
+		ZEND_ARG_INFO( 1, arg5 )  /* 1 = pass by reference */
+ZEND_END_ARG_INFO()
+
 /* }}} */
 
 /* {{{ intl_functions[]
@@ -281,7 +290,7 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( grapheme_substr, grapheme_3_args )
 	PHP_FE( grapheme_strstr, grapheme_3_args )
 	PHP_FE( grapheme_stristr, grapheme_3_args )
-	PHP_FE( grapheme_extract, grapheme_3_args )
+	PHP_FE( grapheme_extract, grapheme_extract_args )
 
 	// common functions
 	PHP_FE( intl_get_error_code, intl_0_args )

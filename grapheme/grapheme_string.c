@@ -780,19 +780,34 @@ PHP_FUNCTION(grapheme_extract)
 	UChar *ustr;
 	int str_len, ustr_len;
 	long size; /* maximum number of grapheme clusters, bytes, or characters (based on extract_type) to return */
-	long start = 0; /* starting position in str in bytes */
+	long lstart = 0; /* starting position in str in bytes */
+	int32_t start = 0;
 	long extract_type = GRAPHEME_EXTRACT_TYPE_COUNT;
 	UErrorCode status;
 	unsigned char u_break_iterator_buffer[U_BRK_SAFECLONE_BUFFERSIZE];
 	UBreakIterator* bi = NULL;
 	int ret_pos;
+	zval *next = NULL; // return offset of next part of the string
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|ll", (char **)&str, &str_len, &size, &extract_type, &start) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl|llz", (char **)&str, &str_len, &size, &extract_type, &lstart, &next) == FAILURE) {
 	
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			 "grapheme_extract: unable to parse input param", 0 TSRMLS_CC );
 			 
 		RETURN_FALSE;
+	}
+
+	if ( NULL != next ) {
+		if ( !PZVAL_IS_REF(next) ) {
+			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
+				 "grapheme_extract: 'next' was not passed by reference", 0 TSRMLS_CC );
+			 
+			RETURN_FALSE;
+		}
+		else {
+			/* initialize next */
+            ZVAL_LONG(next, start);
+		}
 	}
 
 	if ( extract_type < GRAPHEME_EXTRACT_TYPE_MIN || extract_type > GRAPHEME_EXTRACT_TYPE_MAX ) {
@@ -803,12 +818,15 @@ PHP_FUNCTION(grapheme_extract)
 		RETURN_FALSE;
 	}
 
-	if ( start < 0 || start >= str_len ) {
+	if ( lstart > INT32_MAX || lstart < 0 || lstart >= str_len ) {
 
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "grapheme_extract: start not contained in string", 1 TSRMLS_CC );
 
 		RETURN_FALSE;
 	}
+
+	/* we checked that it will fit: */
+	start = (int32_t) lstart;
 
 	pstr = str + start;
 
@@ -834,6 +852,9 @@ PHP_FUNCTION(grapheme_extract)
 	 */
 	
 	if ( -1 != grapheme_ascii_check(pstr, size + 1 < str_len ? size + 1 : str_len ) ) {
+		if ( NULL != next ) {
+			ZVAL_LONG(next, start+size);
+		}
 		RETURN_STRINGL(((char *)pstr), size, 1);
 	}
 
@@ -871,6 +892,10 @@ PHP_FUNCTION(grapheme_extract)
 
 	efree(ustr);
 	ubrk_close(bi);
+
+	if ( NULL != next ) {
+		ZVAL_LONG(next, start+ret_pos);
+	}
 
 	RETURN_STRINGL(((char *)pstr), ret_pos, 1);
 }
