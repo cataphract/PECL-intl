@@ -772,7 +772,7 @@ static grapheme_extract_iter grapheme_extract_iters[] = {
 };
 /* }}} */
 
-/* {{{ proto string grapheme_extract(string str, size[, extract_type[, start]])
+/* {{{ proto string grapheme_extract(string str, int size[, int extract_type[, int start[, int next]]])
 	Function to extract a sequence of default grapheme clusters */
 PHP_FUNCTION(grapheme_extract)
 {
