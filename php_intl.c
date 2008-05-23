@@ -169,32 +169,36 @@ ZEND_END_ARG_INFO()
 #define intl_0_args collator_static_0_args
 #define intl_1_arg collator_static_1_arg
 
-ZEND_BEGIN_ARG_INFO_EX( normalizer_3_args, 0, 0, 3 )
-	ZEND_ARG_INFO( 0, arg1 )
-	ZEND_ARG_INFO( 0, arg2 )
-	ZEND_ARG_INFO( 0, arg3 )
-ZEND_END_ARG_INFO()
-
 static
-ZEND_BEGIN_ARG_INFO_EX( grapheme_0_args, 0, 0, 0 )
+ZEND_BEGIN_ARG_INFO_EX( normalizer_args, 0, 0, 1 )
+	ZEND_ARG_INFO( 0, input )
+	ZEND_ARG_INFO( 0, form )
 ZEND_END_ARG_INFO()
 
 static
 ZEND_BEGIN_ARG_INFO_EX( grapheme_1_arg, 0, 0, 1 )
-        ZEND_ARG_INFO( 0, arg1 )
+        ZEND_ARG_INFO( 0, string )
 ZEND_END_ARG_INFO()
 
 static
-ZEND_BEGIN_ARG_INFO_EX( grapheme_2_args, 0, 0, 2 )
-        ZEND_ARG_INFO( 0, arg1 )
-        ZEND_ARG_INFO( 0, arg2 )
+ZEND_BEGIN_ARG_INFO_EX( grapheme_search_args, 0, 0, 2 )
+        ZEND_ARG_INFO( 0, haystack )
+        ZEND_ARG_INFO( 0, needle )
+        ZEND_ARG_INFO( 0, offset )
 ZEND_END_ARG_INFO()
 
 static
-ZEND_BEGIN_ARG_INFO_EX( grapheme_3_args, 0, 0, 3 )
-        ZEND_ARG_INFO( 0, arg1 )
-        ZEND_ARG_INFO( 0, arg2 )
-        ZEND_ARG_INFO( 0, arg3 )
+ZEND_BEGIN_ARG_INFO_EX( grapheme_substr_args, 0, 0, 2 )
+        ZEND_ARG_INFO( 0, string )
+        ZEND_ARG_INFO( 0, start )
+        ZEND_ARG_INFO( 0, length )
+ZEND_END_ARG_INFO()
+
+static
+ZEND_BEGIN_ARG_INFO_EX( grapheme_strstr_args, 0, 0, 2 )
+        ZEND_ARG_INFO( 0, haystack )
+        ZEND_ARG_INFO( 0, needle )
+        ZEND_ARG_INFO( 0, before_needle )
 ZEND_END_ARG_INFO()
 
 static
@@ -247,8 +251,8 @@ zend_function_entry intl_functions[] = {
 	PHP_FE( numfmt_get_error_message, NULL )
 
 	// normalizer functions
-	PHP_FE( normalizer_normalize, normalizer_3_args )
-	PHP_FE( normalizer_is_normalized, normalizer_3_args )
+	PHP_FE( normalizer_normalize, normalizer_args )
+	PHP_FE( normalizer_is_normalized, normalizer_args )
 
 	//Locale functions
         PHP_NAMED_FE( locale_get_default, zif_locale_get_default, locale_0_args)
@@ -283,13 +287,13 @@ zend_function_entry intl_functions[] = {
 
 	// grapheme functions
 	PHP_FE( grapheme_strlen, grapheme_1_arg )
-	PHP_FE( grapheme_strpos, grapheme_3_args )
-	PHP_FE( grapheme_stripos, grapheme_3_args )
-	PHP_FE( grapheme_strrpos, grapheme_3_args )
-	PHP_FE( grapheme_strripos, grapheme_3_args )
-	PHP_FE( grapheme_substr, grapheme_3_args )
-	PHP_FE( grapheme_strstr, grapheme_3_args )
-	PHP_FE( grapheme_stristr, grapheme_3_args )
+	PHP_FE( grapheme_strpos, grapheme_search_args )
+	PHP_FE( grapheme_stripos, grapheme_search_args )
+	PHP_FE( grapheme_strrpos, grapheme_search_args )
+	PHP_FE( grapheme_strripos, grapheme_search_args )
+	PHP_FE( grapheme_substr, grapheme_substr_args )
+	PHP_FE( grapheme_strstr, grapheme_strstr_args )
+	PHP_FE( grapheme_stristr, grapheme_strstr_args )
 	PHP_FE( grapheme_extract, grapheme_extract_args )
 
 	// common functions
