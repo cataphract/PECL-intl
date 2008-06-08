@@ -82,7 +82,7 @@ PHP_FUNCTION( numfmt_format )
 				formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
 			if (INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
 				intl_error_reset(INTL_DATA_ERROR_P(nfo) TSRMLS_CC); 
-				formatted = eumalloc(formatted_len);
+				formatted = eumalloc(formatted_len+1);
 				formatted_len = unum_format(FORMATTER_OBJECT(nfo), (int32_t)Z_LVAL_PP(number), 
 					formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
 				if (U_FAILURE( INTL_DATA_ERROR_CODE(nfo) ) ) {
@@ -98,7 +98,7 @@ PHP_FUNCTION( numfmt_format )
 			formatted_len = unum_formatInt64(FORMATTER_OBJECT(nfo), value, formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
 			if (INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
 				intl_error_reset(INTL_DATA_ERROR_P(nfo) TSRMLS_CC); 
-				formatted = eumalloc(formatted_len);
+				formatted = eumalloc(formatted_len+1);
 				formatted_len = unum_formatInt64(FORMATTER_OBJECT(nfo), value, formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
 				if (U_FAILURE( INTL_DATA_ERROR_CODE(nfo) ) ) {
 					efree(formatted);
@@ -113,7 +113,7 @@ PHP_FUNCTION( numfmt_format )
 			formatted_len = unum_formatDouble(FORMATTER_OBJECT(nfo), Z_DVAL_PP(number), formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
 			if (INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
 				intl_error_reset(INTL_DATA_ERROR_P(nfo) TSRMLS_CC); 
-				formatted = eumalloc(formatted_len);
+				formatted = eumalloc(formatted_len+1);
 				unum_formatDouble(FORMATTER_OBJECT(nfo), Z_DVAL_PP(number), formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
 				if (U_FAILURE( INTL_DATA_ERROR_CODE(nfo) ) ) {
 					efree(formatted);
@@ -128,6 +128,7 @@ PHP_FUNCTION( numfmt_format )
 			break;
 	}
 
+    formatted[formatted_len] = '\0';
 	RETVAL_UNICODEL( formatted, formatted_len, ( formatted == format_buf ) );
 }
 /* }}} */
@@ -168,7 +169,7 @@ PHP_FUNCTION( numfmt_format_currency )
 	// and use it to format the number.
  	if (INTL_DATA_ERROR_CODE(nfo) == U_BUFFER_OVERFLOW_ERROR) {
  		intl_error_reset(INTL_DATA_ERROR_P(nfo) TSRMLS_CC); 
-		formatted = eumalloc(formatted_len);
+		formatted = eumalloc(formatted_len+1);
 		unum_formatDoubleCurrency(nfo->nf_data.unum, number, currency, formatted, formatted_len, NULL, &INTL_DATA_ERROR_CODE(nfo));
 	}
 
@@ -180,6 +181,7 @@ PHP_FUNCTION( numfmt_format_currency )
  			efree(formatted);
  		}
 	} else {
+		formatted[formatted_len] = 0;
 		RETVAL_UNICODEL( formatted, formatted_len, ( formatted == format_buf ) );
 	}
 }
