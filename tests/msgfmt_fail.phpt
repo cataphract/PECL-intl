@@ -78,13 +78,13 @@ Warning: MessageFormatter::create() expects exactly 2 parameters, 1 given in %s 
 'msgfmt_create: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR'
 'msgfmt_create: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR'
 
-Warning: MessageFormatter::__construct() expects parameter 1 to be string, array given in %s on line %d
+Warning: MessageFormatter::__construct() expects parameter 1 to be binary string, array given in %s on line %d
 '__construct: unable to parse input params: U_ILLEGAL_ARGUMENT_ERROR'
 
-Warning: MessageFormatter::create() expects parameter 1 to be string, array given in %s on line %d
+Warning: MessageFormatter::create() expects parameter 1 to be binary string, array given in %s on line %d
 'msgfmt_create: unable to parse input parameters: U_ILLEGAL_ARGUMENT_ERROR'
 
-Warning: msgfmt_create() expects parameter 1 to be string, array given in %s on line %d
+Warning: msgfmt_create() expects parameter 1 to be binary string, array given in %s on line %d
 'msgfmt_create: unable to parse input parameters: U_ILLEGAL_ARGUMENT_ERROR'
 '__construct: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR'
 'msgfmt_create: message formatter creation failed: U_ILLEGAL_ARGUMENT_ERROR'
@@ -134,3 +134,9 @@ Warning: msgfmt_create() expects parameter 1 to be binary string, array given in
 '__construct: message formatter creation failed: U_UNMATCHED_BRACES'
 'msgfmt_create: message formatter creation failed: U_UNMATCHED_BRACES'
 'msgfmt_create: message formatter creation failed: U_UNMATCHED_BRACES'
+
+Warning: Could not convert binary string to Unicode string (converter UTF-8 failed on bytes (0xD0) at offset 0) in %s on line %d
+
+Warning: Could not convert binary string to Unicode string (converter UTF-8 failed on bytes (0xD0) at offset 0) in %s on line %d
+
+Warning: Could not convert binary string to Unicode string (converter UTF-8 failed on bytes (0xD0) at offset 0) in %s on line %d
