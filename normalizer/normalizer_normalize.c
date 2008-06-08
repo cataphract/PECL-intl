@@ -32,10 +32,8 @@
  */
 PHP_FUNCTION( normalizer_normalize )
 {
-	char*			input = NULL;
 	// form is optional, defaults to FORM_C
 	long			form = NORMALIZER_DEFAULT;
-	int			input_len = 0;
 		
 	UChar*			uinput = NULL;
 	int			uinput_len = 0;
@@ -45,9 +43,6 @@ PHP_FUNCTION( normalizer_normalize )
 	UChar*			uret_buf = NULL;
 	int			uret_len = 0;
 		
-	char*			ret_buf = NULL;
-	int32_t			ret_len = 0;
-
 	int32_t			size_needed;
 		
 	NORMALIZER_METHOD_INIT_VARS
@@ -55,8 +50,8 @@ PHP_FUNCTION( normalizer_normalize )
 	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|l",
-				&input, &input_len, &form ) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "u|l",
+				&uinput, &uinput_len, &form ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 						 "normalizer_normalize: unable to parse input params", 1 TSRMLS_CC );
@@ -85,23 +80,8 @@ PHP_FUNCTION( normalizer_normalize )
 	}
 
 	/*
-	 * Normalize string (converting it to UTF-16 first).
+	 * Normalize string
 	 */
-
-	// First convert the string to UTF-16.
-	intl_convert_utf8_to_utf16(&uinput, &uinput_len, input, input_len, &status );
-
-	if( U_FAILURE( status ) )
-	{
-		// Set global error code.
-		intl_error_set_code( NULL, status TSRMLS_CC );
-
-		// Set error messages.
-		intl_error_set_custom_msg( NULL, "Error converting input string to UTF-16", 1 TSRMLS_CC );
-		efree( uinput );
-		RETURN_NULL();
-	}
-
 
 	// Allocate memory for the destination buffer for normalization
 	uret_len = uinput_len * expansion_factor;
@@ -115,7 +95,6 @@ PHP_FUNCTION( normalizer_normalize )
 	// (U_STRING_NOT_TERMINATED_WARNING usually means that the input string is empty).
 	if( U_FAILURE(status) && status != U_BUFFER_OVERFLOW_ERROR && status != U_STRING_NOT_TERMINATED_WARNING ) {
 		efree( uret_buf );
-		efree( uinput );
 		RETURN_NULL();
 	}
 
@@ -136,28 +115,14 @@ PHP_FUNCTION( normalizer_normalize )
 			// Set error messages.
 			intl_error_set_custom_msg( NULL,"Error normalizing string", 1 TSRMLS_CC );
 			efree( uret_buf );
-			efree( uinput );
 			RETURN_NULL();
 		}
 	}
 
-	efree( uinput );
-
 	// the buffer we actually used
 	uret_len = size_needed;
-
-	// Convert normalized string from UTF-16 to UTF-8.
-	intl_convert_utf16_to_utf8( &ret_buf, &ret_len, uret_buf, uret_len, &status );
-	efree( uret_buf );
-	if( U_FAILURE( status ) )
-	{
-		intl_error_set( NULL, status,
-				"normalizer_normalize: error converting normalized text UTF-8", 1 TSRMLS_CC );
-		RETURN_NULL();
-	}
-
-	// Return it.
-	RETVAL_STRINGL( ret_buf, ret_len, FALSE );
+	uret_buf[uret_len] = 0;
+	RETURN_UNICODEL(uret_buf, uret_len, 0);
 }
 /* }}} */
 
@@ -168,10 +133,8 @@ PHP_FUNCTION( normalizer_normalize )
  */
 PHP_FUNCTION( normalizer_is_normalized )
 {
-	char*	 	input = NULL;
 	// form is optional, defaults to FORM_C
 	long		form = NORMALIZER_DEFAULT;
-	int		input_len = 0;
 
 	UChar*	 	uinput = NULL;
 	int		uinput_len = 0;
@@ -184,8 +147,8 @@ PHP_FUNCTION( normalizer_is_normalized )
 	intl_error_reset( NULL TSRMLS_CC );
 
 	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "s|l",
-				&input, &input_len, &form) == FAILURE )
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "u|l",
+				&uinput, &uinput_len, &form) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 				"normalizer_is_normalized: unable to parse input params", 1 TSRMLS_CC );
@@ -209,29 +172,12 @@ PHP_FUNCTION( normalizer_is_normalized )
 
 
 	/*
-	 * Test normalization of string (converting it to UTF-16 first).
+	 * Test normalization of string 
 	 */
-
-	// First convert the string to UTF-16.
-	intl_convert_utf8_to_utf16(&uinput, &uinput_len, input, input_len, &status );
-
-	if( U_FAILURE( status ) )
-	{
-		// Set global error code.
-		intl_error_set_code( NULL, status TSRMLS_CC );
-
-		// Set error messages.
-		intl_error_set_custom_msg( NULL, "Error converting string to UTF-16.", 1 TSRMLS_CC );
-		efree( uinput );
-		RETURN_FALSE;
-	}
-
 
 	// test string
 	uret = unorm_isNormalizedWithOptions( uinput, uinput_len, form, (int32_t) 0 /* options */, &status);
 	
-	efree( uinput );
-
 	// Bail out if an unexpected error occured.
 	if( U_FAILURE(status)  ) {
 		// Set error messages.
