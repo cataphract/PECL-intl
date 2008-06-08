@@ -117,7 +117,8 @@ static int16_t findOffset(const char* const* list, const char* key)
 }
 /*}}}*/
 
-static char* getPreferredTag(char* gf_tag){ 
+static char* getPreferredTag(char* gf_tag)
+{ 
 	char* result = NULL;
 	int grOffset = 0;
 
@@ -125,7 +126,7 @@ static char* getPreferredTag(char* gf_tag){
 	if( grOffset < LOC_PREFERRED_GRANDFATHERED_LEN ){
 		//return preferred tag
 		result = estrdup( LOC_PREFERRED_GRANDFATHERED[grOffset] );
-	}else{
+	} else {
 		//Return correct grandfathered language tag
 		result = estrdup( LOC_GRANDFATHERED[grOffset] );
 	}
@@ -137,7 +138,8 @@ static char* getPreferredTag(char* gf_tag){
 * or -1 if no token
 * strtokr equivalent search for token in reverse direction 
 */
-static int getStrrtokenPos(char* str, int savedPos){
+static int getStrrtokenPos(char* str, int savedPos)
+{
 	int result =-1;
 	int i=0;
 	
@@ -147,7 +149,7 @@ static int getStrrtokenPos(char* str, int savedPos){
 			if( isIDSeparator(*(str+i-2)) ){
 				//a singleton; so send the position of token before the singleton
 				result = i-3;
-			}else{
+			} else {
 				result = i-1;
 			}
 			break;
@@ -166,7 +168,8 @@ static int getStrrtokenPos(char* str, int savedPos){
 * returns -1 if no singleton
 * strtok equivalent search for singleton
 */
-static int getSingletonPos(char* str){
+static int getSingletonPos(char* str)
+{
 	int result =-1;
 	int i=0;
 	int len = 0;
@@ -178,7 +181,7 @@ static int getSingletonPos(char* str){
 					// string is of the form x-avy or a-prv1
 					result =0;
 					break;
-				}else{
+				} else {
 					//delimiter found; check for singleton 
 					if( isIDSeparator(*(str+i+2)) ){
 						//a singleton; so send the position of separator before singleton
@@ -194,13 +197,14 @@ static int getSingletonPos(char* str){
 }
 /* }}} */
 
-/* {{{ proto static string Locale::getDefault(  )
+/* {{{ proto static string Locale::getDefault( )
  * Gets the default locale 
  }}} */
 /* {{{ proto static string locale_get_default( )
  * Gets the default locale 
  */
-PHP_NAMED_FUNCTION( zif_locale_get_default){
+PHP_NAMED_FUNCTION(zif_locale_get_default)
+{
 	if( UG(default_locale) == NULL ) {
 		UG(default_locale) = pestrdup( uloc_getDefault(), 1);
  	}
@@ -215,7 +219,8 @@ PHP_NAMED_FUNCTION( zif_locale_get_default){
 /* {{{ proto static string locale_set_default( string $locale )
 * sets the default locale
 */
-PHP_NAMED_FUNCTION(  zif_locale_set_default){
+PHP_NAMED_FUNCTION(zif_locale_set_default)
+{
 	char* locale_name = NULL;
 	int   len=0;	
 
@@ -265,7 +270,7 @@ static char* get_icu_value_internal( char* loc_name , char* tag_name, int* resul
 			if( strcmp(tag_name , LOC_LANG_TAG)==0 ){
 				tag_value = estrdup(loc_name);
 				return tag_value;
-			}else{
+			} else {
 				//Since Grandfathered , no value , do nothing , retutn NULL
 				return NULL;
 			}
@@ -298,45 +303,40 @@ static char* get_icu_value_internal( char* loc_name , char* tag_name, int* resul
 	}
 
 //Proceed to ICU
-    do{
-	tag_value = erealloc( tag_value , buflen  );
-	tag_value_len = buflen;
+    do {
+		tag_value = erealloc( tag_value , buflen  );
+		tag_value_len = buflen;
 
-	if( strcmp(tag_name , LOC_SCRIPT_TAG)==0 ){
-		buflen = uloc_getScript ( mod_loc_name ,tag_value , tag_value_len , &status);
-	}
-	if( strcmp(tag_name , LOC_LANG_TAG)==0 ){
-		buflen = uloc_getLanguage ( mod_loc_name ,tag_value , tag_value_len , &status);
-	}
-	if( strcmp(tag_name , LOC_REGION_TAG)==0 ){
-		buflen = uloc_getCountry ( mod_loc_name ,tag_value , tag_value_len , &status);
-	}
-	if( strcmp(tag_name , LOC_VARIANT_TAG)==0 ){
-		buflen = uloc_getVariant ( mod_loc_name ,tag_value , tag_value_len , &status);
-	}
-	if( strcmp(tag_name , LOC_CANONICALIZE_TAG)==0 ){
-		buflen = uloc_canonicalize ( mod_loc_name ,tag_value , tag_value_len , &status);
-	}
-
-	if( U_FAILURE( status ) ) {
-		if( status == U_BUFFER_OVERFLOW_ERROR )
-		{
-			status = U_ZERO_ERROR;
-			continue;
+		if( strcmp(tag_name , LOC_SCRIPT_TAG)==0 ){
+			buflen = uloc_getScript ( mod_loc_name ,tag_value , tag_value_len , &status);
+		} else if( strcmp(tag_name , LOC_LANG_TAG)==0 ){
+			buflen = uloc_getLanguage ( mod_loc_name ,tag_value , tag_value_len , &status);
+		} else if( strcmp(tag_name , LOC_REGION_TAG)==0 ){
+			buflen = uloc_getCountry ( mod_loc_name ,tag_value , tag_value_len , &status);
+		} else if( strcmp(tag_name , LOC_VARIANT_TAG)==0 ){
+			buflen = uloc_getVariant ( mod_loc_name ,tag_value , tag_value_len , &status);
+		} else if( strcmp(tag_name , LOC_CANONICALIZE_TAG)==0 ){
+			buflen = uloc_canonicalize ( mod_loc_name ,tag_value , tag_value_len , &status);
 		}
 
-		//Error in retriving data
-		*result = 0;
-		if( tag_value ){
-			efree( tag_value );
-		}
-		if( mod_loc_name ){
-			efree( mod_loc_name);
-		}
-		return NULL;
-	}
+		if( U_FAILURE( status ) ) {
+			if( status == U_BUFFER_OVERFLOW_ERROR )
+			{
+				status = U_ZERO_ERROR;
+				continue;
+			}
 
-    	} while( buflen > tag_value_len );
+			//Error in retriving data
+			*result = 0;
+			if( tag_value ){
+				efree( tag_value );
+			}
+			if( mod_loc_name ){
+				efree( mod_loc_name);
+			}
+			return NULL;
+		}
+    } while( buflen > tag_value_len );
 
 	if(  buflen ==0 ){
 		//No value found
@@ -348,7 +348,7 @@ static char* get_icu_value_internal( char* loc_name , char* tag_name, int* resul
 			efree( mod_loc_name);
 		}
 		return NULL;
-	}else{
+	} else {
 		*result = 1;
 	}
 
@@ -360,10 +360,11 @@ static char* get_icu_value_internal( char* loc_name , char* tag_name, int* resul
 /* }}} */
 
 /* {{{
-* Gets the value from ICU , called when PHP  userspace function is called
+* Gets the value from ICU , called when PHP userspace function is called
 * common code shared by get_primary_language,get_script or get_region or get_variant
 */
-static void get_icu_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS) {
+static void get_icu_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS) 
+{
 
 	char*       loc_name        	= NULL;
 	int         loc_name_len    	= 0;
@@ -373,7 +374,6 @@ static void get_icu_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS)
 
 	int         result    		= 0;
 	char*       msg        		= NULL;
-	int         msg_len    		= 50;
 
 	UErrorCode  status          	= U_ZERO_ERROR;
 
@@ -381,10 +381,8 @@ static void get_icu_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS)
 
 	// Parse parameters.
 	if(zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "s",
-	&loc_name ,&loc_name_len ) == FAILURE)
-    	{
-		msg = erealloc( msg , msg_len);
-		snprintf(msg , msg_len,"locale_get_%s : unable to parse input params", tag_name );
+	&loc_name ,&loc_name_len ) == FAILURE) {
+		spprintf(&msg , 0, "locale_get_%s : unable to parse input params", tag_name );
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,  msg , 1 TSRMLS_CC );
 		efree(msg);
 
@@ -413,8 +411,7 @@ static void get_icu_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS)
 
 	//Error encountered while fetching the value 
 	if( result ==0) {
-		msg = erealloc( msg , msg_len);
-		snprintf(msg , msg_len, "locale_get_%s : unable to get locale %s", tag_name , tag_name );
+		spprintf(&msg , 0, "locale_get_%s : unable to get locale %s", tag_name , tag_name );
 		intl_error_set( NULL, status, msg , 1 TSRMLS_CC );
 		efree(msg);
 		RETURN_NULL();
@@ -431,7 +428,8 @@ static void get_icu_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS)
  * proto public static string locale_get_script($locale) 
  * gets the script for the $locale 
  */
-PHP_FUNCTION( locale_get_script ) {
+PHP_FUNCTION( locale_get_script ) 
+{
 	get_icu_value_src_php( LOC_SCRIPT_TAG , INTERNAL_FUNCTION_PARAM_PASSTHRU );
 }
 /* }}} */
@@ -444,7 +442,8 @@ PHP_FUNCTION( locale_get_script ) {
  * proto public static string locale_get_region($locale) 
  * gets the region for the $locale 
  */
-PHP_FUNCTION( locale_get_region ) {
+PHP_FUNCTION( locale_get_region ) 
+{
 	get_icu_value_src_php( LOC_REGION_TAG , INTERNAL_FUNCTION_PARAM_PASSTHRU );
 }
 /* }}} */
@@ -457,7 +456,8 @@ PHP_FUNCTION( locale_get_region ) {
  * proto public static string locale_get_primary_language($locale) 
  * gets the primary language for the $locale 
  */
-PHP_FUNCTION(locale_get_primary_language ) {
+PHP_FUNCTION(locale_get_primary_language ) 
+{
 	get_icu_value_src_php( LOC_LANG_TAG , INTERNAL_FUNCTION_PARAM_PASSTHRU );
 }
 /* }}} */
@@ -466,7 +466,8 @@ PHP_FUNCTION(locale_get_primary_language ) {
 /* {{{
  * common code shared by display_xyz functions to  get the value from ICU 
  }}} */
-static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS) {
+static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAMETERS) 
+{
 	char*       loc_name        	= NULL;
 	int         loc_name_len    	= 0;
 
@@ -481,11 +482,7 @@ static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAME
 	int32_t     buflen          	= 512;
 	UErrorCode  status          	= U_ZERO_ERROR;
 
-	char*       utf8value		= NULL;
-	int         utf8value_len   	= 0;
-
   	char*       msg             	= NULL;
-	int         msg_len         	= 50;
 	int         grOffset    	= 0;
 
 	intl_error_reset( NULL TSRMLS_CC );
@@ -495,11 +492,9 @@ static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAME
 		&loc_name, &loc_name_len , 
 		&disp_loc_name ,&disp_loc_name_len ) == FAILURE)
 	{
-		msg = erealloc( msg , msg_len);
-		snprintf(msg , msg_len, 
-		"locale_get_display_%s : unable to parse input params", 
-		tag_name );
+		spprintf(&msg , 0, "locale_get_display_%s : unable to parse input params", tag_name );
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,  msg , 1 TSRMLS_CC );
+		efree(msg);
 		RETURN_FALSE;
 	}
 
@@ -513,7 +508,7 @@ static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAME
 		if( grOffset >= 0 ){
 			if( strcmp(tag_name , LOC_LANG_TAG)==0 ){
 				mod_loc_name = getPreferredTag( loc_name );
-			}else{
+			} else {
 				//Since Grandfathered , no value , do nothing , retutn NULL
 				RETURN_FALSE;
 			}
@@ -524,7 +519,7 @@ static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAME
 		//Handle singletons 
 		if( (strcmp(tag_name , LOC_LANG_TAG)==0) && isIDPrefix(loc_name) ){
 				//return mod_loc_name;
-		}else{
+		} else {
 			singletonPos = getSingletonPos( loc_name );	
 			if( singletonPos == 0){
 					//singleton at start of script, region , variant etc.
@@ -553,32 +548,27 @@ static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAME
             disp_loc_name = estrdup(UG(default_locale));
         }
 
-	if( strcmp(tag_name , LOC_LANG_TAG)==0 ){
-		buflen = uloc_getDisplayLanguage ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
-	}
-	if( strcmp(tag_name , LOC_SCRIPT_TAG)==0 ){
-		buflen = uloc_getDisplayScript ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
-	}
-	if( strcmp(tag_name , LOC_REGION_TAG)==0 ){
-		buflen = uloc_getDisplayCountry ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
-	}
-	if( strcmp(tag_name , LOC_VARIANT_TAG)==0 ){
-		buflen = uloc_getDisplayVariant ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
-	}
-	if( strcmp(tag_name , DISP_NAME)==0 ){
-		buflen = uloc_getDisplayName ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
-	}
+		if( strcmp(tag_name , LOC_LANG_TAG)==0 ){
+			buflen = uloc_getDisplayLanguage ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
+		} else if( strcmp(tag_name , LOC_SCRIPT_TAG)==0 ){
+			buflen = uloc_getDisplayScript ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
+		} else if( strcmp(tag_name , LOC_REGION_TAG)==0 ){
+			buflen = uloc_getDisplayCountry ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
+		} else if( strcmp(tag_name , LOC_VARIANT_TAG)==0 ){
+			buflen = uloc_getDisplayVariant ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
+		} else if( strcmp(tag_name , DISP_NAME)==0 ){
+			buflen = uloc_getDisplayName ( mod_loc_name , disp_loc_name , disp_name , disp_name_len , &status);
+		}
 
-	if( U_FAILURE( status ) )
-	{
-	    if( status == U_BUFFER_OVERFLOW_ERROR )
-	    {
-		status = U_ZERO_ERROR;
-		continue;
-	    }
+		if( U_FAILURE( status ) )
+		{
+			if( status == U_BUFFER_OVERFLOW_ERROR )
+			{
+				status = U_ZERO_ERROR;
+				continue;
+			}
 
-		msg = erealloc( msg , msg_len);
-			snprintf(msg , msg_len , "locale_get_display_%s : unable to get locale %s", tag_name , tag_name );
+			spprintf(&msg, 0, "locale_get_display_%s : unable to get locale %s", tag_name , tag_name );
 			intl_error_set( NULL, status, msg , 1 TSRMLS_CC );
 			efree(msg);
 			if( disp_name){
@@ -587,27 +577,15 @@ static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAME
 			if( mod_loc_name){
 				efree( mod_loc_name );
 			}
-            RETURN_FALSE;
+			RETURN_FALSE;
 		}
 	} while( buflen > disp_name_len );
 
 	if( mod_loc_name){
 		efree( mod_loc_name );
 	}
-	// Convert display locale name from UTF-16 to UTF-8.
-	intl_convert_utf16_to_utf8( &utf8value, &utf8value_len, disp_name, buflen, &status );
-	efree( disp_name );
-	if( U_FAILURE( status ) )
-	{
-		msg = erealloc( msg , msg_len);
-		snprintf(msg , msg_len , "locale_get_display_%s :error converting display name for %s to UTF-8", tag_name , tag_name );
-		intl_error_set( NULL, status, msg , 1 TSRMLS_CC );
-		efree(msg);
-		RETURN_FALSE;
-	}
 
-	RETVAL_STRINGL( utf8value, utf8value_len , FALSE);
-
+	RETURN_UNICODEL(disp_name, buflen, 0);
 }
 /* }}} */
 
@@ -619,7 +597,8 @@ static void get_icu_disp_value_src_php( char* tag_name, INTERNAL_FUNCTION_PARAME
 * public static string get_display_name($locale, $in_locale = null)
 * gets the name for the $locale in $in_locale or default_locale
 */
-PHP_FUNCTION(locale_get_display_name) {
+PHP_FUNCTION(locale_get_display_name) 
+{
     get_icu_disp_value_src_php( DISP_NAME , INTERNAL_FUNCTION_PARAM_PASSTHRU );
 }
 /* }}} */
@@ -632,7 +611,8 @@ PHP_FUNCTION(locale_get_display_name) {
 * public static string get_display_language($locale, $in_locale = null)
 * gets the language for the $locale in $in_locale or default_locale
 */
-PHP_FUNCTION(locale_get_display_language) {
+PHP_FUNCTION(locale_get_display_language) 
+{
     get_icu_disp_value_src_php( LOC_LANG_TAG , INTERNAL_FUNCTION_PARAM_PASSTHRU );
 }
 /* }}} */
@@ -645,7 +625,8 @@ PHP_FUNCTION(locale_get_display_language) {
 * public static string get_display_script($locale, $in_locale = null)
 * gets the script for the $locale in $in_locale or default_locale
 */
-PHP_FUNCTION(locale_get_display_script) {
+PHP_FUNCTION(locale_get_display_script) 
+{
     get_icu_disp_value_src_php( LOC_SCRIPT_TAG , INTERNAL_FUNCTION_PARAM_PASSTHRU );
 }
 /* }}} */
@@ -658,7 +639,8 @@ PHP_FUNCTION(locale_get_display_script) {
 * public static string get_display_region($locale, $in_locale = null)
 * gets the region for the $locale in $in_locale or default_locale
 */
-PHP_FUNCTION(locale_get_display_region) {
+PHP_FUNCTION(locale_get_display_region) 
+{
     get_icu_disp_value_src_php( LOC_REGION_TAG , INTERNAL_FUNCTION_PARAM_PASSTHRU );
 }
 /* }}} */
@@ -671,21 +653,22 @@ PHP_FUNCTION(locale_get_display_region) {
 * public static string get_display_variant($locale, $in_locale = null)
 * gets the variant for the $locale in $in_locale or default_locale
 */
-PHP_FUNCTION(locale_get_display_variant) {
+PHP_FUNCTION(locale_get_display_variant) 
+{
     get_icu_disp_value_src_php( LOC_VARIANT_TAG , INTERNAL_FUNCTION_PARAM_PASSTHRU );
 }
 /* }}} */
 
-     /* {{{
-     * proto static string[] getKeywords(string $locale) {
-     * return an associative array containing keyword-value
-     * pairs for this locale. The keys are keys to the array (doh!)
-     * }}}*/
-     /* {{{
-     * proto static string[] locale_get_keywords(string $locale) {
-     * return an associative array containing keyword-value
-     * pairs for this locale. The keys are keys to the array (doh!)
-     */ 
+ /* {{{
+ * proto static string[] getKeywords(string $locale) 
+ * return an associative array containing keyword-value
+ * pairs for this locale. The keys are keys to the array (doh!)
+ * }}}*/
+ /* {{{
+ * proto static string[] locale_get_keywords(string $locale)
+ * return an associative array containing keyword-value
+ * pairs for this locale. The keys are keys to the array (doh!)
+ */ 
 
 PHP_FUNCTION( locale_get_keywords )
 {
@@ -761,72 +744,79 @@ PHP_FUNCTION( locale_get_keywords )
 /* }}} */
 
  /* {{{
- * proto static string Locale::canonicalize($locale) {}
+ * proto static string Locale::canonicalize($locale)
  * @return string the canonicalized locale 
  * }}} */
  /* {{{
- * proto static string locale_canonicalize(Locale $loc, string $locale) {}
+ * proto static string locale_canonicalize(Locale $loc, string $locale)
  * @param string $locale	The locale string to canonicalize
  */
-PHP_FUNCTION(locale_canonicalize){
+PHP_FUNCTION(locale_canonicalize)
+{
 	get_icu_value_src_php( LOC_CANONICALIZE_TAG , INTERNAL_FUNCTION_PARAM_PASSTHRU );
 }
 /* }}} */
 
-
+#define FREE_VALUE() if(Z_TYPE_PP(ele_value) == IS_UNICODE) { efree(value); }
 /* {{{ append_key_value
 * Internal function which is called from locale_compose
 * gets the value for the key_name and appends to the loc_name
 * returns 1 if successful , -1 if not found ,
 * 0 if array element is not a string , -2 if buffer-overflow
 */
-static int append_key_value(char* loc_name, int loc_name_capacity , HashTable* hash_arr, char* key_name TSRMLS_DC){
-        int     result          = -1;
+static int append_key_value(char* loc_name, int loc_name_capacity , HashTable* hash_arr, char* key_name TSRMLS_DC)
+{
         int     needed_size     = -1;
         zval**  ele_value       = NULL;
 
         intl_error_reset( NULL TSRMLS_CC );
 
-        if( zend_hash_find( hash_arr , key_name , strlen(key_name) + 1 ,
-(void **)&ele_value ) == SUCCESS ){
-                if( Z_TYPE_PP(ele_value)!= IS_STRING ){
+        if( zend_hash_find( hash_arr , key_name , strlen(key_name) + 1 , (void **)&ele_value ) == SUCCESS ||
+			zend_ascii_hash_find( hash_arr , key_name , strlen(key_name) + 1 , (void **)&ele_value ) == SUCCESS) {
+				char *value;
+				int value_len;
+
+                if( Z_TYPE_PP(ele_value) == IS_UNICODE ){
+					value = zend_unicode_to_ascii(Z_USTRVAL_PP(ele_value), Z_USTRLEN_PP(ele_value));
+					value_len = strlen(value);
+				} else if( Z_TYPE_PP(ele_value) == IS_STRING ) {
+					value = Z_STRVAL_PP(ele_value);
+					value_len = Z_STRLEN_PP(ele_value);
+				} else {
                         //element value is not a string
-                        result = 0;
-                        return result;
+                        return 0;
                 }
                 if( strcmp(key_name , LOC_LANG_TAG) != 0 &&
                     strcmp(key_name , LOC_GRANDFATHERED_LANG_TAG)!=0 ){
 
-                        needed_size = Z_STRLEN_PP(ele_value)+1 ;
+                        needed_size = value_len+1 ;
 
                         if( needed_size > loc_name_capacity ){
                                 //Will cause Buffer_overflow
-                                result = -2;
-                                return result;
+								FREE_VALUE();
+								return -2;
 
-                        }else{
+                        } else {
                                 strcat( loc_name , SEPARATOR);
-                                strncat( loc_name ,
-                                         Z_STRVAL_PP(ele_value) ,
-                                         Z_STRLEN_PP(ele_value) );
+                                strncat( loc_name , value, value_len);
                         }
-                }else{
+                } else {
                         //lang or grandfathered  tag
-                        needed_size = Z_STRLEN_PP(ele_value) ;
+                        needed_size = value_len;
                         if( needed_size > loc_name_capacity ){
-                                //Will cause Buffer_overflow
-                                result = -2;
-                                return result;
-
-                        }else{
-                                strncat( loc_name , Z_STRVAL_PP(ele_value) , Z_STRLEN_PP(ele_value) );
+                           //Will cause Buffer_overflow
+							FREE_VALUE();
+                            return -2;
+                        } else {
+                            strncat( loc_name , value, value_len );
                         }
                 }
 
-                result = 1;
+                FREE_VALUE();
+				return 1;
         }
 
-        return result;
+		return -1;
 
 }
 /* }}} */
@@ -836,7 +826,8 @@ static int append_key_value(char* loc_name, int loc_name_capacity , HashTable* h
 /* {{{ append_prefix , appends the prefix needed
 * e.g. private adds 'x'
 */
-static void add_prefix(char* loc_name , char* key_name){
+static void add_prefix(char* loc_name , char* key_name)
+{
 	if( strncmp(key_name , LOC_PRIVATE_TAG , 7) == 0 ){
 		strcat( loc_name , SEPARATOR);
 		strcat( loc_name , PRIVATE_PREFIX);
@@ -852,8 +843,9 @@ static void add_prefix(char* loc_name , char* key_name){
 * returns 1 if successful , -1 if not found ,
 * 0 if array element is not a string , -2 if buffer-overflow
 */
-static int append_multiple_key_values(char* loc_name, int loc_name_capacity  , HashTable* hash_arr, char* key_name TSRMLS_DC){
-        int     result          = -1;
+static int append_multiple_key_values(char* loc_name, int loc_name_capacity  , HashTable* hash_arr, char* key_name TSRMLS_DC)
+{
+		int result = -1;
         zval**  ele_value       = NULL;
         char*   cur_key_name    = NULL;
 
@@ -863,32 +855,43 @@ static int append_multiple_key_values(char* loc_name, int loc_name_capacity  , H
         int     needed_size     = 0;
 
         //Variant/ Extlang/Private etc.
-        if( zend_hash_find( hash_arr , key_name , strlen(key_name) + 1 ,(void **)&ele_value ) == SUCCESS ){
-                if( Z_TYPE_PP(ele_value)!= IS_STRING ){
-                        //key_name is not a string
-                        result = 0;
-                        return result;
+        if( zend_hash_find( hash_arr , key_name , strlen(key_name) + 1 ,(void **)&ele_value ) == SUCCESS ||
+			zend_ascii_hash_find( hash_arr , key_name , strlen(key_name) + 1 , (void **)&ele_value ) == SUCCESS){
+				char *value;
+				int value_len;
+
+                if( Z_TYPE_PP(ele_value) == IS_UNICODE ){
+					value = zend_unicode_to_ascii(Z_USTRVAL_PP(ele_value), Z_USTRLEN_PP(ele_value));
+					value_len = strlen(value);
+				} else if( Z_TYPE_PP(ele_value) == IS_STRING ) {
+					value = Z_STRVAL_PP(ele_value);
+					value_len = Z_STRLEN_PP(ele_value);
+				} else {
+                        //element value is not a string
+					return 0;
                 }
 
                 //Determine the needed_size and check it against available
                 if( strcmp(key_name , LOC_PRIVATE_TAG) ==0 ){
                         //for the string "-x-" and the size of array element
-                        needed_size = Z_STRLEN_PP(ele_value) + 3;
-                }else{
+                        needed_size = value_len + 3;
+                } else {
                         //for the SEPARATOR and the size of array element
-                        needed_size = Z_STRLEN_PP(ele_value) + 1;
+                        needed_size = value_len + 1;
                 }
                 if( needed_size > loc_name_capacity){
                         //Will cause buffer_overflow
-                        result = -2;
-                        return result;
+		                FREE_VALUE();
+                        return -2;
                 }
 
                 add_prefix( loc_name , key_name);
 
                 strcat( loc_name , SEPARATOR);
-                strncat( loc_name , Z_STRVAL_PP(ele_value) , Z_STRLEN_PP(ele_value) );
-        }else{
+                strncat( loc_name , value , value_len );
+				FREE_VALUE();
+				return 1;
+        } else {
                 //Decide the max_value : the max. no. of elements allowed
                 if( strcmp(key_name , LOC_VARIANT_TAG) ==0 ){
                         max_value  = MAX_NO_VARIANT;
@@ -906,39 +909,50 @@ static int append_multiple_key_values(char* loc_name, int loc_name_capacity  , H
                 isFirstSubtag = 0;
                 for( i=0 ; i< max_value; i++ ){
                         sprintf( cur_key_name , "%s%d", key_name , i);
-                        if( zend_hash_find( hash_arr , cur_key_name , strlen(cur_key_name) + 1,(void **)&ele_value ) == SUCCESS ){
-                                if( Z_TYPE_PP(ele_value)!= IS_STRING ){
-                                        //variant is not a string
-                                        result = 0;
-                                        if( cur_key_name){
-                                                efree(cur_key_name);
-                                        }
-                                        return result;
-                                }
+                        if( zend_hash_find( hash_arr , cur_key_name , strlen(cur_key_name) + 1,(void **)&ele_value ) == SUCCESS ||
+							zend_ascii_hash_find( hash_arr , cur_key_name , strlen(cur_key_name) + 1,(void **)&ele_value ) == SUCCESS){
+							char *value;
+							int value_len;
 
-                                //Determine the needed_size and check it against available
-                                if( strcmp(key_name , LOC_PRIVATE_TAG) ==0 && isFirstSubtag ==0 ){
-                                        //for the string "-x-" and the size of array element
-                                        needed_size = Z_STRLEN_PP(ele_value) + 3;
-                                }else{
-                                        //for the SEPARATOR and the size of array element
-                                        needed_size = Z_STRLEN_PP(ele_value) + 1;
+							if( Z_TYPE_PP(ele_value) == IS_UNICODE ){
+								value = zend_unicode_to_ascii(Z_USTRVAL_PP(ele_value), Z_USTRLEN_PP(ele_value));
+								value_len = strlen(value);
+							} else if( Z_TYPE_PP(ele_value) == IS_STRING ) {
+								value = Z_STRVAL_PP(ele_value);
+								value_len = Z_STRLEN_PP(ele_value);
+							} else {
+                                if( cur_key_name){
+									efree(cur_key_name);
                                 }
-                                if( needed_size > loc_name_capacity){
-                                        //Will cause buffer_overflow
-                                        result = -2;
-                                        if( cur_key_name){
-                                                efree(cur_key_name);
-                                        }
-                                        return result;
-                                }
+								return 0;
+                            }
 
-                                //Add the contents
-                                if (isFirstSubtag++ == 0){
-                                        add_prefix( loc_name , cur_key_name);
-                                }
-                                strcat( loc_name , SEPARATOR);
-                                strncat( loc_name , Z_STRVAL_PP(ele_value) , Z_STRLEN_PP(ele_value) );
+                            //Determine the needed_size and check it against available
+                            if( strcmp(key_name , LOC_PRIVATE_TAG) ==0 && isFirstSubtag ==0 ){
+                                    //for the string "-x-" and the size of array element
+                                    needed_size = value_len + 3;
+                            } else {
+                                    //for the SEPARATOR and the size of array element
+                                    needed_size = value_len + 1;
+                            }
+                            if( needed_size > loc_name_capacity){
+                                    //Will cause buffer_overflow
+                                    if( cur_key_name){
+                                            efree(cur_key_name);
+                                    }
+									FREE_VALUE();
+                                    return -2;
+                            }
+
+                            //Add the contents
+                            if (isFirstSubtag++ == 0){
+                                    add_prefix( loc_name , cur_key_name);
+                            }
+                            strcat( loc_name , SEPARATOR);
+                            strncat( loc_name , value , value_len );
+
+							result = 1;
+							FREE_VALUE();
                         }
                 }//end of for
                 efree(cur_key_name);
@@ -953,7 +967,8 @@ static int append_multiple_key_values(char* loc_name, int loc_name_capacity  , H
 * returns 0  if locale_compose needs to be aborted
 * otherwise returns 1
 */
-static int handleAppendResult( int result,char* loc_name TSRMLS_DC){
+static int handleAppendResult( int result,char* loc_name TSRMLS_DC)
+{
         intl_error_reset( NULL TSRMLS_CC );
         if( result == 0 ){
                 intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
@@ -978,14 +993,15 @@ static int handleAppendResult( int result,char* loc_name TSRMLS_DC){
 /* }}} */
 
 /* {{{
-* proto static string Locale::composeLocale($array) {}
+* proto static string Locale::composeLocale($array)
 * Creates a locale by combining the parts of locale-ID passed
 * }}} */
 /* {{{
-* proto static string compose_locale($array) {}
+* proto static string compose_locale($array)
 * Creates a locale by combining the parts of locale-ID passed
 * }}} */
-PHP_FUNCTION(locale_compose){
+PHP_FUNCTION(locale_compose)
+{
         char*           loc_name        = NULL;
         int             loc_name_len    = 0;
 
@@ -1080,7 +1096,8 @@ PHP_FUNCTION(locale_compose){
 * e.g. for locale='en_US-x-prv1-prv2-prv3'
 * returns a pointer to the string 'prv1-prv2-prv3'
 */
-static char* get_private_subtags(char* loc_name){
+static char* get_private_subtags(char* loc_name)
+{
         char*   result =NULL;
         int     singletonPos = 0;
         int     len =0;
@@ -1106,7 +1123,7 @@ static char* get_private_subtags(char* loc_name){
                                         if( singletonPos + 1 >=  len){
                                                 //String end
                                                 break;
-                                        }else{
+                                        } else {
                                                 //singleton found but not a private subtag , hence check further in the string for the private subtag
                                                 mod_loc_name = mod_loc_name + singletonPos +1;
                                                 len = strlen(mod_loc_name);
@@ -1124,7 +1141,8 @@ static char* get_private_subtags(char* loc_name){
 
 /* {{{ code used by locale_parse
 */
-static int add_array_entry(char* loc_name, zval* hash_arr, char* key_name TSRMLS_DC){
+static int add_array_entry(char* loc_name, zval* hash_arr, char* key_name TSRMLS_DC)
+{
 	char*   key_value 	= NULL;
 	char*   cur_key_name	= NULL;
 	char*   token        	= NULL;
@@ -1138,7 +1156,7 @@ static int add_array_entry(char* loc_name, zval* hash_arr, char* key_name TSRMLS
 	if( strcmp(key_name , LOC_PRIVATE_TAG)==0 ){
 		key_value = get_private_subtags( loc_name );
 		result = 1;
-	}else{
+	} else {
 		key_value = get_icu_value_internal( loc_name , key_name , &result,1 );
 	}
 	if( strcmp(key_name , LOC_PRIVATE_TAG)==0 || 
@@ -1158,7 +1176,7 @@ static int add_array_entry(char* loc_name, zval* hash_arr, char* key_name TSRMLS
 				add_assoc_string( hash_arr, cur_key_name , token , TRUE );
 			}
 		}
-	}else{
+	} else {
 		if( result == 1 ){
 			add_assoc_string( hash_arr, key_name , key_value , TRUE );
 			cur_result = 1;
@@ -1175,18 +1193,18 @@ static int add_array_entry(char* loc_name, zval* hash_arr, char* key_name TSRMLS
 }
 
 /* {{{
-* proto static array Locale::parseLocale($locale) {}
+* proto static array Locale::parseLocale($locale) 
 * parses a locale-id into an array the different parts of it
  }}} */
 /* {{{
-* proto static array parse_locale($locale) {}
+* proto static array parse_locale($locale)
 * parses a locale-id into an array the different parts of it
 */
-PHP_FUNCTION(locale_parse){
+PHP_FUNCTION(locale_parse)
+{
     char*       loc_name        = NULL;
     int         loc_name_len    = 0;
     int         grOffset    	= 0;
-    int         isDefaultLoc    = 0;
 
     intl_error_reset( NULL TSRMLS_CC );
 
@@ -1202,15 +1220,14 @@ PHP_FUNCTION(locale_parse){
 
     if(loc_name_len == 0) {
         loc_name = UG(default_locale);
-	isDefaultLoc = 1;
     }
 
 	array_init( return_value );
 
 	grOffset =  findOffset( LOC_GRANDFATHERED , loc_name );
 	if( grOffset >= 0 ){
-		add_assoc_string( return_value , LOC_GRANDFATHERED_LANG_TAG , estrdup(loc_name) ,FALSE );
-	}else{
+		add_assoc_string( return_value , LOC_GRANDFATHERED_LANG_TAG , loc_name , 1 );
+	} else {
 		//Not grandfathered
 		add_array_entry( loc_name , return_value , LOC_LANG_TAG TSRMLS_CC);
 		add_array_entry( loc_name , return_value , LOC_SCRIPT_TAG TSRMLS_CC);
@@ -1228,7 +1245,8 @@ PHP_FUNCTION(locale_parse){
 /* {{{ proto static array locale_get_all_variants($locale)
 * gets an array containing the list of variants, or null
 */
-PHP_FUNCTION(locale_get_all_variants){
+PHP_FUNCTION(locale_get_all_variants)
+{
 	char*  	loc_name        = NULL;
 	int    	loc_name_len    = 0;
 
@@ -1282,9 +1300,10 @@ PHP_FUNCTION(locale_get_all_variants){
 /* }}} */
 
 /*{{{
-* Converts to lower case and also replaces all hyphuns with the underscore
+* Converts to lower case and also replaces all hyphens with the underscore
 */
-static int strToMatch(char* str ,char *retstr){
+static int strToMatch(char* str ,char *retstr)
+{
 	char* 	anchor 	= NULL;
 	char* 	anchor1 = NULL;
 	int 	result 	= 0;
@@ -1292,14 +1311,14 @@ static int strToMatch(char* str ,char *retstr){
 
     if( (!str) || strlen(str) ==0){
         return result;
-    }else{
+    } else {
 	anchor = retstr;
 	anchor1 = str;
         len = strlen(str);
         while( (*str)!='\0' ){
 		if( *str == '-' ){
 			*retstr =  '_';
-		}else{
+		} else {
 			*retstr = tolower(*str);
 		}
             str++;
@@ -1318,7 +1337,8 @@ static int strToMatch(char* str ,char *retstr){
 /*{{{
 * code used by locale_filter_maatches
 */
-PHP_FUNCTION(locale_filter_matches){
+PHP_FUNCTION(locale_filter_matches)
+{
 	char*       	lang_tag        = NULL;
 	int         	lang_tag_len    = 0;
 	char*       	loc_range       = NULL;
@@ -1481,7 +1501,8 @@ PHP_FUNCTION(locale_filter_matches){
 	}
 }
 
-static void array_cleanup( char* arr[] , int arr_size){
+static void array_cleanup( char* arr[] , int arr_size)
+{
 	int i=0;
 	for( i=0; i< arr_size; i++ ){ 
 		if( arr[i] ){
@@ -1495,7 +1516,8 @@ static void array_cleanup( char* arr[] , int arr_size){
 * returns the lookup result to lookup_loc_range_src_php 
 * internal function
 */
-static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanonical  TSRMLS_DC){
+static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanonical  TSRMLS_DC)
+{
 	int		cur_arr_ind 		= 0;
 	int		i 			= 0;
 	int		cur_arr_len 		= 0;
@@ -1514,37 +1536,37 @@ static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanon
 	UErrorCode	status			= U_ZERO_ERROR;
 	char*		empty_result		= "";
 
-	//convert the array to lowercase , also replace hyphuns with the underscore and store it in cur_arr
+	//convert the array to lowercase , also replace hyphens with the underscore and store it in cur_arr
 	for(zend_hash_internal_pointer_reset(hash_arr);
 		zend_hash_has_more_elements(hash_arr) == SUCCESS;
 		zend_hash_move_forward(hash_arr)) {
 		
-	if (zend_hash_get_current_data(hash_arr, (void**)&ele_value) == FAILURE) {
-            // Should never actually fail
-             // since the key is known to exist.
-            continue;
-        }
-	if( Z_TYPE_PP(ele_value)!= IS_STRING ){
-		//element value is not a string 
-		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-		"lookup_internal_src_php: array element is not a string ", 
-		0 TSRMLS_CC );
-		return NULL;
-	}else{
+		if (zend_hash_get_current_data(hash_arr, (void**)&ele_value) == FAILURE) {
+				// Should never actually fail
+				// since the key is known to exist.
+				continue;
+		}
+
 		if( lang_tag ){
 			efree( lang_tag );
 		}
-		lang_tag = estrdup(Z_STRVAL_PP(ele_value) );
+		if( Z_TYPE_PP(ele_value)== IS_UNICODE ) {
+			lang_tag = zend_unicode_to_ascii(Z_USTRVAL_PP(ele_value), Z_USTRLEN_PP(ele_value));
+		} else if( Z_TYPE_PP(ele_value)== IS_STRING ) {
+			lang_tag = estrdup(Z_STRVAL_PP(ele_value));
+		} else {
+			//element value is not a string 
+			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,	"lookup_internal_src_php: array element is not a string ", 0 TSRMLS_CC );
+			return NULL;
+		} 
 
 		if( isCanonical ==0 ){
-			//+1 for the terminating '\0'
+				//+1 for the terminating '\0'
 			cur_arr[cur_arr_ind] = ecalloc(1, strlen(lang_tag)+1 );
 			result = strToMatch(lang_tag, cur_arr[cur_arr_ind]) ;	
+		} else {
+			cur_arr[cur_arr_ind] = estrdup(lang_tag);
 		}
-		else{
-		cur_arr[cur_arr_ind] = estrdup(lang_tag);
-		}
-
 
 		if( cur_arr_ind < MAX_NO_LOOKUP_LANG_TAG ){
 			cur_arr_ind++ ; 
@@ -1552,7 +1574,6 @@ static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanon
 		else{
 			break;
 		}
-	}
 	}//end of for
 	if( lang_tag ){
 		efree( lang_tag );
@@ -1596,12 +1617,12 @@ static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanon
 			}
 			array_cleanup( cur_arr , cur_arr_len );
 			return NULL;
-		}else{
+		} else {
 			//convert to lower and replace hyphuns
 			cur_loc_range = ecalloc( 1, strlen(can_loc_range) +1);
 			result = strToMatch(can_loc_range , cur_loc_range);	
 		}
-	}else{
+	} else {
 		cur_loc_range = ecalloc( 1, strlen(loc_range) +1);
 		//convert to lower and replace hyphuns
 		result = strToMatch(loc_range , cur_loc_range);	
@@ -1661,7 +1682,8 @@ static char* lookup_loc_range(char* loc_range, HashTable* hash_arr , int isCanon
 * Searchs the items in $langtag for the best match to the language
 * range 
 */
-PHP_FUNCTION(locale_lookup){
+PHP_FUNCTION(locale_lookup)
+{
 	char*       	fallback_loc  		= NULL;
 	int         	fallback_loc_len	= 0;
 	char*       	loc_range      		= NULL;
@@ -1703,7 +1725,7 @@ PHP_FUNCTION(locale_lookup){
 	if( result == NULL || result[0] == '\0' ){
 		if( fallback_loc ) {
 			result = estrndup( fallback_loc , fallback_loc_len);
-		}else{
+		} else {
 			RETURN_EMPTY_STRING();
 		}
 	}
