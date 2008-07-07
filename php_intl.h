@@ -60,7 +60,7 @@ PHP_RINIT_FUNCTION(intl);
 PHP_RSHUTDOWN_FUNCTION(intl);
 PHP_MINFO_FUNCTION(intl);
 
-#define PHP_INTL_VERSION "1.0.0RC1-dev"
+#define PHP_INTL_VERSION "1.0.0"
 
 #endif  /* PHP_INTL_H */
 
