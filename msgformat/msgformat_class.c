@@ -80,7 +80,7 @@ zend_object_value MessageFormatter_object_create(zend_class_entry *ce TSRMLS_DC)
  * Every 'MessageFormatter' class method has an entry in this table
  */
 
-static function_entry MessageFormatter_class_functions[] = {
+static zend_function_entry MessageFormatter_class_functions[] = {
 	PHP_ME( MessageFormatter, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR )
 	ZEND_FENTRY(  create, ZEND_FN( msgfmt_create ), NULL, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	PHP_NAMED_FE( format, ZEND_FN( msgfmt_format ), NULL )

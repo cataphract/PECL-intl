@@ -94,7 +94,7 @@ static ZEND_BEGIN_ARG_INFO_EX( number_parse_currency_arginfo, 0, 0, 2 )
 	ZEND_ARG_INFO( 1, position )
 ZEND_END_ARG_INFO()
 
-static function_entry NumberFormatter_class_functions[] = {
+static zend_function_entry NumberFormatter_class_functions[] = {
 	PHP_ME( NumberFormatter, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR )
 	ZEND_FENTRY( create, ZEND_FN( numfmt_create ), NULL, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	PHP_NAMED_FE( format, ZEND_FN( numfmt_format ), NULL )

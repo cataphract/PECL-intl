@@ -87,7 +87,7 @@ zend_object_value IntlDateFormatter_object_create(zend_class_entry *ce TSRMLS_DC
  * Every 'IntlDateFormatter' class method has an entry in this table
  */
 
-static function_entry IntlDateFormatter_class_functions[] = {
+static zend_function_entry IntlDateFormatter_class_functions[] = {
 	PHP_ME( IntlDateFormatter, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR )
 	ZEND_FENTRY(  create, ZEND_FN( datefmt_create ), NULL, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	PHP_NAMED_FE( getDateType, ZEND_FN( datefmt_get_datetype ), NULL )
