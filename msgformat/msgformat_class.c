@@ -25,6 +25,7 @@
 #include "msgformat_attr.h"
 
 zend_class_entry *MessageFormatter_ce_ptr = NULL;
+static zend_object_handlers MessageFormatter_handlers;
 
 /////////////////////////////////////////////////////////////////////////////
 // Auxiliary functions needed by objects of 'MessageFormatter' class
@@ -66,7 +67,7 @@ zend_object_value MessageFormatter_object_create(zend_class_entry *ce TSRMLS_DC)
 		(zend_objects_free_object_storage_t)MessageFormatter_object_free,
 		NULL TSRMLS_CC );
 
-	retval.handlers = zend_get_std_object_handlers();
+	retval.handlers = &MessageFormatter_handlers;
 
 	return retval;
 }
@@ -114,6 +115,10 @@ void msgformat_register_class( TSRMLS_D )
 		zend_error(E_ERROR, "Failed to register MessageFormatter class");
 		return;
 	}
+
+	memcpy(&MessageFormatter_handlers, zend_get_std_object_handlers(),
+		sizeof MessageFormatter_handlers);
+	MessageFormatter_handlers.clone_obj = NULL;
 }
 /* }}} */
 

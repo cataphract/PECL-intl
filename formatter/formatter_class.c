@@ -25,6 +25,7 @@
 #include "formatter_attr.h"
 
 zend_class_entry *NumberFormatter_ce_ptr = NULL;
+static zend_object_handlers NumberFormatter_handlers;
 
 /////////////////////////////////////////////////////////////////////////////
 // Auxiliary functions needed by objects of 'NumberFormatter' class
@@ -69,7 +70,7 @@ zend_object_value NumberFormatter_object_create(
 		(zend_objects_free_object_storage_t)NumberFormatter_object_free,
 		NULL TSRMLS_CC );
 
-	retval.handlers = zend_get_std_object_handlers();
+	retval.handlers = &NumberFormatter_handlers;
 
 	return retval;
 }
@@ -134,6 +135,10 @@ void formatter_register_class( TSRMLS_D )
 		zend_error(E_ERROR, "Failed to register NumberFormatter class");
 		return;
 	}
+
+	memcpy(&NumberFormatter_handlers, zend_get_std_object_handlers(),
+		sizeof NumberFormatter_handlers);
+	NumberFormatter_handlers.clone_obj = NULL;
 }
 /* }}} */
 
