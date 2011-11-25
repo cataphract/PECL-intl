@@ -38,89 +38,6 @@ function dump( $val )
 {
     return var_export( $val, true );
 }
-/*
- * Convert a binary string content of $var to unicode.
- */
-function u( $var )
-{
-    if( is_string( $var ) )
-        return u_str( $var );
-
-    if( is_array( $var ) )
-        return u_array( $var );
-
-    return $var;
-}
-
-/*
- * Convert a binary string to unicode one.
- */
-function u_str( $s )
-{
-    if( !is_binary( $s ) )
-        return $s;
-
-    return unicode_decode( $s, 'utf-8' );
-}
-
-/*
- * Convert each binary string item of array to unicode string.
- */
-function u_array( $a )
-{
-    $b = array();
-    foreach( $a as $key => $val )
-        $b[$key] = u( $val );
-
-    return $b;
-}
-
-/*
- * Same as 'var_export" but does conversion binary string content
- * of $str to utf-8.
- */
-function dump_str( $val, $use_quotes = true )
-{
-    $q = '';
-    if( $use_quotes )
-	$q = "'";
-    if( is_unicode( $val ) && !unicode_semantics() )
-        return $q . unicode_encode( $val, 'utf-8' ) . $q;
-
-    if( is_string( $val ) )
-        return $q . "$val" . $q;
-
-    return var_export( $val, true );
-}
-
-/*
- * Same as 'var_export" but does conversion binary string content
- * of $str to utf-8.
- */
-function dump_array( $a )
-{
-    $b = "array (\n";
-    foreach( $a as $key => $val )
-    {
-    	if( is_integer( $key ) )
-            $b .= "  $key => ";
-        else
-            $b .= "  '$key' => ";
-
-        if( is_unicode( $val ) && !unicode_semantics() )
-    	    $b .= "'" . unicode_encode( $val, 'utf-8' ) . "'";
-        elseif( is_null( $val ) )
-            $b .= "NULL";
-        elseif( is_string( $val ) )
-            $b .= "'" . "$val" . "'";
-        else
-            $b .= $val;
-        $b .= ",\n";
-    }
-    $b .= ")";
-
-    return $b;
-}
 
 /*
  * Wrappers around Collator methods to run them in either OO- or procedural mode.
@@ -142,6 +59,10 @@ function ut_coll_sort_with_sort_keys( $coll, &$arr )
 {
     return $GLOBALS['oo-mode'] ? $coll->sortWithSortKeys( $arr ) : collator_sort_with_sort_keys( $coll, $arr );
 }
+function ut_coll_get_sort_key( $coll, $str )
+{
+    return $GLOBALS['oo-mode'] ? $coll->getSortKey( $str ) : collator_get_sort_key( $coll, $str );
+}
 function ut_coll_asort( $coll, &$arr, $sort_flag = Collator::SORT_REGULAR )
 {
     return $GLOBALS['oo-mode'] ? $coll->asort( $arr, $sort_flag ) : collator_asort( $coll, $arr, $sort_flag );
@@ -149,6 +70,14 @@ function ut_coll_asort( $coll, &$arr, $sort_flag = Collator::SORT_REGULAR )
 function ut_coll_get_locale( $coll, $type )
 {
     return $GLOBALS['oo-mode'] ? $coll->getLocale( $type ) : collator_get_locale( $coll, $type );
+}
+function ut_coll_get_display_name( $obj_loc, $disp_loc )
+{
+    return $GLOBALS['oo-mode'] ? Collator::getDisplayName( $obj_loc, $disp_loc ) : collator_get_display_name( $obj_loc, $disp_loc );
+}
+function ut_coll_get_available_locales()
+{
+    return $GLOBALS['oo-mode'] ? Collator::getAvailableLocales() : collator_get_available_locales();
 }
 function ut_coll_get_attribute( $coll, $attr )
 {
@@ -355,7 +284,9 @@ function ut_loc_locale_lookup( $lang_tag_arr,$loc_range,$isCanonical,$default_lo
 {
     return $GLOBALS['oo-mode'] ? Locale::lookup( $lang_tag_arr,$loc_range,$isCanonical,$default_loc ) : locale_lookup( $lang_tag_arr,$loc_range,$isCanonical,$default_loc );
 }
-
+function ut_loc_accept_http($http) {
+	return $GLOBALS['oo-mode'] ? Locale::acceptFromHttp($http):locale_accept_from_http($http);
+}
 /* MessageFormatter functions */
 function ut_msgfmt_create( $locale, $pattern)
 {
@@ -397,7 +328,7 @@ function ut_msgfmt_get_error_message( $fmt )
 {
     return $GLOBALS['oo-mode'] ? $fmt->getErrorMessage() : msgfmt_get_error_message( $fmt );
 }
-/* DateFormatter functions */
+/* IntlDateFormatter functions */
 function ut_datefmt_create( $locale, $datetype, $timetype, $timezone = null, $calendar = null ,$pattern = null)
 {
     return $GLOBALS['oo-mode'] ? datefmt_create( $locale, $datetype, $timetype, $timezone, $calendar ,$pattern ) : datefmt_create( $locale, $datetype, $timetype, $timezone, $calendar ,$pattern);
@@ -450,12 +381,36 @@ function ut_datefmt_format( $fmt , $value )
 {
     return $GLOBALS['oo-mode'] ? $fmt->format(  $value ) : datefmt_format( $fmt ,  $value);
 }
-function ut_datefmt_parse( $fmt , $value ,$parse_pos=0 )
+function ut_datefmt_parse( $fmt , $value , &$parse_pos=0 )
 {
-    return $GLOBALS['oo-mode'] ? $fmt->parse(  $value ,$parse_pos ) : datefmt_parse( $fmt ,  $value,$parse_pos );
+    return $GLOBALS['oo-mode'] ? $fmt->parse(  $value ,$parse_pos ) : datefmt_parse( $fmt ,  $value,$parse_pos);
 }
-function ut_datefmt_localtime( $fmt , $value ,$parse_pos=0 )
+function ut_datefmt_localtime( $fmt , $value , &$parse_pos=0 )
 {
     return $GLOBALS['oo-mode'] ? $fmt->localtime(  $value , $parse_pos ) : datefmt_localtime( $fmt ,  $value , $parse_pos );
 }
-?>
+
+function ut_resourcebundle_create( $locale, $bundle, $fallback=true )
+{
+    return $GLOBALS['oo-mode'] ? new ResourceBundle($locale, $bundle, $fallback): resourcebundle_create($locale, $bundle, $fallback);
+}
+function ut_resourcebundle_count($bundle )
+{
+    return $GLOBALS['oo-mode'] ? $bundle->count():resourcebundle_count($bundle);
+}
+function ut_resourcebundle_locales($bundle )
+{
+    return $GLOBALS['oo-mode'] ? ResourceBundle::getLocales($bundle):resourcebundle_locales($bundle);
+}
+function ut_resourcebundle_get($bundle, $idx )
+{
+    return $GLOBALS['oo-mode'] ? $bundle->get($idx):resourcebundle_get($bundle, $idx);
+}
+function ut_resourcebundle_get_error_code($bundle )
+{
+    return $GLOBALS['oo-mode'] ? $bundle->getErrorCode():resourcebundle_get_error_code($bundle);
+}
+function ut_resourcebundle_get_error_message($bundle )
+{
+    return $GLOBALS['oo-mode'] ? $bundle->getErrorMessage():resourcebundle_get_error_message($bundle);
+}

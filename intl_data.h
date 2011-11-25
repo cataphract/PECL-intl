@@ -45,6 +45,16 @@ typedef struct _intl_data {
 	obj = (oclass##_object *) zend_object_store_get_object( object TSRMLS_CC );	\
     intl_error_reset( INTL_DATA_ERROR_P(obj) TSRMLS_CC );						\
 
+/* Check status by error code, if error - exit */
+#define INTL_CHECK_STATUS(err, msg)											\
+    intl_error_set_code( NULL, (err) TSRMLS_CC );							\
+    if( U_FAILURE((err)) )													\
+    {																		\
+        intl_error_set_custom_msg( NULL, msg, 0 TSRMLS_CC );				\
+        RETURN_FALSE;														\
+    }
+
+/* Check status in object, if error - exit */
 #define INTL_METHOD_CHECK_STATUS(obj, msg)											\
     intl_error_set_code( NULL, INTL_DATA_ERROR_CODE((obj)) TSRMLS_CC );				\
     if( U_FAILURE( INTL_DATA_ERROR_CODE((obj)) ) )									\
@@ -53,19 +63,41 @@ typedef struct _intl_data {
         RETURN_FALSE;										\
     }
 
-#define INTL_MAX_LOCALE_LEN 64
+/* Check status, if error - destroy value and exit */
+#define INTL_CTOR_CHECK_STATUS(obj, msg)											\
+    intl_error_set_code( NULL, INTL_DATA_ERROR_CODE((obj)) TSRMLS_CC );				\
+    if( U_FAILURE( INTL_DATA_ERROR_CODE((obj)) ) )									\
+    {																				\
+        intl_errors_set_custom_msg( INTL_DATA_ERROR_P((obj)), msg, 0 TSRMLS_CC );	\
+		zval_dtor(return_value);													\
+        RETURN_NULL();																\
+    }
+
+#define INTL_METHOD_RETVAL_UTF8(obj, ustring, ulen, free_it)									\
+{																								\
+	char *u8value;																				\
+	int u8len;																					\
+	intl_convert_utf16_to_utf8(&u8value, &u8len, ustring, ulen, &INTL_DATA_ERROR_CODE((obj)));	\
+	if((free_it)) {																				\
+		efree(ustring);																			\
+	}																							\
+	INTL_METHOD_CHECK_STATUS((obj), "Error converting value to UTF-8");							\
+	RETVAL_STRINGL(u8value, u8len, 0);															\
+}
+
+#define INTL_MAX_LOCALE_LEN 80
 
 #define INTL_CHECK_LOCALE_LEN(locale_len)												\
 	if((locale_len) > INTL_MAX_LOCALE_LEN) {											\
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,									\
-	"Locale string too long, should be no longer than 64 characters", 0 TSRMLS_CC );	\
+	"Locale string too long, should be no longer than 80 characters", 0 TSRMLS_CC );	\
 		RETURN_NULL();																	\
 	}
 
 #define INTL_CHECK_LOCALE_LEN_OBJ(locale_len, object)									\
 	if((locale_len) > INTL_MAX_LOCALE_LEN) {											\
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,									\
-	"Locale string too long, should be no longer than 64 characters", 0 TSRMLS_CC );	\
+	"Locale string too long, should be no longer than 80 characters", 0 TSRMLS_CC );	\
 		zval_dtor(object);																\
 		ZVAL_NULL(object);																\
 		RETURN_NULL();																	\

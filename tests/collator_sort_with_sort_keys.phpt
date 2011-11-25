@@ -23,23 +23,17 @@ function sort_arrays( $locale, $arrays )
 
     foreach( $arrays as $array )
     {
-        // Convert strings to UTF-16 if needed.
-        $u_array = u( $array );
-
         // Sort array values
-        $res_val = ut_coll_sort_with_sort_keys( $coll, $u_array );
+        $res_val = ut_coll_sort_with_sort_keys( $coll, $array );
 
         // Concatenate the sorted array and function result
         // with output string.
-        $res_dump = "\n" . dump_array( $u_array ) .
-                    "\n Result: " . dump_str( $res_val );
+        $res_dump = "\n" . dump( $array ) .
+                    "\n Result: " . dump( $res_val );
         
         
         // Preppend test signature to output string
-        if( unicode_semantics() )
-             $md5 = md5( unicode_encode( $res_dump, 'utf-8' ) );
-        else
-             $md5 = md5( $res_dump );
+        $md5 = md5( $res_dump );
 
         global $test_num;
 

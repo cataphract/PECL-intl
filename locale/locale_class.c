@@ -10,14 +10,14 @@
    | obtain it through the world-wide-web, please send a note to          |
    | license@php.net so we can mail you a copy immediately.               |
    +----------------------------------------------------------------------+
-   | Authors: Kirti Velankar <kirtig@yahoo-inc.com>                  	  |
+   | Authors: Kirti Velankar <kirtig@yahoo-inc.com>                       |
    +----------------------------------------------------------------------+
- */
+*/
+
+/* $Id$ */
 
 #include <unicode/uloc.h>
-
 #include "php_intl.h"
-
 #include "intl_error.h"
 #include "locale_class.h"
 #include "locale_methods.h"
@@ -25,39 +25,34 @@
 
 zend_class_entry *Locale_ce_ptr = NULL;
 
-
-/////////////////////////////////////////////////////////////////////////////
-// 'Locale' class registration structures & functions
-/////////////////////////////////////////////////////////////////////////////
+/*
+ * 'Locale' class registration structures & functions
+ */
 
 /* {{{ Locale methods arguments info */
-// NOTE: modifying 'locale_XX_args' do not forget to
-//       modify approptiate 'locale_XX_args' for
-//       the procedural API.
+/*
+ *  NOTE: when modifying 'locale_XX_args' do not forget to modify
+ *        approptiate 'locale_XX_args' for the procedural API!
+ */
 
-static
 ZEND_BEGIN_ARG_INFO_EX( locale_0_args, 0, 0, 0 )
 ZEND_END_ARG_INFO()
 
-static
 ZEND_BEGIN_ARG_INFO_EX( locale_1_arg, 0, 0, 1 )
 	ZEND_ARG_INFO( 0, arg1 )
 ZEND_END_ARG_INFO()
 
-static
 ZEND_BEGIN_ARG_INFO_EX( locale_2_args, 0, 0, 2 )
 	ZEND_ARG_INFO( 0, arg1 )
 	ZEND_ARG_INFO( 0, arg2 )
 ZEND_END_ARG_INFO()
 
-static
 ZEND_BEGIN_ARG_INFO_EX( locale_3_args, 0, 0, 3 )
         ZEND_ARG_INFO( 0, arg1 )
         ZEND_ARG_INFO( 0, arg2 )
         ZEND_ARG_INFO( 0, arg3 )
 ZEND_END_ARG_INFO()
 
-static
 ZEND_BEGIN_ARG_INFO_EX( locale_4_args, 0, 0, 4 )
         ZEND_ARG_INFO( 0, arg1 )
         ZEND_ARG_INFO( 0, arg2 )
@@ -89,7 +84,8 @@ zend_function_entry Locale_class_functions[] = {
 	ZEND_FENTRY( filterMatches, ZEND_FN( locale_filter_matches ), locale_3_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( lookup, ZEND_FN( locale_lookup ), locale_4_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( canonicalize, ZEND_FN( locale_canonicalize ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
-	{ NULL, NULL, NULL }
+	ZEND_FENTRY( acceptFromHttp, ZEND_FN( locale_accept_from_http ), locale_1_arg , ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
+	PHP_FE_END
 };
 /* }}} */
 
@@ -100,12 +96,12 @@ void locale_register_Locale_class( TSRMLS_D )
 {
 	zend_class_entry ce;
 
-	// Create and register 'Locale' class.
+	/* Create and register 'Locale' class. */
 	INIT_CLASS_ENTRY( ce, "Locale", Locale_class_functions );
 	ce.create_object = NULL;
 	Locale_ce_ptr = zend_register_internal_class( &ce TSRMLS_CC );
 
-	// Declare 'Locale' class properties.
+	/* Declare 'Locale' class properties. */
 	if( !Locale_ce_ptr )
 	{
 		zend_error( E_ERROR,
@@ -114,7 +110,6 @@ void locale_register_Locale_class( TSRMLS_D )
 	}
 }
 /* }}} */
-
 
 /*
  * Local variables:

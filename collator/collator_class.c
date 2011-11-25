@@ -31,9 +31,9 @@
 zend_class_entry *Collator_ce_ptr = NULL;
 static zend_object_handlers Collator_handlers;
 
-/////////////////////////////////////////////////////////////////////////////
-// Auxiliary functions needed by objects of 'Collator' class
-/////////////////////////////////////////////////////////////////////////////
+/*
+ * Auxiliary functions needed by objects of 'Collator' class
+ */
 
 /* {{{ Collator_objects_dtor */
 static void Collator_objects_dtor(
@@ -80,31 +80,27 @@ zend_object_value Collator_object_create(
 }
 /* }}} */
 
-/////////////////////////////////////////////////////////////////////////////
-// 'Collator' class registration structures & functions
-/////////////////////////////////////////////////////////////////////////////
+/*
+ * 'Collator' class registration structures & functions
+ */
 
 /* {{{ Collator methods arguments info */
-// NOTE: modifying 'collator_XX_args' do not forget to
-//       modify approptiate 'collator_XX_args' for
-//       the procedural API.
-
-static
+/* NOTE: modifying 'collator_XX_args' do not forget to
+       modify approptiate 'collator_XX_args' for
+       the procedural API.
+*/
 ZEND_BEGIN_ARG_INFO_EX( collator_0_args, 0, 0, 0 )
 ZEND_END_ARG_INFO()
 
-static
 ZEND_BEGIN_ARG_INFO_EX( collator_1_arg, 0, 0, 1 )
 	ZEND_ARG_INFO( 0, arg1 )
 ZEND_END_ARG_INFO()
 
-static
 ZEND_BEGIN_ARG_INFO_EX( collator_2_args, 0, 0, 2 )
 	ZEND_ARG_INFO( 0, arg1 )
 	ZEND_ARG_INFO( 0, arg2 )
 ZEND_END_ARG_INFO()
 
-static
 ZEND_BEGIN_ARG_INFO_EX( collator_sort_args, 0, 0, 1 )
 	ZEND_ARG_ARRAY_INFO( 1, arr, 0 )
 	ZEND_ARG_INFO( 0, flags )
@@ -130,7 +126,8 @@ zend_function_entry Collator_class_functions[] = {
 	PHP_NAMED_FE( getLocale, ZEND_FN( collator_get_locale ), collator_1_arg )
 	PHP_NAMED_FE( getErrorCode, ZEND_FN( collator_get_error_code ), collator_0_args )
 	PHP_NAMED_FE( getErrorMessage, ZEND_FN( collator_get_error_message ), collator_0_args )
-	{ NULL, NULL, NULL }
+	PHP_NAMED_FE( getSortKey, ZEND_FN( collator_get_sort_key ), collator_2_args )
+	PHP_FE_END
 };
 /* }}} */
 
@@ -141,12 +138,18 @@ void collator_register_Collator_class( TSRMLS_D )
 {
 	zend_class_entry ce;
 
-	// Create and register 'Collator' class.
+	/* Create and register 'Collator' class. */
 	INIT_CLASS_ENTRY( ce, "Collator", Collator_class_functions );
 	ce.create_object = Collator_object_create;
 	Collator_ce_ptr = zend_register_internal_class( &ce TSRMLS_CC );
 
-	// Declare 'Collator' class properties.
+	memcpy(&Collator_handlers, zend_get_std_object_handlers(),
+		sizeof Collator_handlers);
+	/* Collator has no usable clone semantics - ucol_cloneBinary/ucol_openBinary require binary buffer 
+	   for which we don't have the place to keep */	
+	Collator_handlers.clone_obj = NULL; 
+
+	/* Declare 'Collator' class properties. */
 	if( !Collator_ce_ptr )
 	{
 		zend_error( E_ERROR,
@@ -154,10 +157,6 @@ void collator_register_Collator_class( TSRMLS_D )
 			"on a non-registered class." );
 		return;
 	}
-
-	memcpy(&Collator_handlers, zend_get_std_object_handlers(),
-		sizeof Collator_handlers);
-	Collator_handlers.clone_obj = NULL;
 }
 /* }}} */
 

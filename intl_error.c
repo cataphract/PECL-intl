@@ -44,10 +44,9 @@ static void intl_free_custom_error_msg( intl_error* err TSRMLS_DC )
 	if( !err && !( err = intl_g_error_get( TSRMLS_C ) ) )
 		return;
 
-	if( !err->free_custom_error_message )
-		return;
-
-	efree( err->custom_error_message );
+	if(err->free_custom_error_message ) {
+		efree( err->custom_error_message );
+	}
 
 	err->custom_error_message      = NULL;
 	err->free_custom_error_message = 0;
@@ -103,16 +102,19 @@ void intl_error_set_custom_msg( intl_error* err, char* msg, int copyMsg TSRMLS_D
 	if( !msg )
 		return;
 
+	if(!err && INTL_G(error_level)) {
+		php_error_docref(NULL TSRMLS_CC, INTL_G(error_level), "%s", msg);		
+	}
 	if( !err && !( err = intl_g_error_get( TSRMLS_C ) ) )
 		return;
 
-	// Free previous message if any
+	/* Free previous message if any */
 	intl_free_custom_error_msg( err TSRMLS_CC );
 
-	// Mark message copied if any
+	/* Mark message copied if any */
 	err->free_custom_error_message = copyMsg;
 
-	// Set user's error text message
+	/* Set user's error text message */
 	err->custom_error_message = copyMsg ? estrdup( msg ) : msg;
 }
 /* }}} */
@@ -130,7 +132,7 @@ char* intl_error_get_message( intl_error* err TSRMLS_DC )
 
 	uErrorName = u_errorName( err->code );
 
-	// Format output string
+	/* Format output string */
 	if( err->custom_error_message )
 	{
 		spprintf( &errMessage, 0, "%s: %s", err->custom_error_message, uErrorName );
@@ -178,11 +180,23 @@ void intl_error_set( intl_error* err, UErrorCode code, char* msg, int copyMsg TS
 }
 /* }}} */
 
+/* {{{ void intl_errors_set( intl_error* err, UErrorCode code, char* msg, int copyMsg )
+ * Set error code and message.
+ */
+void intl_errors_set( intl_error* err, UErrorCode code, char* msg, int copyMsg TSRMLS_DC )
+{
+	intl_errors_set_code( err, code TSRMLS_CC );
+	intl_errors_set_custom_msg( err, msg, copyMsg TSRMLS_CC );
+}
+/* }}} */
+
 /* {{{ void intl_errors_reset( intl_error* err )
  */
 void intl_errors_reset( intl_error* err TSRMLS_DC )
 {
-	intl_error_reset( err TSRMLS_CC );
+	if(err) {
+		intl_error_reset( err TSRMLS_CC );
+	}
 	intl_error_reset( NULL TSRMLS_CC );
 }
 /* }}} */
@@ -191,7 +205,9 @@ void intl_errors_reset( intl_error* err TSRMLS_DC )
  */
 void intl_errors_set_custom_msg( intl_error* err, char* msg, int copyMsg TSRMLS_DC )
 {
-	intl_error_set_custom_msg( err, msg, copyMsg TSRMLS_CC );
+	if(err) {
+		intl_error_set_custom_msg( err, msg, copyMsg TSRMLS_CC );
+	}
 	intl_error_set_custom_msg( NULL, msg, copyMsg TSRMLS_CC );
 }
 /* }}} */
@@ -200,7 +216,9 @@ void intl_errors_set_custom_msg( intl_error* err, char* msg, int copyMsg TSRMLS_
  */
 void intl_errors_set_code( intl_error* err, UErrorCode err_code TSRMLS_DC )
 {
-	intl_error_set_code( err, err_code TSRMLS_CC );
+	if(err) {
+		intl_error_set_code( err, err_code TSRMLS_CC );
+	}
 	intl_error_set_code( NULL, err_code TSRMLS_CC );
 }
 /* }}} */

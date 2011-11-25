@@ -69,22 +69,20 @@ msgformat_data* msgformat_data_create( TSRMLS_D )
 }
 /* }}} */
 
-int msfgotmat_fix_quotes(UChar **spattern, uint32_t *spattern_len, UErrorCode *ec, int *free_pattern) 
+int msgformat_fix_quotes(UChar **spattern, uint32_t *spattern_len, UErrorCode *ec) 
 {
-	*free_pattern = 0;
 	if(*spattern && *spattern_len && u_strchr(*spattern, (UChar)'\'')) {
-		UChar *npattern = eumalloc(2*(*spattern_len)+1);
+		UChar *npattern = emalloc(sizeof(UChar)*(2*(*spattern_len)+1));
 		uint32_t npattern_len;
 		npattern_len = umsg_autoQuoteApostrophe(*spattern, *spattern_len, npattern, 2*(*spattern_len)+1, ec);
+		efree(*spattern);
 		if( U_FAILURE(*ec) )
 		{
-			efree(npattern);			
 			return FAILURE;
 		}
-		npattern = eurealloc(npattern, npattern_len+1);
+		npattern = erealloc(npattern, sizeof(UChar)*(npattern_len+1));
 		*spattern = npattern;
 		*spattern_len = npattern_len;
-		*free_pattern = 1;
 	}
 	return SUCCESS;
 }

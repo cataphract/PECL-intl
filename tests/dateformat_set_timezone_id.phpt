@@ -2,7 +2,6 @@
 datefmt_set_timezone_id_code()
 --SKIPIF--
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
-<?php print 'skip'; ?>
 --FILE--
 <?php
 
@@ -20,7 +19,7 @@ function ut_main()
 		'CN'
 	);
 	$timestamp_entry = 0;
-	
+
 	$res_str = '';
 
 	$fmt = ut_datefmt_create( "en_US",  IntlDateFormatter::FULL, IntlDateFormatter::FULL, 'America/San_Francisco' , IntlDateFormatter::GREGORIAN  );
@@ -57,18 +56,18 @@ After creation of the dateformatter :  timezone_id= America/San_Francisco
 -----------
 Trying to set timezone_id= America/New_York
 After call to set_timezone_id :  timezone_id= America/New_York
-Formatting timestamp=0 resulted in  Wednesday, December 31, 1969 7:00:00 PM ET
-Formatting timestamp=3600 resulted in  Wednesday, December 31, 1969 8:00:00 PM ET
+Formatting timestamp=0 resulted in  Wednesday, December 31, 1969 7:00:00 PM Eastern Standard Time
+Formatting timestamp=3600 resulted in  Wednesday, December 31, 1969 8:00:00 PM Eastern Standard Time
 -----------
 Trying to set timezone_id= America/Los_Angeles
 After call to set_timezone_id :  timezone_id= America/Los_Angeles
-Formatting timestamp=0 resulted in  Wednesday, December 31, 1969 4:00:00 PM PT
-Formatting timestamp=3600 resulted in  Wednesday, December 31, 1969 5:00:00 PM PT
+Formatting timestamp=0 resulted in  Wednesday, December 31, 1969 4:00:00 PM Pacific Standard Time
+Formatting timestamp=3600 resulted in  Wednesday, December 31, 1969 5:00:00 PM Pacific Standard Time
 -----------
 Trying to set timezone_id= America/Chicago
 After call to set_timezone_id :  timezone_id= America/Chicago
-Formatting timestamp=0 resulted in  Wednesday, December 31, 1969 6:00:00 PM CT
-Formatting timestamp=3600 resulted in  Wednesday, December 31, 1969 7:00:00 PM CT
+Formatting timestamp=0 resulted in  Wednesday, December 31, 1969 6:00:00 PM Central Standard Time
+Formatting timestamp=3600 resulted in  Wednesday, December 31, 1969 7:00:00 PM Central Standard Time
 -----------
 Trying to set timezone_id= CN
 After call to set_timezone_id :  timezone_id= CN

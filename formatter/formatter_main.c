@@ -22,53 +22,63 @@
 
 #include "php_intl.h"
 #include "formatter_class.h"
+#include "intl_convert.h"
 
-/* {{{ proto NumberFormatter NumberFormatter::create( string $locale, int style[, string $pattern ] )
- * Create formatter. }}} */
-/* {{{ proto NumberFormatter numfmt_create( string $locale, int style[, string $pattern ] )
- * Create formatter.
- */
-PHP_FUNCTION( numfmt_create )
+/* {{{ */
+static void numfmt_ctor(INTERNAL_FUNCTION_PARAMETERS)
 {
 	char*       locale;
-	UChar*      pattern = NULL;
+	char*       pattern = NULL;
 	int         locale_len = 0, pattern_len = 0;
 	long        style;
+	UChar*      spattern     = NULL;
+	int         spattern_len = 0;
 	FORMATTER_METHOD_INIT_VARS;
 
-	// Parse parameters.
-	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "sl|u",
+	/* Parse parameters. */
+	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "sl|s",
 		&locale, &locale_len, &style, &pattern, &pattern_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			"numfmt_create: unable to parse input parameters", 0 TSRMLS_CC );
-
-		RETURN_NULL();
-	}
-
-	INTL_CHECK_LOCALE_LEN(locale_len);
-	// Create a NumberFormatter object and save the ICU formatter into it.
-	if( ( object = getThis() ) == NULL )
-		object = return_value;
-
-	if( Z_TYPE_P( object ) != IS_OBJECT )
-		object_init_ex( object, NumberFormatter_ce_ptr );
-
-	FORMATTER_METHOD_FETCH_OBJECT;
-
-	if(locale_len == 0) {
-		locale = UG(default_locale);
-	}
-
-	FORMATTER_OBJECT(nfo) = unum_open(style, pattern, pattern_len, locale, NULL, &INTL_DATA_ERROR_CODE(nfo));
-
-	if( U_FAILURE( INTL_DATA_ERROR_CODE((nfo)) ) )
-	{
-		intl_error_set( NULL, INTL_DATA_ERROR_CODE( nfo ),
-			"numfmt_create: number formatter creation failed", 0 TSRMLS_CC );
 		zval_dtor(return_value);
 		RETURN_NULL();
 	}
+
+	INTL_CHECK_LOCALE_LEN_OBJ(locale_len, return_value);
+	object = return_value;
+	FORMATTER_METHOD_FETCH_OBJECT;
+
+	/* Convert pattern (if specified) to UTF-16. */
+	if(pattern && pattern_len) {
+		intl_convert_utf8_to_utf16(&spattern, &spattern_len, pattern, pattern_len, &INTL_DATA_ERROR_CODE(nfo));
+		INTL_CTOR_CHECK_STATUS(nfo, "numfmt_create: error converting pattern to UTF-16");
+	}
+
+	if(locale_len == 0) {
+		locale = INTL_G(default_locale);
+	}
+
+	/* Create an ICU number formatter. */
+	FORMATTER_OBJECT(nfo) = unum_open(style, spattern, spattern_len, locale, NULL, &INTL_DATA_ERROR_CODE(nfo));
+
+	if(spattern) {
+		efree(spattern);
+	}
+
+	INTL_CTOR_CHECK_STATUS(nfo, "numfmt_create: number formatter creation failed");
+}
+/* }}} */
+
+/* {{{ proto NumberFormatter NumberFormatter::create( string $locale, int style[, string $pattern ] )
+ * Create number formatter. }}} */
+/* {{{ proto NumberFormatter numfmt_create( string $locale, int style[, string $pattern ] )
+ * Create number formatter.
+ */
+PHP_FUNCTION( numfmt_create )
+{
+	object_init_ex( return_value, NumberFormatter_ce_ptr );
+	numfmt_ctor(INTERNAL_FUNCTION_PARAM_PASSTHRU);
 }
 /* }}} */
 
@@ -77,43 +87,8 @@ PHP_FUNCTION( numfmt_create )
  */
 PHP_METHOD( NumberFormatter, __construct )
 {
-	char*       locale;
-	UChar*      pattern = NULL;
-	int         locale_len = 0, pattern_len = 0;
-	long        style;
-	FORMATTER_METHOD_INIT_VARS;
-
-	object = getThis();
-
-	// Parse parameters.
-	if( zend_parse_parameters( ZEND_NUM_ARGS() TSRMLS_CC, "sl|u",
-		&locale, &locale_len, &style, &pattern, &pattern_len ) == FAILURE )
-	{
-		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
-			"__construct: unable to parse input params", 0 TSRMLS_CC );
-		zval_dtor(object);
-		ZVAL_NULL(object);
-		RETURN_NULL();
-	}
-
-	INTL_CHECK_LOCALE_LEN_OBJ(locale_len, object);
-	FORMATTER_METHOD_FETCH_OBJECT;
-
-	if(locale_len == 0) {
-		locale = UG(default_locale);
-	}
-
-	// Create an ICU number formatter.
-	FORMATTER_OBJECT(nfo) = unum_open(style, pattern, pattern_len, locale, NULL, &INTL_DATA_ERROR_CODE(nfo));
-
-	if( U_FAILURE( INTL_DATA_ERROR_CODE((nfo)) ) )
-	{
-		intl_error_set( NULL, INTL_DATA_ERROR_CODE( nfo ),
-			"__construct: number formatter creation failed", 0 TSRMLS_CC );
-		zval_dtor(object);
-		ZVAL_NULL(object);
-		RETURN_NULL();
-	}
+	return_value = getThis();
+	numfmt_ctor(INTERNAL_FUNCTION_PARAM_PASSTHRU);
 }
 /* }}} */
 
@@ -124,9 +99,9 @@ PHP_METHOD( NumberFormatter, __construct )
  */
 PHP_FUNCTION( numfmt_get_error_code )
 {
-	FORMATTER_METHOD_INIT_VARS;
+	FORMATTER_METHOD_INIT_VARS
 
-	// Parse parameters.
+	/* Parse parameters. */
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O",
 		&object, NumberFormatter_ce_ptr ) == FAILURE )
 	{
@@ -138,7 +113,7 @@ PHP_FUNCTION( numfmt_get_error_code )
 
 	nfo = (NumberFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
-	// Return formatter's last error code.
+	/* Return formatter's last error code. */
 	RETURN_LONG( INTL_DATA_ERROR_CODE(nfo) );
 }
 /* }}} */
@@ -153,7 +128,7 @@ PHP_FUNCTION( numfmt_get_error_message )
 	char*                    message = NULL;
 	FORMATTER_METHOD_INIT_VARS
 
-	// Parse parameters.
+	/* Parse parameters. */
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O",
 		&object, NumberFormatter_ce_ptr ) == FAILURE )
 	{
@@ -163,11 +138,10 @@ PHP_FUNCTION( numfmt_get_error_message )
 		RETURN_FALSE;
 	}
 
-	// Create an ICU number formatter.
 	nfo = (NumberFormatter_object *) zend_object_store_get_object( object TSRMLS_CC );
 
-	// Return last error message.
-	message = intl_error_get_message( &INTL_DATA_ERROR(nfo) TSRMLS_CC );
+	/* Return last error message. */
+	message = intl_error_get_message( INTL_DATA_ERROR_P(nfo) TSRMLS_CC );
 	RETURN_STRING( message, 0);
 }
 /* }}} */

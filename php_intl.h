@@ -22,6 +22,8 @@
 
 #include <php.h>
 
+#include "php_compatshims.h"
+
 #include "collator/collator_sort.h"
 #include "grapheme/grapheme.h"
 #include "intl_error.h"
@@ -45,6 +47,7 @@ ZEND_BEGIN_MODULE_GLOBALS(intl)
 	collator_compare_func_t compare_func;
 	UBreakIterator* grapheme_iterator;
 	intl_error g_error;
+	long error_level;
 ZEND_END_MODULE_GLOBALS(intl)
 
 /* Macro to access request-wide global variables. */
@@ -54,13 +57,15 @@ ZEND_END_MODULE_GLOBALS(intl)
 #define INTL_G(v) (intl_globals.v)
 #endif
 
+ZEND_EXTERN_MODULE_GLOBALS(intl)
+
 PHP_MINIT_FUNCTION(intl);
 PHP_MSHUTDOWN_FUNCTION(intl);
 PHP_RINIT_FUNCTION(intl);
 PHP_RSHUTDOWN_FUNCTION(intl);
 PHP_MINFO_FUNCTION(intl);
 
-#define PHP_INTL_VERSION "1.0.0"
+#define PHP_INTL_VERSION "2.0.0"
 
 #endif  /* PHP_INTL_H */
 

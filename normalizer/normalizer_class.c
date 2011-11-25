@@ -23,13 +23,12 @@
 
 zend_class_entry *Normalizer_ce_ptr = NULL;
 
-/////////////////////////////////////////////////////////////////////////////
-// 'Normalizer' class registration structures & functions
-/////////////////////////////////////////////////////////////////////////////
+/*
+ * 'Normalizer' class registration structures & functions
+ */
 
 /* {{{ Normalizer methods arguments info */
 
-static
 ZEND_BEGIN_ARG_INFO_EX( normalizer_3_args, 0, 0, 3 )
 	ZEND_ARG_INFO( 0, arg1 )
 	ZEND_ARG_INFO( 0, arg2 )
@@ -45,7 +44,7 @@ ZEND_END_ARG_INFO()
 zend_function_entry Normalizer_class_functions[] = {
 	ZEND_FENTRY( normalize, ZEND_FN( normalizer_normalize ), normalizer_3_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
 	ZEND_FENTRY( isNormalized, ZEND_FN( normalizer_is_normalized ), normalizer_3_args, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC )
-	{ NULL, NULL, NULL }
+	PHP_FE_END
 };
 /* }}} */
 
@@ -56,12 +55,12 @@ void normalizer_register_Normalizer_class( TSRMLS_D )
 {
 	zend_class_entry ce;
 
-	// Create and register 'Normalizer' class.
+	/* Create and register 'Normalizer' class. */
 	INIT_CLASS_ENTRY( ce, "Normalizer", Normalizer_class_functions );
 	ce.create_object = NULL;
 	Normalizer_ce_ptr = zend_register_internal_class( &ce TSRMLS_CC );
 
-	// Declare 'Normalizer' class properties.
+	/* Declare 'Normalizer' class properties. */
 	if( !Normalizer_ce_ptr )
 	{
 		zend_error( E_ERROR,

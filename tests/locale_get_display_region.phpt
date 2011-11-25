@@ -1,7 +1,5 @@
 --TEST--
 locale_get_display_region()
---INI--
-unicode.runtime_encoding="utf-8"
 --SKIPIF--
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
 --FILE--
@@ -93,7 +91,7 @@ include_once( 'ut_common.inc' );
 ut_run();
 
 ?>
---EXPECT--
+--EXPECTREGEX--
 locale='uk-ua_CALIFORNIA@currency=;currency=GRN'
 disp_locale=en :  display_region=Ukraine
 disp_locale=fr :  display_region=Ukraine
@@ -160,19 +158,19 @@ disp_locale=fr :  display_region=Chine
 disp_locale=de :  display_region=China
 -----------------
 locale='sr-Latn-CS'
-disp_locale=en :  display_region=Serbia And Montenegro
+disp_locale=en :  display_region=Serbia [Aa]nd Montenegro
 disp_locale=fr :  display_region=Serbie-et-Monténégro
 disp_locale=de :  display_region=Serbien und Montenegro
 -----------------
 locale='sl-rozaj'
-disp_locale=en :  display_region=ROZAJ
-disp_locale=fr :  display_region=ROZAJ
-disp_locale=de :  display_region=ROZAJ
+disp_locale=en :  display_region=(ROZAJ)?
+disp_locale=fr :  display_region=(ROZAJ)?
+disp_locale=de :  display_region=(ROZAJ)?
 -----------------
 locale='sl-nedis'
-disp_locale=en :  display_region=NEDIS
-disp_locale=fr :  display_region=NEDIS
-disp_locale=de :  display_region=NEDIS
+disp_locale=en :  display_region=(NEDIS)?
+disp_locale=fr :  display_region=(NEDIS)?
+disp_locale=de :  display_region=(NEDIS)?
 -----------------
 locale='de-CH-1901'
 disp_locale=en :  display_region=Switzerland
@@ -210,9 +208,9 @@ disp_locale=fr :  display_region=Suisse
 disp_locale=de :  display_region=Schweiz
 -----------------
 locale='az-Arab-x-AZE-derbend'
-disp_locale=en :  display_region=X
-disp_locale=fr :  display_region=X
-disp_locale=de :  display_region=X
+disp_locale=en :  display_region=X?
+disp_locale=fr :  display_region=X?
+disp_locale=de :  display_region=X?
 -----------------
 locale='zh-min'
 disp_locale=en :  display_region=
@@ -240,7 +238,7 @@ disp_locale=fr :  display_region=QM
 disp_locale=de :  display_region=QM
 -----------------
 locale='sr-Qaaa-CS'
-disp_locale=en :  display_region=Serbia And Montenegro
+disp_locale=en :  display_region=Serbia [Aa]nd Montenegro
 disp_locale=fr :  display_region=Serbie-et-Monténégro
 disp_locale=de :  display_region=Serbien und Montenegro
 -----------------
@@ -255,9 +253,9 @@ disp_locale=fr :  display_region=Chine
 disp_locale=de :  display_region=China
 -----------------
 locale='en-a-myExt-b-another'
-disp_locale=en :  display_region=A
-disp_locale=fr :  display_region=A
-disp_locale=de :  display_region=A
+disp_locale=en :  display_region=A?
+disp_locale=fr :  display_region=A?
+disp_locale=de :  display_region=A?
 -----------------
 locale='de-419-DE'
 disp_locale=en :  display_region=Latin America and the Caribbean
@@ -270,7 +268,7 @@ disp_locale=fr :  display_region=Allemagne
 disp_locale=de :  display_region=Deutschland
 -----------------
 locale='ar-a-aaa-b-bbb-a-ccc'
-disp_locale=en :  display_region=A
-disp_locale=fr :  display_region=A
-disp_locale=de :  display_region=A
+disp_locale=en :  display_region=A?
+disp_locale=fr :  display_region=A?
+disp_locale=de :  display_region=A?
 -----------------

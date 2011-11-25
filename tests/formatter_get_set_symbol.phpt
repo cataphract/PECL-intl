@@ -47,7 +47,7 @@ function ut_main()
         $res_str .= "\nSymbol '$symb_name'\n";
 
         // Get original symbol value.
-        $orig_val = dump_str( ut_nfmt_get_symbol( $fmt, $symb ), false );
+        $orig_val = ut_nfmt_get_symbol( $fmt, $symb );
         $res_str .= "Default symbol: [$orig_val]\n";
 
         // Set a new symbol value.
@@ -56,7 +56,7 @@ function ut_main()
             $res_str .= "set_symbol() error: " . ut_nfmt_get_error_message( $fmt ) . "\n";
 
         // Get the symbol value back.
-        $new_val_check = dump_str( ut_nfmt_get_symbol( $fmt, $symb ), false );
+        $new_val_check = ut_nfmt_get_symbol( $fmt, $symb );
         if( !$new_val_check )
             $res_str .= "get_symbol() error: " . ut_nfmt_get_error_message( $fmt ) . "\n";
 
@@ -73,7 +73,12 @@ function ut_main()
         // Restore attribute's symbol.
         ut_nfmt_set_symbol( $fmt, $symb, $orig_val );
     }
-
+    $badvals = array(2147483648, -2147483648, -1, 4294901761);
+    foreach($badvals as $badval) {
+	    if(ut_nfmt_get_symbol( $fmt, 2147483648 ))  {
+		$res_str .= "Bad value $badval should return false!\n";
+	    }
+    }
     return $res_str;
 }
 

@@ -29,13 +29,13 @@ typedef struct {
 
 	// formatter handling
 	UMessageFormat* umsgf;
-	UChar*			orig_format;
+	char*			orig_format;
 	ulong			orig_format_len;
 } msgformat_data;
 
 msgformat_data* msgformat_data_create( TSRMLS_D );
 void msgformat_data_init( msgformat_data* mf_data TSRMLS_DC );
 void msgformat_data_free( msgformat_data* mf_data TSRMLS_DC );
-int msfgotmat_fix_quotes(UChar **spattern, uint32_t *spattern_len, UErrorCode *ec, int *free_pattern);
+int msgformat_fix_quotes(UChar **spattern, uint32_t *spattern_len, UErrorCode *ec);
 
 #endif // MSG_FORMAT_DATA_H

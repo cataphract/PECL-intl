@@ -31,17 +31,22 @@
  */
 PHP_FUNCTION( collator_compare )
 {
-	UChar*           str1      = NULL;
-	UChar*           str2      = NULL;
+	char*            str1      = NULL;
+	char*            str2      = NULL;
 	int              str1_len  = 0;
 	int              str2_len  = 0;
+
+	UChar*           ustr1     = NULL;
+	UChar*           ustr2     = NULL;
+	int              ustr1_len = 0;
+	int              ustr2_len = 0;
 
 	UCollationResult result;
 
 	COLLATOR_METHOD_INIT_VARS
 
-	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ouu",
+	/* Parse parameters. */
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Oss",
 		&object, Collator_ce_ptr, &str1, &str1_len, &str2, &str2_len ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
@@ -50,21 +55,70 @@ PHP_FUNCTION( collator_compare )
 		RETURN_FALSE;
 	}
 
-	// Fetch the object.
+	/* Fetch the object. */
 	COLLATOR_METHOD_FETCH_OBJECT;
 
+	if (!co || !co->ucoll) {
+		intl_error_set_code( NULL, COLLATOR_ERROR_CODE( co ) TSRMLS_CC );
+		intl_errors_set_custom_msg( COLLATOR_ERROR_P( co ),
+			"Object not initialized", 0 TSRMLS_CC );
+		php_error_docref(NULL TSRMLS_CC, E_RECOVERABLE_ERROR, "Object not initialized");
+
+		RETURN_FALSE;
+	}
 
 	/*
 	 * Compare given strings (converting them to UTF-16 first).
 	 */
 
-	// Compare given strings.
+	/* First convert the strings to UTF-16. */
+	intl_convert_utf8_to_utf16(
+		&ustr1, &ustr1_len, str1, str1_len, COLLATOR_ERROR_CODE_P( co ) );
+	if( U_FAILURE( COLLATOR_ERROR_CODE( co ) ) )
+	{
+		/* Set global error code. */
+		intl_error_set_code( NULL, COLLATOR_ERROR_CODE( co ) TSRMLS_CC );
+
+		/* Set error messages. */
+		intl_errors_set_custom_msg( COLLATOR_ERROR_P( co ),
+			"Error converting first argument to UTF-16", 0 TSRMLS_CC );
+		if (ustr1) {
+			efree( ustr1 );
+		}
+		RETURN_FALSE;
+	}
+
+	intl_convert_utf8_to_utf16(
+		&ustr2, &ustr2_len, str2, str2_len, COLLATOR_ERROR_CODE_P( co ) );
+	if( U_FAILURE( COLLATOR_ERROR_CODE( co ) ) )
+	{
+		/* Set global error code. */
+		intl_error_set_code( NULL, COLLATOR_ERROR_CODE( co ) TSRMLS_CC );
+
+		/* Set error messages. */
+		intl_errors_set_custom_msg( COLLATOR_ERROR_P( co ),
+			"Error converting second argument to UTF-16", 0 TSRMLS_CC );
+		if (ustr1) {
+			efree( ustr1 );
+		}
+		if (ustr2) {
+			efree( ustr2 );
+		}
+		RETURN_FALSE;
+	}
+
+	/* Then compare them. */
 	result = ucol_strcoll(
 		co->ucoll,
-		str1, str1_len,
-		str2, str2_len );
+		ustr1, ustr1_len,
+		ustr2, ustr2_len );
 
-	// Return result of the comparison.
+	if( ustr1 )
+		efree( ustr1 );
+	if( ustr2 )
+		efree( ustr2 );
+
+	/* Return result of the comparison. */
 	RETURN_LONG( result );
 }
 /* }}} */

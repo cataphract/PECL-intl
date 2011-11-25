@@ -25,6 +25,11 @@
 #include "msgformat_format.h"
 #include "msgformat_data.h"
 #include "msgformat_helpers.h"
+#include "intl_convert.h"
+
+#ifndef Z_ADDREF_P
+#define Z_ADDREF_P(z) ((z)->refcount++)
+#endif
 
 /* {{{ */
 static void msgfmt_do_format(MessageFormatter_object *mfo, zval *args, zval *return_value TSRMLS_DC) 
@@ -39,7 +44,7 @@ static void msgfmt_do_format(MessageFormatter_object *mfo, zval *args, zval *ret
 	count = zend_hash_num_elements(Z_ARRVAL_P(args));
 
 	if(count < umsg_format_arg_count(MSG_FORMAT_OBJECT(mfo))) {
-		// Not enough aguments for format!
+		/* Not enough aguments for format! */
 		intl_error_set( INTL_DATA_ERROR_P(mfo), U_ILLEGAL_ARGUMENT_ERROR,
 			"msgfmt_format: not enough parameters", 0 TSRMLS_CC );
 		RETVAL_FALSE;
@@ -71,7 +76,7 @@ static void msgfmt_do_format(MessageFormatter_object *mfo, zval *args, zval *ret
 	}
 
 	INTL_METHOD_CHECK_STATUS( mfo, "Number formatting failed" );
-	RETURN_UNICODEL(formatted, formatted_len, 0);
+	INTL_METHOD_RETVAL_UTF8( mfo, formatted, formatted_len, 1 );
 }
 /* }}} */
 
@@ -86,7 +91,7 @@ PHP_FUNCTION( msgfmt_format )
 	MSG_FORMAT_METHOD_INIT_VARS;
 
 
-	// Parse parameters.
+	/* Parse parameters. */
 	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Oa",
 		&object, MessageFormatter_ce_ptr,  &args ) == FAILURE )
 	{
@@ -96,7 +101,7 @@ PHP_FUNCTION( msgfmt_format )
 		RETURN_FALSE;
 	}
 
-	// Fetch the object.
+	/* Fetch the object. */
 	MSG_FORMAT_METHOD_FETCH_OBJECT;
 
 	msgfmt_do_format(mfo, args, return_value TSRMLS_CC);
@@ -113,15 +118,16 @@ PHP_FUNCTION( msgfmt_format_message )
 	zval       *args;
 	UChar      *spattern = NULL;
 	int         spattern_len = 0;
+	char       *pattern = NULL;
+	int         pattern_len = 0;
 	char       *slocale = NULL;
 	int         slocale_len = 0;
-	int free_pattern = 0;
 	MessageFormatter_object mf = {0};
 	MessageFormatter_object *mfo = &mf;
 
-	// Parse parameters.
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "sua",
-		  &slocale, &slocale_len, &spattern, &spattern_len, &args ) == FAILURE )
+	/* Parse parameters. */
+	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "ssa",
+		  &slocale, &slocale_len, &pattern, &pattern_len, &args ) == FAILURE )
 	{
 		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
 			"msgfmt_format_message: unable to parse input params", 0 TSRMLS_CC );
@@ -131,26 +137,39 @@ PHP_FUNCTION( msgfmt_format_message )
 
 	msgformat_data_init(&mfo->mf_data TSRMLS_CC);
 
-	if(slocale_len == 0) {
-		slocale = UG(default_locale);
+	if(pattern && pattern_len) {
+		intl_convert_utf8_to_utf16(&spattern, &spattern_len, pattern, pattern_len, &INTL_DATA_ERROR_CODE(mfo));
+		if( U_FAILURE(INTL_DATA_ERROR_CODE((mfo))) )
+		{
+			intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR,
+				"msgfmt_format_message: error converting pattern to UTF-16", 0 TSRMLS_CC );
+			RETURN_FALSE;
+		}
+	} else {
+		spattern_len = 0;
+		spattern = NULL;
 	}
 
-	if(msfgotmat_fix_quotes(&spattern, &spattern_len, &INTL_DATA_ERROR_CODE(mfo), &free_pattern) != SUCCESS) {
+	if(slocale_len == 0) {
+		slocale = INTL_G(default_locale);
+	}
+
+	if(msgformat_fix_quotes(&spattern, &spattern_len, &INTL_DATA_ERROR_CODE(mfo)) != SUCCESS) {
 		intl_error_set( NULL, U_INVALID_FORMAT_ERROR,
 			"msgfmt_format_message: error converting pattern to quote-friendly format", 0 TSRMLS_CC );
 		RETURN_FALSE;
 	}
 
-	// Create an ICU message formatter.
+	/* Create an ICU message formatter. */
 	MSG_FORMAT_OBJECT(mfo) = umsg_open(spattern, spattern_len, slocale, NULL, &INTL_DATA_ERROR_CODE(mfo));
-	if(free_pattern) {
+	if(spattern && spattern_len) {
 		efree(spattern);
 	}
 	INTL_METHOD_CHECK_STATUS(mfo, "Creating message formatter failed");
 
 	msgfmt_do_format(mfo, args, return_value TSRMLS_CC);
 
-	// drop the temporary formatter
+	/* drop the temporary formatter */
 	msgformat_data_free(&mfo->mf_data TSRMLS_CC);
 }
 /* }}} */

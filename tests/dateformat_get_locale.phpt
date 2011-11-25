@@ -2,7 +2,6 @@
 datefmt_get_locale_code()
 --SKIPIF--
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
-<?php print 'skip'; ?>
 --FILE--
 <?php
 
@@ -29,6 +28,12 @@ function ut_main()
 		$locale = ut_datefmt_get_locale( $fmt , 1);
 		$res_str .= "\nAfter call to get_locale :  locale= $locale";
 		$res_str .= "\n";
+	}
+	$badvals = array(100, -1, 4294901761);
+	foreach($badvals as $badval) {
+		if(ut_datefmt_get_locale($fmt, $badval)) {
+			$res_str .= "datefmt_get_locale should return false for bad argument $badval\n";
+		}
 	}
 
 	return $res_str;

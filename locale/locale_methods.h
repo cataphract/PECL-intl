@@ -12,13 +12,14 @@
    +----------------------------------------------------------------------+
    | Author: Kirti Velankar <kirtig@yahoo-inc.com>                        |
    +----------------------------------------------------------------------+
- */
+*/
+
+/* $Id$ */
 
 #ifndef LOCALE_METHODS_H
 #define LOCALE_METHODS_H
 
 #include <php.h>
-
 
 PHP_FUNCTION( locale_get_primary_language );
 PHP_FUNCTION( locale_get_script );
@@ -43,5 +44,6 @@ PHP_FUNCTION( locale_parse);
 PHP_FUNCTION( locale_filter_matches);
 PHP_FUNCTION( locale_lookup);
 PHP_FUNCTION( locale_canonicalize);
+PHP_FUNCTION( locale_accept_from_http);
 
 #endif // LOCALE_METHODS_H
