@@ -10,6 +10,8 @@
 #define Z_DELREF_P ZVAL_DELREF
 #define Z_ADDREF_P ZVAL_ADDREF
 
+#define zval_addref_p(pz) ZVAL_ADDREF(pz)
+
 # undef ZEND_BEGIN_ARG_INFO_EX
 # define ZEND_BEGIN_ARG_INFO_EX(name, pass_rest_by_reference, return_reference, required_num_args) \
     static const zend_arg_info name[] = { \

@@ -79,4 +79,5 @@ if test "$PHP_INTL" != "no"; then
   PHP_ADD_BUILD_DIR($ext_builddir/transliterator)
   PHP_ADD_BUILD_DIR($ext_builddir/idn)
   PHP_ADD_BUILD_DIR($ext_builddir/spoofchecker)
+  PHP_ADD_EXTENSION_DEP(intl, date, true)
 fi

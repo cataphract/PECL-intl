@@ -1,11 +1,11 @@
 --TEST--
-datefmt_format_code() (5.3+)
+datefmt_format_code() (5.2)
 --SKIPIF--
 <?php
 	if (!extension_loaded('intl'))
 		die('skip');
-	if(!defined('PHP_VERSION_ID') || PHP_VERSION_ID<50300)
-		die("skip PHP5.3+ only");
+	if(!defined('PHP_MAJOR_VERSION') || PHP_MAJOR_VERSION != 5 || PHP_MINOR_VERSION != 2)
+		die("skip PHP5.2 only");
 --FILE--
 <?php
 
@@ -319,81 +319,51 @@ IntlDateFormatter locale= en_US ,datetype = -1 ,timetype =-1
 Formatted localtime_array is : 18951217 12:13 AM
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2010-01-01 01:02:03',
-   'timezone_type' => 3,
-   'timezone' => 'UTC',
 ))
 ------------
 Formatted DateTime is : Thursday, December 31, 2009 3:02:03 PM GMT-10:00
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2010-01-01 01:02:03',
-   'timezone_type' => 3,
-   'timezone' => 'UTC',
 ))
 ------------
 Formatted DateTime is : December 31, 2009 3:02:03 PM GMT-10:00
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2010-01-01 01:02:03',
-   'timezone_type' => 3,
-   'timezone' => 'UTC',
 ))
 ------------
 Formatted DateTime is : Dec 31, 2009 3:02:03 PM
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2010-01-01 01:02:03',
-   'timezone_type' => 3,
-   'timezone' => 'UTC',
 ))
 ------------
 Formatted DateTime is : 12/31/09 3:02 PM
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2010-01-01 01:02:03',
-   'timezone_type' => 3,
-   'timezone' => 'UTC',
 ))
 ------------
 Formatted DateTime is : 20091231 03:02 PM
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2000-12-30 19:04:05',
-   'timezone_type' => 3,
-   'timezone' => 'America/Los_Angeles',
 ))
 ------------
 Formatted DateTime is : Saturday, December 30, 2000 5:04:05 PM GMT-10:00
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2000-12-30 19:04:05',
-   'timezone_type' => 3,
-   'timezone' => 'America/Los_Angeles',
 ))
 ------------
 Formatted DateTime is : December 30, 2000 5:04:05 PM GMT-10:00
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2000-12-30 19:04:05',
-   'timezone_type' => 3,
-   'timezone' => 'America/Los_Angeles',
 ))
 ------------
 Formatted DateTime is : Dec 30, 2000 5:04:05 PM
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2000-12-30 19:04:05',
-   'timezone_type' => 3,
-   'timezone' => 'America/Los_Angeles',
 ))
 ------------
 Formatted DateTime is : 12/30/00 5:04 PM
 ------------
 Date is: DateTime::__set_state(array(
-   'date' => '2000-12-30 19:04:05',
-   'timezone_type' => 3,
-   'timezone' => 'America/Los_Angeles',
 ))
 ------------
 Formatted DateTime is : 20001230 05:04 PM

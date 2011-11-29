@@ -21,7 +21,7 @@
  <date>2011-11-25</date>
  <time>02:15:32</time>
  <version>
-  <release>2.0.0</release>
+  <release>2.0.0b1</release>
   <api>5.4.0</api>
  </version>
  <stability>
@@ -187,6 +187,7 @@
     <file role="test" name="collator_sort_with_sort_keys.phpt"/>
     <file role="test" name="dateformat_clone.phpt"/>
     <file role="test" name="dateformat_format.phpt"/>
+    <file role="test" name="dateformat_format52.phpt"/>
     <file role="test" name="dateformat_format_parse.phpt"/>
     <file role="test" name="dateformat_get_datetype.phpt"/>
     <file role="test" name="dateformat_get_locale.phpt"/>
@@ -307,7 +308,7 @@
  <dependencies>
   <required>
    <php>
-    <min>5.2.0</min>
+    <min>5.2.4</min>
    </php>
    <pearinstaller>
     <min>1.4.8</min>

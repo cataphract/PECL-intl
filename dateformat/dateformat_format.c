@@ -161,21 +161,43 @@ PHP_FUNCTION(datefmt_format)
 			break;
 		case IS_OBJECT: {
 			zend_class_entry *date_ce = php_date_get_date_ce();
-			zval retval;
-			zval *zfuncname;
+			zval retval = zval_used_for_init,
+				 zfuncname = zval_used_for_init,
+				 *ts_format_p;
+#if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 3
+			zval ts_format = zval_used_for_init;
+#endif
+			int  argcount,
+				 expected_type;
+			
 			if(!instanceof_function(Z_OBJCE_P(zarg), date_ce TSRMLS_CC)) {
 				intl_errors_set(INTL_DATA_ERROR_P(dfo), U_ILLEGAL_ARGUMENT_ERROR, "datefmt_format: object must be an instance of DateTime", 0 TSRMLS_CC );
 				RETURN_FALSE;
 			}
-			INIT_ZVAL(retval);
-			MAKE_STD_ZVAL(zfuncname);
-			ZVAL_STRING(zfuncname, "getTimestamp", 1);
-			if(call_user_function(NULL, &zarg, zfuncname, &retval, 0, NULL TSRMLS_CC) != SUCCESS || Z_TYPE(retval) != IS_LONG) {
+			
+#if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 3
+			ZVAL_STRING(&zfuncname, "format", 0);
+			ZVAL_STRINGL(&ts_format, "U", sizeof("U") - 1, 0);
+			argcount = 1;
+			ts_format_p = &ts_format;
+			expected_type = IS_STRING;
+#else
+			ZVAL_STRING(&zfuncname, "getTimestamp", 0);
+			argcount = 0;
+			ts_format_p = NULL;
+			expected_type = IS_LONG;
+#endif
+			
+			if (call_user_function(NULL, &zarg, &zfuncname, &retval, argcount, &ts_format_p TSRMLS_CC) != SUCCESS
+					|| Z_TYPE(retval) != expected_type) {
 				intl_errors_set(INTL_DATA_ERROR_P(dfo), U_ILLEGAL_ARGUMENT_ERROR, "datefmt_format: cannot get timestamp", 0 TSRMLS_CC );
-				zval_ptr_dtor(&zfuncname);
 				RETURN_FALSE;
 			}
-			zval_ptr_dtor(&zfuncname);
+			
+#if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 3
+			convert_to_long(&retval);
+#endif
+			
 			p_timestamp = Z_LVAL(retval);
 			timestamp = p_timestamp*1000;
 		}

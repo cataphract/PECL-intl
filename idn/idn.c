@@ -23,7 +23,7 @@
 #include "config.h"
 #endif
 
-#include <php.h>
+#include "php_intl.h"
 
 #include <unicode/uidna.h>
 #include <unicode/ustring.h>
