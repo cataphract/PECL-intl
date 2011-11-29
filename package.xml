@@ -12,13 +12,25 @@
   <email>stas@php.net</email>
   <active>yes</active>
  </lead>
+ <lead>
+  <name>Gustavo Lopes</name>
+  <user>cataphract</user>
+  <email>cataphract@php.net</email>
+  <active>yes</active>
+ </lead>
  <developer>
   <name>Kirti Velankar</name>
   <user>kirtig</user>
   <email>kirtig@php.net</email>
   <active>yes</active>
  </developer>
- <date>2011-11-25</date>
+ <developer>
+  <name>Ed Batutis</name>
+  <user>ebatutis</user>
+  <email>ed@batutis.com</email>
+  <active>yes</active>
+ </developer>
+ <date>2011-11-29</date>
  <time>02:15:32</time>
  <version>
   <release>2.0.0b1</release>
