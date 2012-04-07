@@ -22,6 +22,7 @@
 #include <unicode/gregocal.h>
 
 extern "C" {
+#include "../php_intl.h"
 #define USE_TIMEZONE_POINTER 1
 #include "../timezone/timezone_class.h"
 #define USE_CALENDAR_POINTER 1
@@ -135,6 +136,7 @@ static const struct {
 	{UCAL_IS_LEAP_MONTH,		"is leap month"},
 };
 
+#if PHP_VERSION_ID >= 50300
 /* {{{ get_debug_info handler for Calendar */
 static HashTable *Calendar_get_debug_info(zval *object, int *is_temp TSRMLS_DC)
 {
@@ -209,6 +211,7 @@ static HashTable *Calendar_get_debug_info(zval *object, int *is_temp TSRMLS_DC)
 	return Z_ARRVAL(zv);
 }
 /* }}} */
+#endif
 
 /* {{{ void calendar_object_init(Calendar_object* to)
  * Initialize internals of Calendar_object not specific to zend standard objects.
@@ -464,7 +467,9 @@ void calendar_register_IntlCalendar_class(TSRMLS_D)
 	memcpy( &Calendar_handlers, zend_get_std_object_handlers(),
 		sizeof Calendar_handlers);
 	Calendar_handlers.clone_obj = Calendar_clone_obj;
+#if PHP_VERSION_ID >= 50300
 	Calendar_handlers.get_debug_info = Calendar_get_debug_info;
+#endif
 
 	/* Create and register 'IntlGregorianCalendar' class. */
 	INIT_CLASS_ENTRY(ce, "IntlGregorianCalendar", GregorianCalendar_class_functions);

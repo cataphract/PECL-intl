@@ -23,6 +23,7 @@
 #include <unicode/ustring.h>
 #include "../intl_convertcpp.h"
 extern "C" {
+#include "../php_intl.h"
 #define USE_TIMEZONE_POINTER 1
 #include "../timezone/timezone_class.h"
 #define USE_CALENDAR_POINTER 1
@@ -204,7 +205,8 @@ U_CFUNC PHP_FUNCTION(intlcal_get_available_locales)
 	array_init(return_value);
 	for (int i = 0; i < count; i++) {
 		Locale locale = availLocales[i];
-		add_next_index_string(return_value, locale.getName(), 1);
+		/* cast is necessary in PHP 5.2 */
+		add_next_index_string(return_value, const_cast<char*>(locale.getName()), 1);
 	}
 }
 

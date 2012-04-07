@@ -4,6 +4,8 @@ IntlTimeZone equals handler: error test
 <?php
 if (!extension_loaded('intl'))
 	die('skip intl extension not enabled');
+if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300)
+	die('skip for PHP >= 5.3');
 --FILE--
 <?php
 ini_set("intl.error_level", E_WARNING);
@@ -40,4 +42,4 @@ object(IntlTimeZone)#2 (4) {
 }
 string(9) "Exception"
 string(63) "Comparison with at least one unconstructed IntlTimeZone operand"
-==DONE==
+==DONE==

@@ -24,6 +24,7 @@
 #include "../intl_convertcpp.h"
 
 extern "C" {
+#include "../php_intl.h"
 #include "../intl_convert.h"
 #define USE_TIMEZONE_POINTER 1
 #include "timezone_class.h"
@@ -197,6 +198,7 @@ static int TimeZone_compare_objects(zval *object1, zval *object2 TSRMLS_DC)
 }
 /* }}} */
 
+#if PHP_VERSION_ID >= 50300
 /* {{{ get_debug_info handler for TimeZone */
 static HashTable *TimeZone_get_debug_info(zval *object, int *is_temp TSRMLS_DC)
 {
@@ -246,6 +248,7 @@ static HashTable *TimeZone_get_debug_info(zval *object, int *is_temp TSRMLS_DC)
 	return Z_ARRVAL(zv);
 }
 /* }}} */
+#endif
 
 /* {{{ void TimeZone_object_init(TimeZone_object* to)
  * Initialize internals of TImeZone_object not specific to zend standard objects.
@@ -421,7 +424,9 @@ U_CFUNC void timezone_register_IntlTimeZone_class(TSRMLS_D)
 		sizeof TimeZone_handlers);
 	TimeZone_handlers.clone_obj = TimeZone_clone_obj;
 	TimeZone_handlers.compare_objects = TimeZone_compare_objects;
+#if PHP_VERSION_ID >= 50300
 	TimeZone_handlers.get_debug_info = TimeZone_get_debug_info;
+#endif
 
 	/* Declare 'IntlTimeZone' class constants */
 #define TIMEZONE_DECL_LONG_CONST(name, val) \

@@ -24,8 +24,9 @@
 #include "common_enum.h"
 
 extern "C" {
-#include "intl_error.h"
-#include "intl_data.h"
+#include "../php_intl.h"
+#include "../intl_error.h"
+#include "../intl_data.h"
 #include <zend_interfaces.h>
 #include <zend_exceptions.h>
 }
