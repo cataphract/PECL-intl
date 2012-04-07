@@ -92,7 +92,7 @@
 #include <ext/standard/info.h>
 
 #include "php_ini.h"
-#define INTL_MODULE_VERSION "PECL-2.0.0b1"
+#define INTL_MODULE_VERSION "PECL-3.0.0a1"
 
 /*
  * locale_get_default has a conflict since ICU also has
