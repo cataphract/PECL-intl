@@ -1,7 +1,8 @@
 --TEST--
-datefmt_parse_localtime() with parse pos
+datefmt_parse_localtime() with parse pos icu <= 4.2
 --SKIPIF--
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
+<?php if(version_compare(INTL_ICU_VERSION, '4.3', '<') != 1) print 'skip'; ?>
 --FILE--
 <?php
 
@@ -78,7 +79,7 @@ include_once( 'ut_common.inc' );
 // Run the test
 ut_run();
 ?>
---EXPECT--
+--EXPECTF--
 -------------------------------
 
 Input text is : Thursday, December 18, 1969 8:49:59 AM PST
@@ -96,7 +97,7 @@ Input text is : June 18, 1969 8:49:59 AM
 IntlDateFormatter : DateType::LONG, TimeType::LONG	Error : 'Date parsing failed: U_PARSE_ERROR'
 ------------
 IntlDateFormatter : DateType::MEDIUM, TimeType::MEDIUM
-tm_sec : '59' , tm_min : '49' , tm_hour : '8' , tm_year : '69' , tm_mday : '18' , tm_wday : '3' , tm_yday : '169' , tm_mon : '5' , tm_isdst : '1' , 
+tm_sec : '59' , tm_min : '49' , tm_hour : '8' , tm_year : '69' , tm_mday : '18' , tm_wday : '3' , tm_yday : '169' , tm_mon : '5' , tm_isdst : '%d' , 
 ------------
 IntlDateFormatter : DateType::FULL, TimeType::FULL	Error : 'Date parsing failed: U_PARSE_ERROR'
 -------------------------------
