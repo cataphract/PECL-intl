@@ -30,20 +30,20 @@
   <email>ed@batutis.com</email>
   <active>yes</active>
  </developer>
- <date>2011-11-29</date>
- <time>02:15:32</time>
+ <date>2012-04-07</date>
+ <time>20:34:24</time>
  <version>
-  <release>2.0.0b1</release>
+  <release>2.0.0</release>
   <api>5.4.0</api>
  </version>
  <stability>
-  <release>beta</release>
+  <release>stable</release>
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
-
- <notes>Synchronized with PHP 5.4 ext/intl</notes>
-
+ <notes>- Fixed bug #61487 - bad bounds check in grapheme_strpos.
+- Fixed several tests.
+</notes>
  <contents>
   <dir name="/">
    <dir name="collator">
@@ -185,19 +185,23 @@
     <file role="test" name="bug60192-getsortkey.phpt"/>
     <file role="test" name="bug60192-sort.phpt"/>
     <file role="test" name="bug60192-sortwithsortkeys.phpt"/>
+    <file role="test" name="bug61487.phpt"/>
     <file role="test" name="collation_customization.phpt"/>
     <file role="test" name="collator_asort.phpt"/>
     <file role="test" name="collator_compare.phpt"/>
     <file role="test" name="collator_create.phpt"/>
+    <file role="test" name="collator_create2.phpt"/>
     <file role="test" name="collator_get_error_code.phpt"/>
     <file role="test" name="collator_get_error_message.phpt"/>
     <file role="test" name="collator_get_locale.phpt"/>
+    <file role="test" name="collator_get_locale2.phpt"/>
     <file role="test" name="collator_get_set_attribute.phpt"/>
     <file role="test" name="collator_get_set_strength.phpt"/>
     <file role="test" name="collator_get_sort_key.phpt"/>
     <file role="test" name="collator_sort.phpt"/>
     <file role="test" name="collator_sort_with_sort_keys.phpt"/>
     <file role="test" name="dateformat_clone.phpt"/>
+    <file role="test" name="dateformat_clone2.phpt"/>
     <file role="test" name="dateformat_format.phpt"/>
     <file role="test" name="dateformat_format52.phpt"/>
     <file role="test" name="dateformat_format_parse.phpt"/>
@@ -205,6 +209,7 @@
     <file role="test" name="dateformat_get_locale.phpt"/>
     <file role="test" name="dateformat_get_set_calendar.phpt"/>
     <file role="test" name="dateformat_get_set_pattern.phpt"/>
+    <file role="test" name="dateformat_get_set_pattern2.phpt"/>
     <file role="test" name="dateformat_get_timetype.phpt"/>
     <file role="test" name="dateformat_get_timezone_id.phpt"/>
     <file role="test" name="dateformat_is_set_lenient.phpt"/>
@@ -213,16 +218,21 @@
     <file role="test" name="dateformat_parse_localtime_parsepos.phpt"/>
     <file role="test" name="dateformat_parse_timestamp_parsepos.phpt"/>
     <file role="test" name="dateformat_set_timezone_id.phpt"/>
+    <file role="test" name="dateformat_set_timezone_id2.phpt"/>
     <file role="test" name="formatter_clone.phpt"/>
     <file role="test" name="formatter_fail.phpt"/>
     <file role="test" name="formatter_format.phpt"/>
+    <file role="test" name="formatter_format2.phpt"/>
     <file role="test" name="formatter_format_conv.phpt"/>
     <file role="test" name="formatter_format_currency.phpt"/>
+    <file role="test" name="formatter_format_currency2.phpt"/>
     <file role="test" name="formatter_get_error.phpt"/>
     <file role="test" name="formatter_get_locale.phpt"/>
     <file role="test" name="formatter_get_set_attribute.phpt"/>
+    <file role="test" name="formatter_get_set_attribute2.phpt"/>
     <file role="test" name="formatter_get_set_pattern.phpt"/>
     <file role="test" name="formatter_get_set_symbol.phpt"/>
+    <file role="test" name="formatter_get_set_symbol2.phpt"/>
     <file role="test" name="formatter_get_set_text_attribute.phpt"/>
     <file role="test" name="formatter_parse.phpt"/>
     <file role="test" name="formatter_parse_currency.phpt"/>
@@ -239,22 +249,30 @@
     <file role="test" name="locale_accept.phpt"/>
     <file role="test" name="locale_compose_locale.phpt"/>
     <file role="test" name="locale_filter_matches.phpt"/>
+    <file role="test" name="locale_filter_matches2.phpt"/>
     <file role="test" name="locale_get_all_variants.phpt"/>
     <file role="test" name="locale_get_default.phpt"/>
     <file role="test" name="locale_get_display_language.phpt"/>
     <file role="test" name="locale_get_display_name.phpt"/>
+    <file role="test" name="locale_get_display_name2.phpt"/>
     <file role="test" name="locale_get_display_region.phpt"/>
+    <file role="test" name="locale_get_display_region2.phpt"/>
     <file role="test" name="locale_get_display_script.phpt"/>
+    <file role="test" name="locale_get_display_script2.phpt"/>
     <file role="test" name="locale_get_display_variant.phpt"/>
+    <file role="test" name="locale_get_display_variant2.phpt"/>
     <file role="test" name="locale_get_keywords.phpt"/>
+    <file role="test" name="locale_get_keywords2.phpt"/>
     <file role="test" name="locale_get_primary_language.phpt"/>
     <file role="test" name="locale_get_region.phpt"/>
     <file role="test" name="locale_get_script.phpt"/>
     <file role="test" name="locale_lookup.phpt"/>
     <file role="test" name="locale_parse_locale.phpt"/>
+    <file role="test" name="locale_parse_locale2.phpt"/>
     <file role="test" name="locale_set_default.phpt"/>
     <file role="test" name="msgfmt_clone.phpt"/>
     <file role="test" name="msgfmt_fail.phpt"/>
+    <file role="test" name="msgfmt_fail2.phpt"/>
     <file role="test" name="msgfmt_format.phpt"/>
     <file role="test" name="msgfmt_get_error.phpt"/>
     <file role="test" name="msgfmt_get_locale.phpt"/>
