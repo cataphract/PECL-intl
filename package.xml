@@ -30,22 +30,31 @@
   <email>ed@batutis.com</email>
   <active>yes</active>
  </developer>
- <date>2011-11-29</date>
- <time>02:15:32</time>
+ <date>2012-04-07</date>
+ <time>21:52:30</time>
  <version>
-  <release>2.0.0b1</release>
+  <release>3.0.0a1</release>
   <api>5.4.0</api>
  </version>
  <stability>
-  <release>beta</release>
-  <api>stable</api>
+  <release>alpha</release>
+  <api>alpha</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
-
- <notes>Synchronized with PHP 5.4 ext/intl</notes>
-
+ <notes>- Added classes IntlCalendar, IntlGregorianCalendar and IntlTimeZone.
+- Added the ability for the intl exception to throw exceptions when a
+  global error is set.
+</notes>
  <contents>
   <dir name="/">
+   <dir name="calendar">
+    <file role="src" name="calendar_class.cpp"/>
+    <file role="src" name="calendar_class.h"/>
+    <file role="src" name="calendar_methods.cpp"/>
+    <file role="src" name="calendar_methods.h"/>
+    <file role="src" name="gregoriancalendar_methods.cpp"/>
+    <file role="src" name="gregoriancalendar_methods.h"/>
+   </dir>
    <dir name="collator">
     <file role="src" name="collator.c"/>
     <file role="src" name="collator.h"/>
@@ -71,6 +80,8 @@
    <dir name="common">
     <file role="src" name="common_error.c"/>
     <file role="src" name="common_error.h"/>
+    <file role="src" name="common_enum.cpp"/>
+    <file role="src" name="common_enum.h"/>
    </dir>
    <dir name="dateformat">
     <file role="src" name="dateformat.c"/>
@@ -162,6 +173,12 @@
     <file role="src" name="spoofchecker_main.c"/>
     <file role="src" name="spoofchecker_main.h"/>
    </dir>
+   <dir name="timezone">
+    <file role="src" name="timezone_class.cpp"/>
+    <file role="src" name="timezone_class.h"/>
+    <file role="src" name="timezone_methods.cpp"/>
+    <file role="src" name="timezone_methods.h"/>
+   </dir>
    <dir name="tests">
     <dir name="_files">
      <dir name="resourcebundle">
@@ -185,19 +202,95 @@
     <file role="test" name="bug60192-getsortkey.phpt"/>
     <file role="test" name="bug60192-sort.phpt"/>
     <file role="test" name="bug60192-sortwithsortkeys.phpt"/>
+    <file role="test" name="bug61487.phpt"/>
+    <file role="test" name="calendar_add_basic.phpt"/>
+    <file role="test" name="calendar_add_error.phpt"/>
+    <file role="test" name="calendar_before_after_error.phpt"/>
+    <file role="test" name="calendar_clear_basic.phpt"/>
+    <file role="test" name="calendar_clear_error.phpt"/>
+    <file role="test" name="calendar_clear_variation1.phpt"/>
+    <file role="test" name="calendar_createInstance_basic.phpt"/>
+    <file role="test" name="calendar_createInstance_error.phpt"/>
+    <file role="test" name="calendar_createInstance_variation1.phpt"/>
+    <file role="test" name="calendar_equals_before_after_basic.phpt"/>
+    <file role="test" name="calendar_equals_error.phpt"/>
+    <file role="test" name="calendar_fieldDifference_basic.phpt"/>
+    <file role="test" name="calendar_fieldDifference_error.phpt"/>
+    <file role="test" name="calendar_getAvailableLocales_basic.phpt"/>
+    <file role="test" name="calendar_getAvailableLocales_error.phpt"/>
+    <file role="test" name="calendar_getDayOfWeekType_basic.phpt"/>
+    <file role="test" name="calendar_getDayOfWeekType_error.phpt"/>
+    <file role="test" name="calendar_getErrorCode_error.phpt"/>
+    <file role="test" name="calendar_getErrorCode_getErrorMessage_basic.phpt"/>
+    <file role="test" name="calendar_getErrorMessage_error.phpt"/>
+    <file role="test" name="calendar_getFirstDayOfWeek_basic.phpt"/>
+    <file role="test" name="calendar_getFirstDayOfWeek_error.phpt"/>
+    <file role="test" name="calendar_getKeywordValuesForLocale_basic.phpt"/>
+    <file role="test" name="calendar_getKeywordValuesForLocale_error.phpt"/>
+    <file role="test" name="calendar_getLocale_basic.phpt"/>
+    <file role="test" name="calendar_getLocale_error.phpt"/>
+    <file role="test" name="calendar_getMinimalDaysInFirstWeek_basic.phpt"/>
+    <file role="test" name="calendar_getMinimalDaysInFirstWeek_error.phpt"/>
+    <file role="test" name="calendar_getNow_basic.phpt"/>
+    <file role="test" name="calendar_getNow_error.phpt"/>
+    <file role="test" name="calendar_getSkipped_RepeatedWallTimeOption_error.phpt"/>
+    <file role="test" name="calendar_getTimeZone_basic.phpt"/>
+    <file role="test" name="calendar_getTimeZone_error.phpt"/>
+    <file role="test" name="calendar_getTime_basic.phpt"/>
+    <file role="test" name="calendar_getTime_error.phpt"/>
+    <file role="test" name="calendar_getType_basic.phpt"/>
+    <file role="test" name="calendar_getType_error.phpt"/>
+    <file role="test" name="calendar_getWeekendTransition_basic.phpt"/>
+    <file role="test" name="calendar_getWeekendTransition_error.phpt"/>
+    <file role="test" name="calendar_getXMaximum_basic.phpt"/>
+    <file role="test" name="calendar_getXMinimum_basic.phpt"/>
+    <file role="test" name="calendar_get_basic.phpt"/>
+    <file role="test" name="calendar_get_getActualMaximum_Minumum_error.phpt"/>
+    <file role="test" name="calendar_get_getActualMaximum_Minumum_error2.phpt"/>
+    <file role="test" name="calendar_get_Least_Greatest_Minimum_Maximum_error.phpt"/>
+    <file role="test" name="calendar_get_setRepeatedWallTimeOption_basic.phpt"/>
+    <file role="test" name="calendar_get_setSkippedWallTimeOption_basic.phpt"/>
+    <file role="test" name="calendar_inDaylightTime_basic.phpt"/>
+    <file role="test" name="calendar_inDaylightTime_error.phpt"/>
+    <file role="test" name="calendar_isEquivalentTo_basic.phpt"/>
+    <file role="test" name="calendar_isEquivalentTo_error.phpt"/>
+    <file role="test" name="calendar_isLenient_error.phpt"/>
+    <file role="test" name="calendar_isSet_basic.phpt"/>
+    <file role="test" name="calendar_isSet_error.phpt"/>
+    <file role="test" name="calendar_isWeekend_basic.phpt"/>
+    <file role="test" name="calendar_isWeekend_error.phpt"/>
+    <file role="test" name="calendar_is_set_lenient_basic.phpt"/>
+    <file role="test" name="calendar_roll_basic.phpt"/>
+    <file role="test" name="calendar_roll_error.phpt"/>
+    <file role="test" name="calendar_roll_variation1.phpt"/>
+    <file role="test" name="calendar_setFirstDayOfWeek_basic.phpt"/>
+    <file role="test" name="calendar_setFirstDayOfWeek_error.phpt"/>
+    <file role="test" name="calendar_setLenient_error.phpt"/>
+    <file role="test" name="calendar_setSkipped_RepeatedWallTimeOption_error.phpt"/>
+    <file role="test" name="calendar_setTimeZone_basic.phpt"/>
+    <file role="test" name="calendar_setTimeZone_error.phpt"/>
+    <file role="test" name="calendar_setTimeZone_variation1.phpt"/>
+    <file role="test" name="calendar_setTime_basic.phpt"/>
+    <file role="test" name="calendar_setTime_error.phpt"/>
+    <file role="test" name="calendar_set_basic.phpt"/>
+    <file role="test" name="calendar_set_error.phpt"/>
+    <file role="test" name="calendar_set_variation1.phpt"/>
     <file role="test" name="collation_customization.phpt"/>
     <file role="test" name="collator_asort.phpt"/>
     <file role="test" name="collator_compare.phpt"/>
     <file role="test" name="collator_create.phpt"/>
+    <file role="test" name="collator_create2.phpt"/>
     <file role="test" name="collator_get_error_code.phpt"/>
     <file role="test" name="collator_get_error_message.phpt"/>
     <file role="test" name="collator_get_locale.phpt"/>
+    <file role="test" name="collator_get_locale2.phpt"/>
     <file role="test" name="collator_get_set_attribute.phpt"/>
     <file role="test" name="collator_get_set_strength.phpt"/>
     <file role="test" name="collator_get_sort_key.phpt"/>
     <file role="test" name="collator_sort.phpt"/>
     <file role="test" name="collator_sort_with_sort_keys.phpt"/>
     <file role="test" name="dateformat_clone.phpt"/>
+    <file role="test" name="dateformat_clone2.phpt"/>
     <file role="test" name="dateformat_format.phpt"/>
     <file role="test" name="dateformat_format52.phpt"/>
     <file role="test" name="dateformat_format_parse.phpt"/>
@@ -205,6 +298,7 @@
     <file role="test" name="dateformat_get_locale.phpt"/>
     <file role="test" name="dateformat_get_set_calendar.phpt"/>
     <file role="test" name="dateformat_get_set_pattern.phpt"/>
+    <file role="test" name="dateformat_get_set_pattern2.phpt"/>
     <file role="test" name="dateformat_get_timetype.phpt"/>
     <file role="test" name="dateformat_get_timezone_id.phpt"/>
     <file role="test" name="dateformat_is_set_lenient.phpt"/>
@@ -213,23 +307,37 @@
     <file role="test" name="dateformat_parse_localtime_parsepos.phpt"/>
     <file role="test" name="dateformat_parse_timestamp_parsepos.phpt"/>
     <file role="test" name="dateformat_set_timezone_id.phpt"/>
+    <file role="test" name="dateformat_set_timezone_id2.phpt"/>
     <file role="test" name="formatter_clone.phpt"/>
     <file role="test" name="formatter_fail.phpt"/>
     <file role="test" name="formatter_format.phpt"/>
+    <file role="test" name="formatter_format2.phpt"/>
     <file role="test" name="formatter_format_conv.phpt"/>
     <file role="test" name="formatter_format_currency.phpt"/>
+    <file role="test" name="formatter_format_currency2.phpt"/>
     <file role="test" name="formatter_get_error.phpt"/>
     <file role="test" name="formatter_get_locale.phpt"/>
     <file role="test" name="formatter_get_set_attribute.phpt"/>
+    <file role="test" name="formatter_get_set_attribute2.phpt"/>
     <file role="test" name="formatter_get_set_pattern.phpt"/>
     <file role="test" name="formatter_get_set_symbol.phpt"/>
+    <file role="test" name="formatter_get_set_symbol2.phpt"/>
     <file role="test" name="formatter_get_set_text_attribute.phpt"/>
     <file role="test" name="formatter_parse.phpt"/>
     <file role="test" name="formatter_parse_currency.phpt"/>
     <file role="test" name="grapheme.phpt"/>
+    <file role="test" name="gregoriancalendar_getGregorianChange_error.phpt"/>
+    <file role="test" name="gregoriancalendar_get_setGregorianChange_basic.phpt"/>
+    <file role="test" name="gregoriancalendar_isLeapYear_basic.phpt"/>
+    <file role="test" name="gregoriancalendar_isLeapYear_error.phpt"/>
+    <file role="test" name="gregoriancalendar_setGregorianChange_error.phpt"/>
+    <file role="test" name="gregoriancalendar___construct_basic.phpt"/>
+    <file role="test" name="gregoriancalendar___construct_error.phpt"/>
+    <file role="test" name="gregoriancalendar___construct_variant1.phpt"/>
     <file role="test" name="idn.phpt"/>
     <file role="test" name="idn_uts46_basic.phpt"/>
     <file role="test" name="idn_uts46_errors.phpt"/>
+    <file role="test" name="ini_use_exceptions_basic.phpt"/>
     <file role="test" name="intl_error_name.phpt"/>
     <file role="test" name="intl_get_error_code.phpt"/>
     <file role="test" name="intl_get_error_message.phpt"/>
@@ -239,22 +347,30 @@
     <file role="test" name="locale_accept.phpt"/>
     <file role="test" name="locale_compose_locale.phpt"/>
     <file role="test" name="locale_filter_matches.phpt"/>
+    <file role="test" name="locale_filter_matches2.phpt"/>
     <file role="test" name="locale_get_all_variants.phpt"/>
     <file role="test" name="locale_get_default.phpt"/>
     <file role="test" name="locale_get_display_language.phpt"/>
     <file role="test" name="locale_get_display_name.phpt"/>
+    <file role="test" name="locale_get_display_name2.phpt"/>
     <file role="test" name="locale_get_display_region.phpt"/>
+    <file role="test" name="locale_get_display_region2.phpt"/>
     <file role="test" name="locale_get_display_script.phpt"/>
+    <file role="test" name="locale_get_display_script2.phpt"/>
     <file role="test" name="locale_get_display_variant.phpt"/>
+    <file role="test" name="locale_get_display_variant2.phpt"/>
     <file role="test" name="locale_get_keywords.phpt"/>
+    <file role="test" name="locale_get_keywords2.phpt"/>
     <file role="test" name="locale_get_primary_language.phpt"/>
     <file role="test" name="locale_get_region.phpt"/>
     <file role="test" name="locale_get_script.phpt"/>
     <file role="test" name="locale_lookup.phpt"/>
     <file role="test" name="locale_parse_locale.phpt"/>
+    <file role="test" name="locale_parse_locale2.phpt"/>
     <file role="test" name="locale_set_default.phpt"/>
     <file role="test" name="msgfmt_clone.phpt"/>
     <file role="test" name="msgfmt_fail.phpt"/>
+    <file role="test" name="msgfmt_fail2.phpt"/>
     <file role="test" name="msgfmt_format.phpt"/>
     <file role="test" name="msgfmt_get_error.phpt"/>
     <file role="test" name="msgfmt_get_locale.phpt"/>
@@ -277,6 +393,58 @@
     <file role="test" name="spoofchecker_002.phpt"/>
     <file role="test" name="spoofchecker_003.phpt"/>
     <file role="test" name="spoofchecker_004.phpt"/>
+    <file role="test" name="timezone_clone_basic.phpt"/>
+    <file role="test" name="timezone_clone_error.phpt"/>
+    <file role="test" name="timezone_countEquivalentIDs_basic.phpt"/>
+    <file role="test" name="timezone_countEquivalentIDs_error.phpt"/>
+    <file role="test" name="timezone_createDefault_basic.phpt"/>
+    <file role="test" name="timezone_createDefault_error.phpt"/>
+    <file role="test" name="timezone_createEnumeration_basic.phpt"/>
+    <file role="test" name="timezone_createEnumeration_error.phpt"/>
+    <file role="test" name="timezone_createEnumeration_variation1.phpt"/>
+    <file role="test" name="timezone_createEnumeration_variation2.phpt"/>
+    <file role="test" name="timezone_createTimeZoneIDEnumeration_basic.phpt"/>
+    <file role="test" name="timezone_createTimeZoneIDEnumeration_error.phpt"/>
+    <file role="test" name="timezone_createTimeZoneIDEnumeration_variant1.phpt"/>
+    <file role="test" name="timezone_createTimeZoneIDEnumeration_variant2.phpt"/>
+    <file role="test" name="timezone_createTimeZone_basic.phpt"/>
+    <file role="test" name="timezone_createTimeZone_error.phpt"/>
+    <file role="test" name="timezone_equals_basic.phpt"/>
+    <file role="test" name="timezone_equals_error.phpt"/>
+    <file role="test" name="timezone_getCanonicalID_basic.phpt"/>
+    <file role="test" name="timezone_getCanonicalID_error.phpt"/>
+    <file role="test" name="timezone_getCanonicalID_variant1.phpt"/>
+    <file role="test" name="timezone_getDisplayName_basic.phpt"/>
+    <file role="test" name="timezone_getDisplayName_error.phpt"/>
+    <file role="test" name="timezone_getDisplayName_variant1.phpt"/>
+    <file role="test" name="timezone_getDisplayName_variant2-49+.phpt"/>
+    <file role="test" name="timezone_getDisplayName_variant2.phpt"/>
+    <file role="test" name="timezone_getDisplayName_variant3-49+.phpt"/>
+    <file role="test" name="timezone_getDisplayName_variant3.phpt"/>
+    <file role="test" name="timezone_getDSTSavings_basic.phpt"/>
+    <file role="test" name="timezone_getDSTSavings_error.phpt"/>
+    <file role="test" name="timezone_getEquivalentID_basic.phpt"/>
+    <file role="test" name="timezone_getEquivalentID_error.phpt"/>
+    <file role="test" name="timezone_getErrorCodeMessage_basic.phpt"/>
+    <file role="test" name="timezone_getErrorCode_error.phpt"/>
+    <file role="test" name="timezone_getErrorMessage_error.phpt"/>
+    <file role="test" name="timezone_getGMT_basic.phpt"/>
+    <file role="test" name="timezone_getGMT_error.phpt"/>
+    <file role="test" name="timezone_getID_error.phpt"/>
+    <file role="test" name="timezone_getOffset_basic.phpt"/>
+    <file role="test" name="timezone_getOffset_error.phpt"/>
+    <file role="test" name="timezone_getRawOffset_basic.phpt"/>
+    <file role="test" name="timezone_getRawOffset_error.phpt"/>
+    <file role="test" name="timezone_getRegion_basic.phpt"/>
+    <file role="test" name="timezone_getRegion_error.phpt"/>
+    <file role="test" name="timezone_getTZDataVersion_error.phpt"/>
+    <file role="test" name="timezone_getTZData_basic.phpt"/>
+    <file role="test" name="timezone_getUnknown_basic.phpt"/>
+    <file role="test" name="timezone_getUnknown_error.phpt"/>
+    <file role="test" name="timezone_hasSameRules_basic.phpt"/>
+    <file role="test" name="timezone_hasSameRules_error.phpt"/>
+    <file role="test" name="timezone_useDaylightTime_basic.phpt"/>
+    <file role="test" name="timezone_useDaylightTime_error.phpt"/>
     <file role="test" name="transliterator_clone.phpt"/>
     <file role="test" name="transliterator_create_basic.phpt"/>
     <file role="test" name="transliterator_create_error.phpt"/>
@@ -315,6 +483,8 @@
    <file role="src" name="php_compatshims.h"/>
    <file role="src" name="php_intl.c"/>
    <file role="src" name="php_intl.h"/>
+   <file role="src" name="intl_convertcpp.cpp"/>
+   <file role="src" name="intl_convertcpp.h"/>
   </dir>
  </contents>
  <dependencies>
