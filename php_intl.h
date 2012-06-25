@@ -71,6 +71,8 @@ PHP_RINIT_FUNCTION(intl);
 PHP_RSHUTDOWN_FUNCTION(intl);
 PHP_MINFO_FUNCTION(intl);
 
+const char *intl_locale_get_default( TSRMLS_D );
+
 #define PHP_INTL_VERSION "3.0.0a2-dev"
 
 #endif  /* PHP_INTL_H */

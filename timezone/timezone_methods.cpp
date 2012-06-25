@@ -29,7 +29,6 @@ extern "C" {
 #define USE_TIMEZONE_POINTER 1
 #include "timezone_class.h"
 #include "intl_convert.h"
-#include "../locale/locale.h"
 #include <zend_exceptions.h>
 #include <ext/date/php_date.h>
 }

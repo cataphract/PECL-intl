@@ -31,7 +31,6 @@ extern "C" {
 #define USE_CALENDAR_POINTER 1
 #include "calendar_class.h"
 #include "../intl_convert.h"
-#include "../locale/locale.h"
 #include <zend_exceptions.h>
 #include <zend_interfaces.h>
 #include <ext/date/php_date.h>
