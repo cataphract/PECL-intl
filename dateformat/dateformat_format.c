@@ -21,15 +21,13 @@
 #include <unicode/ustring.h>
 #include <unicode/ucal.h>
 
-#include "php_intl.h"
-#include "intl_convert.h"
+#include "../php_intl.h"
+#include "../intl_convert.h"
+#include "../common/common_date.h"
 #include "dateformat.h"
 #include "dateformat_class.h"
 #include "dateformat_format.h"
 #include "dateformat_data.h"
-/* avoid redefinition of int8_t, already defined in unicode/pwin32.h */
-#define _MSC_STDINT_H_ 1
-#include "ext/date/php_date.h"
 
 /* {{{ 
  * Internal function which calls the udat_format
@@ -126,92 +124,38 @@ static UDate internal_get_timestamp(IntlDateFormatter_object *dfo, HashTable* ha
  * Format the time value as a string. }}}*/
 PHP_FUNCTION(datefmt_format) 
 {
-	UDate 		timestamp =0;
-	UDate 		p_timestamp =0;
-	HashTable*      hash_arr        = NULL;
-	zval*		zarg	= NULL;
+	UDate 		timestamp	= 0;
+	HashTable	*hash_arr	= NULL;
+	zval		*zarg		= NULL;
 
 	DATE_FORMAT_METHOD_INIT_VARS;
 
 	/* Parse parameters. */
-	if( zend_parse_method_parameters( ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Oz", &object, IntlDateFormatter_ce_ptr,&zarg ) == FAILURE )
-	{
-		intl_error_set( NULL, U_ILLEGAL_ARGUMENT_ERROR, "datefmt_format: unable to parse input params", 0 TSRMLS_CC );
+	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Oz",
+			&object, IntlDateFormatter_ce_ptr, &zarg) == FAILURE) {
+		intl_error_set(NULL, U_ILLEGAL_ARGUMENT_ERROR, "datefmt_format: unable "
+				"to parse input params", 0 TSRMLS_CC );
 		RETURN_FALSE;
 	}
 
-	/* Fetch the object. */
 	DATE_FORMAT_METHOD_FETCH_OBJECT;
 
-	switch(Z_TYPE_P(zarg) ){
-		case IS_LONG:
-			p_timestamp = Z_LVAL_P(zarg) ;
-			timestamp = p_timestamp * 1000;
-			break;
-		case IS_DOUBLE:
-			/* timestamp*1000 since ICU expects it in milliseconds */
-			p_timestamp = Z_DVAL_P(zarg) ;
-			timestamp = p_timestamp * 1000;
-			break;
-		case IS_ARRAY:
-			hash_arr = Z_ARRVAL_P(zarg);
-			if( !hash_arr || zend_hash_num_elements( hash_arr ) == 0 )
-				RETURN_FALSE;
-
-			timestamp = internal_get_timestamp(dfo, hash_arr TSRMLS_CC);
-			INTL_METHOD_CHECK_STATUS( dfo, "datefmt_format: Date formatting failed" )
-			break;
-		case IS_OBJECT: {
-			zend_class_entry *date_ce = php_date_get_date_ce();
-			zval retval = zval_used_for_init,
-				 zfuncname = zval_used_for_init,
-				 *ts_format_p;
-#if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 3
-			zval ts_format = zval_used_for_init;
-#endif
-			int  argcount,
-				 expected_type;
-			
-			if(!instanceof_function(Z_OBJCE_P(zarg), date_ce TSRMLS_CC)) {
-				intl_errors_set(INTL_DATA_ERROR_P(dfo), U_ILLEGAL_ARGUMENT_ERROR, "datefmt_format: object must be an instance of DateTime", 0 TSRMLS_CC );
-				RETURN_FALSE;
-			}
-			
-#if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 3
-			ZVAL_STRING(&zfuncname, "format", 0);
-			ZVAL_STRINGL(&ts_format, "U", sizeof("U") - 1, 0);
-			argcount = 1;
-			ts_format_p = &ts_format;
-			expected_type = IS_STRING;
-#else
-			ZVAL_STRING(&zfuncname, "getTimestamp", 0);
-			argcount = 0;
-			ts_format_p = NULL;
-			expected_type = IS_LONG;
-#endif
-			
-			if (call_user_function(NULL, &zarg, &zfuncname, &retval, argcount, &ts_format_p TSRMLS_CC) != SUCCESS
-					|| Z_TYPE(retval) != expected_type) {
-				intl_errors_set(INTL_DATA_ERROR_P(dfo), U_ILLEGAL_ARGUMENT_ERROR, "datefmt_format: cannot get timestamp", 0 TSRMLS_CC );
-				RETURN_FALSE;
-			}
-			
-#if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 3
-			convert_to_long(&retval);
-#endif
-			
-			p_timestamp = Z_LVAL(retval);
-			timestamp = p_timestamp*1000;
+	if (Z_TYPE_P(zarg) == IS_ARRAY) {
+		hash_arr = Z_ARRVAL_P(zarg);
+		if (!hash_arr || zend_hash_num_elements(hash_arr) == 0) {
+ 			RETURN_FALSE;
 		}
-			break;
-		default:
-			intl_errors_set( INTL_DATA_ERROR_P(dfo), U_ILLEGAL_ARGUMENT_ERROR,
-				"datefmt_format: takes either an array or an integer timestamp value or a DateTime object", 0 TSRMLS_CC );
-			RETURN_FALSE;
+ 
+		timestamp = internal_get_timestamp(dfo, hash_arr TSRMLS_CC);
+		INTL_METHOD_CHECK_STATUS(dfo, "datefmt_format: date formatting failed")
+	} else {
+		timestamp = intl_zval_to_millis(zarg,
+				&INTL_DATA_ERROR_CODE(dfo) TSRMLS_CC);
+		INTL_METHOD_CHECK_STATUS(dfo, "datefmt_format: could not convert input "
+				"into a date")
 	}
-
+ 	
 	internal_format( dfo, timestamp, return_value TSRMLS_CC);
-	
 }
 
 /* }}} */
