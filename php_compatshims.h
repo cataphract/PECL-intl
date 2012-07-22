@@ -2,6 +2,16 @@
 # define PHP_FE_END { NULL, NULL, NULL, 0, 0 }
 #endif
 
+#if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 4
+
+static inline void object_properties_init(zend_object *object, zend_class_entry *class_type)
+{
+	zend_hash_copy(object->properties, &class_type->default_properties,
+		(copy_ctor_func_t)zval_add_ref, NULL, sizeof(zval*));
+}
+
+#endif
+
 #if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 3
 
 #define zend_parse_parameters_none() \
