@@ -154,6 +154,7 @@ U_CFUNC int intl_datetime_decompose(zval *z, double *millis, TimeZone **tz,
 			intl_errors_set(err, U_INTERNAL_PROGRAM_ERROR,
 				message, 1 TSRMLS_CC);
 			efree(message);
+			return FAILURE;
 		} else {
 #if PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION < 3
 			convert_to_long(&retval);
