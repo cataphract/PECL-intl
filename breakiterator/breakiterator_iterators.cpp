@@ -254,13 +254,23 @@ U_CFUNC zend_object_value IntlPartsIterator_object_create(zend_class_entry *ce T
 	return retval;
 }
 
+#if PHP_VERSION_ID >= 50399
 U_CFUNC zend_function *IntlPartsIterator_get_method(zval **object_ptr,
 		char *method, int method_len, const zend_literal *key TSRMLS_DC)
+#else
+U_CFUNC zend_function *IntlPartsIterator_get_method(zval **object_ptr,
+		char *method, int method_len TSRMLS_DC)
+#endif
 {
+#if PHP_VERSION_ID >= 50399
 	zend_literal local_literal = {0};
+#else
+	char *lower_method;
+#endif
 	zend_function *ret;
 	ALLOCA_FLAG(use_heap)
 
+#if PHP_VERSION_ID >= 50399
 	if (key == NULL) {
 		Z_STRVAL(local_literal.constant) = static_cast<char*>(
 				do_alloca(method_len + 1, use_heap));
@@ -270,21 +280,36 @@ U_CFUNC zend_function *IntlPartsIterator_get_method(zval **object_ptr,
 				Z_STRVAL(local_literal.constant), method_len + 1);
 		key = &local_literal;
 	}
+#else
+	lower_method = static_cast<char*>(do_alloca(method_len + 1, use_heap));
+	zend_str_tolower_copy(lower_method, method, method_len);
+#endif
 
+#if PHP_VERSION_ID >= 50399
 	if ((key->hash_value & 0xFFFFFFFF) == 0xA2B486A1 /* hash of getrulestatus\0 */
-			&& method_len == sizeof("getrulestatus") - 1
+			method_len == sizeof("getrulestatus") - 1
 			&& memcmp("getrulestatus", Z_STRVAL(key->constant),	method_len) == 0) {
+#else
+	if (method_len == sizeof("getrulestatus") - 1
+			&& memcmp("getrulestatus", lower_method, method_len) == 0) {
+#endif
 		IntlIterator_object *obj = (IntlIterator_object*)
 				zend_object_store_get_object(*object_ptr TSRMLS_CC);
 		if (obj->iterator && obj->iterator->data) {
 			zval *break_iter_zv = static_cast<zval*>(obj->iterator->data);
 			*object_ptr = break_iter_zv;
+#if PHP_VERSION_ID >= 50399
 			ret = Z_OBJ_HANDLER_P(break_iter_zv, get_method)(object_ptr,
 					method, method_len, key TSRMLS_CC);
+#else
+			ret = Z_OBJ_HANDLER_P(break_iter_zv, get_method)(object_ptr,
+					method, method_len TSRMLS_CC);
+#endif
 			goto end;
 		}
 	}
 
+#if PHP_VERSION_ID >= 50399
 	ret = std_object_handlers.get_method(object_ptr,
 			method, method_len, key TSRMLS_CC);
 
@@ -292,6 +317,12 @@ end:
 	if (key == &local_literal) {
 		free_alloca(Z_STRVAL(local_literal.constant), use_heap);
 	}
+#else
+	ret = std_object_handlers.get_method(object_ptr,
+			method, method_len TSRMLS_CC);
+
+end:
+#endif
 
 	return ret;
 }
