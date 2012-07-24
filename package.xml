@@ -30,19 +30,36 @@
   <email>ed@batutis.com</email>
   <active>yes</active>
  </developer>
- <date>2012-04-07</date>
- <time>20:34:24</time>
+ <date>2012-07-24</date>
+ <time>14:39:21</time>
  <version>
-  <release>2.0.0</release>
-  <api>5.4.0</api>
+  <release>2.0.1</release>
+  <api>5.4.5</api>
  </version>
  <stability>
   <release>stable</release>
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
- <notes>- Fixed bug #61487 - bad bounds check in grapheme_strpos.
-- Fixed several tests.
+ <notes>- Changed ResourceBundle constructor behavior: null is now accepted for two
+  first (mandatory arguments).
+- Optimization in ext/intl/msgformat: don't transform the string to make it
+  apostrophe friendly in ICU 4.8+.
+- Fixed bug #55610: ResourceBundle not marked Traversable.
+- Fixed bug #59597: NumberFormatter::parse() with TYPE_INT64 results in a 32 bit
+  integer.
+- Fixed bug #60785: memory leak in IntlDateFormatter constructor.
+- Fixed bug #61829: memory leak when calling MessageFormatter's constructor
+  twice.
+- Fixed bug #62017: datefmt_create with incorrectly encoded timezone leaks
+  pattern.
+- Fixed bug #62070: Collator::getSortKey() was returning an unterminated string
+  due the length given to RETURN_STRINGL being off by one.
+- Fixed bug #62081: constructor of IntlDateFormatter would leak if called twice.
+- Fixed bug #62082: buffer overflow in internal function
+  get_icu_disp_value_src_php().
+- Fixed bug #62083: memory leak in grapheme_extract().
+- Fixed bug #62564/#62565: call to object_properties_init() missing.
 </notes>
  <contents>
   <dir name="/">
@@ -180,12 +197,19 @@
     <file role="test" name="bug50590.phpt"/>
     <file role="test" name="bug53512.phpt"/>
     <file role="test" name="bug55562.phpt"/>
+    <file role="test" name="bug59597_32.phpt"/>
+    <file role="test" name="bug59597_64.phpt"/>
     <file role="test" name="bug60192-compare.phpt"/>
     <file role="test" name="bug60192-getlocale.phpt"/>
     <file role="test" name="bug60192-getsortkey.phpt"/>
     <file role="test" name="bug60192-sort.phpt"/>
     <file role="test" name="bug60192-sortwithsortkeys.phpt"/>
     <file role="test" name="bug61487.phpt"/>
+    <file role="test" name="bug62017.phpt"/>
+    <file role="test" name="bug62070.phpt"/>
+    <file role="test" name="bug62081.phpt"/>
+    <file role="test" name="bug62082.phpt"/>
+    <file role="test" name="bug62083.phpt"/>
     <file role="test" name="collation_customization.phpt"/>
     <file role="test" name="collator_asort.phpt"/>
     <file role="test" name="collator_compare.phpt"/>
@@ -200,6 +224,7 @@
     <file role="test" name="collator_get_sort_key.phpt"/>
     <file role="test" name="collator_sort.phpt"/>
     <file role="test" name="collator_sort_with_sort_keys.phpt"/>
+    <file role="test" name="dateformat_calendars.phpt"/>
     <file role="test" name="dateformat_clone.phpt"/>
     <file role="test" name="dateformat_clone2.phpt"/>
     <file role="test" name="dateformat_format.phpt"/>
@@ -259,6 +284,7 @@
     <file role="test" name="locale_get_display_region2.phpt"/>
     <file role="test" name="locale_get_display_script.phpt"/>
     <file role="test" name="locale_get_display_script2.phpt"/>
+    <file role="test" name="locale_get_display_script3.phpt"/>
     <file role="test" name="locale_get_display_variant.phpt"/>
     <file role="test" name="locale_get_display_variant2.phpt"/>
     <file role="test" name="locale_get_keywords.phpt"/>
@@ -291,6 +317,8 @@
     <file role="test" name="resourcebundle_internal.phpt"/>
     <file role="test" name="resourcebundle_iterator.phpt"/>
     <file role="test" name="resourcebundle_locales.phpt"/>
+    <file role="test" name="resourcebundle_null_mandatory_args.phpt"/>
+    <file role="test" name="resourcebundle_traversable.phpt"/>
     <file role="test" name="spoofchecker_001.phpt"/>
     <file role="test" name="spoofchecker_002.phpt"/>
     <file role="test" name="spoofchecker_003.phpt"/>
