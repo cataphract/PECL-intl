@@ -17,6 +17,7 @@
 #include "codepointiterator_internal.h"
 
 extern "C" {
+#include "../php_intl.h"
 #define USE_BREAKITERATOR_POINTER 1
 #include "breakiterator_class.h"
 }

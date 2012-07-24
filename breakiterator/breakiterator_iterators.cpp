@@ -24,6 +24,7 @@
 #include "../common/common_enum.h"
 
 extern "C" {
+#include "../php_intl.h"
 #define USE_BREAKITERATOR_POINTER
 #include "breakiterator_class.h"
 #include "../intl_convert.h"
@@ -40,7 +41,7 @@ inline BreakIterator *_breakiter_prolog(zend_object_iterator *iter TSRMLS_DC)
 {
 	BreakIterator_object *bio;
 	bio = (BreakIterator_object*)zend_object_store_get_object(
-			(const zval*)iter->data TSRMLS_CC);
+			(zval*)iter->data TSRMLS_CC);
 	intl_errors_reset(BREAKITER_ERROR_P(bio) TSRMLS_CC);
 	if (bio->biter == NULL) {
 		intl_errors_set(BREAKITER_ERROR_P(bio), U_INVALID_STATE_ERROR,
@@ -280,8 +281,11 @@ U_CFUNC zend_function *IntlPartsIterator_get_method(zval **object_ptr,
 				Z_STRVAL(local_literal.constant), method_len + 1);
 		key = &local_literal;
 	}
-#else
+#elif PHP_VERSION_ID >= 50300
 	lower_method = static_cast<char*>(do_alloca(method_len + 1, use_heap));
+	zend_str_tolower_copy(lower_method, method, method_len);
+#else
+	lower_method = static_cast<char*>(do_alloca(method_len + 1));
 	zend_str_tolower_copy(lower_method, method, method_len);
 #endif
 

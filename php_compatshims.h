@@ -49,6 +49,16 @@ static inline zend_class_entry *php_date_get_date_ce(void)
 	return *ret;
 }
 
+static inline zend_class_entry *php_date_get_timezone_ce(void)
+{
+    zend_class_entry **ret;
+    TSRMLS_FETCH();
+    zend_lookup_class_ex("DateTimeZone", sizeof("DateTimeZone")-1, 0, &ret TSRMLS_CC);
+    assert(*ret);
+    return *ret;
+}
+
+
 #ifdef ZVAL_STRING
 #undef ZVAL_STRING
 #define ZVAL_STRING(z, s, duplicate) {		\
@@ -65,6 +75,30 @@ static inline zend_class_entry *php_date_get_date_ce(void)
 		(z)->type = IS_STRING;				\
 	}
 #endif
+
+#define E_DEPRECATED E_STRICT
+
+#include <ext/date/lib/timelib_structs.h>
+typedef struct _php_date_obj {
+    zend_object   std;
+    timelib_time *time;
+} php_date_obj;
+
+typedef struct _php_timezone_obj {
+    zend_object     std;
+    int             initialized;
+    int             type;
+    union {
+        timelib_tzinfo *tz; /* TIMELIB_ZONETYPE_ID; */
+        timelib_sll     utc_offset; /* TIMELIB_ZONETYPE_OFFSET */
+        struct                      /* TIMELIB_ZONETYPE_ABBR */
+        {
+            timelib_sll  utc_offset;
+            char        *abbr;
+            int          dst;
+        } z;
+    } tzi;
+} php_timezone_obj;
 
 #endif
 

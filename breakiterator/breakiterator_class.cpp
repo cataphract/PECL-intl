@@ -27,6 +27,7 @@
 #include <typeinfo>
 
 extern "C" {
+#include "../php_intl.h"
 #define USE_BREAKITERATOR_POINTER 1
 #include "breakiterator_class.h"
 #include "breakiterator_methods.h"
@@ -138,6 +139,7 @@ static zend_object_value BreakIterator_clone_obj(zval *object TSRMLS_DC)
 /* }}} */
 
 /* {{{ get_debug_info handler for BreakIterator */
+#if PHP_VERSION_ID >= 50300
 static HashTable *BreakIterator_get_debug_info(zval *object, int *is_temp TSRMLS_DC)
 {
 	zval					zv = zval_used_for_init;
@@ -169,6 +171,7 @@ static HashTable *BreakIterator_get_debug_info(zval *object, int *is_temp TSRMLS
 
 	return Z_ARRVAL(zv);
 }
+#endif
 /* }}} */
 
 /* {{{ void breakiterator_object_init(BreakIterator_object* to)
@@ -345,7 +348,9 @@ U_CFUNC void breakiterator_register_BreakIterator_class(TSRMLS_D)
 		sizeof BreakIterator_handlers);
 	BreakIterator_handlers.compare_objects = BreakIterator_compare_objects;
 	BreakIterator_handlers.clone_obj = BreakIterator_clone_obj;
+#if PHP_VERSION_ID >= 50300
 	BreakIterator_handlers.get_debug_info = BreakIterator_get_debug_info;
+#endif
 
 	zend_class_implements(BreakIterator_ce_ptr TSRMLS_CC, 1,
 			zend_ce_traversable);

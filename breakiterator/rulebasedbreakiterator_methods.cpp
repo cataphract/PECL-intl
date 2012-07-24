@@ -17,6 +17,7 @@
 #include <unicode/rbbi.h>
 
 extern "C" {
+#include "../php_intl.h"
 #define USE_BREAKITERATOR_POINTER 1
 #include "breakiterator_class.h"
 #include <zend_exceptions.h>
