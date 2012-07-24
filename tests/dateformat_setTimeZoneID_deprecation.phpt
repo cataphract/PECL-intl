@@ -14,5 +14,5 @@ $df->setTimeZoneId('Europe/Madrid');
 ==DONE==
 --EXPECTF--
 
-Deprecated: IntlDateFormatter::setTimeZoneId(): Use datefmt_set_timezone() instead, which also accepts a plain time zone identifier and for which this function is now an alias in %s on line %d
+%s: IntlDateFormatter::setTimeZoneId(): Use datefmt_set_timezone() instead, which also accepts a plain time zone identifier and for which this function is now an alias in %s on line %d
 ==DONE==

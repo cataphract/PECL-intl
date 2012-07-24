@@ -6,6 +6,8 @@ if (!extension_loaded('intl'))
 	die('skip intl extension not enabled');
 if (version_compare(INTL_ICU_VERSION, '49') < 0)
 	die('skip for ICU 49+');
+if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300)
+	die("skip for PHP 5.3+");
 --FILE--
 <?php
 ini_set("intl.error_level", E_WARNING);

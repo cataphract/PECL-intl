@@ -449,7 +449,6 @@
     <file role="test" name="formatter_get_error.phpt"/>
     <file role="test" name="formatter_get_locale.phpt"/>
     <file role="test" name="formatter_get_set_attribute.phpt"/>
-    <file role="test" name="formatter_get_set_attribute2.phpt"/>
     <file role="test" name="formatter_get_set_pattern.phpt"/>
     <file role="test" name="formatter_get_set_symbol.phpt"/>
     <file role="test" name="formatter_get_set_symbol2.phpt"/>
