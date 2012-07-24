@@ -361,6 +361,7 @@
    <file role="src" name="php_compatshims.h"/>
    <file role="src" name="php_intl.c"/>
    <file role="src" name="php_intl.h"/>
+   <file role="doc" name="CREDITS"/>
   </dir>
  </contents>
  <dependencies>
