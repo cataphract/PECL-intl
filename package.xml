@@ -30,23 +30,87 @@
   <email>ed@batutis.com</email>
   <active>yes</active>
  </developer>
- <date>2012-04-07</date>
- <time>21:52:30</time>
+ <date>2012-07-24</date>
+ <time>22:46:00</time>
  <version>
-  <release>3.0.0a1</release>
-  <api>5.4.0</api>
+  <release>3.0.0a2</release>
+  <api>5.5.0a1</api>
  </version>
  <stability>
   <release>alpha</release>
   <api>alpha</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
- <notes>- Added classes IntlCalendar, IntlGregorianCalendar and IntlTimeZone.
-- Added the ability for the intl exception to throw exceptions when a
-  global error is set.
+ <notes>- Added IntlBreakIterator, IntlRuleBasedBreakiterator and
+  IntlCodePointBreakIterator.
+- Added IntlDateFormatter::formatObject().
+- Implememented FR #61871: named Argument support for MessageFormatter.
+- Accepted numeric strings for dates (when a timestamp is expected).
+- Better error messages in MessageFormatter::format().
+- Number of arguments in MessageFormatter::format() is not checked anymore.
+- Kept subsecond date precision in MessageFormatter.
+- Changed ResourceBundle constructor behavior: null is now accepted for two
+  first (mandatory arguments).
+- Accept DateTimeZone where time zones are expected.
+- Added IntlCalendar::fromDateTime().
+- Added IntlTimeZone::fromDateTimeZone() and ::toDateTimeZone.
+- MessageFormatter accepts IntlCalendar arguments.
+- Added IntlCalendar::toDateTime().
+- Made IntlDateFormatter constructor accept NULL, IntlTimeZone and DateTimeZone
+  objects in the timezone argument.
+- When NULL is passed to IntlDateFormatter, the time zone specified in
+  date.timezone is used instead of the ICU default, except if an IntlCalendar is
+  also passed, in which its time zone is used instead.
+- The IntlDateFormatter constructor now accepts for the $calendar argument also
+  an IntlCalendar. In this case, IntlDateFormatter::getCalendar() will return
+  false.
+- Added IntlDateFormatter::getCalendarObject(), which always returns the
+  IntlCalendar object that backs the DateFormat, even if a constant was passed
+  to the constructor, i.e., if an IntlCalendar was not passed to the
+  constructor.
+- Added IntlDateFormatter::setTimeZone() and IntlDateFormatter::getTimeZone().
+- Do not fetch default locale on minit or rinit
+- Deprecated IntlDateFormatter::setTimeZoneId() and made it an alias for
+  IntlDateFormatter::setTimeZone(), as the new ::setTimeZone() also accepts
+  plain identifiers, besides other types.
+- Fixed bug #55610: ResourceBundle not marked Traversable.
+- Fixed bug #58756: IntlDateFormatter and MessageFormatter do not respect
+  date.timezone INI setting w.r.t MessageFormatter (partial fix)
+- Fixed bug #59597: NumberFormatter::parse() with TYPE_INT64 results in a 32 bit
+  integer.
+- Fixed bug #60785: memory leak in IntlDateFormatter constructor.
+- Fixed bug #61829: memory leak when calling MessageFormatter's constructor
+  twice.
+- Fixed bug #62017: datefmt_create with incorrectly encoded timezone leaks
+  pattern.
+- Fixed bug #62070: Collator::getSortKey() was returning an unterminated string
+  due the length given to RETURN_STRINGL being off by one.
+- Fixed bug #62081: constructor of IntlDateFormatter would leak if called twice.
+- Fixed bug #62082: buffer overflow in internal function
+  get_icu_disp_value_src_php().
+- Fixed bug #62083: memory leak in grapheme_extract().
+- Fixed bug #62564/#62565: call to object_properties_init() missing.
+- Fixed problem in IntlCalendar debug handler.
+- Fixed write in constant memory.
+- Added private constructor to IntlTimeZone.
+- Fixed IntlDateFormatter::setCalendar() with a constant passed.
 </notes>
  <contents>
   <dir name="/">
+   <dir name="breakiterator">
+    <file role="src" name="breakiterator_class.h"/>
+    <file role="src" name="breakiterator_class.cpp"/>
+    <file role="src" name="breakiterator_iterators.h"/>
+    <file role="src" name="breakiterator_iterators.cpp"/>
+    <file role="src" name="breakiterator_methods.h"/>
+    <file role="src" name="breakiterator_methods.cpp"/>
+    <file role="src" name="codepointiterator_internal.h"/>
+    <file role="src" name="codepointiterator_internal.cpp"/>
+    <file role="src" name="codepointiterator_methods.h"/>
+    <file role="src" name="codepointiterator_methods.cpp"/>
+    <file role="src" name="rulebasedbreakiterator_methods.h"/>
+    <file role="src" name="rulebasedbreakiterator_methods.cpp"/>
+   </dir>
    <dir name="calendar">
     <file role="src" name="calendar_class.cpp"/>
     <file role="src" name="calendar_class.h"/>
@@ -78,22 +142,32 @@
     <file role="src" name="collator_sort.h"/>
    </dir>
    <dir name="common">
-    <file role="src" name="common_error.c"/>
-    <file role="src" name="common_error.h"/>
+    <file role="src" name="common_date.cpp"/>
+    <file role="src" name="common_date.h"/>
     <file role="src" name="common_enum.cpp"/>
     <file role="src" name="common_enum.h"/>
+    <file role="src" name="common_error.c"/>
+    <file role="src" name="common_error.h"/>
    </dir>
    <dir name="dateformat">
     <file role="src" name="dateformat.c"/>
     <file role="src" name="dateformat.h"/>
     <file role="src" name="dateformat_attr.c"/>
     <file role="src" name="dateformat_attr.h"/>
+    <file role="src" name="dateformat_attrcpp.cpp"/>
+    <file role="src" name="dateformat_attrcpp.h"/>
     <file role="src" name="dateformat_class.c"/>
     <file role="src" name="dateformat_class.h"/>
+    <file role="src" name="dateformat_create.cpp"/>
+    <file role="src" name="dateformat_create.h"/>
     <file role="src" name="dateformat_data.c"/>
     <file role="src" name="dateformat_data.h"/>
     <file role="src" name="dateformat_format.c"/>
     <file role="src" name="dateformat_format.h"/>
+    <file role="src" name="dateformat_format_object.cpp"/>
+    <file role="src" name="dateformat_format_object.h"/>
+    <file role="src" name="dateformat_helpers.cpp"/>
+    <file role="src" name="dateformat_helpers.h"/>
     <file role="src" name="dateformat_parse.c"/>
     <file role="src" name="dateformat_parse.h"/>
    </dir>
@@ -191,18 +265,53 @@
      <file role="test" name="res_index.txt"/>
     </dir>
     <file role="test" name="badargs.phpt"/>
+    <file role="test" name="breakiter_clone_basic.phpt"/>
+    <file role="test" name="breakiter_createCodePointInstance_basic.phpt"/>
+    <file role="test" name="breakiter_createCodePointInstance_error.phpt"/>
+    <file role="test" name="breakiter_current_basic.phpt"/>
+    <file role="test" name="breakiter_factories_basic.phpt"/>
+    <file role="test" name="breakiter_factories_error.phpt"/>
+    <file role="test" name="breakiter_first_basic.phpt"/>
+    <file role="test" name="breakiter_first_last_previous_current_error.phpt"/>
+    <file role="test" name="breakiter_following_basic.phpt"/>
+    <file role="test" name="breakiter_following_preceding_isBoundary_error.phpt"/>
+    <file role="test" name="breakiter_getLocale_basic.phpt"/>
+    <file role="test" name="breakiter_getLocale_error.phpt"/>
+    <file role="test" name="breakiter_getPartsIterator_basic.phpt"/>
+    <file role="test" name="breakiter_getPartsIterator_error.phpt"/>
+    <file role="test" name="breakiter_getPartsIterator_var1.phpt"/>
+    <file role="test" name="breakiter_getText_basic.phpt"/>
+    <file role="test" name="breakiter_getText_error.phpt"/>
+    <file role="test" name="breakiter_isBoundary_basic.phpt"/>
+    <file role="test" name="breakiter_last_basic.phpt"/>
+    <file role="test" name="breakiter_next_basic.phpt"/>
+    <file role="test" name="breakiter_next_error.phpt"/>
+    <file role="test" name="breakiter_preceding_basic.phpt"/>
+    <file role="test" name="breakiter_previous_basic.phpt"/>
+    <file role="test" name="breakiter_setText_basic.phpt"/>
+    <file role="test" name="breakiter_setText_error.phpt"/>
+    <file role="test" name="breakiter___construct.phpt"/>
+    <file role="test" name="breakiter___construct_error.phpt"/>
     <file role="test" name="bug12887.phpt"/>
     <file role="test" name="bug14562.phpt"/>
     <file role="test" name="bug48227.phpt"/>
     <file role="test" name="bug50590.phpt"/>
     <file role="test" name="bug53512.phpt"/>
     <file role="test" name="bug55562.phpt"/>
+    <file role="test" name="bug58756_MessageFormatter.phpt"/>
+    <file role="test" name="bug59597_32.phpt"/>
+    <file role="test" name="bug59597_64.phpt"/>
     <file role="test" name="bug60192-compare.phpt"/>
     <file role="test" name="bug60192-getlocale.phpt"/>
     <file role="test" name="bug60192-getsortkey.phpt"/>
     <file role="test" name="bug60192-sort.phpt"/>
     <file role="test" name="bug60192-sortwithsortkeys.phpt"/>
     <file role="test" name="bug61487.phpt"/>
+    <file role="test" name="bug62017.phpt"/>
+    <file role="test" name="bug62070.phpt"/>
+    <file role="test" name="bug62081.phpt"/>
+    <file role="test" name="bug62082.phpt"/>
+    <file role="test" name="bug62083.phpt"/>
     <file role="test" name="calendar_add_basic.phpt"/>
     <file role="test" name="calendar_add_error.phpt"/>
     <file role="test" name="calendar_before_after_error.phpt"/>
@@ -216,6 +325,8 @@
     <file role="test" name="calendar_equals_error.phpt"/>
     <file role="test" name="calendar_fieldDifference_basic.phpt"/>
     <file role="test" name="calendar_fieldDifference_error.phpt"/>
+    <file role="test" name="calendar_fromDateTime_basic.phpt"/>
+    <file role="test" name="calendar_fromDateTime_error.phpt"/>
     <file role="test" name="calendar_getAvailableLocales_basic.phpt"/>
     <file role="test" name="calendar_getAvailableLocales_error.phpt"/>
     <file role="test" name="calendar_getDayOfWeekType_basic.phpt"/>
@@ -269,12 +380,16 @@
     <file role="test" name="calendar_setSkipped_RepeatedWallTimeOption_error.phpt"/>
     <file role="test" name="calendar_setTimeZone_basic.phpt"/>
     <file role="test" name="calendar_setTimeZone_error.phpt"/>
+    <file role="test" name="calendar_setTimeZone_error2.phpt"/>
     <file role="test" name="calendar_setTimeZone_variation1.phpt"/>
+    <file role="test" name="calendar_setTimeZone_variation2.phpt"/>
     <file role="test" name="calendar_setTime_basic.phpt"/>
     <file role="test" name="calendar_setTime_error.phpt"/>
     <file role="test" name="calendar_set_basic.phpt"/>
     <file role="test" name="calendar_set_error.phpt"/>
     <file role="test" name="calendar_set_variation1.phpt"/>
+    <file role="test" name="calendar_toDateTime_basic.phpt"/>
+    <file role="test" name="calendar_toDateTime_error.phpt"/>
     <file role="test" name="collation_customization.phpt"/>
     <file role="test" name="collator_asort.phpt"/>
     <file role="test" name="collator_compare.phpt"/>
@@ -289,16 +404,28 @@
     <file role="test" name="collator_get_sort_key.phpt"/>
     <file role="test" name="collator_sort.phpt"/>
     <file role="test" name="collator_sort_with_sort_keys.phpt"/>
+    <file role="test" name="cpbi_clone_equality.phpt"/>
+    <file role="test" name="cpbi_getLastCodePoint_basic.phpt"/>
+    <file role="test" name="cpbi_getLastCodePoint_error.phpt"/>
+    <file role="test" name="cpbi_parts_iterator.phpt"/>
+    <file role="test" name="dateformat_calendars.phpt"/>
     <file role="test" name="dateformat_clone.phpt"/>
     <file role="test" name="dateformat_clone2.phpt"/>
+    <file role="test" name="dateformat_create_cal_arg.phpt"/>
     <file role="test" name="dateformat_format.phpt"/>
     <file role="test" name="dateformat_format52.phpt"/>
+    <file role="test" name="dateformat_formatObject_calendar.phpt"/>
+    <file role="test" name="dateformat_formatObject_datetime.phpt"/>
+    <file role="test" name="dateformat_formatObject_error.phpt"/>
     <file role="test" name="dateformat_format_parse.phpt"/>
+    <file role="test" name="dateformat_getCalendarObject_error.phpt"/>
+    <file role="test" name="dateformat_getTimeZone_error.phpt"/>
     <file role="test" name="dateformat_get_datetype.phpt"/>
     <file role="test" name="dateformat_get_locale.phpt"/>
     <file role="test" name="dateformat_get_set_calendar.phpt"/>
     <file role="test" name="dateformat_get_set_pattern.phpt"/>
     <file role="test" name="dateformat_get_set_pattern2.phpt"/>
+    <file role="test" name="dateformat_get_set_timezone.phpt"/>
     <file role="test" name="dateformat_get_timetype.phpt"/>
     <file role="test" name="dateformat_get_timezone_id.phpt"/>
     <file role="test" name="dateformat_is_set_lenient.phpt"/>
@@ -306,8 +433,12 @@
     <file role="test" name="dateformat_parse.phpt"/>
     <file role="test" name="dateformat_parse_localtime_parsepos.phpt"/>
     <file role="test" name="dateformat_parse_timestamp_parsepos.phpt"/>
+    <file role="test" name="dateformat_setTimeZoneID_deprecation.phpt"/>
+    <file role="test" name="dateformat_setTimeZone_error.phpt"/>
     <file role="test" name="dateformat_set_timezone_id.phpt"/>
     <file role="test" name="dateformat_set_timezone_id2.phpt"/>
+    <file role="test" name="dateformat_timezone_arg_variations.phpt"/>
+    <file role="test" name="dateformat___construct_bad_tz_cal.phpt"/>
     <file role="test" name="formatter_clone.phpt"/>
     <file role="test" name="formatter_fail.phpt"/>
     <file role="test" name="formatter_format.phpt"/>
@@ -357,6 +488,7 @@
     <file role="test" name="locale_get_display_region2.phpt"/>
     <file role="test" name="locale_get_display_script.phpt"/>
     <file role="test" name="locale_get_display_script2.phpt"/>
+    <file role="test" name="locale_get_display_script3.phpt"/>
     <file role="test" name="locale_get_display_variant.phpt"/>
     <file role="test" name="locale_get_display_variant2.phpt"/>
     <file role="test" name="locale_get_keywords.phpt"/>
@@ -372,11 +504,29 @@
     <file role="test" name="msgfmt_fail.phpt"/>
     <file role="test" name="msgfmt_fail2.phpt"/>
     <file role="test" name="msgfmt_format.phpt"/>
-    <file role="test" name="msgfmt_get_error.phpt"/>
+    <file role="test" name="msgfmt_format_datetime.phpt"/>
+    <file role="test" name="msgfmt_format_error1.phpt"/>
+    <file role="test" name="msgfmt_format_error2.phpt"/>
+    <file role="test" name="msgfmt_format_error3.phpt"/>
+    <file role="test" name="msgfmt_format_error4.phpt"/>
+    <file role="test" name="msgfmt_format_error5.phpt"/>
+    <file role="test" name="msgfmt_format_error6.phpt"/>
+    <file role="test" name="msgfmt_format_intlcalendar.phpt"/>
+    <file role="test" name="msgfmt_format_mixed_params.phpt"/>
+    <file role="test" name="msgfmt_format_simple_types_numeric_strings.phpt"/>
+    <file role="test" name="msgfmt_format_subpatterns.phpt"/>
+    <file role="test" name="msgfmt_format_subpatterns_named.phpt"/>
     <file role="test" name="msgfmt_get_locale.phpt"/>
     <file role="test" name="msgfmt_get_set_pattern.phpt"/>
+    <file role="test" name="msgfmt_millisecond_dates.phpt"/>
     <file role="test" name="msgfmt_parse.phpt"/>
+    <file role="test" name="msgfmt_setPattern_cache.phpt"/>
     <file role="test" name="normalizer_normalize.phpt"/>
+    <file role="test" name="rbbiter_getBinaryRules_basic.phpt"/>
+    <file role="test" name="rbbiter_getRuleStatusVec_basic.phpt"/>
+    <file role="test" name="rbbiter_getRuleStatus_basic.phpt"/>
+    <file role="test" name="rbbiter_getRules_basic.phpt"/>
+    <file role="test" name="rbbiter___construct_basic.phpt"/>
     <file role="test" name="regression_sortwsk_and_cow.phpt"/>
     <file role="test" name="regression_sortwsk_eq.phpt"/>
     <file role="test" name="regression_sort_and_cow.phpt"/>
@@ -389,6 +539,8 @@
     <file role="test" name="resourcebundle_internal.phpt"/>
     <file role="test" name="resourcebundle_iterator.phpt"/>
     <file role="test" name="resourcebundle_locales.phpt"/>
+    <file role="test" name="resourcebundle_null_mandatory_args.phpt"/>
+    <file role="test" name="resourcebundle_traversable.phpt"/>
     <file role="test" name="spoofchecker_001.phpt"/>
     <file role="test" name="spoofchecker_002.phpt"/>
     <file role="test" name="spoofchecker_003.phpt"/>
@@ -411,6 +563,8 @@
     <file role="test" name="timezone_createTimeZone_error.phpt"/>
     <file role="test" name="timezone_equals_basic.phpt"/>
     <file role="test" name="timezone_equals_error.phpt"/>
+    <file role="test" name="timezone_fromDateTimeZone_basic.phpt"/>
+    <file role="test" name="timezone_fromDateTimeZone_error.phpt"/>
     <file role="test" name="timezone_getCanonicalID_basic.phpt"/>
     <file role="test" name="timezone_getCanonicalID_error.phpt"/>
     <file role="test" name="timezone_getCanonicalID_variant1.phpt"/>
@@ -443,6 +597,8 @@
     <file role="test" name="timezone_getUnknown_error.phpt"/>
     <file role="test" name="timezone_hasSameRules_basic.phpt"/>
     <file role="test" name="timezone_hasSameRules_error.phpt"/>
+    <file role="test" name="timezone_toDateTimeZone_basic.phpt"/>
+    <file role="test" name="timezone_toDateTimeZone_error.phpt"/>
     <file role="test" name="timezone_useDaylightTime_basic.phpt"/>
     <file role="test" name="timezone_useDaylightTime_error.phpt"/>
     <file role="test" name="transliterator_clone.phpt"/>
@@ -474,17 +630,19 @@
    </dir>
    <file role="src" name="config.m4"/>
    <file role="src" name="config.w32"/>
+   <file role="doc" name="CREDITS"/>
    <file role="src" name="intl_common.h"/>
    <file role="src" name="intl_convert.c"/>
    <file role="src" name="intl_convert.h"/>
+   <file role="src" name="intl_convertcpp.cpp"/>
+   <file role="src" name="intl_convertcpp.h"/>
+   <file role="src" name="intl_cppshims.h"/>
    <file role="src" name="intl_data.h"/>
    <file role="src" name="intl_error.c"/>
    <file role="src" name="intl_error.h"/>
    <file role="src" name="php_compatshims.h"/>
    <file role="src" name="php_intl.c"/>
    <file role="src" name="php_intl.h"/>
-   <file role="src" name="intl_convertcpp.cpp"/>
-   <file role="src" name="intl_convertcpp.h"/>
   </dir>
  </contents>
  <dependencies>
