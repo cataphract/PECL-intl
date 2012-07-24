@@ -287,7 +287,7 @@ U_CFUNC zend_function *IntlPartsIterator_get_method(zval **object_ptr,
 
 #if PHP_VERSION_ID >= 50399
 	if ((key->hash_value & 0xFFFFFFFF) == 0xA2B486A1 /* hash of getrulestatus\0 */
-			method_len == sizeof("getrulestatus") - 1
+			&& method_len == sizeof("getrulestatus") - 1
 			&& memcmp("getrulestatus", Z_STRVAL(key->constant),	method_len) == 0) {
 #else
 	if (method_len == sizeof("getrulestatus") - 1
