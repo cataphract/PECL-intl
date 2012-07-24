@@ -109,8 +109,6 @@ U_CFUNC TimeZone *timezone_convert_datetimezone(int type,
 U_CFUNC int intl_datetime_decompose(zval *z, double *millis, TimeZone **tz,
 		intl_error *err, const char *func TSRMLS_DC)
 {
-	zval	retval;
-	zval	*zfuncname;
 	char	*message;
 
 	if (err && U_FAILURE(err->code)) {
