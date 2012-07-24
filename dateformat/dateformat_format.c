@@ -27,7 +27,11 @@
 #include "dateformat_class.h"
 #include "dateformat_format.h"
 #include "dateformat_data.h"
-#include "ext/date/php_date.h"
+
+/* defining _MSC_STDINT_H fixes the build on Windows by preventing the
+ * redefinition of types already defined on php_stdint.h */
+#define _MSC_STDINT_H
+#include <ext/date/php_date.h>
 
 /* {{{ 
  * Internal function which calls the udat_format
