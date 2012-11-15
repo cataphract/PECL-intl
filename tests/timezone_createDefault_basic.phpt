@@ -20,14 +20,14 @@ IntlTimeZone Object
 (
     [valid] => 1
     [id] => %s
-    [rawOffset] => %d
-    [currentOffset] => %d
+    [rawOffset] => %i
+    [currentOffset] => %i
 )
 IntlTimeZone Object
 (
     [valid] => 1
     [id] => %s
-    [rawOffset] => %d
-    [currentOffset] => %d
+    [rawOffset] => %i
+    [currentOffset] => %i
 )
 ==DONE==
