@@ -15,13 +15,13 @@
  */
 
 #include "converter.h"
-#include "zend_exceptions.h"
+#include <zend_exceptions.h>
 
 #include <unicode/utypes.h>
 #include <unicode/ucnv.h>
 #include <unicode/ustring.h>
 
-#include "ext/intl/intl_error.h"
+#include "../intl_error.h"
 
 typedef struct _php_converter_object {
 	zend_object obj;
