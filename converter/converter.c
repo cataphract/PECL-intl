@@ -984,7 +984,7 @@ static zend_object_value php_converter_object_ctor(zend_class_entry *ce, php_con
 	zend_object_value retval;
 
 	objval = ecalloc(1, sizeof(php_converter_object));
-	objval->obj.ce = ce;
+	zend_object_std_init(&(objval->obj), ce TSRMLS_CC);
 
 #ifdef ZTS
 	objval->tsrm_ls = TSRMLS_C;
@@ -1002,7 +1002,12 @@ static zend_object_value php_converter_create_object(zend_class_entry *ce TSRMLS
 	php_converter_object *objval = NULL;
 	zend_object_value retval = php_converter_object_ctor(ce, &objval TSRMLS_CC);
 
+#if PHP_VERSION_ID < 50399
+	zend_hash_copy(objval->obj.properties, &(ce->default_properties),
+		(copy_ctor_func_t) zval_add_ref, NULL, sizeof(zval*));
+#else
 	object_properties_init(&(objval->obj), ce);
+#endif
 
 	return retval;
 }
