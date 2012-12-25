@@ -1,9 +1,8 @@
 --TEST--
-locale_get_display_name() 4.8 <= ICU < 50
+locale_get_display_name() ICU >= 50
 --SKIPIF--
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
-<?php if(version_compare(INTL_ICU_VERSION, '4.8') < 0) print 'skip for 4.8 <= ICU < 50'; ?>
-<?php if(version_compare(INTL_ICU_VERSION, '50') >= 0) print 'skip for 4.8 <= ICU < 50'; ?>
+<?php if(version_compare(INTL_ICU_VERSION, '50') < 0) print 'skip for ICU >= 50'; ?>
 --FILE--
 <?php
 
@@ -119,7 +118,7 @@ disp_locale=de :  display_name=Slowenisch #Italien, NEDIS_A_KIRTI_X_XYZ#
 locale='sl_IT_rozaj'
 disp_locale=en :  display_name=Slovenian #Italy, Resian#
 disp_locale=fr :  display_name=slovène #Italie, dialecte de Resia#
-disp_locale=de :  display_name=Slowenisch #Italien, (ROZAJ|Resianisch)#
+disp_locale=de :  display_name=Slowenisch #Italien, Resianisch#
 -----------------
 locale='sl_IT_NEDIS_ROJAZ_1901'
 disp_locale=en :  display_name=Slovenian #Italy, NEDIS_ROJAZ_1901#
@@ -132,9 +131,9 @@ disp_locale=fr :  display_name=i-enochian #Usage privé=i-enochian#
 disp_locale=de :  display_name=i-enochian #Privatnutzung=i-enochian#
 -----------------
 locale='zh-hakka'
-disp_locale=en :  display_name=Chinese( #HAKKA#)?
-disp_locale=fr :  display_name=chinois( #HAKKA#)?
-disp_locale=de :  display_name=Chinesisch( #HAKKA#)?
+disp_locale=en :  display_name=Chinese #HAKKA#
+disp_locale=fr :  display_name=chinois #HAKKA#
+disp_locale=de :  display_name=Chinesisch #HAKKA#
 -----------------
 locale='zh-wuu'
 disp_locale=en :  display_name=Chinese #WUU#
@@ -147,33 +146,33 @@ disp_locale=fr :  display_name=i-tay
 disp_locale=de :  display_name=i-tay
 -----------------
 locale='sgn-BE-nl'
-disp_locale=en :  display_name=Sign Languages? #Belgium, NL#
-disp_locale=fr :  display_name=langues? des signes #Belgique, NL#
+disp_locale=en :  display_name=Sign Language #Belgium, NL#
+disp_locale=fr :  display_name=langue des signes #Belgique, NL#
 disp_locale=de :  display_name=Gebärdensprache #Belgien, NL#
 -----------------
 locale='sgn-CH-de'
-disp_locale=en :  display_name=Sign Languages? #Switzerland, DE#
-disp_locale=fr :  display_name=langues? des signes #Suisse, DE#
+disp_locale=en :  display_name=Sign Language #Switzerland, DE#
+disp_locale=fr :  display_name=langue des signes #Suisse, DE#
 disp_locale=de :  display_name=Gebärdensprache #Schweiz, DE#
 -----------------
 locale='sl_IT_rozaj@currency=EUR'
-disp_locale=en :  display_name=Slovenian #Italy, Resian, [Cc]urrency=Euro#
-disp_locale=fr :  display_name=slovène #Italie, dialecte de Resia, Devise=euro#
-disp_locale=de :  display_name=Slowenisch #Italien, (ROZAJ|Resianisch), Währung=Euro#
+disp_locale=en :  display_name=Slovenian #Italy, Resian, Currency=Euro#
+disp_locale=fr :  display_name=slovène #Italie, dialecte de Resia, devise=euro#
+disp_locale=de :  display_name=Slowenisch #Italien, Resianisch, Währung=Euro#
 -----------------
 locale='uk-ua_CALIFORNIA@currency=;currency=GRN'
-disp_locale=en :  display_name=Ukrainian #Ukraine, CALIFORNIA, [Cc]urrency#
-disp_locale=fr :  display_name=ukrainien #Ukraine, CALIFORNIA, Devise#
+disp_locale=en :  display_name=Ukrainian #Ukraine, CALIFORNIA, Currency#
+disp_locale=fr :  display_name=ukrainien #Ukraine, CALIFORNIA, devise#
 disp_locale=de :  display_name=Ukrainisch #Ukraine, CALIFORNIA, Währung#
 -----------------
 locale='root'
 disp_locale=en :  display_name=Root
 disp_locale=fr :  display_name=racine
-disp_locale=de :  display_name=[Rr]oot
+disp_locale=de :  display_name=Root
 -----------------
 locale='uk@currency=EURO'
-disp_locale=en :  display_name=Ukrainian #[Cc]urrency=EURO#
-disp_locale=fr :  display_name=ukrainien #Devise=EURO#
+disp_locale=en :  display_name=Ukrainian #Currency=EURO#
+disp_locale=fr :  display_name=ukrainien #devise=EURO#
 disp_locale=de :  display_name=Ukrainisch #Währung=EURO#
 -----------------
 locale='Hindi'
@@ -203,12 +202,12 @@ disp_locale=de :  display_name=i-enochian #Privatnutzung=i-enochian#
 -----------------
 locale='zh-Hant'
 disp_locale=en :  display_name=Chinese #Traditional#
-disp_locale=fr :  display_name=chinois #idéogrammes han (#variante traditionnelle#|traditionnels)#
+disp_locale=fr :  display_name=chinois #traditionnel#
 disp_locale=de :  display_name=Chinesisch #Traditionell#
 -----------------
 locale='zh-Hans'
 disp_locale=en :  display_name=Chinese #Simplified#
-disp_locale=fr :  display_name=chinois #idéogrammes han (#variante simplifiée#|simplifiés)#
+disp_locale=fr :  display_name=chinois #simplifié#
 disp_locale=de :  display_name=Chinesisch #Vereinfacht#
 -----------------
 locale='sr-Cyrl'
@@ -223,18 +222,18 @@ disp_locale=de :  display_name=Serbisch #Lateinisch#
 -----------------
 locale='zh-Hans-CN'
 disp_locale=en :  display_name=Chinese #Simplified, China#
-disp_locale=fr :  display_name=chinois #idéogrammes han (#variante simplifiée#|simplifiés), Chine#
+disp_locale=fr :  display_name=chinois #simplifié, Chine#
 disp_locale=de :  display_name=Chinesisch #Vereinfacht, China#
 -----------------
 locale='sr-Latn-CS'
-disp_locale=en :  display_name=Serbian #Latin, Serbia [aA]nd Montenegro#
-disp_locale=fr :  display_name=serbe #latin, Serbie-et-Monténégro#
-disp_locale=de :  display_name=Serbisch #Lateinisch, Serbien und Montenegro#
+disp_locale=en :  display_name=Serbian #Latin, Serbia#
+disp_locale=fr :  display_name=serbe #latin, Serbie#
+disp_locale=de :  display_name=Serbisch #Lateinisch, Serbien#
 -----------------
 locale='sl-rozaj'
 disp_locale=en :  display_name=Slovenian #Resian#
 disp_locale=fr :  display_name=slovène #dialecte de Resia#
-disp_locale=de :  display_name=Slowenisch( #(ROZAJ|Resianisch)#)?
+disp_locale=de :  display_name=Slowenisch #Resianisch#
 -----------------
 locale='sl-nedis'
 disp_locale=en :  display_name=Slovenian #Natisone dialect#
@@ -244,17 +243,17 @@ disp_locale=de :  display_name=Slowenisch #Natisone-Dialekt#
 locale='de-CH-1901'
 disp_locale=en :  display_name=German #Switzerland, Traditional German orthography#
 disp_locale=fr :  display_name=allemand #Suisse, orthographe allemande traditionnelle#
-disp_locale=de :  display_name=Deutsch #Schweiz, (1901|[aA]lte deutsche Rechtschreibung)#
+disp_locale=de :  display_name=Deutsch #Schweiz, Alte deutsche Rechtschreibung#
 -----------------
 locale='sl-IT-nedis'
 disp_locale=en :  display_name=Slovenian #Italy, Natisone dialect#
 disp_locale=fr :  display_name=slovène #Italie, dialecte de Natisone#
-disp_locale=de :  display_name=Slowenisch #Italien, (NEDIS|Natisone-Dialekt)#
+disp_locale=de :  display_name=Slowenisch #Italien, Natisone-Dialekt#
 -----------------
 locale='sl-Latn-IT-nedis'
 disp_locale=en :  display_name=Slovenian #Latin, Italy, Natisone dialect#
 disp_locale=fr :  display_name=slovène #latin, Italie, dialecte de Natisone#
-disp_locale=de :  display_name=Slowenisch #Lateinisch, Italien, (NEDIS|Natisone-Dialekt)#
+disp_locale=de :  display_name=Slowenisch #Lateinisch, Italien, Natisone-Dialekt#
 -----------------
 locale='de-DE'
 disp_locale=en :  display_name=German #Germany#
@@ -307,9 +306,9 @@ disp_locale=fr :  display_name=serbe #latin, QM#
 disp_locale=de :  display_name=Serbisch #Lateinisch, QM#
 -----------------
 locale='sr-Qaaa-CS'
-disp_locale=en :  display_name=Serbian #Qaaa, Serbia [aA]nd Montenegro#
-disp_locale=fr :  display_name=serbe #Qaaa, Serbie-et-Monténégro#
-disp_locale=de :  display_name=Serbisch #Qaaa, Serbien und Montenegro#
+disp_locale=en :  display_name=Serbian #Qaaa, Serbia#
+disp_locale=fr :  display_name=serbe #Qaaa, Serbie#
+disp_locale=de :  display_name=Serbisch #Qaaa, Serbien#
 -----------------
 locale='en-US-u-islamCal'
 disp_locale=en :  display_name=English #United States, attribute=islamcal#
