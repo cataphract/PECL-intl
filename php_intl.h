@@ -73,7 +73,7 @@ PHP_MINFO_FUNCTION(intl);
 
 const char *intl_locale_get_default( TSRMLS_D );
 
-#define PHP_INTL_VERSION "3.0.0a3-dev"
+#define PHP_INTL_VERSION "3.0.0b1"
 
 #endif  /* PHP_INTL_H */
 

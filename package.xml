@@ -30,71 +30,26 @@
   <email>ed@batutis.com</email>
   <active>yes</active>
  </developer>
- <date>2012-07-24</date>
- <time>22:46:00</time>
+ <date>2012-12-26</date>
+ <time>00:53:05</time>
  <version>
-  <release>3.0.0a2</release>
-  <api>5.5.0a1</api>
+  <release>3.0.0b1</release>
+  <api>5.5.0b1</api>
  </version>
  <stability>
-  <release>alpha</release>
-  <api>alpha</api>
+  <release>beta</release>
+  <api>beta</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
- <notes>- Added IntlBreakIterator, IntlRuleBasedBreakiterator and
-  IntlCodePointBreakIterator.
-- Added IntlDateFormatter::formatObject().
-- Implememented FR #61871: named Argument support for MessageFormatter.
-- Accepted numeric strings for dates (when a timestamp is expected).
-- Better error messages in MessageFormatter::format().
-- Number of arguments in MessageFormatter::format() is not checked anymore.
-- Kept subsecond date precision in MessageFormatter.
-- Changed ResourceBundle constructor behavior: null is now accepted for two
-  first (mandatory arguments).
-- Accept DateTimeZone where time zones are expected.
-- Added IntlCalendar::fromDateTime().
-- Added IntlTimeZone::fromDateTimeZone() and ::toDateTimeZone.
-- MessageFormatter accepts IntlCalendar arguments.
-- Added IntlCalendar::toDateTime().
-- Made IntlDateFormatter constructor accept NULL, IntlTimeZone and DateTimeZone
-  objects in the timezone argument.
-- When NULL is passed to IntlDateFormatter, the time zone specified in
-  date.timezone is used instead of the ICU default, except if an IntlCalendar is
-  also passed, in which its time zone is used instead.
-- The IntlDateFormatter constructor now accepts for the $calendar argument also
-  an IntlCalendar. In this case, IntlDateFormatter::getCalendar() will return
-  false.
-- Added IntlDateFormatter::getCalendarObject(), which always returns the
-  IntlCalendar object that backs the DateFormat, even if a constant was passed
-  to the constructor, i.e., if an IntlCalendar was not passed to the
-  constructor.
-- Added IntlDateFormatter::setTimeZone() and IntlDateFormatter::getTimeZone().
-- Do not fetch default locale on minit or rinit
-- Deprecated IntlDateFormatter::setTimeZoneId() and made it an alias for
-  IntlDateFormatter::setTimeZone(), as the new ::setTimeZone() also accepts
-  plain identifiers, besides other types.
-- Fixed bug #55610: ResourceBundle not marked Traversable.
-- Fixed bug #58756: IntlDateFormatter and MessageFormatter do not respect
-  date.timezone INI setting w.r.t MessageFormatter (partial fix)
-- Fixed bug #59597: NumberFormatter::parse() with TYPE_INT64 results in a 32 bit
-  integer.
-- Fixed bug #60785: memory leak in IntlDateFormatter constructor.
-- Fixed bug #61829: memory leak when calling MessageFormatter's constructor
-  twice.
-- Fixed bug #62017: datefmt_create with incorrectly encoded timezone leaks
-  pattern.
-- Fixed bug #62070: Collator::getSortKey() was returning an unterminated string
-  due the length given to RETURN_STRINGL being off by one.
-- Fixed bug #62081: constructor of IntlDateFormatter would leak if called twice.
-- Fixed bug #62082: buffer overflow in internal function
-  get_icu_disp_value_src_php().
-- Fixed bug #62083: memory leak in grapheme_extract().
-- Fixed bug #62564/#62565: call to object_properties_init() missing.
-- Fixed problem in IntlCalendar debug handler.
-- Fixed write in constant memory.
-- Added private constructor to IntlTimeZone.
-- Fixed IntlDateFormatter::setCalendar() with a constant passed.
-</notes>
+ <notes>- Add UConverter class (ICU's UConverter API).
+   See RFC at http://wiki.php.net/rfc/uconverter
+- Fixed defective cloning of subclassed intl classes. See also bug #62915.
+- Allow Spoofchecker to be registered on ICU versions with .1 minor numbers like
+  ICU 49.1.
+- Fix SPOOFCHECKER_METHOD_FETCH_OBJECT definition.
+- Fix handling of several uinitialized intl objects.
+- Added the intl tests extracted from Symfony.
+- Fixed several tests.</notes>
  <contents>
   <dir name="/">
    <dir name="breakiterator">
@@ -148,6 +103,10 @@
     <file role="src" name="common_enum.h"/>
     <file role="src" name="common_error.c"/>
     <file role="src" name="common_error.h"/>
+   </dir>
+   <dir name="converter">
+    <file role="src" name="converter.c"/>
+    <file role="src" name="converter.h"/>
    </dir>
    <dir name="dateformat">
     <file role="src" name="dateformat.c"/>
@@ -312,6 +271,8 @@
     <file role="test" name="bug62081.phpt"/>
     <file role="test" name="bug62082.phpt"/>
     <file role="test" name="bug62083.phpt"/>
+    <file role="test" name="bug62915-2.phpt"/>
+    <file role="test" name="bug62915.phpt"/>
     <file role="test" name="calendar_add_basic.phpt"/>
     <file role="test" name="calendar_add_error.phpt"/>
     <file role="test" name="calendar_before_after_error.phpt"/>
@@ -411,13 +372,16 @@
     <file role="test" name="dateformat_calendars.phpt"/>
     <file role="test" name="dateformat_clone.phpt"/>
     <file role="test" name="dateformat_clone2.phpt"/>
+    <file role="test" name="dateformat_clone_bad_obj.phpt"/>
     <file role="test" name="dateformat_create_cal_arg.phpt"/>
     <file role="test" name="dateformat_format.phpt"/>
     <file role="test" name="dateformat_format52.phpt"/>
     <file role="test" name="dateformat_formatObject_calendar.phpt"/>
     <file role="test" name="dateformat_formatObject_datetime.phpt"/>
     <file role="test" name="dateformat_formatObject_error.phpt"/>
+    <file role="test" name="dateformat_format_50+.phpt"/>
     <file role="test" name="dateformat_format_parse.phpt"/>
+    <file role="test" name="dateformat_format_parse_50+.phpt"/>
     <file role="test" name="dateformat_getCalendarObject_error.phpt"/>
     <file role="test" name="dateformat_getTimeZone_error.phpt"/>
     <file role="test" name="dateformat_get_datetype.phpt"/>
@@ -440,6 +404,7 @@
     <file role="test" name="dateformat_timezone_arg_variations.phpt"/>
     <file role="test" name="dateformat___construct_bad_tz_cal.phpt"/>
     <file role="test" name="formatter_clone.phpt"/>
+    <file role="test" name="formatter_clone_bad_obj.phpt"/>
     <file role="test" name="formatter_fail.phpt"/>
     <file role="test" name="formatter_format.phpt"/>
     <file role="test" name="formatter_format2.phpt"/>
@@ -449,6 +414,8 @@
     <file role="test" name="formatter_get_error.phpt"/>
     <file role="test" name="formatter_get_locale.phpt"/>
     <file role="test" name="formatter_get_set_attribute.phpt"/>
+    <file role="test" name="formatter_get_set_attribute2.php"/>
+    <file role="test" name="formatter_get_set_attribute2.sh"/>
     <file role="test" name="formatter_get_set_pattern.phpt"/>
     <file role="test" name="formatter_get_set_symbol.phpt"/>
     <file role="test" name="formatter_get_set_symbol2.phpt"/>
@@ -478,11 +445,13 @@
     <file role="test" name="locale_compose_locale.phpt"/>
     <file role="test" name="locale_filter_matches.phpt"/>
     <file role="test" name="locale_filter_matches2.phpt"/>
+    <file role="test" name="locale_filter_matches_50+.phpt"/>
     <file role="test" name="locale_get_all_variants.phpt"/>
     <file role="test" name="locale_get_default.phpt"/>
     <file role="test" name="locale_get_display_language.phpt"/>
     <file role="test" name="locale_get_display_name.phpt"/>
     <file role="test" name="locale_get_display_name2.phpt"/>
+    <file role="test" name="locale_get_display_name_50+.phpt"/>
     <file role="test" name="locale_get_display_region.phpt"/>
     <file role="test" name="locale_get_display_region2.phpt"/>
     <file role="test" name="locale_get_display_script.phpt"/>
@@ -500,6 +469,7 @@
     <file role="test" name="locale_parse_locale2.phpt"/>
     <file role="test" name="locale_set_default.phpt"/>
     <file role="test" name="msgfmt_clone.phpt"/>
+    <file role="test" name="msgfmt_clone_bad_obj.phpt"/>
     <file role="test" name="msgfmt_fail.phpt"/>
     <file role="test" name="msgfmt_fail2.phpt"/>
     <file role="test" name="msgfmt_format.phpt"/>
@@ -544,6 +514,25 @@
     <file role="test" name="spoofchecker_002.phpt"/>
     <file role="test" name="spoofchecker_003.phpt"/>
     <file role="test" name="spoofchecker_004.phpt"/>
+    <file role="test" name="symfony_format_type_double_intl1.phpt"/>
+    <file role="test" name="symfony_format_type_double_intl2.phpt"/>
+    <file role="test" name="symfony_format_type_double_intl3.phpt"/>
+    <file role="test" name="symfony_format_type_double_intl4.phpt"/>
+    <file role="test" name="symfony_format_type_int32_intl1.phpt"/>
+    <file role="test" name="symfony_format_type_int32_intl2.phpt"/>
+    <file role="test" name="symfony_format_type_int32_intl3.phpt"/>
+    <file role="test" name="symfony_format_type_int32_intl4.phpt"/>
+    <file role="test" name="symfony_format_type_int32_intl5.phpt"/>
+    <file role="test" name="symfony_format_type_int32_intl6.phpt"/>
+    <file role="test" name="symfony_format_type_int32_intl7.phpt"/>
+    <file role="test" name="symfony_format_type_int64_intl1.phpt"/>
+    <file role="test" name="symfony_format_type_int64_intl2.phpt"/>
+    <file role="test" name="symfony_format_type_int64_intl3.phpt"/>
+    <file role="test" name="symfony_format_type_int64_intl4.phpt"/>
+    <file role="test" name="symfony_format_type_int64_intl5.phpt"/>
+    <file role="test" name="symfony_format_type_int64_intl6.phpt"/>
+    <file role="test" name="symfony_format_type_int64_intl7.phpt"/>
+    <file role="test" name="symfony_format_type_int64_intl8.phpt"/>
     <file role="test" name="timezone_clone_basic.phpt"/>
     <file role="test" name="timezone_clone_error.phpt"/>
     <file role="test" name="timezone_countEquivalentIDs_basic.phpt"/>
@@ -617,6 +606,14 @@
     <file role="test" name="transliterator_transliterate_basic.phpt"/>
     <file role="test" name="transliterator_transliterate_error.phpt"/>
     <file role="test" name="transliterator_transliterate_variant1.phpt"/>
+    <file role="test" name="uconverter_enum.phpt"/>
+    <file role="test" name="uconverter_func_basic.phpt"/>
+    <file role="test" name="uconverter_func_subst.phpt"/>
+    <file role="test" name="uconverter_oop_algo.phpt"/>
+    <file role="test" name="uconverter_oop_basic.phpt"/>
+    <file role="test" name="uconverter_oop_callback.phpt"/>
+    <file role="test" name="uconverter_oop_callback_return.phpt"/>
+    <file role="test" name="uconverter_oop_subst.phpt"/>
     <file role="test" name="ut_common.inc"/>
    </dir>
    <dir name="transliterator">
