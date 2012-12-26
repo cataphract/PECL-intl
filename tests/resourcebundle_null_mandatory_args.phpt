@@ -22,7 +22,7 @@ $c = $r->get('calendar')->get('gregorian')->get('DateTimePatterns')->get(0);
 var_dump($c);
 ?>
 ==DONE==
---EXPECT--
+--EXPECTF--
 string(14) "h:mm:ss a zzzz"
-string(12) "H:mm:ss zzzz"
+string(%d) "%SH:mm:ss zzzz"
 ==DONE==

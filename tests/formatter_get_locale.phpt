@@ -43,7 +43,7 @@ include_once( 'ut_common.inc' );
 // Run the test
 ut_run();
 ?>
---EXPECT--
+--EXPECTF--
 en_UK:  actual='en' valid='en'
 en_US@California:  actual='en' valid='en'
-fr_CA:  actual='fr_CA' valid='fr_CA'
+fr_CA:  actual='fr%S' valid='fr_CA'
