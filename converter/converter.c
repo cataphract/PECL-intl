@@ -22,6 +22,7 @@
 #include <unicode/ustring.h>
 
 #include "../intl_error.h"
+#include "../php_compatshims.h"
 
 typedef struct _php_converter_object {
 	zend_object obj;
@@ -545,9 +546,23 @@ static void php_converter_resolve_callback(zval *zobj,
 	Z_ADDREF_P(zobj);
 	add_index_zval(&caller, 0, zobj);
 	add_index_string(&caller, 1, callback_name, 1);
+#if PHP_VERSION_ID >= 50300
 	if (zend_fcall_info_init(&caller, 0, finfo, fcache, NULL, &errstr TSRMLS_CC) == FAILURE) {
 		php_converter_throw_failure(objval, U_INTERNAL_PROGRAM_ERROR TSRMLS_CC, "Error setting converter callback: %s", errstr);
 	}
+#else
+	if (zend_fcall_info_init(&caller, finfo, fcache TSRMLS_CC) == FAILURE) {
+		php_converter_throw_failure(objval, U_INTERNAL_PROGRAM_ERROR TSRMLS_CC, "Error setting converter callback");
+	} else {
+		/* PHP 5.2 stores the this zval with double indirection and right now
+		 * ->object_pp is pointing to a variable that'll be destroyed when
+		 * caller is destroyed */
+		zval **this = emalloc(sizeof(*this));
+		*this = *finfo->object_pp;
+		finfo->object_pp = this;
+		fcache->object_pp = this;
+	}
+#endif
 	zval_dtor(&caller);
 	if (errstr) {
 		efree(errstr);
@@ -979,6 +994,15 @@ static void php_converter_free_object(php_converter_object *objval TSRMLS_DC) {
 
 	intl_error_reset(&(objval->error) TSRMLS_CC);
 	zend_object_std_dtor(&(objval->obj) TSRMLS_CC);
+
+#if PHP_VERSION_ID < 50300
+	if (objval->to_cb.object_pp) {
+		efree(objval->to_cb.object_pp);
+	}
+	if (objval->from_cb.object_pp) {
+		efree(objval->from_cb.object_pp);
+	}
+#endif
 
 	efree(objval);
 }
