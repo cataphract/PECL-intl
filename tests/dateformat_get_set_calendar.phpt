@@ -36,13 +36,13 @@ d($df);
 
 ?>
 ==DONE==
---EXPECT--
+--EXPECTF--
 dimanche 1 janvier 2012 ap. J.-C. 03:00:00 UTC+03:00
 int(1)
 string(9) "gregorian"
 string(12) "Europe/Minsk"
 
-dimanche 8 Safar 1433 AH 03:00:00 UTC+03:00
+dimanche 8 %cafar 1433 AH 03:00:00 UTC+03:00
 int(0)
 string(7) "islamic"
 string(12) "Europe/Minsk"

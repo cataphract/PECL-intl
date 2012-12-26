@@ -26,13 +26,13 @@ var_dump($lsb->getDisplayName(false, IntlTimeZone::DISPLAY_GENERIC_LOCATION));
 
 ?>
 ==DONE==
---EXPECT--
-string(3) "GMT"
-string(30) "Western European Standard Time"
-string(22) "Portugal Time (Lisbon)"
-string(21) "Western European Time"
-string(5) "+0000"
-string(3) "GMT"
-string(3) "GMT"
-string(22) "Portugal Time (Lisbon)"
-==DONE==
+--EXPECTREGEX--
+string\(3\) "GMT"
+string\(30\) "Western European Standard Time"
+string\(\d+\) ("Portugal Time \(Lisbon\)"|"Lisbon Time")
+string\(21\) "Western European Time"
+string\(5\) "\+0000"
+string\(3\) "GMT"
+string\(3\) "GMT"
+string\(\d+\) ("Portugal Time \(Lisbon\)"|"Lisbon Time")
+==DONE==

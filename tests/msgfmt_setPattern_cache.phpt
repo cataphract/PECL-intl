@@ -19,8 +19,8 @@ var_dump($mf->format(array(1.3, 1.3)));
 
 ?>
 ==DONE==
---EXPECT--
-string(10) "1.3 -- 1st"
-string(10) "1.3 -- 1st"
-string(10) "1st -- 1.3"
+--EXPECTREGEX--
+string\(\d+\) "1.3 -- 1(st|ˢᵗ)"
+string\(\d+\) "1.3 -- 1(st|ˢᵗ)"
+string\(\d+\) "1(st|ˢᵗ) -- 1.3"
 ==DONE==

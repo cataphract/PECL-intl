@@ -2,7 +2,7 @@
 numfmt_get/set_attribute()
 --SKIPIF--
 <?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
-<?php if(version_compare(INTL_ICU_VERSION, '4.4', '<')) print 'skip for ICU 4.4+'; ?>
+<?php if(version_compare(INTL_ICU_VERSION, '4.2', '<') != 1) print 'skip for ICU 4.4+'; ?>
 --FILE--
 <?php
 
