@@ -1,7 +1,9 @@
 --TEST--
 Symfony StubNumberFormatterTest#testFormatTypeDoubleIntl #3
 --SKIPIF--
-<?php if( !extension_loaded( 'intl' ) ) print 'skip'; ?>
+<?php if( !extension_loaded( 'intl' ) ) print 'skip';
+if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) die('skip for PHP >= 5.3');
+?>
 --FILE--
 <?php
 

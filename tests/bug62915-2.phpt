@@ -1,9 +1,9 @@
 --TEST--
 Bug #62915: cloning of several classes is defective
 --SKIPIF--
-<?php
-if (!extension_loaded('intl'))
-	    die('skip intl extension not enabled');
+<?php if( !extension_loaded( 'intl' ) ) print 'skip';
+if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) die('skip for PHP >= 5.3');
+?>
 --FILE--
 <?php
 class A extends IntlDateFormatter {
