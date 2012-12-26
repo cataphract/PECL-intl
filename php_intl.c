@@ -86,7 +86,7 @@
 
 #include "idn/idn.h"
 
-#if U_ICU_VERSION_MAJOR_NUM * 1000 + U_ICU_VERSION_MINOR_NUM >= 3002
+#if U_ICU_VERSION_MAJOR_NUM * 1000 + U_ICU_VERSION_MINOR_NUM >= 4002
 # include "spoofchecker/spoofchecker_class.h"
 # include "spoofchecker/spoofchecker.h"
 # include "spoofchecker/spoofchecker_create.h"
