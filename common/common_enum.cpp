@@ -252,6 +252,7 @@ static PHP_METHOD(IntlIterator, key)
 	INTLITERATOR_METHOD_FETCH_OBJECT;
 
 	if (ii->iterator->funcs->get_current_key) {
+#if PHP_VERSION_ID < 50499
 		char *str_key;
 		uint str_key_len;
 		ulong int_key;
@@ -265,6 +266,9 @@ static PHP_METHOD(IntlIterator, key)
 			RETURN_STRINGL(str_key, str_key_len-1, 0);
 			break;
 		}
+#else
+		ii->iterator->funcs->get_current_key(ii->iterator, return_value TSRMLS_CC);
+#endif
 	} else {
 		RETURN_LONG(ii->iterator->index);
 	}

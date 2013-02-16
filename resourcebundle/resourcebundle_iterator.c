@@ -101,13 +101,19 @@ static void resourcebundle_iterator_current( zend_object_iterator *iter, zval **
 /* }}} */
 
 /* {{{ resourcebundle_iterator_key */
+#if PHP_VERSION_ID < 50499
 static int resourcebundle_iterator_key( zend_object_iterator *iter, char **str_key, uint *str_key_len, ulong *int_key TSRMLS_DC )
+#else
+static void resourcebundle_iterator_key( zend_object_iterator *iter, zval *key TSRMLS_DC )
+#endif
 {
 	ResourceBundle_iterator *iterator = (ResourceBundle_iterator *) iter;
 
 	if (!iterator->current) {
 		resourcebundle_iterator_read( iterator TSRMLS_CC);
 	}
+
+#if PHP_VERSION_ID < 50499
 	if (iterator->is_table) {
 		*str_key = estrdup( iterator->currentkey );
 		*str_key_len = strlen( iterator->currentkey ) + 1;
@@ -117,6 +123,13 @@ static int resourcebundle_iterator_key( zend_object_iterator *iter, char **str_k
 		*int_key = iterator->i;
 		return HASH_KEY_IS_LONG;
 	}
+#else
+	if (iterator->is_table) {
+		ZVAL_STRING(key, iterator->currentkey, 1);
+	} else {
+		ZVAL_LONG(key, iterator->i);
+	}
+#endif
 }
 /* }}} */
 
