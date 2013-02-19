@@ -39,7 +39,7 @@ int transliterator_object_construct( zval *object,
 	char                  *str_id;
 	int                   str_id_len;
 	Transliterator_object *to;
-	
+
 	TRANSLITERATOR_METHOD_FETCH_OBJECT_NO_CHECK;
 
 	assert( to->utrans == NULL );
@@ -54,7 +54,7 @@ int transliterator_object_construct( zval *object,
 	{
 		return FAILURE;
 	}
-	
+
 	zend_update_property_stringl( Transliterator_ce_ptr, object,
 		"id", sizeof( "id" ) - 1, str_id, str_id_len TSRMLS_CC );
 	efree( str_id );
@@ -126,7 +126,7 @@ static zend_object_value Transliterator_object_create(
 	Transliterator_object* intern;
 
 	intern = ecalloc( 1, sizeof( Transliterator_object ) );
-	
+
 	zend_object_std_init( &intern->zo, ce TSRMLS_CC );
 #if PHP_VERSION_ID < 50399
     zend_hash_copy( intern->zo.properties, &(ce->default_properties ),
@@ -246,8 +246,11 @@ err:
 /* {{{ get_property_ptr_ptr handler */
 #if PHP_VERSION_ID < 50399
 static zval **Transliterator_get_property_ptr_ptr( zval *object, zval *member TSRMLS_DC )
-#else
+#elif PHP_VERSION_ID < 50499
 static zval **Transliterator_get_property_ptr_ptr( zval *object, zval *member,
+	const struct _zend_literal *key TSRMLS_DC )
+#else
+static zval **Transliterator_get_property_ptr_ptr( zval *object, zval *member, int type,
 	const struct _zend_literal *key TSRMLS_DC )
 #endif
 {
@@ -264,8 +267,10 @@ static zval **Transliterator_get_property_ptr_ptr( zval *object, zval *member,
 	{
 #if PHP_VERSION_ID < 50399
 		retval = std_object_handlers.get_property_ptr_ptr( object, member TSRMLS_CC );
-#else
+#elif PHP_VERSION_ID < 50499
 		retval = std_object_handlers.get_property_ptr_ptr( object, member, key TSRMLS_CC );
+#else
+		retval = std_object_handlers.get_property_ptr_ptr( object, member, type, key TSRMLS_CC );
 #endif
 	}
 
@@ -277,10 +282,10 @@ static zval **Transliterator_get_property_ptr_ptr( zval *object, zval *member,
 
 /* {{{ read_property handler */
 #if PHP_VERSION_ID < 50399
-static zval *Transliterator_read_property( zval *object, zval *member, int type TSRMLS_DC ) /* {{{ */
+static zval *Transliterator_read_property( zval *object, zval *member, int type TSRMLS_DC )
 #else
 static zval *Transliterator_read_property( zval *object, zval *member, int type,
-	const struct _zend_literal *key TSRMLS_DC ) /* {{{ */
+	const struct _zend_literal *key TSRMLS_DC )
 #endif
 {
 	zval *retval;
