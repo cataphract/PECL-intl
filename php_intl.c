@@ -13,7 +13,7 @@
    | Authors: Vadim Savchuk <vsavchuk@productengine.com>                  |
    |          Dmitry Lakhtyuk <dlakhtyuk@productengine.com>               |
    |          Stanislav Malyshev <stas@zend.com>                          |
-   |          Kirti Velankar <kirtig@yahoo-inc.com>   			  |
+   |          Kirti Velankar <kirtig@yahoo-inc.com>                       |
    +----------------------------------------------------------------------+
  */
 
