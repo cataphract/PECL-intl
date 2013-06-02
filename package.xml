@@ -31,7 +31,7 @@
   <active>yes</active>
  </developer>
  <date>2013-06-02</date>
- <time>19:00:00</time>
+ <time>20:00:00</time>
  <version>
   <release>3.0.0</release>
   <api>5.5.0</api>
@@ -42,6 +42,10 @@
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
  <notes>- Fixed build on PHP 5.5+.
+- Bring error reporting in converter more in line with the rest.
+- Fix parameter parsing in Uconverter::convert() for PHP 5.5.
+- Fix intlcal_get_time_zone() not setting local error.
+- Fix arginfo for BreakIterator::getLocale().
 - Fixed compiler warnings.</notes>
  <contents>
   <dir name="/">
@@ -597,6 +601,7 @@
     <file role="test" name="transliterator_transliterate_basic.phpt"/>
     <file role="test" name="transliterator_transliterate_error.phpt"/>
     <file role="test" name="transliterator_transliterate_variant1.phpt"/>
+    <file role="test" name="uconverter___construct_error.phpt"/>
     <file role="test" name="uconverter_enum.phpt"/>
     <file role="test" name="uconverter_func_basic.phpt"/>
     <file role="test" name="uconverter_func_subst.phpt"/>
@@ -618,6 +623,7 @@
    <file role="src" name="config.m4"/>
    <file role="src" name="config.w32"/>
    <file role="doc" name="CREDITS"/>
+   <file role="doc" name="ERROR.CONVENTIONS"/>
    <file role="src" name="intl_common.h"/>
    <file role="src" name="intl_convert.c"/>
    <file role="src" name="intl_convert.h"/>
